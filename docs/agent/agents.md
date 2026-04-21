@@ -54,6 +54,26 @@ Generates bash scripts that capture a systematic set of Playwright CLI screensho
 
 ---
 
+## Deployment-pipeline agents
+
+These agents own the GitHub Pages deployment lifecycle. They are dispatched by the `/rag-web-pages-*` commands, not by `/rag-web-close`. They are the instruments; the skill [`rag-web-pages-deploy`](../../.claude/skills/rag-web-pages-deploy/SKILL.md) is the durable theory surface above them. See [`commands.md`](commands.md) for the command contracts and `docs/agent/` for the skill layer documented in that file.
+
+The pipeline has two mechanical agents and one advisory agent. The distinction is load-bearing: mechanical agents run gates and report facts; the advisory agent synthesizes a judgment and proposes an operator action. Model and effort reflect this split.
+
+### [`rag-web-pages-preflight`](../../.claude/agents/rag-web-pages-preflight.md)
+
+Pre-deploy gate. Runs the checklist from `reference/preflight-checklist.md` in order — `.nojekyll` presence, `actionlint` lint, token-script validation, `include-hidden-files: true` flag in the workflow, `lychee` offline link check. Each gate is binary: pass or fail. No judgment, no proposed fixes. A missing required binary (`lychee`, `actionlint`) is a hard failure, not a skip. Model: `sonnet`, `effort: medium`. Invoked by `/rag-web-pages-check` and by the CI preflight job; both invocations run the same gates against the same binaries.
+
+### [`rag-web-pages-verify`](../../.claude/agents/rag-web-pages-verify.md)
+
+Post-deploy verification. Fetches the live URL via `gh api`, runs the gates from `reference/postflight-checklist.md` — HTTPS, canonical content, asset resolution, CDN-lag tolerance. Reports divergence between committed state and served state. Retries once after 60 seconds if stale content is detected (CDN lag is common in the first minute). If staleness persists past five minutes, reports a real failure and includes the run SHA for diagnosis. Model: `sonnet`, `effort: medium`. Invoked by `/rag-web-pages-deploy` after the workflow run completes; never invoked standalone by `/rag-web-close`.
+
+### [`rag-web-pages-rollback-advisor`](../../.claude/agents/rag-web-pages-rollback-advisor.md)
+
+Read-only rollback proposer. Lists recent Pages deployments via `gh api`, cross-references session summaries in `.the-grid/sessions/summaries/` to find the last-known-good SHA (the most recent entry with a `rag-web-pages-verify` PASS record), identifies the bad deploy, and produces a proposal with two execution paths — Pages UI re-run, or `gh workflow run` targeting the good SHA. Never executes either path; the proposal is the deliverable. When the data is ambiguous (no clean verify record exists), reports the ambiguity explicitly rather than guessing. Model: `opus`, `effort: high`. The model/effort mismatch with preflight and verify is intentional: rollback happens on the operator's worst day and the quality lift justifies the per-invocation cost.
+
+---
+
 ## Dispatch rules — what runs when
 
 The full dispatch contract lives in `/rag-web-close`; this is the registry-level summary. Group writers dispatch in parallel; `rag-web-docs-vault-exporter` runs sequentially after.
@@ -68,5 +88,8 @@ The full dispatch contract lives in `/rag-web-close`; this is the registry-level
 | CSS file authored or edited | operator / `web-frontend` skill | `rag-web-css-auditor`, `rag-web-token-enforcer` |
 | Visual change landed | operator / `web-frontend` skill | `rag-web-visual-reviewer` |
 | New page needs screenshot coverage | operator | `rag-web-visual-test-writer` |
+| Pre-deploy gate | `/rag-web-pages-check`, CI preflight job | `rag-web-pages-preflight` |
+| Post-deploy verification | `/rag-web-pages-deploy` (after workflow success) | `rag-web-pages-verify` |
+| Rollback proposal | `/rag-web-pages-rollback` | `rag-web-pages-rollback-advisor` |
 
-Every agent in this registry has a corresponding entry in [`pi-agents.yaml`](../../pi-agents.yaml). A new agent added under `.claude/agents/` without a matching entry is a cross-harness-drift violation; see [`harness.md`](harness.md).
+Every agent in this registry has a corresponding entry in [`pi-agents.yaml`](../../pi-agents.yaml). The three deployment-pipeline agents are all `mirror_status: pending` — their Pi mirrors are owed. A new agent added under `.claude/agents/` without a matching entry is a cross-harness-drift violation; see [`harness.md`](harness.md).

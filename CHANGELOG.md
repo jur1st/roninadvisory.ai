@@ -17,6 +17,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Visual QA runs through Playwright CLI via `tools/scripts/capture-screenshot.sh`, which is the only sanctioned browser surface; agents that need a viewport go through that one script or extend it.
 - Four quality-gate agents (`rag-web-visual-reviewer`, `rag-web-css-auditor`, `rag-web-token-enforcer`, `rag-web-visual-test-writer`) encode the design-system invariants the tokens assert, so token drift becomes a reviewable signal instead of a slow accident.
 - Typography primer (`docs/dev/typography.md`) frames three delivery paths — system fallback (A), self-hosted woff2 (B), Adobe Typekit CDN (C) — and ships Path A as the launch default with the final choice held open for the operator.
+- First project-level skill (`rag-web-pages-deploy`) establishes a new agentic vocabulary layer: skills own *why* (durable theory + staleness-tracked specs), agents own *how* (mechanical instruments), commands own *when* (operator entry points). Moves deployment from a gap to a gated, pre-flight-twice lifecycle.
+- Deployment surface admits GitHub Actions with operator-controlled, read-only rollback — the skill scaffolds `.github/workflows/deploy-pages.yml`, three agents (preflight/verify/advisor), and four commands (`/rag-web-pages-{init,check,deploy,rollback}`). Continuation of the "never auto-commit" posture: advisor agent proposes; operator executes.
+- Reference documentation pattern — dated spec files (`verified: 2026-04-21`) with explicit re-verify cadences, acknowledging that GitHub action majors drift (`deploy-pages` v4→v5, April 2026). Future sessions pick up the skill cold via this progressively-disclosed knowledge surface.
+- `site/.nojekyll` (empty file) disables Jekyll processing on GitHub Pages; required to preserve hand-written HTML. Presence is load-bearing in `actions/upload-pages-artifact@v5` with `include-hidden-files: true`.
 
 ### Changed
 

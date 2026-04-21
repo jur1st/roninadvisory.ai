@@ -14,15 +14,17 @@ Two things follow directly from the shape of the artifact.
 
 The project has four working layers. Reading them in this order gives the mental model:
 
-1. **`site/`** — the publishable surface. `site/index.html` is the live page. `site/static/tokens.css` is the design contract. Anything under `site/` is, in principle, what GitHub Pages serves.
+1. **`site/`** — the publishable surface. `site/index.html` is the live page. `site/static/tokens.css` is the design contract. `site/.nojekyll` is a required marker file that signals GitHub Pages to skip its Jekyll processor and serve the hand-written HTML as-is. Anything under `site/` is what the deploy workflow uploads as the artifact.
 
-2. **`docs/dev/`** — the theory. Developer-facing documentation, this file included. Plans live under `docs/dev/plans/`. Versioned with the source; read by humans and by agents. If something belongs in `CLAUDE.md` but is structural rather than durable, this is where it goes.
+2. **`.github/workflows/deploy-pages.yml`** — the deployment surface. A two-job CI workflow: a preflight job (link-check, token validation, `actionlint`, `.nojekyll` presence check) and a deploy job (uploads `site/` as a Pages artifact via `actions/upload-pages-artifact@v5` with `include-hidden-files: true`, then deploys via `actions/deploy-pages@v5`). Triggers on pushes to `main` that touch `site/` or the workflow file itself. The `include-hidden-files: true` flag is load-bearing — without it, `.nojekyll` is excluded from the artifact and Jekyll processing resumes. See `docs/dev/pages/README.md` and the skill at `.claude/skills/rag-web-pages-deploy/`.
 
-3. **`.claude/`** and **`pi-agents.yaml`** — the agentic layer. Claude Code primitives live under `.claude/commands/` (slash commands) and `.claude/agents/` (subagent definitions). `pi-agents.yaml` tracks each primitive's Pi-harness status. The prefix is `rag-web-*` on everything project-specific, so that the project's commands do not shadow generic ones in the user's `~/.claude/`.
+3. **`docs/dev/`** — the theory. Developer-facing documentation, this file included. Plans live under `docs/dev/plans/`. Versioned with the source; read by humans and by agents. If something belongs in `CLAUDE.md` but is structural rather than durable, this is where it goes.
 
-4. **`tools/`** — developer-only tooling. `tools/scripts/*.sh` are the runtime-neutral entry points; `tools/package.json` + `tools/node_modules/` hold the Playwright dev dependency. Nothing under `tools/` ships to GitHub Pages.
+4. **`.claude/`** and **`pi-agents.yaml`** — the agentic layer. Claude Code primitives live under `.claude/commands/` (slash commands), `.claude/agents/` (subagent definitions), and `.claude/skills/` (skill libraries). `pi-agents.yaml` tracks each primitive's Pi-harness status. The prefix is `rag-web-*` on everything project-specific, so that the project's commands do not shadow generic ones in the user's `~/.claude/`.
 
-A visitor sees only layer 1. A contributor edits layer 1 mediated by the contracts set down in layers 2 and 3, with layer 4 as the loop for verifying the result. Losing sight of that gradient — treating `docs/`, `.claude/`, and `tools/` as if they were part of the site — is the most common way to degrade the shape.
+5. **`tools/`** — developer-only tooling. `tools/scripts/*.sh` are the runtime-neutral entry points; `tools/package.json` + `tools/node_modules/` hold the Playwright dev dependency. Nothing under `tools/` ships to GitHub Pages.
+
+A visitor sees only layer 1. A contributor edits layer 1 mediated by the contracts set down in layers 3 and 4, with layer 5 as the loop for verifying the result, and layer 2 as the gate from commit to public URL. Losing sight of that gradient — treating `docs/`, `.claude/`, `.github/`, and `tools/` as if they were part of the site — is the most common way to degrade the shape.
 
 ## Why the token contract is shaped the way it is
 

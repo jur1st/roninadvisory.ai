@@ -93,6 +93,40 @@ A common mistake is to treat all session machinery as one category — either tr
 
 ---
 
+## The skill layer — what a skill is, and why it is not an agent or a command
+
+Prior to plan 03, the agentic layer had two kinds of primitives: commands (user-invocable entry points under `.claude/commands/`) and agents (orchestrated instruments under `.claude/agents/`). Plan 03 introduced the first project-level skill: [`rag-web-pages-deploy`](../../.claude/skills/rag-web-pages-deploy/).
+
+A skill is a **progressive disclosure surface and reference library**. It bundles:
+
+- A `SKILL.md` — the theory of the domain it owns (what GitHub Pages is, why this project uses it the way it does, an entry-point table, doctrine). Naur-voice; ≤200 lines.
+- A `reference/` directory — dated, re-verification-scheduled documentation. Each file opens with `verified: YYYY-MM-DD` and a cadence. Reference docs rot on a schedule the project can see and act on; `SKILL.md` does not recapitulate them.
+- A `templates/` directory — scaffold files that commands copy into place (e.g., the workflow YAML, the `.nojekyll` marker).
+
+A skill is not a replacement for agents or commands:
+
+- It does not execute anything. Agents execute.
+- It is not user-invoked. Commands are user-invoked.
+- It is auto-loaded when the operator touches the skill's domain files (`site/`, `.github/workflows/`, `site/.nojekyll`) and user-invocable via the associated commands.
+
+The design intention from plan 03 (Decision 5): "skill structure adopted. Progressive disclosure for the dated spec, durable theory surface for future sessions, locality for the runbook cluster." The alternative — embedding the GitHub Pages spec, workflow commentary, rollback runbook, and troubleshooting catalogue directly in agent bodies or command files — would distribute dated content across primitives that have no re-verification cadence, producing invisible staleness.
+
+When a skill is added, its `pi-agents.yaml` entry's `mirrors:` value points to the skill directory, not a file. The parity obligation applies to the skill tree as a whole.
+
+---
+
+## Known issues
+
+### Name collision: `rag-web-pages-deploy` (skill) vs `/rag-web-pages-deploy` (command)
+
+The skill at `.claude/skills/rag-web-pages-deploy/` and the command at `.claude/commands/rag-web-pages-deploy.md` share a name. The harness dispatches correctly — skill lookup is by directory, command lookup is by file — but any display that lists both primitives in one view (e.g., a slash-command autocomplete that includes skills) will show `rag-web-pages-deploy` twice without distinguishing context.
+
+This is cosmetic, not functional. No behavioral change has been observed; the naming was intentional (the command wraps the skill's deploy path) and the convention of naming them symmetrically aids readability in individual context but creates display ambiguity in aggregate views.
+
+**Resolution path if this becomes operationally confusing:** rename the command to `/rag-web-pages-push` to distinguish the user-facing trigger from the skill. This would require updating the command file, `pi-agents.yaml`, the `SKILL.md` entry-point table, and any `agents.md`/`commands.md` references. Until it causes a real dispatch error, treat as cosmetic.
+
+---
+
 ## The `rag-web-*` namespace
 
 All project-specific slash commands, agents, and skills carry the `rag-web-*` prefix. Global or sibling-project primitives do not.

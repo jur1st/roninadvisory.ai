@@ -40,6 +40,10 @@ assets:   [ ... same shape ... ]
 
 The five top-level buckets (`commands`, `agents`, `skills`, `settings`, `assets`) exist so that a primitive's *kind* is preserved even when its Pi shape does not resemble the CC shape at all. A Pi "command" may be a script; a Pi "agent" may be a YAML entry in a different registry. The bucket survives; the file format does not have to.
 
+The `skills:` bucket is now populated — the `rag-web-pages-deploy` skill is the first project-level skill, added in plan 03. A skill's `mirrors:` value points to a directory, not a file (`mirrors: .claude/skills/rag-web-pages-deploy/`), because the skill is a structured tree (SKILL.md + reference/ + templates/), not a single primitive. The drift check still applies: a skill entry with `mirror_status: pending` means the Pi side of the skill tree has not been built.
+
+The `assets:` bucket captures harness-agnostic files that are meaningful to the deployment lifecycle but require no Pi mirror. Current entries: `tools/scripts/` (shell scripts, harness-agnostic), `site/index.html + tokens.css` (published artifacts, harness-agnostic), `.github/workflows/deploy-pages.yml` (GitHub infrastructure, runs regardless of harness), and `site/.nojekyll` (static marker consumed by GitHub's Pages builder). Adding an asset entry does not open a parity obligation; the `scope` field must name the asymmetry.
+
 ### `mirror_status` — three values, each with a meaning
 
 | Value | When to use | What it asserts |

@@ -29,6 +29,34 @@ commands:
       Adaptive close. Verifies prime reads, dispatches documentation agents,
       surfaces cross-harness drift, gates the commit.
 
+  - name: rag-web-pages-init
+    mirrors: .claude/commands/rag-web-pages-init.md
+    mirror_status: pending
+    scope: >-
+      One-time scaffolding for GitHub Pages deployment. Creates the workflow
+      and site/.nojekyll from skill templates; prints the GitHub-UI checklist.
+
+  - name: rag-web-pages-check
+    mirrors: .claude/commands/rag-web-pages-check.md
+    mirror_status: pending
+    scope: >-
+      Invokes the rag-web-pages-preflight agent; relays the structured report.
+      Read-only; safe to run any time.
+
+  - name: rag-web-pages-deploy
+    mirrors: .claude/commands/rag-web-pages-deploy.md
+    mirror_status: pending
+    scope: >-
+      Triggers a GitHub Pages deployment. Confirms clean git state, runs
+      preflight, pushes or workflow_dispatches, tails the run, invokes verify.
+
+  - name: rag-web-pages-rollback
+    mirrors: .claude/commands/rag-web-pages-rollback.md
+    mirror_status: pending
+    scope: >-
+      Presents a rollback proposal via the advisor agent. Operator-gated;
+      the command itself never executes a rollback.
+
 agents:
   - name: rag-web-docs-dev-writer
     mirrors: .claude/agents/rag-web-docs-dev-writer.md
@@ -88,7 +116,38 @@ agents:
       Generates bash scripts that capture systematic Playwright CLI
       screenshots of rag-web pages via scripts/capture-screenshot.sh.
 
-skills: []
+  - name: rag-web-pages-preflight
+    mirrors: .claude/agents/rag-web-pages-preflight.md
+    mirror_status: pending
+    scope: >-
+      Pre-deploy gate for GitHub Pages. Runs the preflight checklist
+      (nojekyll, actionlint, tokens, include-hidden-files, lychee) and
+      reports pass/fail per gate. Read-only and mechanical.
+
+  - name: rag-web-pages-verify
+    mirrors: .claude/agents/rag-web-pages-verify.md
+    mirror_status: pending
+    scope: >-
+      Post-deploy verification. Fetches the live URL, checks HTTPS,
+      canonical content, asset resolution, and Jekyll leakage. Reports
+      divergence between committed and served state.
+
+  - name: rag-web-pages-rollback-advisor
+    mirrors: .claude/agents/rag-web-pages-rollback-advisor.md
+    mirror_status: pending
+    scope: >-
+      Lists recent Pages deployments, cross-references session summaries
+      for last-known-good, proposes a rollback target with exact commands.
+      Never executes. Opus + effort:high for high-stakes infrequent decisions.
+
+skills:
+  - name: rag-web-pages-deploy
+    mirrors: .claude/skills/rag-web-pages-deploy/
+    mirror_status: pending
+    scope: >-
+      GitHub Pages lifecycle: init, preflight, deploy, verify, rollback.
+      Dated spec, workflow commentary, checklists, rollback runbook,
+      custom-domain setup, troubleshooting. April 2026 spec.
 
 settings:
   - name: claude-settings-json
@@ -120,3 +179,17 @@ assets:
     mirror_status: not-applicable
     scope: >-
       Publishable web artifacts consumed by GitHub Pages. No harness coupling.
+
+  - name: rag-web-pages-workflow
+    mirrors: .github/workflows/deploy-pages.yml
+    mirror_status: not-applicable
+    scope: >-
+      GitHub Actions workflow that publishes site/ to GitHub Pages. Runs on
+      GitHub's infrastructure regardless of which harness authored it.
+
+  - name: rag-web-nojekyll
+    mirrors: site/.nojekyll
+    mirror_status: not-applicable
+    scope: >-
+      Empty marker file that disables Jekyll processing on the uploaded
+      artifact. Consumed by GitHub's Pages builder. No harness coupling.

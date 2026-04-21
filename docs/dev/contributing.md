@@ -31,10 +31,11 @@ The close command is explicit about what it is not: **it never auto-commits.** I
 
 ## The plan-doc convention
 
-Substantive work on this project routes through a plan document under `docs/dev/plans/`. Two exist today:
+Substantive work on this project routes through a plan document under `docs/dev/plans/`. Three exist today:
 
 - `01-bootstrap-session-management.md` — established the three-way contract itself.
 - `02-web-frontend-localization.md` — added the scaffold, Playwright CLI, four quality-gate agents, and the typography primer.
+- `03-pages-deployment.md` — added the GitHub Pages deployment layer: the `rag-web-pages-deploy` skill, three agents, four commands, the CI workflow, and `site/.nojekyll`.
 
 A plan doc is not a ticket. It is a written theory of what is about to change, why the changes have the shape they do, and what the acceptance criteria are. The sections are fixed by convention:
 

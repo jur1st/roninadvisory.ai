@@ -76,13 +76,14 @@ The surface is embedded in both agents rather than referenced, so context compac
 
 ## What this loop replaces
 
-A more conventional project would wire Playwright into a test harness — `playwright test`, fixtures, config files, screenshot diffing, a CI step, maybe Chromatic. This project deliberately does none of that, for three reasons rooted in the scope:
+A more conventional project would wire Playwright into a test harness — `playwright test`, fixtures, config files, screenshot diffing, a CI step, maybe Chromatic. This project deliberately does none of that for screenshot diffing, for two reasons rooted in the scope:
 
-- **No CI gates today.** The site deploys via GitHub Pages from `main`. A failed test run in CI would not prevent a visitor from seeing the change.
 - **No regression baseline.** The site is pre-launch and pre-content. Diffing against a prior screenshot protects against nothing that matters yet.
 - **The review is subjective, and opus is the right reviewer.** A pixel-diff test would fire on intentional design changes and never fire on the things that actually matter (rhythm, hierarchy, dark-mode fidelity). The sophistication rubric is what actually scores what matters, and it needs a model that can reason about composition.
 
-When the site ships real pages and the operator decides a regression guard is worth the maintenance, the path forward is `playwright test` with a small, hand-curated baseline — not a `testing.md` primer, which is why this document is the whole testing story for now.
+The CI story is different from the screenshot story. The `.github/workflows/deploy-pages.yml` preflight job runs `lychee`, `actionlint`, the token validator, and a `.nojekyll` presence check before any deploy. Those are structural gates — they prevent bad artifacts from reaching the CDN — not visual quality gates. The visual review loop here is the complement: it catches what the structural gates cannot see. See [`plans/03-pages-deployment.md`](plans/03-pages-deployment.md) for the preflight gate definitions.
+
+When the site ships real pages and the operator decides a visual regression guard is worth the maintenance, the path forward is `playwright test` with a small, hand-curated baseline — not a `testing.md` primer, which is why this document is the whole screenshot testing story for now.
 
 ## The full capture-review rhythm
 

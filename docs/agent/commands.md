@@ -101,3 +101,43 @@ The reason this gate exists is recorded as an antipattern in [`CLAUDE.md`](../..
 Prime and close are not two halves of one thing; they are two different things that share a session. Prime says *what is true right now*. Close says *what changed, who should write about it, and what the operator wants to do with it.* If prime wrote, it would lie the next time it ran against the state it authored. If close committed, the operator would discover the project's theory had shifted without their consent.
 
 The split is the design. A new command that wants to "prime and dispatch in one pass" is proposing a merge that the three-way contract explicitly forbids. Add a new command; do not collapse these two.
+
+---
+
+## Deployment commands — the `/rag-web-pages-*` group
+
+Four commands bracket the GitHub Pages deployment lifecycle. They are a cluster, not a pair: each targets a distinct moment in the deploy cycle (scaffold, pre-deploy check, deploy + verify, emergency rollback) and none duplicates the others. Source files: [`.claude/commands/rag-web-pages-*.md`](../../.claude/commands/).
+
+The skill that provides theory, reference documentation, and workflow templates for this group is [`rag-web-pages-deploy`](../../.claude/skills/rag-web-pages-deploy/SKILL.md). The skill owns the *why*; these commands own the *when* and *how*. See [`agents.md`](agents.md) for the three agents they dispatch.
+
+All four entries in [`pi-agents.yaml`](../../pi-agents.yaml) are `mirror_status: pending`.
+
+### `/rag-web-pages-init` — one-time scaffold
+
+[Source](../../.claude/commands/rag-web-pages-init.md). One-time setup. Confirms `site/index.html` and `site/static/tokens.css` exist, confirms `.github/workflows/deploy-pages.yml` does not yet exist (idempotency guard — refuses to overwrite), then copies the two skill templates into place (`templates/deploy-pages.yml` → `.github/workflows/deploy-pages.yml`; `templates/nojekyll` → `site/.nojekyll`). Prints the GitHub-UI configuration checklist (Settings → Pages, Environments, Actions permissions) as terminal output. **Writes files. Does not stage, commit, or push.**
+
+The idempotency guard is a hard invariant. A command that could silently overwrite a configured workflow file on a second invocation would be destructive precisely when the operator is most confused. The guard makes re-running safe.
+
+### `/rag-web-pages-check` — preflight gate
+
+[Source](../../.claude/commands/rag-web-pages-check.md). Invokes `rag-web-pages-preflight` and relays its structured report. Read-only. Appends a pointer to `reference/preflight-checklist.md` on hard-gate failure. Safe to run at any point in the authoring loop — before a commit, after a site change, any time the operator wants a deploy-readiness signal. Exit code mirrors the agent.
+
+### `/rag-web-pages-deploy` — deploy, watch, verify
+
+[Source](../../.claude/commands/rag-web-pages-deploy.md). The deploy command has two gates before any push: clean working tree, and `main` branch. A dirty tree is a hard abort. Then it runs `/rag-web-pages-check`; a preflight failure aborts. The push mechanism is context-sensitive: if HEAD equals `origin/main` (nothing to push), it dispatches `gh workflow run`; otherwise it pushes. It then tails the run via `gh run watch` and invokes `rag-web-pages-verify` on success.
+
+The dirty-tree gate reinforces the project-wide posture. If the operator has uncommitted changes, the right response is to commit or stash them — not to deploy an intermediate state that does not match what is in the history.
+
+The command never commits. On workflow failure, it prints the failing job name and points to `reference/troubleshooting.md`.
+
+### `/rag-web-pages-rollback` — operator-gated rollback
+
+[Source](../../.claude/commands/rag-web-pages-rollback.md). Invokes `rag-web-pages-rollback-advisor`, presents the proposal verbatim, presents both execution paths from `reference/rollback-runbook.md` (Pages UI fast-path; `gh workflow run` slow-path), and stops. The command is a conduit to the advisor; it never executes either path.
+
+When the advisor reports ambiguity — no clean verify record in session summaries — the command surfaces that ambiguity rather than guessing. The operator decides.
+
+The rollback command's design mirrors the close command's commit gate: it is a gate that can only be opened by the operator, not by the agent holding the gate.
+
+### Name-collision known issue
+
+The skill is named `rag-web-pages-deploy` and the command is `/rag-web-pages-deploy`. The harness dispatches correctly — the skill is a directory at `.claude/skills/rag-web-pages-deploy/`, the command is a file at `.claude/commands/rag-web-pages-deploy.md` — but the name appears twice in any display that lists both skills and commands together. The collision is cosmetic, not functional. See [`conventions.md`](conventions.md) for the full known-issue entry.
