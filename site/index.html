@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ronin Advisory Group</title>
+<link rel="stylesheet" href="static/tokens.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-prose);
+  font-size: var(--size-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0 auto;
+  max-width: var(--width-content);
+  padding: var(--space-8) var(--space-6);
+  font-family: var(--font-prose);
+  color: var(--color-text);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-structure);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin: var(--space-8) 0 var(--space-4);
+  color: var(--color-text);
+}
+h1 { font-size: var(--size-2xl); border-bottom: 2px solid var(--color-border); padding-bottom: var(--space-3); }
+h2 { font-size: var(--size-xl); }
+h3 { font-size: var(--size-lg); }
+h4 { font-size: var(--size-base); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
+
+p { margin: 0 0 var(--space-4); line-height: var(--leading-prose); }
+
+a { color: var(--color-accent); text-decoration: underline; }
+a:hover { color: var(--color-accent-hover); }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  line-height: var(--leading-relaxed);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: var(--space-4) var(--space-5);
+  overflow-x: auto;
+  margin: 0 0 var(--space-6);
+}
+pre code { background: none; border: none; padding: 0; font-size: inherit; }
+
+blockquote {
+  margin: 0 0 var(--space-6);
+  padding: var(--space-3) var(--space-5);
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+blockquote p { margin: 0; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 var(--space-6);
+  display: block;
+  overflow-x: auto;
+}
+th {
+  font-family: var(--font-structure);
+  font-size: var(--size-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid var(--color-border);
+  padding: var(--space-2) var(--space-3);
+}
+td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-8) 0;
+}
+
+mark {
+  background: oklch(0.94 0.12 95);
+  color: var(--color-text);
+  padding: 0.1em 0.2em;
+  border-radius: 2px;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  color: var(--color-text);
+}
+
+@media print {
+  html { background: #fff; color: #000; font-size: 11pt; }
+  body { max-width: 100%; padding: 0; margin: 1.5cm 2cm; }
+  h1, h2, h3, h4 { color: #000; page-break-after: avoid; }
+  pre, table, blockquote { break-inside: avoid; }
+  a { color: #000; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #555; }
+  pre, code { background: #f5f5f5; border-color: #ccc; }
+  blockquote { border-color: #999; background: #f9f9f9; }
+  mark { background: #ff9; }
+}
+</style>
+</head>
+<body>
+<h1>Ronin Advisory Group</h1>
+<main>
+</main>
+</body>
+</html>

@@ -1,0 +1,104 @@
+# Conventions — the rules and the failure modes behind them
+
+Every convention in this file exists because something went wrong, or would go wrong, without it. A convention recorded without its failure mode rots: the next contributor who sees a "good reason" to ignore it has nothing to weigh against that reason. The conventions are kept here, in one place, with their warrants intact.
+
+Source: [`CLAUDE.md`](../../CLAUDE.md). This file extends — never duplicates — the durable rules recorded there.
+
+---
+
+## The three `CLAUDE.md` antipatterns
+
+### Inventorial CLAUDE.md
+
+- **Failure mode.** File layouts, tech-stack lists, and "current state" copy accumulate in `CLAUDE.md` and go stale within weeks. A stale rulesfile is worse than a missing one — it lies with authority. A future agent reads the inventory, trusts it, and reasons from an inaccurate map.
+- **Rule.** Structural content goes into prime reads (live each session) or `docs/` (versioned and explicitly maintained). `CLAUDE.md` holds only durable role, rules, and antipatterns.
+- **Rule warrant.** Single-layer persistence designs fail. The three-way contract (prime / `CLAUDE.md` / close) exists so each layer owns one kind of artifact: prime owns live state, `CLAUDE.md` owns durable rules, close owns reconciliation. Blurring it collapses the design. If `CLAUDE.md` grows beyond ~80 lines, the cause is almost always inventorial drift; split the durable-but-long material into `docs/agent/` and link from `CLAUDE.md`.
+
+### Cross-harness drift
+
+- **Failure mode.** A Claude Code primitive is added to `.claude/` and the Pi equivalent is never built. Over sessions, the project silently locks to one harness. No single commit causes the violation; the accumulated omission does.
+- **Rule.** When a CC primitive ships, open a follow-up task for the Pi mirror and surface it at the next `/rag-web-close`. The surface is [`pi-agents.yaml`](../../pi-agents.yaml); the check is the Pi-harness-follow-up step in `/rag-web-close`.
+- **Rule warrant.** `README.md` requirement #1 commits the project to supporting both harnesses. Silent single-harness lock-in violates that commitment. See [`harness.md`](harness.md) for the full doctrine and the `mirror_status` schema.
+
+### Auto-commit on close
+
+- **Failure mode.** `/rag-web-close` or a dispatched agent commits changes without operator review. The operator discovers the project's theory shifted without their consent — history then carries decisions the operator never made.
+- **Rule.** `/rag-web-close` presents uncommitted changes with four options (commit as-is, commit selected paths, discard specific changes, leave for next session) and waits for the operator. Dispatched agents never commit.
+- **Rule warrant.** Close is read + orchestrate, never write-by-itself. The commit gate belongs to the operator. The design keeps close incapable of the crossing because a gate that the gatekeeper can open from inside the room is not a gate.
+
+---
+
+## The plan-doc convention
+
+Plans under [`docs/dev/plans/`](../../docs/dev/plans/) are the project's theory-preservation mechanism for larger bodies of work. They are not task lists; they are the record of *why* a body of work was shaped the way it was. The decisions blocks, in particular, are load-bearing source material for a future contributor trying to rebuild the theory.
+
+### The template
+
+Plans are authored from [`docs/dev/plans/_template.md`](../../docs/dev/plans/_template.md). The template's sections are not suggestions:
+
+- **Scope** — one sentence on what this plan accomplishes and what it explicitly does NOT. Explicit non-scope prevents drift during execution.
+- **Out of scope (deferred)** — list form. Named non-goals survive the session; unnamed ones get re-proposed next session.
+- **Current ground truth** — what exists, what's absent, citing files and recent commits. Anchors the plan in observable state, not recollection.
+- **Steps** — concrete, numbered, ordered.
+- **`## Pi Mirror`** — required. See below.
+- **Acceptance criteria** — concrete checks, including the two parity checks the template already provides.
+- **Decisions** — resolved decisions with dates. This block is what a future contributor reads to understand why the plan looks the way it does.
+
+### The `## Pi Mirror` section — required
+
+Every plan doc carries a `## Pi Mirror` section. The close command checks for it and flags a missing section as a parity-convention violation.
+
+For each CC primitive the plan introduces or modifies, the section records:
+
+- **Name** — the primitive's name
+- **Pi shape** — what the Pi analog looks like (same YAML entry, a separate script, nothing, etc.)
+- **Expected `mirror_status` after this plan** — `shipped`, `pending`, or `not-applicable`
+- **Justification** — required when `not-applicable`; names the asymmetry
+
+If the plan modifies no primitive under `.claude/`, the section is present but contains exactly:
+
+> *N/A — this plan modifies no primitive under `.claude/`.*
+
+The explicit N/A is the point. Silence is indistinguishable from oversight; a present-but-null section is unambiguous. A plan that elides the section entirely is treated as a violation even if its scope is genuinely outside `.claude/` — the check enforces the convention, not the content.
+
+### Why plans are the theory record
+
+Commits record what changed; plans record why the change was possible. A decision made in the flow of a session — "use `light-dark()` with a static fallback because the token resolves in both modes" — lives in the plan's Decisions block. Three months later, a contributor wondering whether they can simplify the three-line CSS pattern reads the decision and understands what they would be giving up. The antipattern the decision prevented is recorded; the alternatives considered are recorded. The plan is how the project's theory outlives the session that made it.
+
+---
+
+## `.the-grid/` — session-artifact policy
+
+The project's session-management machinery writes under `.the-grid/`. Its contents fall into two categories, and the split is deliberate:
+
+### Tracked (part of project history)
+
+- `.the-grid/sessions/context_bundles/` — session context bundles written at close.
+- `.the-grid/sessions/summaries/` — human-readable session summaries, paired with their JSON siblings.
+- `.the-grid/sessions/index.jsonl` — the append-only session index.
+- `.the-grid/config/<hostname>-SYSTEM-ENV.md` — machine environment profile, regenerated by `/prime-env`.
+
+These are the record. A future contributor reading through the session summaries should be able to reconstruct the arc of the project's development; they are as much a part of the theory as the code is.
+
+### Ignored (ephemeral)
+
+- `.the-grid/sessions/beacons/` — transient session-start markers.
+- `.the-grid/sessions/hook_logs/` — hook execution traces.
+
+These exist only for the duration of a session's tooling. Tracking them would dilute history with noise and make diffs illegible. The gitignore entry enforces the split at the VCS layer; the convention records why.
+
+### The split matters
+
+A common mistake is to treat all session machinery as one category — either tracking everything (and drowning the history) or ignoring everything (and losing the summaries). The split exists because `context_bundles/` and `summaries/` *are* the project's memory across sessions, while `beacons/` and `hook_logs/` are scaffolding that should vanish when the session ends.
+
+---
+
+## The `rag-web-*` namespace
+
+All project-specific slash commands, agents, and skills carry the `rag-web-*` prefix. Global or sibling-project primitives do not.
+
+- **Failure mode without it.** A global agent named `docs-writer` lives at `~/.claude/agents/docs-writer.md`. A project-specific agent named `docs-writer` lives at `.claude/agents/docs-writer.md`. The project's version shadows the global, *or* the global shadows the project's, depending on resolution order. Either way, the operator cannot invoke both, and collisions are silent.
+- **Rule.** Every project-specific primitive is prefixed `rag-web-*`. The rule is absolute: `/rag-web-prime`, `/rag-web-close`, `rag-web-docs-dev-writer`, `rag-web-visual-reviewer`, and so on.
+- **Rule warrant.** The prefix scopes the project's primitives so that the operator can invoke both project and global primitives in the same session without collision. The prefix is load-bearing because agent and slash-command resolution is by name, not by location.
+
+When a new primitive is added, confirm the `rag-web-*` prefix is present before the entry is added to `pi-agents.yaml`. An unprefixed project primitive is not "project-specific" — it is a trap for the next operator.

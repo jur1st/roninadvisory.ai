@@ -1,0 +1,90 @@
+/* === rag-web Design Token System === */
+/*
+ * Derived from web-frontend/templates/tokens/darko-labs-tokens.css.
+ * Typography defaults ship with Path A (system fallback) per docs/typography.md;
+ * update the three --font-* chains when the operator commits to Path B or C.
+ */
+
+:root { color-scheme: light dark; }
+
+:root {
+  --color-text: #1a1b22;
+  --color-text: oklch(0.169 0.034 265);
+  --color-text: light-dark(oklch(0.169 0.034 265), oklch(0.913 0.006 265));
+
+  --color-bg: #fafafa;
+  --color-bg: oklch(0.985 0 0);
+  --color-bg: light-dark(oklch(0.985 0 0), oklch(0.130 0.028 262));
+
+  --color-text-muted: #6b7280;
+  --color-text-muted: oklch(0.551 0.027 264);
+  --color-text-muted: light-dark(oklch(0.551 0.027 264), oklch(0.700 0.018 264));
+
+  --color-border: #d4d8e0;
+  --color-border: oklch(0.872 0.010 258);
+  --color-border: light-dark(oklch(0.872 0.010 258), oklch(0.373 0.034 260));
+
+  --color-surface: #f2f4f7;
+  --color-surface: oklch(0.960 0.006 265);
+  --color-surface: light-dark(oklch(0.960 0.006 265), oklch(0.210 0.034 265));
+
+  --color-accent: #3b5fe8;
+  --color-accent: oklch(0.506 0.289 265);
+  --color-accent: light-dark(oklch(0.506 0.289 265), oklch(0.638 0.190 270));
+
+  --color-accent-hover: #2e4fd4;
+  --color-accent-hover: oklch(0.455 0.264 265);
+  --color-accent-hover: light-dark(oklch(0.455 0.264 265), oklch(0.700 0.160 270));
+
+  --color-success: #16803c;
+  --color-success: oklch(0.520 0.170 145);
+  --color-success: light-dark(oklch(0.520 0.170 145), oklch(0.700 0.150 145));
+
+  --color-warning: #b45309;
+  --color-warning: oklch(0.530 0.160 75);
+  --color-warning: light-dark(oklch(0.530 0.160 75), oklch(0.770 0.160 70));
+
+  --color-error: #b91c1c;
+  --color-error: oklch(0.430 0.180 25);
+  --color-error: light-dark(oklch(0.430 0.180 25), oklch(0.630 0.220 25));
+
+  /* Typography — Path A (system fallback). See docs/typography.md. */
+  --font-structure: ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+  --font-prose:     Georgia, 'Times New Roman', serif;
+  --font-mono:      ui-monospace, Menlo, Monaco, 'Courier New', monospace;
+  --font-sans:      ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --size-xs:   0.640rem;
+  --size-sm:   0.800rem;
+  --size-base: 1.000rem;
+  --size-lg:   1.250rem;
+  --size-xl:   1.563rem;
+  --size-2xl:  1.953rem;
+
+  --leading-tight:   1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.75;
+  --leading-prose:   2.0;
+
+  --tracking-tight:  -0.025em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.025em;
+
+  --space-1:  0.25rem;
+  --space-2:  0.50rem;
+  --space-3:  0.75rem;
+  --space-4:  1.00rem;
+  --space-5:  1.25rem;
+  --space-6:  1.50rem;
+  --space-8:  2.00rem;
+  --space-10: 2.50rem;
+  --space-12: 3.00rem;
+  --space-16: 4.00rem;
+  --space-20: 5.00rem;
+  --space-24: 6.00rem;
+
+  --width-prose:     65ch;
+  --width-content:   830px;
+  --width-container: 1200px;
+  --width-sidebar:   250px;
+}

@@ -1,0 +1,122 @@
+# rag-web Pi Agent registry
+#
+# Drift-tracking registry for Claude Code primitives that need Pi Agent mirrors.
+# Each entry corresponds to a file under .claude/ (plus select root artifacts).
+#
+# mirror_status values:
+#   shipped         Pi implementation exists and is active
+#   pending         CC side exists; Pi side is deferred
+#   not-applicable  no Pi analog planned (justify inline)
+#
+# /rag-web-close inspects this file as part of the Pi-harness-follow-up check.
+# The canonical Pi Agent schema will be set when Pi primitives are stood up;
+# this file may be reshaped at that point. Entries survive the reshape.
+
+version: 1
+
+commands:
+  - name: rag-web-prime
+    mirrors: .claude/commands/rag-web-prime.md
+    mirror_status: pending
+    scope: >-
+      Read-only session prime. Reports harness parity, content state,
+      publishing state, and work state.
+
+  - name: rag-web-close
+    mirrors: .claude/commands/rag-web-close.md
+    mirror_status: pending
+    scope: >-
+      Adaptive close. Verifies prime reads, dispatches documentation agents,
+      surfaces cross-harness drift, gates the commit.
+
+agents:
+  - name: rag-web-docs-dev-writer
+    mirrors: .claude/agents/rag-web-docs-dev-writer.md
+    mirror_status: pending
+    scope: >-
+      Writes developer-facing docs under docs/dev/ from source and recent changes.
+
+  - name: rag-web-docs-user-writer
+    mirrors: .claude/agents/rag-web-docs-user-writer.md
+    mirror_status: pending
+    scope: >-
+      Authors visitor-facing site copy (HTML page content, about, services).
+
+  - name: rag-web-docs-agent-writer
+    mirrors: .claude/agents/rag-web-docs-agent-writer.md
+    mirror_status: pending
+    scope: >-
+      Writes docs about the agentic layer (docs/agent/) from .claude/ and CLAUDE.md.
+
+  - name: rag-web-docs-changelog-writer
+    mirrors: .claude/agents/rag-web-docs-changelog-writer.md
+    mirror_status: pending
+    scope: >-
+      Appends session changes to CHANGELOG.md from git log and diff.
+
+  - name: rag-web-docs-vault-exporter
+    mirrors: .claude/agents/rag-web-docs-vault-exporter.md
+    mirror_status: pending
+    scope: >-
+      Optional. Exports finalized docs to the operator's Obsidian vault when configured.
+
+  - name: rag-web-visual-reviewer
+    mirrors: .claude/agents/rag-web-visual-reviewer.md
+    mirror_status: pending
+    scope: >-
+      Scores live rag-web UI against the 25-point sophistication rubric.
+      Drives Playwright CLI via scripts/capture-screenshot.sh.
+
+  - name: rag-web-css-auditor
+    mirrors: .claude/agents/rag-web-css-auditor.md
+    mirror_status: pending
+    scope: >-
+      Pattern-matches CSS against token compliance and fallback requirements
+      defined in static/tokens.css.
+
+  - name: rag-web-token-enforcer
+    mirrors: .claude/agents/rag-web-token-enforcer.md
+    mirror_status: pending
+    scope: >-
+      Catches hardcoded CSS values; suggests the corresponding design token
+      from static/tokens.css.
+
+  - name: rag-web-visual-test-writer
+    mirrors: .claude/agents/rag-web-visual-test-writer.md
+    mirror_status: pending
+    scope: >-
+      Generates bash scripts that capture systematic Playwright CLI
+      screenshots of rag-web pages via scripts/capture-screenshot.sh.
+
+skills: []
+
+settings:
+  - name: claude-settings-json
+    mirrors: .claude/settings.json
+    mirror_status: not-applicable
+    scope: >-
+      Pi Agent has no settings.json equivalent; model defaults and permission
+      model differ. Record Pi model default in
+      .the-grid/config/the-grid-SYSTEM-ENV.md when Pi side is stood up.
+
+  - name: playwright-dev-dep
+    mirrors: tools/package.json
+    mirror_status: not-applicable
+    scope: >-
+      Node dev dependency (Playwright) supporting visual QA for the rag-web
+      Claude Code workflow. No build output ships to GitHub Pages. Pi Agent
+      has its own test-harness story; no mirror planned.
+
+assets:
+  - name: rag-web-scripts
+    mirrors: tools/scripts/
+    mirror_status: not-applicable
+    scope: >-
+      Shell scripts (validate-tokens.sh, capture-screenshot.sh, font-check.sh).
+      Harness-agnostic; invoked identically from either runtime.
+
+  - name: rag-web-site-scaffold
+    mirrors: site/index.html + site/static/tokens.css
+    mirror_status: not-applicable
+    scope: >-
+      Publishable web artifacts consumed by GitHub Pages. No harness coupling.

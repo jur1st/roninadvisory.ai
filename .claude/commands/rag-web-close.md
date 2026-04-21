@@ -22,7 +22,7 @@ READ-ONLY on source. DISPATCH-ONLY on writes.
 
 ## Verify prime reads
 
-Check whether each file `/rag-web-prime` typically reads changed this session: `README.md`, `CLAUDE.md`, `.the-grid/config/*-SYSTEM-ENV.md`, `pi-agents.yaml`, entries in `docs/plans/`.
+Check whether each file `/rag-web-prime` typically reads changed this session: `README.md`, `CLAUDE.md`, `.the-grid/config/*-SYSTEM-ENV.md`, `pi-agents.yaml`, entries in `docs/dev/plans/`.
 
 - If `CLAUDE.md` grew inventorial content (file layouts, tech-stack inventories, "current state"), REPORT as three-way-contract drift and recommend relocating.
 - If `pi-agents.yaml` changed, FLAG as Pi-harness surface update.
@@ -50,7 +50,9 @@ Project-specific loops: `html-lint`, `link-check`, `gh-pages-build` — all UNKN
 
 ## Pi-harness follow-up
 
-IF any file under `.claude/` was created or modified and no corresponding Pi entry exists in `pi-agents.yaml`, FLAG a cross-harness-drift follow-up per the antipattern in `CLAUDE.md`.
+IF any file under `.claude/` was created or modified AND the corresponding entry in `pi-agents.yaml` is absent or has `mirror_status: pending`, FLAG cross-harness drift per the antipattern in `CLAUDE.md`. Do not flag entries marked `not-applicable` — those are deliberately without a Pi analog.
+
+IF any file under `docs/dev/plans/` was created or modified AND the file lacks a `## Pi Mirror` section, FLAG as parity-convention violation and recommend the operator align it with `docs/dev/plans/_template.md`.
 
 ## Commit gate
 

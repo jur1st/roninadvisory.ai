@@ -20,3 +20,11 @@
 .idea/
 *.swp
 *.swo
+
+# Node dev toolchain (Playwright)
+node_modules/
+
+# Visual QA output — ephemeral
+playwright-report/
+test-results/
+screenshots/

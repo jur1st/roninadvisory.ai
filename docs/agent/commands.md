@@ -1,0 +1,103 @@
+# Commands — `/rag-web-prime` and `/rag-web-close` as a contract
+
+Two slash commands bracket every working session on this project. They are a pair: prime opens the session by establishing ground truth, close reconciles what happened against that ground truth and hands the commit decision back to the operator. Neither is optional for non-trivial work, and neither does the other's job.
+
+The shorthand:
+
+- **`/rag-web-prime` is a snapshot.** It captures, it does not change.
+- **`/rag-web-close` is an adaptive dispatcher with a commit gate.** It routes work to writers based on what changed, surfaces parity drift, and stops at the commit gate without crossing it.
+
+Source files: [`.claude/commands/rag-web-prime.md`](../../.claude/commands/rag-web-prime.md) and [`.claude/commands/rag-web-close.md`](../../.claude/commands/rag-web-close.md).
+
+---
+
+## `/rag-web-prime` — the ground-truth snapshot
+
+### What it is
+
+A read-only pass that establishes the session's mental model. `CLAUDE.md` already loaded the durable rules; prime fetches the parts of the world that change between sessions. Its output is a structured report across four axes that together describe the state of the project at the moment work begins.
+
+### Hard invariants
+
+These are not defaults. They are the shape of the command, and violating them breaks the three-layer contract (prime / `CLAUDE.md` / close).
+
+- **Read-only.** Prime never writes a file. Not a log, not a cache, not a session record.
+- **No memory mutation.** Prime does not update `~/.claude/projects/.../memory/MEMORY.md`, does not touch `.the-grid/sessions/summaries/`, does not append to any index. Those are close's territory.
+- **No dispatch.** Prime does not invoke agents. If work should be done, prime names it in the report and stops. Dispatch is close's responsibility.
+- **No regeneration of the environment profile.** `.the-grid/config/<hostname>-SYSTEM-ENV.md` is owned by `/prime-env` (a separate, manual-trigger command). Session prime reads the profile; it does not rebuild it.
+
+A prime that writes anything has become something else — a session-start script, a hook, a bootstrap. Those may have their place, but they are not prime. The invariant is what makes prime safe to run at any time, by any operator, including in an unfamiliar checkout.
+
+### The four axes
+
+Prime's report is structured, not prose. The structure is the contract:
+
+1. **Harness parity** — which `rag-web-*` primitives exist on the Claude Code side, which exist on the Pi side, drift to flag.
+2. **Content state** — pages and assets drafted; what is publishable.
+3. **Publishing state** — GitHub Pages workflow, last deploy, publish branch.
+4. **Work state** — git branch, uncommitted changes, open plans in `docs/dev/plans/`.
+
+These four axes are not arbitrary. They are the dimensions along which an incoming agent's guesses are most likely to be wrong — and therefore the dimensions the snapshot must materialize. The agent has `CLAUDE.md` for durable rules; it has prime for live state.
+
+---
+
+## `/rag-web-close` — the adaptive dispatcher
+
+### What it is
+
+A pass that closes the loops prime opened. It verifies that the files prime read are still accurate, dispatches documentation-layer writers based on what actually changed this session, flags cross-harness drift, and presents commit options to the operator without executing any of them.
+
+The structural rule is: **`/rag-web-close` is read-only on source, dispatch-only on writes.** Close never edits a source file directly; all writes happen inside dispatched agents. Close never commits; the commit gate belongs to the operator.
+
+### Verify prime reads
+
+Close re-examines the files prime canonically reads — `README.md`, `CLAUDE.md`, `.the-grid/config/*-SYSTEM-ENV.md`, `pi-agents.yaml`, and entries in `docs/dev/plans/` — and reports specific failure modes:
+
+- If `CLAUDE.md` grew inventorial content (file layouts, tech-stack inventories, "current state"), close flags it as three-way-contract drift and recommends relocating the content to `docs/` or to a prime read. See the **Inventorial CLAUDE.md** antipattern in [`conventions.md`](conventions.md).
+- If `pi-agents.yaml` changed, close flags it as a Pi-harness surface update — the registry is a reviewable artifact, and changes to it deserve explicit attention at the session boundary.
+- If `.claude/settings.json` drifted from git HEAD, close flags it as a local settings override — this is usually fine, but the operator should know.
+
+### Adaptive dispatch — the mapping from change type to writer
+
+Close inspects the session's diff and dispatches the documentation-layer agents whose scope intersects what actually changed. This is the "adaptive" part: close does not run every writer every time; it matches writers to change types.
+
+| What changed | Agent(s) dispatched |
+|---|---|
+| Source or content files (`site/`, `tools/`) | [`rag-web-docs-dev-writer`](../../.claude/agents/rag-web-docs-dev-writer.md) |
+| Visitor-facing surface (pages, copy) | [`rag-web-docs-user-writer`](../../.claude/agents/rag-web-docs-user-writer.md) + [`rag-web-docs-dev-writer`](../../.claude/agents/rag-web-docs-dev-writer.md) |
+| `.claude/` configuration (commands, agents, settings) | [`rag-web-docs-agent-writer`](../../.claude/agents/rag-web-docs-agent-writer.md) |
+| Any net change to the repo | [`rag-web-docs-changelog-writer`](../../.claude/agents/rag-web-docs-changelog-writer.md) |
+| After the above, if Obsidian vault is configured | [`rag-web-docs-vault-exporter`](../../.claude/agents/rag-web-docs-vault-exporter.md), sequentially last |
+
+The first four dispatch in parallel; the vault exporter runs sequentially after them because it consumes their output. See [`agents.md`](agents.md) for the full registry.
+
+If the documentation-layer agents do not yet exist in `.claude/agents/` or `~/.claude/agents/`, close reports which dispatch set *would* have run and notes that the `documentation-layer` skill should be invoked to create them. This is the pre-documentation-layer graceful-degradation path.
+
+### Flag Pi drift
+
+After dispatch, close performs the cross-harness-drift check described in [`harness.md`](harness.md):
+
+- If any file under `.claude/` was created or modified, and the corresponding entry in `pi-agents.yaml` is absent or marked `mirror_status: pending`, close flags it per the antipattern in `CLAUDE.md`.
+- Entries marked `not-applicable` are deliberately excluded — those exemptions are intentional.
+- If any file under `docs/dev/plans/` was created or modified and lacks a `## Pi Mirror` section, close flags it as a parity-convention violation and recommends alignment with [`docs/dev/plans/_template.md`](../../docs/dev/plans/_template.md).
+
+### The commit gate
+
+The last thing close does is present uncommitted changes. It does not commit. It does not pick a subset. It does not compose a commit message. It offers four options:
+
+1. Commit as-is (operator authors the message).
+2. Commit selected paths only.
+3. Discard specific changes.
+4. Leave uncommitted for the next session.
+
+Then it waits.
+
+The reason this gate exists is recorded as an antipattern in [`CLAUDE.md`](../../CLAUDE.md): `/rag-web-close` or a dispatched agent committing without operator review is the failure mode. Close is orchestration; commits are judgment. The two must not be the same actor, and the design keeps them separate by making close incapable of the crossing. See **Auto-commit on close** in [`conventions.md`](conventions.md) for the full antipattern.
+
+---
+
+## Why the split matters
+
+Prime and close are not two halves of one thing; they are two different things that share a session. Prime says *what is true right now*. Close says *what changed, who should write about it, and what the operator wants to do with it.* If prime wrote, it would lie the next time it ran against the state it authored. If close committed, the operator would discover the project's theory had shifted without their consent.
+
+The split is the design. A new command that wants to "prime and dispatch in one pass" is proposing a merge that the three-way contract explicitly forbids. Add a new command; do not collapse these two.

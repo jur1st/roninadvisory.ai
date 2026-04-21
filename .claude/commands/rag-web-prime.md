@@ -27,7 +27,7 @@ READ-ONLY. Never writes. Never modifies memory. Never dispatches agents.
 - READ `CLAUDE.md`
 - READ `.the-grid/config/the-grid-SYSTEM-ENV.md` if it exists
 - READ most-recent `.the-grid/sessions/summaries/*.md` if any exist
-- READ any file under `docs/plans/` if it exists
+- READ any file under `docs/dev/plans/` if it exists
 - READ `pi-agents.yaml` if it exists
 - LIST `.claude/commands/`
 - LIST `.claude/agents/` if it exists
@@ -39,4 +39,4 @@ Report in the structured form below — not as free prose. This step is load-bea
 1. **Harness parity** — which `rag-web-*` primitives exist on the Claude Code side; which exist on the Pi side; drift to flag.
 2. **Content state** — pages and assets drafted; what is publishable.
 3. **Publishing state** — GitHub Pages workflow, last deploy, publish branch.
-4. **Work state** — git branch, uncommitted changes, open plans in `docs/plans/`.
+4. **Work state** — git branch, uncommitted changes, open plans in `docs/dev/plans/`.

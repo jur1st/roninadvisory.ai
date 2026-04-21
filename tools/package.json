@@ -1,0 +1,9 @@
+{
+  "name": "ronin-advisory-website",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Ronin Advisory Group website. Hand-written HTML/CSS, no build step. Playwright is a dev-only dependency for visual QA and is never shipped to GitHub Pages.",
+  "devDependencies": {
+    "playwright": "^1.59.1"
+  }
+}
