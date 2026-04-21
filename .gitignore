@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+.DocumentRevisions-V100
+
+# .the-grid session ephemera
+# Tracked: .the-grid/sessions/context_bundles/, summaries/, index.jsonl
+# Ignored below: beacons/ (ephemeral signals), hook_logs/ (per-process runtime noise)
+.the-grid/sessions/beacons/
+.the-grid/sessions/hook_logs/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
