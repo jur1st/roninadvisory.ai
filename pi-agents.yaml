@@ -57,6 +57,14 @@ commands:
       Presents a rollback proposal via the advisor agent. Operator-gated;
       the command itself never executes a rollback.
 
+  - name: rag-web-preview
+    mirrors: .claude/commands/rag-web-preview.md
+    mirror_status: pending
+    scope: >-
+      Manage the local Go-backed preview server (start/stop/status/restart/logs).
+      Thin wrapper over tools/scripts/preview.sh; dev-only, not part of the
+      GitHub Pages pipeline.
+
 agents:
   - name: rag-web-docs-dev-writer
     mirrors: .claude/agents/rag-web-docs-dev-writer.md
@@ -171,8 +179,16 @@ assets:
     mirrors: tools/scripts/
     mirror_status: not-applicable
     scope: >-
-      Shell scripts (validate-tokens.sh, capture-screenshot.sh, font-check.sh).
-      Harness-agnostic; invoked identically from either runtime.
+      Shell scripts (validate-tokens.sh, capture-screenshot.sh, font-check.sh,
+      preview.sh). Harness-agnostic; invoked identically from either runtime.
+
+  - name: rag-web-preview-server
+    mirrors: tools/preview/
+    mirror_status: not-applicable
+    scope: >-
+      Stdlib-only Go binary (main.go + go.mod) that serves site/ over
+      localhost for laptop preview. Dev-tooling approval on record; no
+      output ships to GitHub Pages. Harness-agnostic.
 
   - name: rag-web-site-scaffold
     mirrors: site/index.html + site/static/tokens.css

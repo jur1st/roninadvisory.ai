@@ -7,6 +7,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Dev-loop-vs-publish separation inside `tools/`: Playwright and preview-server are explicit dev tools that never produce output shipped to Pages. Approvals tracked in commit messages and `pi-agents.yaml`, making the "no build tooling without explicit approval" rule legible in practice.
+- `tools/preview/main.go` + `go.mod` — stdlib-only HTTP file server over `site/`. Binds 0.0.0.0:8080 by default; `HOST=127.0.0.1` for laptop-only access. Prints loopback and LAN URLs on startup, enabling rapid local iteration without a separate build step.
+- `tools/scripts/preview.sh` — pidfile-backed daemon wrapper (start | stop | status | restart | logs) for the preview server. Operators use `/rag-web-preview` command; script is the mechanical layer.
+- `/rag-web-preview` slash command — entry point for preview-server lifecycle. Operator chooses start/stop/status/restart/logs; command maps to the script.
+- `/rag-web-prime` reads doctrine from `docs/agent/` — every `.md` file in that directory is now primed into the session, surfacing agent doctrine alongside the project theory. Prime output includes a fifth axis: preview-server status.
+- `pi-agents.yaml` — dual-harness tracking row for `rag-web-preview` (pending Pi mirror) and `rag-web-preview-server` (not-applicable, Go binary). Scope for `rag-web-scripts` extended to include `preview.sh`.
+- `.gitignore` entries for `.the-grid/preview.pid` and `.the-grid/preview.log`, keeping daemon ephemera out of version control.
 - Three-way session contract: `CLAUDE.md` owns the durable theory (role, rules, antipatterns); `/rag-web-prime` reports ground truth; `/rag-web-close` orchestrates and gates commits. No layer carries content that belongs to another.
 - `/rag-web-prime` establishes that a session begins by reading the world, not by guessing it — four project-tuned axes (harness parity, content, publishing, work state) replace the generic four.
 - `/rag-web-close` formalizes the end-of-session split between read/orchestrate (agent) and write (operator); commit authority is never delegated.

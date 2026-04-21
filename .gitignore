@@ -15,6 +15,10 @@
 .the-grid/sessions/beacons/
 .the-grid/sessions/hook_logs/
 
+# Preview server runtime state (managed by tools/scripts/preview.sh)
+.the-grid/preview.pid
+.the-grid/preview.log
+
 # Editor / IDE
 .vscode/
 .idea/

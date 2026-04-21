@@ -20,12 +20,14 @@ READ-ONLY. Never writes. Never modifies memory. Never dispatches agents.
 !`git log --oneline -5 2>/dev/null || echo "no commits yet"`
 !`test -f pi-agents.yaml && echo "Pi config present" || echo "Pi config absent"`
 !`ls /Volumes/home/00-Meta/02-Tools-Config/02.59-Pi-Agent 2>/dev/null | head -5 || echo "Pi tool dir unreachable"`
+!`test -x tools/scripts/preview.sh && tools/scripts/preview.sh status 2>&1 || echo "preview.sh absent"`
 
 ## Read
 
 - READ `README.md`
 - READ `CLAUDE.md`
 - READ `.the-grid/config/the-grid-SYSTEM-ENV.md` if it exists
+- READ each file under `docs/agent/` if it exists — `conventions.md`, `harness.md`, `agents.md`, `commands.md`. These encode the durable doctrine behind the `rag-web-*` primitives; loading them at prime inherits the project's theory instead of rebuilding it from scratch each session.
 - READ most-recent `.the-grid/sessions/summaries/*.md` if any exist
 - READ any file under `docs/dev/plans/` if it exists
 - READ `pi-agents.yaml` if it exists
@@ -40,3 +42,4 @@ Report in the structured form below — not as free prose. This step is load-bea
 2. **Content state** — pages and assets drafted; what is publishable.
 3. **Publishing state** — GitHub Pages workflow, last deploy, publish branch.
 4. **Work state** — git branch, uncommitted changes, open plans in `docs/dev/plans/`.
+5. **Preview server** — running/not-running per `tools/scripts/preview.sh status`; URL(s) if up. Dev-only; never part of publishing state.

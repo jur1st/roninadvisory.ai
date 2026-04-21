@@ -104,6 +104,71 @@ The split is the design. A new command that wants to "prime and dispatch in one 
 
 ---
 
+## Prime's fifth axis — preview server state
+
+As of the current version of [`.claude/commands/rag-web-prime.md`](../../.claude/commands/rag-web-prime.md), the prime report has five axes, not four:
+
+1. Harness parity
+2. Content state
+3. Publishing state
+4. Work state
+5. **Preview server** — running or not per `tools/scripts/preview.sh status`; URL(s) if up.
+
+The fifth axis is deliberate isolation. Preview-server state is neither publishing state (the server never participates in the GitHub Pages pipeline) nor work state (it is not a git artifact). Conflating it with either would blur the report's mental model. The axis exists so the operator knows whether a local server is orphaned from a previous session — a common source of port conflicts at the start of a new session — without having to inspect the process table manually.
+
+The implementation is one line in prime's Run block:
+
+```
+!`test -x tools/scripts/preview.sh && tools/scripts/preview.sh status 2>&1 || echo "preview.sh absent"`
+```
+
+That line degrades gracefully: if `preview.sh` does not exist (the Go binary and script haven't been built yet), prime reports "preview.sh absent" and moves on. The axis does not block prime's read-only invariant.
+
+### Why prime now reads `docs/agent/`
+
+The same update added this to prime's Read block:
+
+> READ each file under `docs/agent/` — `conventions.md`, `harness.md`, `agents.md`, `commands.md`. These encode the durable doctrine behind the `rag-web-*` primitives; loading them at prime inherits the project's theory instead of rebuilding it from scratch each session.
+
+Before this change, a cold agent had `CLAUDE.md` (durable rules) and the session summary (last session's narrative) but lacked the cross-cutting doctrine layer — the `mirror_status` schema, the dispatch table, the antipattern warrants — unless it happened to read those files during its session. Every new session rebuilt that layer from first principles, which meant the agent's early guesses were drifting from the recorded theory.
+
+Reading `docs/agent/` at prime is the mechanism that makes the doctrine layer sticky. It does not violate prime's read-only invariant — the reads are non-mutating. It does mean the prime report is richer and the agent's starting model is closer to the project's actual theory.
+
+---
+
+## `/rag-web-preview` — the local preview server
+
+Source: [`.claude/commands/rag-web-preview.md`](../../.claude/commands/rag-web-preview.md).
+
+### What it is
+
+A thin wrapper over `tools/scripts/preview.sh` that manages a stdlib-only Go binary (`tools/preview/`) serving `site/` on port 8080. It is a dev-loop tool: start it once, keep it running across many edits, stop it when done. It is never part of the GitHub Pages pipeline — preflight does not check it, deploy does not use it, rollback does not touch it.
+
+The command exists because the preview server is stateful in a way that raw bash is not. The server runs as a background daemon with a pidfile at `.the-grid/preview.pid` and a log at `.the-grid/preview.log`. Without a command to manage that pidfile, the operator has to remember the pid, the signal, and the log path across a session — exactly the friction that drains focus from authoring. The command makes the server's lifecycle a one-word operation.
+
+### Why 0.0.0.0 binding by default
+
+The server binds `0.0.0.0:8080` (LAN-reachable) rather than `127.0.0.1` (laptop-only). The reason is responsive and cross-device testing: a phone or tablet on the same network can reach the site without tunneling, which is the cheapest way to catch layout breakpoints that only appear on smaller viewports. The operator can set `HOST=127.0.0.1` to restrict access; the default errs toward the testing use case that is otherwise most inconvenient.
+
+This is appropriate for trusted local networks (home, office) and not for shared or public networks. The server is static-file-only; there are no write endpoints.
+
+### Subcommands
+
+| Subcommand | Effect |
+|---|---|
+| `start` | Launch in background; idempotent — reports "already running" on repeat |
+| `stop` | Graceful SIGTERM → SIGKILL after 2s |
+| `status` | Running/not-running + URL; this is what prime calls |
+| `restart` | Stop then start |
+| `logs` | Tail `-f` the log file |
+| *(none)* | Defaults to `status` |
+
+### Parity status
+
+`pi-agents.yaml` entry: `mirror_status: pending`. The Pi equivalent of the slash-command surface has not been built. The Go binary and `preview.sh` are `not-applicable` (harness-agnostic — both harnesses invoke the same script against the same binary). Only the slash-command wrapper is `pending`. See [`harness.md`](harness.md) for what `pending` means and when the flag clears.
+
+---
+
 ## Deployment commands — the `/rag-web-pages-*` group
 
 Four commands bracket the GitHub Pages deployment lifecycle. They are a cluster, not a pair: each targets a distinct moment in the deploy cycle (scaffold, pre-deploy check, deploy + verify, emergency rollback) and none duplicates the others. Source files: [`.claude/commands/rag-web-pages-*.md`](../../.claude/commands/).

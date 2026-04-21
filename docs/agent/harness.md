@@ -44,6 +44,8 @@ The `skills:` bucket is now populated — the `rag-web-pages-deploy` skill is th
 
 The `assets:` bucket captures harness-agnostic files that are meaningful to the deployment lifecycle but require no Pi mirror. Current entries: `tools/scripts/` (shell scripts, harness-agnostic), `site/index.html + tokens.css` (published artifacts, harness-agnostic), `.github/workflows/deploy-pages.yml` (GitHub infrastructure, runs regardless of harness), and `site/.nojekyll` (static marker consumed by GitHub's Pages builder). Adding an asset entry does not open a parity obligation; the `scope` field must name the asymmetry.
 
+The preview server (`tools/preview/` Go binary, `tools/scripts/preview.sh`) is registered in this bucket as `not-applicable`. The binary and script are harness-agnostic — both CC and Pi invoke the same script against the same binary. Only the slash-command surface (`/rag-web-preview`) is harness-specific and carries `mirror_status: pending` in the `commands:` bucket. This is the canonical example of a split entry: one logical feature, two registry entries at different parity status, neither wrong.
+
 ### `mirror_status` — three values, each with a meaning
 
 | Value | When to use | What it asserts |

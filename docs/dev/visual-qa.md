@@ -96,6 +96,8 @@ Given a page with a new edit:
 5. Dispatch `rag-web-visual-reviewer` for a scored review.
 6. Address remediation strings. Iterate from step 3.
 
+Steps 3–4 use `file://` paths, which is correct for desktop screenshot capture. When the session also involves responsive layout work — checking how the page reads on a phone or tablet — start the preview server first (`tools/scripts/preview.sh start`) and use `http://127.0.0.1:8080` as the base URL for the wrapper instead. The Playwright loop and the preview server are complementary; see [`preview.md`](preview.md) for the distinction.
+
 For a page with many interactive states, `rag-web-visual-test-writer` generates a `tools/scripts/capture-<page>.sh` script that replaces steps 3–4 with one invocation producing the full matrix.
 
 The rhythm is as fast as it is because the wrapper is as narrow as it is. Every capability added to the wrapper is a capability that the agents have to reason about and that review sessions can get bogged down in. The smallest tool that does the job is the right tool.
@@ -105,3 +107,4 @@ The rhythm is as fast as it is because the wrapper is as narrow as it is. Every 
 - [`authoring.md`](authoring.md) — the CSS auditor and token enforcer that gate the code side.
 - [`tokens.md`](tokens.md) — the token contract the visual reviewer is implicitly scoring against.
 - [`plans/02-web-frontend-localization.md`](plans/02-web-frontend-localization.md) — the Playwright approval scope.
+- [`preview.md`](preview.md) — the local Go preview server; when to use it alongside the Playwright loop for cross-device responsive review.

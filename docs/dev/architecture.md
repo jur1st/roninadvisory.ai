@@ -22,7 +22,7 @@ The project has four working layers. Reading them in this order gives the mental
 
 4. **`.claude/`** and **`pi-agents.yaml`** — the agentic layer. Claude Code primitives live under `.claude/commands/` (slash commands), `.claude/agents/` (subagent definitions), and `.claude/skills/` (skill libraries). `pi-agents.yaml` tracks each primitive's Pi-harness status. The prefix is `rag-web-*` on everything project-specific, so that the project's commands do not shadow generic ones in the user's `~/.claude/`.
 
-5. **`tools/`** — developer-only tooling. `tools/scripts/*.sh` are the runtime-neutral entry points; `tools/package.json` + `tools/node_modules/` hold the Playwright dev dependency. Nothing under `tools/` ships to GitHub Pages.
+5. **`tools/`** — developer-only tooling. `tools/scripts/*.sh` are the runtime-neutral entry points; `tools/package.json` + `tools/node_modules/` hold the Playwright dev dependency; `tools/preview/` holds the stdlib-only Go binary that serves `site/` over localhost for cross-device responsive review. Nothing under `tools/` ships to GitHub Pages. Both Playwright and the Go preview server were approved explicitly as dev dependencies — the approval model is recorded in the plan doc or session notes that introduced each tool, and the approval criterion is the same in both cases: dev workflow only, zero shipping surface.
 
 A visitor sees only layer 1. A contributor edits layer 1 mediated by the contracts set down in layers 3 and 4, with layer 5 as the loop for verifying the result, and layer 2 as the gate from commit to public URL. Losing sight of that gradient — treating `docs/`, `.claude/`, `.github/`, and `tools/` as if they were part of the site — is the most common way to degrade the shape.
 

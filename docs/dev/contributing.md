@@ -101,8 +101,8 @@ The doctrine does not mean both harnesses must be built at the same time — def
 A typical session on this project:
 
 1. **Prime.** Run `/rag-web-prime`. Read its four-axis report. This is the mental model.
-2. **Work.** Edit source, edit plans, add primitives. If the work is substantive, there is a plan doc covering it; if a new substantive direction emerges mid-session, the close step will produce the plan.
-3. **Review.** For CSS changes, dispatch `rag-web-css-auditor` and `rag-web-token-enforcer`. For visible changes, dispatch `rag-web-visual-reviewer`. Resolve findings.
+2. **Work.** Edit source, edit plans, add primitives. If the work involves layout or responsive design, start the local preview server (`tools/scripts/preview.sh start` or `/rag-web-preview start`) so that a phone or tablet on the same network can load the working `site/` directory in a real browser. If the work is substantive, there is a plan doc covering it; if a new substantive direction emerges mid-session, the close step will produce the plan.
+3. **Review.** For CSS changes, dispatch `rag-web-css-auditor` and `rag-web-token-enforcer`. For visible changes, dispatch `rag-web-visual-reviewer`. For responsive layout work, verify on a physical device via the preview server. Resolve findings.
 4. **Close.** Run `/rag-web-close`. Review the verify report, let the adaptive documentation dispatch run, review the agent outputs, then make the commit decision.
 
 The commit belongs to the operator. The close routine presents; the operator chooses.
@@ -125,3 +125,4 @@ The antipatterns are named so they can be talked about. "That's auto-commit drif
 - `pi-agents.yaml` at project root — the Pi-mirror registry.
 - [`plans/_template.md`](plans/_template.md) — the plan-doc template.
 - [`architecture.md`](architecture.md) — the theory the conventions serve.
+- [`preview.md`](preview.md) — the local preview server; when and why to run it during a session.
