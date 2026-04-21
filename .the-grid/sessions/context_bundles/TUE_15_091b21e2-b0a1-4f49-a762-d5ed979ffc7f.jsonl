@@ -14,3 +14,5 @@
 {"timestamp": "2026-04-21T15:57:19.575Z", "operation": "edit", "file_path": "/Volumes/GridStore/Ronin-Advisory-Website/docs/plans/01-bootstrap-session-management.md", "tool_input": {"file_path": "/Volumes/GridStore/Ronin-Advisory-Website/docs/plans/01-bootstrap-session-management.md", "old_string_preview": "## Open questions (flagged, not blocking this session)\n\n1. **`/prime-env` in README** \u2014 I'm folding ", "new_string_preview": "## Decisions (resolved 2026-04-21)\n\n1. **`/prime-env`** \u2014 standalone user-level command; runs out-of", "replace_all": false}}
 {"timestamp": "2026-04-21T16:00:49.297Z", "operation": "prompt", "content": "2", "session_id": "091b21e2-b0a1-4f49-a762-d5ed979ffc7f"}
 {"timestamp": "2026-04-21T16:17:47.666Z", "operation": "prompt", "content": "2", "session_id": "091b21e2-b0a1-4f49-a762-d5ed979ffc7f"}
+{"timestamp": "2026-04-21T16:19:19.633Z", "operation": "prompt", "content": "/rag-web-close", "session_id": "091b21e2-b0a1-4f49-a762-d5ed979ffc7f"}
+{"timestamp": "2026-04-21T16:20:11.505Z", "operation": "prompt", "content": "1", "session_id": "091b21e2-b0a1-4f49-a762-d5ed979ffc7f"}
