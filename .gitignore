@@ -19,6 +19,9 @@
 .the-grid/preview.pid
 .the-grid/preview.log
 
+# Preview server build output (rebuilt on each `preview.sh start`)
+tools/preview/preview
+
 # Editor / IDE
 .vscode/
 .idea/

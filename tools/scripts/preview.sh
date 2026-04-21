@@ -4,6 +4,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 TOOLS_DIR="$( cd "$SCRIPT_DIR/.." && pwd )"
 REPO_ROOT="$( cd "$TOOLS_DIR/.." && pwd )"
 PREVIEW_DIR="$TOOLS_DIR/preview"
+PREVIEW_BIN="$PREVIEW_DIR/preview"
 SITE_DIR="$REPO_ROOT/site"
 
 RUN_DIR="$REPO_ROOT/.the-grid"
@@ -17,6 +18,15 @@ lan_ip() {
   # First non-loopback IPv4 address on an up interface, or empty.
   ifconfig 2>/dev/null \
     | awk '/^[a-z0-9]+:.*<.*UP.*>/ {iface=$1} /inet [0-9]/ && iface !~ /^lo/ {print $2; exit}'
+}
+
+# Ask lsof what port a PID is actually listening on. Avoids reporting the
+# env's PORT value when a server started under a different PORT is still
+# running (easy to get wrong after a context rollover).
+bound_port() {
+  local pid="$1"
+  lsof -Pan -p "$pid" -iTCP -sTCP:LISTEN 2>/dev/null \
+    | awk 'NR>1 { n=split($9,a,":"); print a[n]; exit }'
 }
 
 # preview.sh — manage the local Go-backed rag-web preview server.
@@ -88,12 +98,18 @@ cmd_start() {
   printf "  Log      : %s\n" "$LOG_FILE"
   echo ""
 
-  (
-    cd "$PREVIEW_DIR"
-    nohup go run . -root "$SITE_DIR" -host "$HOST" -port "$PORT" \
-      >"$LOG_FILE" 2>&1 &
-    echo $! >"$PID_FILE"
-  )
+  # Build, then exec the binary directly. `go run` would leave a parent
+  # `go run` process in the pidfile while the actual listener runs as a
+  # child — that makes status/bound_port unreliable and complicates stop.
+  if ! (cd "$PREVIEW_DIR" && go build -o "$PREVIEW_BIN" . 2>>"$LOG_FILE"); then
+    echo "  [x] build failed — last 10 log lines:"
+    tail -10 "$LOG_FILE" 2>/dev/null | sed 's/^/    /'
+    exit 1
+  fi
+
+  nohup "$PREVIEW_BIN" -root "$SITE_DIR" -host "$HOST" -port "$PORT" \
+    >>"$LOG_FILE" 2>&1 &
+  echo $! >"$PID_FILE"
 
   # Give the server a moment to bind so `status` immediately after is honest.
   sleep 0.4
@@ -136,12 +152,14 @@ cmd_stop() {
 
 cmd_status() {
   if is_running; then
-    echo "  [v] running (pid $(cat "$PID_FILE"))"
-    echo "      http://127.0.0.1:$PORT"
-    if [[ "$HOST" == "0.0.0.0" ]]; then
-      local ip; ip="$(lan_ip)"
-      [[ -n "$ip" ]] && echo "      http://$ip:$PORT"
-    fi
+    local pid running_port
+    pid="$(cat "$PID_FILE")"
+    running_port="$(bound_port "$pid")"
+    running_port="${running_port:-$PORT}"
+    echo "  [v] running (pid $pid)"
+    echo "      http://127.0.0.1:$running_port"
+    local ip; ip="$(lan_ip)"
+    [[ -n "$ip" ]] && echo "      http://$ip:$running_port"
   else
     echo "  [=] not running"
     [[ -f "$PID_FILE" ]] && rm -f "$PID_FILE"
