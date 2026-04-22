@@ -36,7 +36,9 @@ Substantive work on this project routes through a plan document under `docs/dev/
 - `01-bootstrap-session-management.md` — established the three-way contract itself.
 - `02-web-frontend-localization.md` — added the scaffold, Playwright CLI, four quality-gate agents, and the typography primer.
 - `03-pages-deployment.md` — added the GitHub Pages deployment layer: the `rag-web-pages-deploy` skill, three agents, four commands, the CI workflow, and `site/.nojekyll`.
-- `04-pi-harness-bringup.md` — stood up the Pi harness: the `.pi/` directory, four writer agents, two extensions, profile-based model routing, the `drive` tmux layer, three launcher scripts, and the CC-side `/rag-web-pi-close` command.
+- `04-design-system-lock-in.md` — promoted mockup A (editorial masthead) to `site/`; rewrote the token catalog from the Tier-1 scaffold to the editorial palette (two-ink, oxblood, no state tokens); committed typography to Path C (Adobe Typekit); authored the design-system theory document and the failure-mode catalogue.
+- `04-pi-harness-bringup.md` — stood up the Pi harness in parallel with the design-system lock-in (both carry the `04-` prefix because they were authored on separate branches before merging): the `.pi/` directory, four writer agents, two extensions, profile-based model routing, the `drive` tmux layer, three launcher scripts, and the CC-side `/rag-web-pi-close` command.
+- `05-pi-harness-finish.md` — closed the Pi parity backlog: damage-control extension, Gemini profile, seven slash-command extensions bundled into three topic-grouped files, and Pi mirrors for the four quality-gate agents plus three deploy-pipeline agents.
 
 A plan doc is not a ticket. It is a written theory of what is about to change, why the changes have the shape they do, and what the acceptance criteria are. The sections are fixed by convention:
 
@@ -177,4 +179,6 @@ To add a new provider profile, create `.pi/profiles/<name>.json` with `default` 
 - [`plans/_template.md`](plans/_template.md) — the plan-doc template.
 - [`plans/04-pi-harness-bringup.md`](plans/04-pi-harness-bringup.md) — decisions behind the Pi harness shape.
 - [`architecture.md`](architecture.md) — the theory the conventions serve.
+- [`design-system.md`](design-system.md) — the editorial design theory: what the site claims, how it makes that visible, and what invariants keep it recoverable.
+- [`troubleshooting.md`](troubleshooting.md) — named failure modes from the editorial-masthead iteration; each entry is a pattern, not an incident report.
 - [`preview.md`](preview.md) — the local preview server; when and why to run it during a session.

@@ -2,7 +2,7 @@
 
 A site whose value is in its composure needs a review loop that can see the rendered result. This project's loop is a three-part assembly: a Playwright CLI wrapper that captures screenshots, a sonnet agent that generates systematic capture scripts for multi-state pages, and an opus agent that scores the captures against a sophistication rubric.
 
-The design decision worth naming up front: **the Playwright CLI wrapper is the entire browser story on this project.** There is no Chrome DevTools MCP integration, no remote browser bridge, no manual navigation primitive. Every browser interaction — by a human, by an agent, by a script — routes through `tools/scripts/capture-screenshot.sh`. This is deliberate, and the reason is a direct reading of the `CLAUDE.md` rule against build tooling without explicit approval. Playwright was approved in [`plans/02-web-frontend-localization.md`](plans/02-web-frontend-localization.md) as a dev dependency with a bounded surface: one wrapper script, two flags, one output artifact. Approving it as "Playwright, generally" would invite drift toward a full test harness, which is not what this site needs and not what was approved.
+The design decision worth naming up front: **the Playwright CLI wrapper is the entire browser story on this project.** There is no Chrome DevTools MCP integration, no remote browser bridge, no manual navigation primitive. Every browser interaction — by a human, by an agent, by a script — routes through `tools/scripts/capture-screenshot.sh`. This is deliberate, and the reason is a direct reading of the `CLAUDE.md` rule against build tooling without explicit approval. Playwright was approved in [`plans/02-web-frontend-localization.md`](plans/02-web-frontend-localization.md) as a dev dependency with a bounded surface: one wrapper script, a small set of flags, one output artifact. Approving it as "Playwright, generally" would invite drift toward a full test harness, which is not what this site needs and not what was approved.
 
 If the wrapper is insufficient for a task, the correct move is to extend it — or add a sibling `tools/scripts/*.sh` — not to bypass it. The rule is what it is because a bypassed wrapper is a bypassed approval.
 
@@ -12,21 +12,23 @@ If the wrapper is insufficient for a task, the correct move is to extend it — 
 
 1. Validates that `bun` is on PATH and that `tools/node_modules/playwright` exists.
 2. Launches headless Chromium.
-3. Navigates to the URL, waits for `networkidle`, optionally injects `.dark` on `<html>`.
+3. Navigates to the URL, waits for `networkidle`, optionally pins `data-theme="dark"` on `<html>`.
 4. Writes the screenshot to the output path, or exits non-zero if the file was not created.
 
 **Invocation:**
 
 ```
-./tools/scripts/capture-screenshot.sh <url> <output.png> [--full-page] [--dark]
+./tools/scripts/capture-screenshot.sh <url> <output.png> [flags]
 ```
 
 **Flags:**
 
-- `--dark` — sets the Playwright context's `colorScheme` to `dark` *and* injects a `.dark` class on `<html>` after navigation. Both are done because some dark-mode strategies read the media query while others read the class; the wrapper covers both so the captured image matches what a visitor with `prefers-color-scheme: dark` would see.
+- `--dark` — sets the Playwright context's `colorScheme` to `dark` *and* pins `data-theme="dark"` on `<html>` via `page.evaluate()` after navigation. The site's inline theme script reads `data-theme` on `<html>` — not a `.dark` class — so both the OS-preference signal (colorScheme) and the attribute the cascade reads are set. Light mode is also pinned explicitly when `--dark` is absent, so captures are fully deterministic regardless of the OS preference of the machine running the script.
 - `--full-page` — captures the full scrollable height rather than the viewport. Useful for long pages where the viewport crop would hide the review target.
+- `--viewport WIDTHxHEIGHT` — overrides the default 1280×720 viewport. Use `390x844` for iPhone-class captures, `1440x900` for wide-desktop review. The format is `WxH` with no spaces (e.g. `--viewport 390x844`).
+- `--scale N` — sets `deviceScaleFactor` (default 1). Use `--scale 2` for @2x retina-legible captures when submitting screenshots for embedded review.
 
-**Default viewport:** 1280×720. This is hard-coded in the inline node script the wrapper emits. It is deliberate: the two quality-gate agents capture at this size for light and dark, and the third captures at mobile. A single desktop default means callers who don't care get consistent output.
+**Default viewport:** 1280×720. Callers who do not pass `--viewport` get this size, which is what the quality-gate agents expect for their light/dark desktop captures. Passing `--viewport` is the correct way to capture at any other size — there is no separate mobile wrapper script, and no need for one.
 
 **Exit code is load-bearing.** The wrapper exits non-zero if the output file did not land on disk, even if the node script printed no visible error. Scripts that loop over many invocations depend on this — a silent write failure would otherwise produce a stale screenshot set.
 
@@ -40,20 +42,6 @@ The script template it generates parameterizes `BASE_URL` and `OUT_DIR` via envi
 
 The review is the authoritative loop. The auditor and enforcer agents (see [`authoring.md`](authoring.md)) gate the CSS on pattern compliance; the visual reviewer gates the render on what the eye actually sees. A site can be fully token-compliant and still look wrong — and a site can look right while carrying drift the auditor would catch. Both loops are needed; neither subsumes the other.
 
-## The mobile-viewport limitation
-
-The wrapper defaults to a 1280×720 viewport and does not accept a viewport flag. This is a deliberate minimum — the inline script is small and legible, and every flag added to it expands the surface the two agents have to reason about. For the common "light and dark at desktop" case, the default is correct.
-
-Mobile captures (390×844, matching iPhone 15 Pro) are out of reach of the wrapper as written. Two ways to address this, both acceptable, both named in the `rag-web-visual-reviewer` agent definition:
-
-1. **Mobile wrapper variant.** Add `tools/scripts/capture-screenshot-mobile.sh` as a sibling. Same shape as the desktop wrapper, different hard-coded viewport. The duplication is the point: two scripts, each simple, neither parameterized into complexity. A reviewer invokes either one explicitly.
-
-2. **Ad-hoc node script.** For a one-off mobile capture, write a small `.js` file that uses the Playwright API directly and run it under `bun`. The Playwright CLI surface block embedded in both visual agents lists this as a sanctioned path (`node <custom.js>`). Useful when the captured viewport varies across invocations or when testing a breakpoint at a non-standard width.
-
-Neither option parameterizes the primary wrapper. Adding `--viewport WIDTHxHEIGHT` to `capture-screenshot.sh` would be natural and is consciously declined: the wrapper's job is "capture the authoritative desktop view," and "capture anything at any size" is a different tool with a different maintenance surface.
-
-If mobile capture becomes a recurring need, the right move is the sibling script (option 1). If mobile capture remains occasional, the ad-hoc node script (option 2) is cheaper.
-
 ## The Playwright CLI surface, in full
 
 The authoritative surface, as embedded verbatim in both `rag-web-visual-reviewer` and `rag-web-visual-test-writer`:
@@ -65,10 +53,12 @@ bunx playwright codegen <url>              # interactive script generation
 bunx playwright open <url>                 # launch inspector
 node <custom.js>                           # run ad-hoc Playwright scripts
 
-./tools/scripts/capture-screenshot.sh <url> <out.png> [--full-page] [--dark]
-  - Default viewport 1280x720 (override by editing the inline script)
-  - --dark sets context colorScheme=dark AND injects .dark on <html>
+./tools/scripts/capture-screenshot.sh <url> <out.png> [flags]
+  - Default viewport 1280x720
+  - --dark      sets context colorScheme=dark AND pins data-theme="dark" on <html>
   - --full-page captures scrollable height, not just viewport
+  - --viewport WxH  overrides the default (e.g. --viewport 390x844 for iPhone)
+  - --scale N   sets deviceScaleFactor (e.g. --scale 2 for @2x captures)
   - Exits non-zero if the output file was not created
 ```
 

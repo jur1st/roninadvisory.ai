@@ -1,0 +1,135 @@
+/* ============================================================================
+ * Ronin Advisory — Mockup B — Direction: Typographic Architecture
+ * tokens.css (shadow copy of site/static/tokens.css + direction-B extensions)
+ * ============================================================================
+ *
+ * The page IS typography. This token sheet is the specimen inventory:
+ *   — ink/paper palette, two values plus a single accent spike
+ *   — one anchor display face + one monospace structural face
+ *   — a tracking scale that makes the grid visible without drawing it
+ *
+ * Three-line fallback pattern per web-frontend doctrine:
+ *   prop: #hex;
+ *   prop: oklch(...);
+ *   prop: light-dark(oklch(...), oklch(...));
+ *
+ * The light-dark() call is the authoritative source; the two lines above
+ * are static fallbacks for older engines and copy-paste into design tools.
+ * ========================================================================== */
+
+:root { color-scheme: light dark; }
+
+:root {
+  /* ── INK & PAPER — the two-value register ──────────────────────────── */
+
+  --color-ink: #0f1116;
+  --color-ink: oklch(0.160 0.020 265);
+  --color-ink: light-dark(oklch(0.160 0.020 265), oklch(0.945 0.006 265));
+
+  --color-paper: #f7f6f2;
+  --color-paper: oklch(0.975 0.006 85);
+  --color-paper: light-dark(oklch(0.975 0.006 85), oklch(0.135 0.018 265));
+
+  --color-ink-muted: #6a6d78;
+  --color-ink-muted: oklch(0.520 0.020 265);
+  --color-ink-muted: light-dark(oklch(0.520 0.020 265), oklch(0.680 0.018 265));
+
+  --color-rule: #0f1116;
+  --color-rule: oklch(0.160 0.020 265);
+  --color-rule: light-dark(oklch(0.160 0.020 265), oklch(0.945 0.006 265));
+
+  --color-rule-hair: #c9c9c2;
+  --color-rule-hair: oklch(0.830 0.010 95);
+  --color-rule-hair: light-dark(oklch(0.830 0.010 95), oklch(0.320 0.016 265));
+
+  /* ── THE ACCENT SPIKE — used exactly once ──────────────────────────── */
+  /* Oxidized-red — reads as ink-stamped imprimatur, not UI-kit red. */
+
+  --color-accent: #a83226;
+  --color-accent: oklch(0.480 0.160 25);
+  --color-accent: light-dark(oklch(0.480 0.160 25), oklch(0.640 0.180 25));
+
+  /* ── TYPOGRAPHY — one display face, one monospace ──────────────────── */
+
+  /* Display: Helvetica Neue LT Com, Black Condensed.
+     Installed on the operator's machine (font-check.sh: present).
+     Fallback chain degrades to a generic condensed grotesque. */
+  --font-display:
+    'Helvetica Neue LT Com 97 Black Condensed',
+    'HelveticaNeueLTCom-BlkCn',
+    'Helvetica Neue',
+    'HelveticaNeue-CondensedBlack',
+    'Inter Tight', 'Barlow Condensed',
+    'Arial Narrow', 'Impact',
+    ui-sans-serif, system-ui, sans-serif;
+
+  /* Structural: same family, a step lighter / non-condensed for sub-display */
+  --font-structure:
+    'Helvetica Neue LT Com 77 Bold Condensed',
+    'HelveticaNeueLTCom-BdCn',
+    'Helvetica Neue',
+    'Inter Tight', 'Barlow Condensed',
+    'Arial Narrow', 'Impact',
+    ui-sans-serif, system-ui, sans-serif;
+
+  /* Mono: Berkeley Mono — body, metadata, structural punctuation */
+  --font-mono:
+    'Berkeley Mono',
+    'BerkeleyMono-Regular',
+    'JetBrains Mono', 'IBM Plex Mono',
+    ui-monospace, Menlo, Monaco, 'Courier New', monospace;
+
+  /* ── SIZE SCALE — monograph front-matter proportions ───────────────── */
+
+  --size-xs:   0.6875rem;   /* 11px — metadata / labels */
+  --size-sm:   0.8125rem;   /* 13px — body copy (mono reads large) */
+  --size-base: 1.0000rem;   /* 16px — baseline */
+  --size-lg:   1.2500rem;
+  --size-xl:   1.5625rem;
+  --size-2xl:  1.9531rem;
+  --size-3xl:  2.4414rem;
+  --size-4xl:  3.0518rem;
+
+  /* ── LEADING ───────────────────────────────────────────────────────── */
+
+  --leading-architectural: 0.85;   /* wordmark — lines stack as strata */
+  --leading-tight:         1.05;
+  --leading-snug:          1.15;
+  --leading-normal:        1.45;
+  --leading-relaxed:       1.65;
+
+  /* ── TRACKING — the grid you can see without drawing it ────────────── */
+
+  --tracking-tightest: -0.035em;   /* mega display — optical tightening */
+  --tracking-tight:    -0.015em;
+  --tracking-normal:    0;
+  --tracking-wide:      0.04em;
+  --tracking-wider:     0.08em;
+  --tracking-widest:    0.16em;    /* small-caps / labels / ledger */
+
+  /* ── SPACING — 4px base, monograph-generous ────────────────────────── */
+
+  --space-1:  0.25rem;
+  --space-2:  0.50rem;
+  --space-3:  0.75rem;
+  --space-4:  1.00rem;
+  --space-5:  1.25rem;
+  --space-6:  1.50rem;
+  --space-8:  2.00rem;
+  --space-10: 2.50rem;
+  --space-12: 3.00rem;
+  --space-16: 4.00rem;
+  --space-20: 5.00rem;
+  --space-24: 6.00rem;
+  --space-32: 8.00rem;
+
+  /* ── MEASURE & CONTAINER ───────────────────────────────────────────── */
+
+  --width-prose:     58ch;
+  --width-content:   72ch;
+  --width-container: 1280px;
+
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+}
+</content>
+</invoke>

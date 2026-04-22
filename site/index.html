@@ -1,146 +1,270 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ronin Advisory Group</title>
-<link rel="stylesheet" href="static/tokens.css">
-<style>
-*, *::before, *::after { box-sizing: border-box; }
-
-html {
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-prose);
-  font-size: var(--size-base);
-  line-height: var(--leading-normal);
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
-  margin: 0 auto;
-  max-width: var(--width-content);
-  padding: var(--space-8) var(--space-6);
-  font-family: var(--font-prose);
-  color: var(--color-text);
-}
-
-h1, h2, h3, h4 {
-  font-family: var(--font-structure);
-  font-weight: 700;
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
-  margin: var(--space-8) 0 var(--space-4);
-  color: var(--color-text);
-}
-h1 { font-size: var(--size-2xl); border-bottom: 2px solid var(--color-border); padding-bottom: var(--space-3); }
-h2 { font-size: var(--size-xl); }
-h3 { font-size: var(--size-lg); }
-h4 { font-size: var(--size-base); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
-
-p { margin: 0 0 var(--space-4); line-height: var(--leading-prose); }
-
-a { color: var(--color-accent); text-decoration: underline; }
-a:hover { color: var(--color-accent-hover); }
-
-code {
-  font-family: var(--font-mono);
-  font-size: 0.875em;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 3px;
-  padding: 0.1em 0.35em;
-}
-
-pre {
-  font-family: var(--font-mono);
-  font-size: var(--size-sm);
-  line-height: var(--leading-relaxed);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  padding: var(--space-4) var(--space-5);
-  overflow-x: auto;
-  margin: 0 0 var(--space-6);
-}
-pre code { background: none; border: none; padding: 0; font-size: inherit; }
-
-blockquote {
-  margin: 0 0 var(--space-6);
-  padding: var(--space-3) var(--space-5);
-  border-left: 3px solid var(--color-accent);
-  background: var(--color-surface);
-  color: var(--color-text-muted);
-  font-style: italic;
-}
-blockquote p { margin: 0; }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-  margin: 0 0 var(--space-6);
-  display: block;
-  overflow-x: auto;
-}
-th {
-  font-family: var(--font-structure);
-  font-size: var(--size-sm);
-  font-weight: 600;
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  text-align: left;
-  color: var(--color-text-muted);
-  border-bottom: 2px solid var(--color-border);
-  padding: var(--space-2) var(--space-3);
-}
-td {
-  padding: var(--space-2) var(--space-3);
-  border-bottom: 1px solid var(--color-border);
-  vertical-align: top;
-}
-tr:last-child td { border-bottom: none; }
-
-hr {
-  border: none;
-  border-top: 1px solid var(--color-border);
-  margin: var(--space-8) 0;
-}
-
-mark {
-  background: oklch(0.94 0.12 95);
-  color: var(--color-text);
-  padding: 0.1em 0.2em;
-  border-radius: 2px;
-}
-
-kbd {
-  font-family: var(--font-mono);
-  font-size: 0.8em;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-bottom-width: 2px;
-  border-radius: 4px;
-  padding: 0.1em 0.4em;
-  color: var(--color-text);
-}
-
-@media print {
-  html { background: #fff; color: #000; font-size: 11pt; }
-  body { max-width: 100%; padding: 0; margin: 1.5cm 2cm; }
-  h1, h2, h3, h4 { color: #000; page-break-after: avoid; }
-  pre, table, blockquote { break-inside: avoid; }
-  a { color: #000; }
-  a[href]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #555; }
-  pre, code { background: #f5f5f5; border-color: #ccc; }
-  blockquote { border-color: #999; background: #f9f9f9; }
-  mark { background: #ff9; }
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ronin Advisory Group — Vol. 01, No. 01</title>
+  <meta name="description" content="Ronin Advisory Group, LLC. Technical consulting, digital forensics examination, AI software engineering, and AI risk management. Publisher of the Gunnerbench periodical." />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="stylesheet" href="https://use.typekit.net/dwr4eme.css" />
+  <link rel="stylesheet" href="static/styles.css" />
+  <script>
+    // Theme override — inline in <head> to avoid FOUC. When the user
+    // has chosen an edition, we pin the color-scheme before paint;
+    // otherwise prefers-color-scheme decides (via tokens.css).
+    (() => {
+      const KEY = 'rag-theme';
+      try {
+        const stored = localStorage.getItem(KEY);
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      } catch (_) { /* localStorage unavailable — fall back to OS */ }
+    })();
+  </script>
 </head>
 <body>
-<h1>Ronin Advisory Group</h1>
-<main>
-</main>
+
+  <!--
+      ── Genesis ────────────────────────────────────────────────────────
+      The cover prose from the first placeholder, set live March 2025 and
+      retired when this cover took its place. Preserved verbatim as the
+      origin statement of the practice. Not rendered; read only by those
+      who look for it.
+
+      In feudal Japan, when a samurai became masterless—now a ronin—he
+      carried forward not titles or affiliations, but hard-earned skills
+      and unwavering principles. The ronin walked a path of independence,
+      guided by personal honor rather than external authority.
+
+      Without the shelter of institutional power, the ronin relied on
+      practical mastery of diverse tools and techniques. More than just
+      swordsmanship, they understood metallurgy, weather patterns, human
+      psychology—each skill becoming essential when you stand alone. This
+      breadth of knowledge allowed them to see connections and solutions
+      invisible to specialists who knew only one way.
+
+      Where others saw only constraints, the ronin found freedom in
+      self-reliance. Their strength came not from position or resources,
+      but from authentic purpose—using their skills to protect those who
+      needed protection, to uncover truths others wished to remain hidden,
+      to bring balance where power had tipped too far in one direction.
+
+      The path of the ronin endures today—in those who choose independence
+      to better serve their values of authenticity, justice, and
+      knowledge-sharing. These modern practitioners have walked away from
+      comfortable structures to follow their own compass. With nothing but
+      their expertise and core tools, they offer their skills not to the
+      highest bidder, but to causes, people and organizations that matter.
+      ─────────────────────────────────────────────────────────────────
+  -->
+
+  <main class="cover" role="main">
+    <div class="cover__frame">
+
+      <!-- ── Top folio — issue line ────────────────────────────── -->
+      <header class="folio" aria-label="Masthead folio">
+        <div class="folio__left">
+          <span class="folio__mark-wrap" aria-hidden="true">
+            <svg class="folio__mark" viewBox="0 0 48 48">
+              <g fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="24" cy="24" r="21" />
+                <polygon points="24,8 40,24 24,40 8,24" />
+              </g>
+              <circle cx="24" cy="24" r="2" fill="currentColor" />
+            </svg>
+          </span>
+          <span>Ronin Advisory Group, LLC</span>
+        </div>
+        <div class="folio__sep" aria-hidden="true">§</div>
+        <div class="folio__right">
+          <span>Est. MMXXV</span>
+          <span class="vr" aria-hidden="true"></span>
+          <span>Vol. 01 &nbsp;·&nbsp; No. 01</span>
+        </div>
+      </header>
+
+      <!-- ── Masthead + body pairing ──────────────────────────── -->
+      <section class="masthead" aria-label="Cover">
+        <p class="masthead__eyebrow">
+          <span class="mark">A Technical Consulting Practice</span>
+          &nbsp;·&nbsp; Forensics · AI · Risk
+        </p>
+
+        <h1 class="masthead__title">
+          <span class="line line--ronin">Ronin</span>
+          <span class="line line--advisory">Advisory<span class="group-mark">&hairsp;Group</span></span>
+        </h1>
+
+        <p class="masthead__tagline">
+          Evidentiary-grade consulting for systems whose failure modes
+          leave traces — and for the teams accountable when they do.
+        </p>
+
+        <div class="masthead-layout" style="margin-top: var(--space-7);">
+
+          <!-- ── Lede — the editorial voice of the cover ── -->
+          <div class="lede">
+            <p>
+              Ronin Advisory Group is an independent practice in digital
+              forensics, AI engineering, and the risk work that sits
+              between them. We are retained when the stakes are
+              investigatory, the record must hold, and the question is
+              less <em>what happened</em> than <em>what can be proven</em>.
+            </p>
+            <p>
+              The firm publishes its thinking.
+            </p>
+          </div>
+
+          <!-- ── Colophon — services as numbered masthead block ── -->
+          <aside class="colophon" aria-labelledby="services-label">
+            <h2 id="services-label" class="colophon__label">
+              The Practice &nbsp;—&nbsp; Colophon
+            </h2>
+            <ol class="services">
+              <li>
+                <span class="services__num" aria-hidden="true"></span>
+                <span class="services__name">Digital Forensics Examination</span>
+                <span class="services__kicker">Evidentiary</span>
+              </li>
+              <li>
+                <span class="services__num" aria-hidden="true"></span>
+                <span class="services__name">AI Risk Management</span>
+                <span class="services__kicker">Governance</span>
+              </li>
+              <li>
+                <span class="services__num" aria-hidden="true"></span>
+                <span class="services__name">AI Software Engineering</span>
+                <span class="services__kicker">Build</span>
+              </li>
+              <li>
+                <span class="services__num" aria-hidden="true"></span>
+                <span class="services__name">Technical Consulting</span>
+                <span class="services__kicker">Advisory</span>
+              </li>
+            </ol>
+          </aside>
+
+        </div>
+      </section>
+
+      <!-- ── Foot — imprint, principal, Gunnerbench ───────────── -->
+      <footer class="foot" aria-label="Imprint">
+
+        <div class="foot__block">
+          <h3>Principal</h3>
+          <p>
+            <strong>John Benson, Esq.</strong> &nbsp;—&nbsp;
+            Forensics &amp; AI.
+            <br/>
+            <a href="https://john-benson.com" rel="noopener">john-benson.com</a>
+          </p>
+        </div>
+
+        <div class="foot__block">
+          <h3>Correspondence</h3>
+          <address>
+            <a class="foot__email"
+               href="mailto:john@roninadvisory.ai">john@roninadvisory.ai</a>
+          </address>
+          <p style="margin-top: var(--space-2); color: var(--color-ink-muted); font-size: var(--size-sm);">
+            By appointment. No intake form.
+          </p>
+        </div>
+
+        <!-- ── Gunnerbench — the periodical, tipped in as the card ── -->
+        <a class="gunnerbench"
+           href="#gunnerbench"
+           aria-label="Read Gunnerbench, Issue 01">
+          <span class="gunnerbench__issue" aria-hidden="true">N<sup style="font-size:.55em">o</sup>&thinsp;01</span>
+          <span class="gunnerbench__kicker">The Firm Publishes</span>
+          <h3 class="gunnerbench__title">
+            <em>Gunnerbench</em>
+            <br/>— a periodical
+          </h3>
+          <span class="gunnerbench__meta">
+            <span>Issue 01 &nbsp;·&nbsp; Forthcoming</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </span>
+        </a>
+
+      </footer>
+
+      <!-- ── Editorial rule mark between foot and imprint ──── -->
+      <div aria-hidden="true" style="display:flex;justify-content:center;padding:var(--space-6) 0 var(--space-4);color:var(--color-rule);">
+        <img src="static/assets/rule-mark.svg" alt="" width="240" height="24" style="color:inherit;opacity:0.9;"/>
+      </div>
+
+      <!-- ── Imprint line ──────────────────────────────────── -->
+      <!--
+           The imprint is the printed-matter convention for print-run
+           notes. The edition toggle lives here, as an italic colophon
+           affordance — "Day edition / Night edition" — not a button.
+           It reads as part of the imprint, which is why it doesn't
+           break the cover composition.
+      -->
+      <div class="imprint">
+        <span>© MMXXV Ronin Advisory Group, LLC &nbsp;·&nbsp; All rights reserved</span>
+        <span class="imprint__center">
+          <button type="button"
+                  class="edition"
+                  data-theme-toggle
+                  aria-pressed="false"
+                  aria-label="Toggle night edition">
+            <span class="edition__rule" aria-hidden="true"></span>
+            <span class="edition__label">
+              <span class="edition__word edition__word--day">Day</span>
+              <span class="edition__slash" aria-hidden="true">/</span>
+              <span class="edition__word edition__word--night">Night</span>
+              <span class="edition__suffix">&nbsp;edition</span>
+            </span>
+          </button>
+        </span>
+        <span class="imprint__right">roninadvisory.ai</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Theme toggle — wires the [data-theme-toggle] in the imprint.
+    // Reads OS preference as the fallback for the initial pivot, then
+    // persists the explicit choice. aria-pressed reflects "night
+    // edition currently active" so the pressed state has meaning.
+    (() => {
+      const KEY = 'rag-theme';
+      const mql = window.matchMedia('(prefers-color-scheme: dark)');
+
+      const currentTheme = () =>
+        document.documentElement.getAttribute('data-theme')
+          || (mql.matches ? 'dark' : 'light');
+
+      const reflect = (theme) => {
+        document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+        });
+      };
+
+      reflect(currentTheme());
+
+      window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const next = currentTheme() === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem(KEY, next); } catch (_) {}
+            reflect(next);
+          });
+        });
+        // If the user hasn't chosen, follow OS changes live.
+        mql.addEventListener?.('change', () => {
+          if (!document.documentElement.getAttribute('data-theme')) {
+            reflect(currentTheme());
+          }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

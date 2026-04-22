@@ -1,0 +1,156 @@
+/* === Ronin Advisory — Mockup A: Editorial Masthead === */
+/*
+ * Shadow copy of site/static/tokens.css, narrowed and re-tuned for the
+ * "cover of a quarterly" direction. The project-level tokens.css is a
+ * general-purpose Tier-1 scaffold; this file overrides typography and
+ * palette only for the masthead composition. Three-line semantic-color
+ * fallback preserved per web-frontend doctrine.
+ *
+ * Palette: ink-on-paper, two-ink register (black + one warm red mark).
+ * Typography: FreightText/Disp Pro (serif, high contrast) + Acumin Pro
+ * (neutral grotesque for colophon/structure).
+ */
+
+:root { color-scheme: light dark; }
+
+:root {
+  /* ── Ink register ────────────────────────────────────────────── */
+  /* Deep ink — not pure black. The warmth matters at display scale. */
+  --color-ink: #141210;
+  --color-ink: oklch(0.180 0.006 60);
+  --color-ink: light-dark(oklch(0.180 0.006 60), oklch(0.920 0.004 80));
+
+  /* Paper — a warm off-white, not sterile. */
+  --color-paper: #f5f0e6;
+  --color-paper: oklch(0.950 0.014 85);
+  --color-paper: light-dark(oklch(0.950 0.014 85), oklch(0.155 0.008 60));
+
+  /* Secondary ink — for colophon, folios, metadata. */
+  --color-ink-muted: #6b645b;
+  --color-ink-muted: oklch(0.480 0.012 70);
+  --color-ink-muted: light-dark(oklch(0.480 0.012 70), oklch(0.660 0.010 75));
+
+  /* Rule work — hairlines, dividers. */
+  --color-rule: #2a2620;
+  --color-rule: oklch(0.280 0.008 65);
+  --color-rule: light-dark(oklch(0.280 0.008 65), oklch(0.520 0.010 70));
+
+  /* The second ink. Oxblood — editorial red, not web-red. Used */
+  /* sparingly: issue mark, masthead ornament, one keyword. */
+  --color-mark: #7a1a1a;
+  --color-mark: oklch(0.382 0.142 25);
+  --color-mark: light-dark(oklch(0.382 0.142 25), oklch(0.620 0.165 28));
+
+  /* Surface — a half-step warmer for the colophon strip. */
+  --color-surface: #ebe4d5;
+  --color-surface: oklch(0.915 0.020 85);
+  --color-surface: light-dark(oklch(0.915 0.020 85), oklch(0.195 0.008 70));
+
+  /* ── Typography ──────────────────────────────────────────────── */
+  /* Display serif — the cover voice. High-contrast didone-adjacent.  */
+  /* FreightDisp is the primary; substitutes are graded by stress.    */
+  --font-display:
+    'FreightDisp Pro',
+    'Freight Display Pro',
+    'Kepler Std Display',
+    'Canela',
+    'Minion Pro Display',
+    Georgia,
+    'Times New Roman',
+    serif;
+
+  /* Text serif — body copy, pull quotes. Same family, less contrast. */
+  --font-text:
+    'FreightText Pro',
+    'Freight Text Pro',
+    'Kepler Std',
+    'Minion Pro',
+    Georgia,
+    'Times New Roman',
+    serif;
+
+  /* Grotesque — colophon, metadata, small-caps, numbering. */
+  --font-grotesque:
+    'Acumin Pro',
+    'Neue Haas Grotesk',
+    'Söhne',
+    'Inter',
+    'Helvetica Neue',
+    Helvetica,
+    'Arial',
+    sans-serif;
+
+  /* Mono — kept for machine-register items (email, domain strings). */
+  --font-mono:
+    'Berkeley Mono',
+    ui-monospace,
+    'SF Mono',
+    Menlo,
+    Monaco,
+    'Courier New',
+    monospace;
+
+  /* ── Tier-1 canonical aliases ────────────────────────────────── */
+  /* Project-level tokens.css exposes --font-structure / --font-prose */
+  /* as the Tier-1 names. Our mockup routes those to the editorial    */
+  /* faces so any code reading the canonical names still works.       */
+  --font-structure: var(--font-grotesque);
+  --font-prose:     var(--font-text);
+
+  /* One more semantic color with the three-line fallback — covers   */
+  /* an interior accent the mockup does not render but leaves space  */
+  /* for on supporting pages (pull quotes, footnote markers).        */
+  --color-ink-soft: #3a342c;
+  --color-ink-soft: oklch(0.330 0.010 65);
+  --color-ink-soft: light-dark(oklch(0.330 0.010 65), oklch(0.780 0.008 75));
+
+  /* ── Type scale — Perfect Fourth (1.333), editorial voice ─────── */
+  --size-xs:   0.750rem;   /* 12px — folios, issue marks             */
+  --size-sm:   0.875rem;   /* 14px — colophon, metadata              */
+  --size-base: 1.000rem;   /* 16px — body                            */
+  --size-lg:   1.250rem;   /* 20px — lede                            */
+  --size-xl:   1.875rem;   /* 30px — sub-display                     */
+  --size-2xl:  2.750rem;   /* 44px — section lede                    */
+  --size-3xl:  4.250rem;   /* 68px — masthead tablet                 */
+  --size-4xl:  6.500rem;   /* 104px — masthead desktop               */
+  --size-5xl:  9.500rem;   /* 152px — masthead widescreen            */
+
+  /* ── Leading ─────────────────────────────────────────────────── */
+  --leading-display:  0.92;   /* tight, optical for display serif   */
+  --leading-tight:    1.10;
+  --leading-snug:     1.22;
+  --leading-prose:    1.48;
+
+  /* ── Tracking ────────────────────────────────────────────────── */
+  --tracking-display: -0.025em;  /* optical tightening at display   */
+  --tracking-text:     0;
+  --tracking-caps:     0.12em;   /* small-caps / all-caps           */
+  --tracking-caps-lg:  0.18em;   /* hairline caps at small sizes    */
+
+  /* ── Spacing — based on 8px grid, editorial proportions ──────── */
+  --space-1:  0.25rem;
+  --space-2:  0.50rem;
+  --space-3:  0.75rem;
+  --space-4:  1.00rem;
+  --space-5:  1.50rem;
+  --space-6:  2.00rem;
+  --space-7:  3.00rem;
+  --space-8:  4.50rem;
+  --space-9:  6.50rem;
+  --space-10: 9.00rem;
+
+  /* ── Rule weights ────────────────────────────────────────────── */
+  --rule-hairline: 0.5px;
+  --rule-thin:     1px;
+  --rule-double:   3px;   /* paired with inner line in border trick */
+
+  /* ── Layout ──────────────────────────────────────────────────── */
+  /* xs is iPhone-class — the chrome reduces so the cover composition
+     still has room for the display type. */
+  --page-margin-xs: 0.625rem;
+  --page-margin-sm: 1.25rem;
+  --page-margin-md: 2.25rem;
+  --page-margin-lg: 4.00rem;
+  --width-prose:    62ch;
+  --width-cover:    1280px;
+}

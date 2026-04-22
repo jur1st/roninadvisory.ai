@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="ronin-mark-title ronin-mark-desc" class="ronin-mark">
+  <title id="ronin-mark-title">Ronin Advisory Group</title>
+  <desc id="ronin-mark-desc">A spartan seal: a single vertical figure contained within a square frame, crossed once.</desc>
+
+  <!--
+    Ronin mark. The square is the engagement — a bounded, declared scope.
+    The vertical stroke is the operator under their own authority.
+    The single horizontal crossbar is resolve: a line drawn, a decision made.
+    The notch at the top is deliberate asymmetry — the seal is hand-cut, not stamped.
+    Nothing else. No helmet, no sword, no ornament. The mark is the discipline.
+  -->
+
+  <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Outer frame: the engagement. Open at the top-right (the departure). -->
+    <path d="M 24 24 L 24 176 L 176 176 L 176 64" />
+    <path d="M 24 24 L 140 24" />
+
+    <!-- The vertical stroke: the operator's bearing, off-axis. -->
+    <line x1="100" y1="48" x2="100" y2="164" />
+
+    <!-- The single crossbar: resolve. Positioned at the upper third — decision, not midpoint. -->
+    <line x1="64" y1="84" x2="136" y2="84" />
+
+    <!-- The notch: the seal is hand-cut. A single witness mark at the lower left. -->
+    <line x1="24" y1="148" x2="40" y2="148" />
+  </g>
+</svg>

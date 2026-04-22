@@ -22,21 +22,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install preflight tools
-        run: |
-          set -euo pipefail
-          curl -sSL https://github.com/lycheeverse/lychee/releases/latest/download/lychee-x86_64-unknown-linux-gnu.tar.gz \
-            | sudo tar -xz -C /usr/local/bin lychee
-          curl -sSL https://github.com/rhysd/actionlint/releases/latest/download/actionlint_linux_amd64.tar.gz \
-            | sudo tar -xz -C /usr/local/bin actionlint
-      - name: Lint workflow
-        run: actionlint .github/workflows/deploy-pages.yml
+      - name: Lint workflows (actionlint)
+        uses: reviewdog/action-actionlint@v1
+        with:
+          reporter: github-check
+          fail_level: error
       - name: Validate tokens
         run: ./tools/scripts/validate-tokens.sh site/static/tokens.css
       - name: Verify .nojekyll
         run: test -f site/.nojekyll
       - name: Check links (offline)
-        run: lychee --offline --no-progress --verbose site/
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress --verbose site/
 
   deploy:
     needs: preflight

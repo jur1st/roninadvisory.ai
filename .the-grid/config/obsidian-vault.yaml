@@ -1,0 +1,22 @@
+# Obsidian vault target for rag-web-docs-vault-exporter.
+#
+# Project-local config tracked in the repo so every workstation
+# that clones this repo and runs /rag-web-close targets the same
+# vault location. Vault name is an identifier, not a path — each
+# operator's Obsidian may resolve it to a different filesystem
+# path, which is correct.
+#
+# The exporter reads this file first, then falls back to
+# $OBSIDIAN_VAULT, then ~/.config/obsidian-cli/, then no-op.
+
+vault: Kensho-2026
+
+# Subpath inside the vault where rag-web docs land. Kensho-2026
+# follows PARA; Resources/ is the right category for reference
+# material that outlives any single engagement.
+subpath: Resources/rag-web
+
+# MOC (map-of-content) filename. Sits alongside the exported docs,
+# not in a vault-level _MOCs folder — the operator's current
+# Kensho-2026 convention keeps MOCs co-located with their corpora.
+moc: rag-web - Index.md

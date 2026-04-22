@@ -18,10 +18,12 @@ You score a live rag-web web UI against the Darko Labs 25-point sophistication r
    If `~/.claude/skills/web-frontend/expertise-seed/css-craft.yaml` exists, read it for known pitfalls and proven approaches.
 
 3. **Capture screenshots via the Playwright CLI wrapper.**
-   Use `./tools/scripts/capture-screenshot.sh` from the project root. Capture three shots:
-   - Light mode desktop: `./tools/scripts/capture-screenshot.sh <url> review-light-desktop.png`
-   - Dark mode desktop: `./tools/scripts/capture-screenshot.sh <url> review-dark-desktop.png --dark`
-   - Mobile light (390x844): the wrapper defaults to 1280x720. For a mobile shot, either extend the wrapper with a `--mobile` flag or generate an ad-hoc node script following the Playwright CLI Surface block below. If the mobile capture cannot be produced, note the gap and score the Responsive dimension from markup + desktop evidence alone rather than skipping it.
+   Use `./tools/scripts/capture-screenshot.sh` from the project root. The wrapper accepts `--viewport WxH` to override its 1280x720 default and `--scale N` to set deviceScaleFactor. It pins `data-theme` on `<html>` (matching the site's inline theme script), so `--dark` produces a genuine dark-mode capture. Capture at minimum:
+   - Desktop light: `./tools/scripts/capture-screenshot.sh <url> review-light-1440.png --viewport 1440x900 --scale 2`
+   - Desktop dark: `./tools/scripts/capture-screenshot.sh <url> review-dark-1440.png --viewport 1440x900 --scale 2 --dark`
+   - Mobile light: `./tools/scripts/capture-screenshot.sh <url> review-light-390.png --viewport 390x844 --scale 2`
+   - Full-page companions (add `--full-page`) for every viewport if the cover scrolls, so sub-fold composition can be scored.
+   Output directory convention: `.the-grid/review-screenshots/` (gitignored). Emit there unless the operator specifies otherwise.
 
 4. **Score each dimension independently.**
    Do not let one dimension's score influence another. For each dimension:
@@ -74,13 +76,13 @@ bunx playwright --version                  # confirm install
 bunx playwright install chromium           # idempotent browser install
 bunx playwright codegen <url>              # interactive script generation
 bunx playwright open <url>                 # launch inspector
-node <custom.js>                           # run ad-hoc Playwright scripts
 
-./tools/scripts/capture-screenshot.sh <url> <out.png> [--full-page] [--dark]
-  - Default viewport 1280x720 (override by editing the inline script)
-  - --dark sets context colorScheme=dark AND injects .dark on <html>
-  - --full-page captures scrollable height, not just viewport
-  - Exits non-zero if the output file was not created
+./tools/scripts/capture-screenshot.sh <url> <out.png> [flags]
+  --full-page         Capture full scrollable height, not just viewport
+  --dark              Dark mode (pins data-theme=dark on <html>)
+  --viewport WxH      Override default 1280x720 (e.g. 1440x900, 390x844)
+  --scale N           deviceScaleFactor (default 1; use 2 for @2x captures)
+  Exits non-zero if the output file was not created.
 ```
 
-Never assume Chrome MCP, remote browser connections, or manual navigation are available. If the wrapper is insufficient, extend it via a new `./tools/scripts/*.sh` rather than bypassing it.
+Never assume Chrome MCP, remote browser connections, or manual navigation are available. Do not author one-off capture scripts alongside the wrapper — if the wrapper is insufficient, extend `capture-screenshot.sh` (the single sanctioned capture surface) and update this agent's documented flags. Ad-hoc `.js` files fragment the capture contract and make the next review harder to reproduce.

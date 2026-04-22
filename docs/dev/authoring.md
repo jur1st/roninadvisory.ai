@@ -48,7 +48,7 @@ The point of the auditor is that the three-line definition lives *somewhere* for
 
 ## Spacing: pixels map to tokens
 
-The spatial grid is quarter-rem indexed: `--space-1` = 0.25rem, `--space-2` = 0.5rem, up to `--space-24` = 6rem. Most common pixel values map directly:
+The editorial spacing progression is not a uniform quarter-rem grid through its entire range. The first four steps are quarter-rem; beyond that, the steps are editorial — larger jumps for the wide horizontal spacers a cover layout needs. The canonical map:
 
 | Pixel | Token        |
 |-------|--------------|
@@ -56,16 +56,16 @@ The spatial grid is quarter-rem indexed: `--space-1` = 0.25rem, `--space-2` = 0.
 | 8px   | `--space-2`  |
 | 12px  | `--space-3`  |
 | 16px  | `--space-4`  |
-| 20px  | `--space-5`  |
-| 24px  | `--space-6`  |
-| 32px  | `--space-8`  |
-| 40px  | `--space-10` |
-| 48px  | `--space-12` |
-| 64px  | `--space-16` |
-| 80px  | `--space-20` |
-| 96px  | `--space-24` |
+| 24px  | `--space-5`  |
+| 32px  | `--space-6`  |
+| 48px  | `--space-7`  |
+| 72px  | `--space-8`  |
+| 104px | `--space-9`  |
+| 144px | `--space-10` |
 
-`rag-web-token-enforcer` runs this table against any `margin`, `padding`, `gap`, `top`, `right`, `bottom`, `left`, or `inset` literal. If a value lands between tokens — say `margin: 18px` — the enforcer reports it as "no direct token; use closest or define new." The correct move is almost always to step to the nearest token. A new spacing value should be added to `tokens.css` only when a rhythmic reason demands it, and the reason belongs in the commit message that adds the token.
+The index numbers 1–10 do not correspond to a pixel/4 ratio. The enforcer maps to the nearest token by rem value, not by index arithmetic. If a value lands between tokens — say `margin: 20px` — the enforcer reports it as "no direct token; use closest or define new." The correct move is almost always to step to the nearest token (16px → `--space-4`; 24px → `--space-5`). A new spacing value should be added to `tokens.css` only when a rhythmic reason demands it, and the reason belongs in the commit message that adds the token.
+
+`rag-web-token-enforcer` runs this map against any `margin`, `padding`, `gap`, `top`, `right`, `bottom`, `left`, or `inset` literal.
 
 Why a fixed scale at all? Because a composition with six distinct spacing values reads as intentional; a composition with seventeen distinct spacing values reads as noisy, and the eye cannot tell you which it is looking at. The token scale forces a decision at token-definition time rather than at every CSS rule.
 
@@ -77,9 +77,30 @@ This cuts two ways. First, it keeps the palette finite. Second, it keeps the dar
 
 ## Typography: only via `var(--font-*)`
 
-The font stacks live in four tokens: `--font-structure` (headings, UI chrome), `--font-prose` (body copy), `--font-mono` (code), `--font-sans` (neutral UI fallback). Component CSS writes `font-family: var(--font-structure)` and never the literal font name.
+The font stacks live in four editorial tokens and three Tier-1 aliases. Component CSS always writes the token reference — never the literal font name.
 
-Today, the stacks resolve to system fonts — `ui-sans-serif`, `Georgia`, `ui-monospace` — under Path A of [`typography.md`](typography.md). Under Path B (self-hosted woff2) or Path C (Adobe Typekit), the stacks gain a leading face while every `var(--font-*)` consumer stays unchanged. This is the point of the token: the switch from system fallback to custom typography is one file's worth of edits, not a site-wide sweep.
+**Editorial tokens (keyed to optical register):**
+
+| Token              | Voice                                          | Use                                   |
+|--------------------|------------------------------------------------|---------------------------------------|
+| `--font-display`   | Display serif (FreightDisp Pro)                | Cover title, masthead, large headings |
+| `--font-text`      | Text serif (FreightText Pro)                   | Body prose, pull quotes               |
+| `--font-grotesque` | Grotesque (Acumin Pro)                         | Colophon, metadata, small-caps        |
+| `--font-mono`      | Monospace (Berkeley Mono)                      | Email, domain, machine register       |
+
+**Tier-1 aliases (canonical names for agents and validators):**
+
+| Alias             | Routes to           |
+|-------------------|---------------------|
+| `--font-structure`| `--font-grotesque`  |
+| `--font-prose`    | `--font-text`       |
+| `--font-sans`     | `--font-grotesque`  |
+
+The four stacks each carry graded fallbacks. Until the Typekit `<link>` is added to `site/index.html`, `--font-display` resolves to Kepler Std Display or Georgia; `--font-text` to Kepler Std or Georgia; `--font-grotesque` to Helvetica Neue or sans-serif. The design reads in the intended register on day zero; the Typekit upgrade is enhancement, not a blocker. See [`typography.md`](typography.md) for the operational setup.
+
+Three voices is the ceiling (one serif family at two optical sizes + one grotesque + one mono). A fourth face in component CSS is a theory shift — stop and read [`design-system.md`](design-system.md) before adding one.
+
+The point of the token is that the font-delivery decision is reversible: a switch from Path C (Typekit) to Path B (self-hosted) is one block's worth of edits in `tokens.css`. Every `var(--font-*)` consumer stays unchanged.
 
 ## The review loop: `rag-web-visual-reviewer` and the 25-point rubric
 
@@ -116,14 +137,18 @@ The gate before step 5 is the auditor and enforcer, not a linter. There is no HT
 ## Common drift patterns and why they fail
 
 - **"Just this one color."** The moment a component writes `color: #333`, the palette has two versions of near-black and the first reviewer to notice will ask why. Fix: add a token, or use the closest existing one.
-- **Literal font names in component CSS.** Shows up when someone copies an example from an external tutorial. The auditor catches it. Fix: replace with `var(--font-structure)` or similar.
-- **Spacing drift below the token grid.** `padding: 14px` creeps in because it "looks right." It does look right — and five other rules will each look right at their own off-grid value, and the composition will slowly lose rhythm. Fix: snap to the nearest token.
+- **Literal font names in component CSS.** Shows up when someone copies an example from an external tutorial. The auditor catches it. Fix: replace with `var(--font-grotesque)`, `var(--font-text)`, or the appropriate editorial token.
+- **Spacing drift below the token grid.** `padding: 14px` creeps in because it "looks right." It does look right — and five other rules will each look right at their own off-grid value, and the composition will slowly lose rhythm. Fix: snap to the nearest token (`--space-3` at 12px or `--space-4` at 16px).
 - **Dark-mode logic in JavaScript.** The `light-dark()` function and `color-scheme: light dark` on `:root` make the dark mode declarative. A JS toggle on `<html>` is both unnecessary and a regression against the agent review model, because the screenshot tool captures preference via `colorScheme: dark` on the Playwright context — there is nothing to click. Fix: trust the cascade.
 - **Inline styles on elements.** They bypass the token contract entirely and the auditor cannot see them because they live in HTML. If an inline style is necessary, it should be a hard-won exception with a comment explaining why no token suffices.
+- **Small-caps at narrow widths.** `font-variant-caps: small-caps` applied globally synthesizes caps at all viewport widths. On short iPhone lines (two or three words), browsers faux-synthesize caps when the font lacks a proper small-caps face, and the result reads as SHOUTING rather than typographic convention. Fix: gate the rule with `@media (min-width: 768px)`. The editorial convention holds at tablet-and-up where the first line has enough words to declare itself; at narrower widths drop it entirely rather than risk the shouting register.
+- **Cross-accent-color drift.** Oxblood (`--color-mark`, aliased as `--color-accent`) is the only non-ink color on the site. Adding a second accent color — for a CTA, a status badge, a new section's heading — shifts the register from editorial to commercial. A second accent is a theory shift. If the design genuinely needs one, it earns a token and a plan record of the register shift; it does not land as a one-off hex in a component rule.
 
 ## Cross-references
 
 - [`tokens.md`](tokens.md) — the full token catalog, category by category, with a worked three-line example.
-- [`typography.md`](typography.md) — font delivery paths (system, self-hosted woff2, Adobe Typekit).
+- [`design-system.md`](design-system.md) — the theory behind the editorial direction: what the palette claims and what invariants keep it recoverable.
+- [`typography.md`](typography.md) — Path C committed (Adobe Typekit); operational setup for the Typekit Web Project.
 - [`visual-qa.md`](visual-qa.md) — the Playwright CLI loop and the capture scripts.
 - [`contributing.md`](contributing.md) — the session-management contract and the plan-doc convention.
+- [`troubleshooting.md`](troubleshooting.md) — named failure modes from the editorial-masthead iteration history.

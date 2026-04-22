@@ -1,90 +1,189 @@
-/* === rag-web Design Token System === */
+/* === Ronin Advisory Group — Design Token Contract === */
 /*
- * Derived from web-frontend/templates/tokens/darko-labs-tokens.css.
- * Typography defaults ship with Path A (system fallback) per docs/typography.md;
- * update the three --font-* chains when the operator commits to Path B or C.
+ * Canonical token catalog for the live site. The editorial-masthead
+ * direction (plan 04) is the shipped design; these tokens are the
+ * vocabulary that direction speaks in.
+ *
+ * Three-line semantic-color fallback preserved on every color:
+ *   static hex → OKLch token → light-dark() semantic pair.
+ * Older browsers resolve to the hex; OKLch-capable browsers stop at
+ * the middle line; modern browsers honor color-scheme via light-dark().
+ *
+ * The palette is two-ink (deep ink + warm off-white paper) with a
+ * single second accent (oxblood). State tokens (success/warning/error)
+ * are deliberately absent — they are not used on the current site and
+ * a disciplined palette is the point. If a future page needs a state
+ * color, the token lands here first, then the consumer.
+ *
+ * Validator margins: this catalog carries exactly 7 light-dark() calls
+ * and exactly 10 --space-N definitions — the minimums required by
+ * tools/scripts/validate-tokens.sh. Removing a semantic color or a
+ * spacing rung breaks the gate before it breaks the site. See
+ * docs/dev/plans/04-design-system-lock-in.md Decision 9 for why the
+ * catalog is sized to the vocabulary rather than padded for slack.
  */
 
 :root { color-scheme: light dark; }
 
 :root {
-  --color-text: #1a1b22;
-  --color-text: oklch(0.169 0.034 265);
-  --color-text: light-dark(oklch(0.169 0.034 265), oklch(0.913 0.006 265));
+  /* ── Ink register ────────────────────────────────────────────── */
 
-  --color-bg: #fafafa;
-  --color-bg: oklch(0.985 0 0);
-  --color-bg: light-dark(oklch(0.985 0 0), oklch(0.130 0.028 262));
+  /* Deep ink — warm, not pure black. Carries at display scale. */
+  --color-ink: #141210;
+  --color-ink: oklch(0.180 0.006 60);
+  --color-ink: light-dark(oklch(0.180 0.006 60), oklch(0.920 0.004 80));
 
-  --color-text-muted: #6b7280;
-  --color-text-muted: oklch(0.551 0.027 264);
-  --color-text-muted: light-dark(oklch(0.551 0.027 264), oklch(0.700 0.018 264));
+  /* Paper — warm off-white. Not sterile. Load-bearing: the editorial
+     direction collapses the moment the page feels clinical. */
+  --color-paper: #f5f0e6;
+  --color-paper: oklch(0.950 0.014 85);
+  --color-paper: light-dark(oklch(0.950 0.014 85), oklch(0.155 0.008 60));
 
-  --color-border: #d4d8e0;
-  --color-border: oklch(0.872 0.010 258);
-  --color-border: light-dark(oklch(0.872 0.010 258), oklch(0.373 0.034 260));
+  /* Secondary ink — colophon, folios, metadata. */
+  --color-ink-muted: #6b645b;
+  --color-ink-muted: oklch(0.480 0.012 70);
+  --color-ink-muted: light-dark(oklch(0.480 0.012 70), oklch(0.660 0.010 75));
 
-  --color-surface: #f2f4f7;
-  --color-surface: oklch(0.960 0.006 265);
-  --color-surface: light-dark(oklch(0.960 0.006 265), oklch(0.210 0.034 265));
+  /* Rule work — hairlines, dividers. */
+  --color-rule: #2a2620;
+  --color-rule: oklch(0.280 0.008 65);
+  --color-rule: light-dark(oklch(0.280 0.008 65), oklch(0.520 0.010 70));
 
-  --color-accent: #3b5fe8;
-  --color-accent: oklch(0.506 0.289 265);
-  --color-accent: light-dark(oklch(0.506 0.289 265), oklch(0.638 0.190 270));
+  /* The second ink. Oxblood — editorial red, not web-red. Used
+     sparingly: issue mark, masthead ornament, one keyword, focus. */
+  --color-mark: #7a1a1a;
+  --color-mark: oklch(0.382 0.142 25);
+  --color-mark: light-dark(oklch(0.382 0.142 25), oklch(0.620 0.165 28));
 
-  --color-accent-hover: #2e4fd4;
-  --color-accent-hover: oklch(0.455 0.264 265);
-  --color-accent-hover: light-dark(oklch(0.455 0.264 265), oklch(0.700 0.160 270));
+  /* Surface — half-step warmer than paper. Colophon strips, insets. */
+  --color-surface: #ebe4d5;
+  --color-surface: oklch(0.915 0.020 85);
+  --color-surface: light-dark(oklch(0.915 0.020 85), oklch(0.195 0.008 70));
 
-  --color-success: #16803c;
-  --color-success: oklch(0.520 0.170 145);
-  --color-success: light-dark(oklch(0.520 0.170 145), oklch(0.700 0.150 145));
+  /* Interior ink-soft — pull quotes, footnote markers. Reserved for
+     supporting pages; shipped now so the catalog is whole. */
+  --color-ink-soft: #3a342c;
+  --color-ink-soft: oklch(0.330 0.010 65);
+  --color-ink-soft: light-dark(oklch(0.330 0.010 65), oklch(0.780 0.008 75));
 
-  --color-warning: #b45309;
-  --color-warning: oklch(0.530 0.160 75);
-  --color-warning: light-dark(oklch(0.530 0.160 75), oklch(0.770 0.160 70));
+  /* ── Tier-1 canonical aliases ────────────────────────────────── */
+  /* Validation script and quality-gate agents address the site by
+     canonical names. These route to the editorial-register tokens. */
+  --color-text:         var(--color-ink);
+  --color-bg:           var(--color-paper);
+  --color-text-muted:   var(--color-ink-muted);
+  --color-border:       var(--color-rule);
+  --color-accent:       var(--color-mark);
+  --color-accent-hover: var(--color-ink-soft);
 
-  --color-error: #b91c1c;
-  --color-error: oklch(0.430 0.180 25);
-  --color-error: light-dark(oklch(0.430 0.180 25), oklch(0.630 0.220 25));
+  /* ── Typography ──────────────────────────────────────────────── */
+  /* Display serif — the cover voice. FreightDisp primary; graded
+     substitutes preserve stress when the primary is unavailable. */
+  --font-display:
+    'freight-display-pro',
+    'FreightDisp Pro',
+    'Freight Display Pro',
+    'Kepler Std Display',
+    'Canela',
+    'Minion Pro Display',
+    Georgia,
+    'Times New Roman',
+    serif;
 
-  /* Typography — Path A (system fallback). See docs/typography.md. */
-  --font-structure: ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', sans-serif;
-  --font-prose:     Georgia, 'Times New Roman', serif;
-  --font-mono:      ui-monospace, Menlo, Monaco, 'Courier New', monospace;
-  --font-sans:      ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* Text serif — body copy, pull quotes. Same family, lower contrast. */
+  --font-text:
+    'freight-text-pro',
+    'FreightText Pro',
+    'Freight Text Pro',
+    'Kepler Std',
+    'Minion Pro',
+    Georgia,
+    'Times New Roman',
+    serif;
 
-  --size-xs:   0.640rem;
-  --size-sm:   0.800rem;
-  --size-base: 1.000rem;
-  --size-lg:   1.250rem;
-  --size-xl:   1.563rem;
-  --size-2xl:  1.953rem;
+  /* Grotesque — colophon, metadata, small-caps, numbering. */
+  --font-grotesque:
+    'acumin-pro',
+    'Acumin Pro',
+    'Neue Haas Grotesk',
+    'Söhne',
+    'Inter',
+    'Helvetica Neue',
+    Helvetica,
+    'Arial',
+    sans-serif;
 
-  --leading-tight:   1.2;
-  --leading-normal:  1.5;
-  --leading-relaxed: 1.75;
-  --leading-prose:   2.0;
+  /* Mono — machine-register items (email, domain, ledger metadata). */
+  --font-mono:
+    'Berkeley Mono',
+    ui-monospace,
+    'SF Mono',
+    Menlo,
+    Monaco,
+    'Courier New',
+    monospace;
 
-  --tracking-tight:  -0.025em;
-  --tracking-normal:  0;
-  --tracking-wide:    0.025em;
+  /* Tier-1 canonical aliases. Component CSS addressing these names
+     still works; the identity is chosen here. */
+  --font-structure: var(--font-grotesque);
+  --font-prose:     var(--font-text);
+  --font-sans:      var(--font-grotesque);
 
-  --space-1:  0.25rem;
-  --space-2:  0.50rem;
-  --space-3:  0.75rem;
-  --space-4:  1.00rem;
-  --space-5:  1.25rem;
-  --space-6:  1.50rem;
-  --space-8:  2.00rem;
-  --space-10: 2.50rem;
-  --space-12: 3.00rem;
-  --space-16: 4.00rem;
-  --space-20: 5.00rem;
-  --space-24: 6.00rem;
+  /* ── Type scale — editorial voice, clamp()-driven at display ─── */
+  --size-xs:   0.750rem;   /* 12px  folios, issue marks                 */
+  --size-sm:   0.875rem;   /* 14px  colophon, metadata                  */
+  --size-base: 1.000rem;   /* 16px  body                                */
+  --size-lg:   1.250rem;   /* 20px  lede                                */
+  --size-xl:   1.875rem;   /* 30px  sub-display                         */
+  --size-2xl:  2.750rem;   /* 44px  section lede                        */
+  --size-3xl:  4.250rem;   /* 68px  masthead tablet                     */
+  --size-4xl:  6.500rem;   /* 104px masthead desktop                    */
+  --size-5xl:  9.500rem;   /* 152px masthead widescreen                 */
 
-  --width-prose:     65ch;
+  /* ── Leading ─────────────────────────────────────────────────── */
+  --leading-display: 0.92;    /* tight, optical for display serif      */
+  --leading-tight:   1.10;
+  --leading-snug:    1.22;
+  --leading-normal:  1.48;    /* alias for --leading-prose             */
+  --leading-prose:   1.48;
+  --leading-relaxed: 1.70;
+
+  /* ── Tracking ────────────────────────────────────────────────── */
+  --tracking-display: -0.025em; /* optical tightening at display       */
+  --tracking-tight:   -0.025em; /* alias                               */
+  --tracking-text:     0;
+  --tracking-normal:   0;       /* alias                               */
+  --tracking-wide:     0.025em;
+  --tracking-caps:     0.12em;  /* small-caps / all-caps               */
+  --tracking-caps-lg:  0.18em;  /* hairline caps at small sizes        */
+
+  /* ── Spatial grid — editorial proportions ────────────────────── */
+  --space-1:  0.25rem;   /*  4px */
+  --space-2:  0.50rem;   /*  8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1.00rem;   /* 16px */
+  --space-5:  1.50rem;   /* 24px */
+  --space-6:  2.00rem;   /* 32px */
+  --space-7:  3.00rem;   /* 48px */
+  --space-8:  4.50rem;   /* 72px */
+  --space-9:  6.50rem;   /* 104px */
+  --space-10: 9.00rem;   /* 144px */
+
+  /* ── Rule weights ────────────────────────────────────────────── */
+  --rule-hairline: 0.5px;
+  --rule-thin:     1px;
+  --rule-double:   3px;   /* paired with inset outline for double-rule */
+
+  /* ── Page margins — cover-frame padding scales with viewport ─── */
+  --page-margin-xs: 0.625rem;   /* iPhone-class — reduces chrome      */
+  --page-margin-sm: 1.25rem;    /* ≥420px                             */
+  --page-margin-md: 2.25rem;    /* ≥768px                             */
+  --page-margin-lg: 4.00rem;    /* ≥1200px                            */
+
+  /* ── Layout widths ───────────────────────────────────────────── */
+  --width-prose:     62ch;
   --width-content:   830px;
+  --width-cover:     1280px;
   --width-container: 1200px;
   --width-sidebar:   250px;
 }

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ronin Advisory Group — Vol. 01, No. 01</title>
+  <meta name="description" content="Ronin Advisory Group, LLC. Technical consulting, digital forensics examination, AI software engineering, and AI risk management. Publisher of the Gunnerbench periodical." />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script>
+    // Theme override — inline in <head> to avoid FOUC. When the user
+    // has chosen an edition, we pin the color-scheme before paint;
+    // otherwise prefers-color-scheme decides (via tokens.css).
+    (() => {
+      const KEY = 'rag-theme';
+      try {
+        const stored = localStorage.getItem(KEY);
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      } catch (_) { /* localStorage unavailable — fall back to OS */ }
+    })();
+  </script>
+</head>
+<body>
+  <main class="cover" role="main">
+    <div class="cover__frame">
+
+      <!-- ── Top folio — issue line ────────────────────────────── -->
+      <header class="folio" aria-label="Masthead folio">
+        <div class="folio__left">
+          <span class="folio__mark-wrap" aria-hidden="true">
+            <svg class="folio__mark" viewBox="0 0 48 48">
+              <g fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="24" cy="24" r="21" />
+                <polygon points="24,8 40,24 24,40 8,24" />
+              </g>
+              <circle cx="24" cy="24" r="2" fill="currentColor" />
+            </svg>
+          </span>
+          <span>Ronin Advisory Group, LLC</span>
+        </div>
+        <div class="folio__sep" aria-hidden="true">§</div>
+        <div class="folio__right">
+          <span>Est. MMXXV</span>
+          <span class="vr" aria-hidden="true"></span>
+          <span>Vol. 01 &nbsp;·&nbsp; No. 01</span>
+        </div>
+      </header>
+
+      <!-- ── Masthead + body pairing ──────────────────────────── -->
+      <section class="masthead" aria-label="Cover">
+        <p class="masthead__eyebrow">
+          <span class="mark">A quarterly practice</span>
+          &nbsp;·&nbsp; Forensics · AI · Risk
+        </p>
+
+        <h1 class="masthead__title">
+          <span class="line line--ronin">Ronin</span>
+          <span class="line line--advisory">Advisory<span class="group-mark">&hairsp;Group</span></span>
+        </h1>
+
+        <p class="masthead__tagline">
+          Evidentiary-grade consulting for systems whose failure modes
+          leave traces — and for the teams accountable when they do.
+        </p>
+
+        <div class="masthead-layout" style="margin-top: var(--space-7);">
+
+          <!-- ── Lede — the editorial voice of the cover ── -->
+          <div class="lede">
+            <p>
+              Ronin Advisory Group is an independent practice in digital
+              forensics, AI engineering, and the risk work that sits
+              between them. We are retained when the stakes are
+              investigatory, the record must hold, and the question is
+              less <em>what happened</em> than <em>what can be proven</em>.
+            </p>
+            <p>
+              The firm publishes its thinking. Below is the colophon of
+              current engagements and, opposite, Issue 01 of our
+              continuing periodical.
+            </p>
+          </div>
+
+          <!-- ── Colophon — services as numbered masthead block ── -->
+          <aside class="colophon" aria-labelledby="services-label">
+            <h2 id="services-label" class="colophon__label">
+              The Practice &nbsp;—&nbsp; Colophon
+            </h2>
+            <ol class="services">
+              <li>
+                <span class="services__num" aria-hidden="true"></span>
+                <span class="services__name">Digital Forensics Examination</span>
+                <span class="services__kicker">Evidentiary</span>
+              </li>
+              <li>
+                <span class="services__num" aria-hidden="true"></span>
+                <span class="services__name">AI Risk Management</span>
+                <span class="services__kicker">Governance</span>
+              </li>
+              <li>
+                <span class="services__num" aria-hidden="true"></span>
+                <span class="services__name">AI Software Engineering</span>
+                <span class="services__kicker">Build</span>
+              </li>
+              <li>
+                <span class="services__num" aria-hidden="true"></span>
+                <span class="services__name">Technical Consulting</span>
+                <span class="services__kicker">Advisory</span>
+              </li>
+            </ol>
+          </aside>
+
+        </div>
+      </section>
+
+      <!-- ── Foot — imprint, principal, Gunnerbench ───────────── -->
+      <footer class="foot" aria-label="Imprint">
+
+        <div class="foot__block">
+          <h3>Principal</h3>
+          <p>
+            <strong>John Benson</strong> &nbsp;—&nbsp;
+            Forensics &amp; AI.
+            <br/>
+            <a href="https://john-benson.com" rel="noopener">john-benson.com</a>
+          </p>
+        </div>
+
+        <div class="foot__block">
+          <h3>Correspondence</h3>
+          <address>
+            <a class="foot__email"
+               href="mailto:john@roninadvisory.ai">john@roninadvisory.ai</a>
+          </address>
+          <p style="margin-top: var(--space-2); color: var(--color-ink-muted); font-size: var(--size-sm);">
+            By appointment. No intake form.
+          </p>
+        </div>
+
+        <!-- ── Gunnerbench — the periodical, tipped in as the card ── -->
+        <a class="gunnerbench"
+           href="#gunnerbench"
+           aria-label="Read Gunnerbench, Issue 01">
+          <span class="gunnerbench__issue" aria-hidden="true">N<sup style="font-size:.55em">o</sup>&thinsp;01</span>
+          <span class="gunnerbench__kicker">The Firm Publishes</span>
+          <h3 class="gunnerbench__title">
+            <em>Gunnerbench</em>
+            <br/>— a periodical
+          </h3>
+          <span class="gunnerbench__meta">
+            <span>Issue 01 &nbsp;·&nbsp; Forthcoming</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </span>
+        </a>
+
+      </footer>
+
+      <!-- ── Editorial rule mark between foot and imprint ──── -->
+      <div aria-hidden="true" style="display:flex;justify-content:center;padding:var(--space-6) 0 var(--space-4);color:var(--color-rule);">
+        <img src="./assets/rule-mark.svg" alt="" width="240" height="24" style="color:inherit;opacity:0.9;"/>
+      </div>
+
+      <!-- ── Imprint line ──────────────────────────────────── -->
+      <!--
+           The imprint is the printed-matter convention for print-run
+           notes. The edition toggle lives here, as an italic colophon
+           affordance — "Day edition / Night edition" — not a button.
+           It reads as part of the imprint, which is why it doesn't
+           break the cover composition.
+      -->
+      <div class="imprint">
+        <span>© MMXXV Ronin Advisory Group, LLC &nbsp;·&nbsp; All rights reserved</span>
+        <span class="imprint__center">
+          <button type="button"
+                  class="edition"
+                  data-theme-toggle
+                  aria-pressed="false"
+                  aria-label="Toggle night edition">
+            <span class="edition__rule" aria-hidden="true"></span>
+            <span class="edition__label">
+              <span class="edition__word edition__word--day">Day</span>
+              <span class="edition__slash" aria-hidden="true">/</span>
+              <span class="edition__word edition__word--night">Night</span>
+              <span class="edition__suffix">&nbsp;edition</span>
+            </span>
+          </button>
+        </span>
+        <span class="imprint__right">roninadvisory.ai</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Theme toggle — wires the [data-theme-toggle] in the imprint.
+    // Reads OS preference as the fallback for the initial pivot, then
+    // persists the explicit choice. aria-pressed reflects "night
+    // edition currently active" so the pressed state has meaning.
+    (() => {
+      const KEY = 'rag-theme';
+      const mql = window.matchMedia('(prefers-color-scheme: dark)');
+
+      const currentTheme = () =>
+        document.documentElement.getAttribute('data-theme')
+          || (mql.matches ? 'dark' : 'light');
+
+      const reflect = (theme) => {
+        document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+        });
+      };
+
+      reflect(currentTheme());
+
+      window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const next = currentTheme() === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem(KEY, next); } catch (_) {}
+            reflect(next);
+          });
+        });
+        // If the user hasn't chosen, follow OS changes live.
+        mql.addEventListener?.('change', () => {
+          if (!document.documentElement.getAttribute('data-theme')) {
+            reflect(currentTheme());
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
