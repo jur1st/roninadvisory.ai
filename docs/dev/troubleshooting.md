@@ -150,6 +150,26 @@ The inline `<script>` in `<head>` that pins `data-theme` before paint remains; t
 
 ---
 
+## 7. Specificity trap on base element rules
+
+**Symptom.** A wrapper class (e.g. `.lede`) sets `font-size` or `line-height` on itself, intending child elements to inherit the value, but the children render at a different size. The wrapper rule and the child rule are both present; the child's explicit declaration wins.
+
+**Cause.** `site/static/styles.css` contains a base-prose block of element selectors (`p`, `h1`–`h6`, `ul`, `ol`, `table`, etc.) that sets properties explicitly on those elements. A bare `p { font-size: var(--size-base); }` has higher specificity than a parent wrapper's value because inheritance only applies when no more-specific rule is present. The element selector wins over inheritance regardless of the order of declarations or the position of the wrapper in the cascade.
+
+The failure is not a specificity bug in the conventional sense — the base block is working correctly. The trap is that the author expects inheritance to win when explicit rules are in play.
+
+**Fix.** The base-prose block should only set properties that are **not** inherited, or properties where the base value is the correct default for all contexts. Inherited properties — `font-family`, `font-size`, `line-height`, `color` — should flow from `body` through wrapper rules and arrive at element selectors as inherited values. The base block should **not** set inherited typography properties on individual elements unless those elements genuinely need a non-body default at all times.
+
+When a wrapper needs to set `font-size` for its children, either:
+1. The base-prose element rule for that element should not exist, or should be removed from it, so inheritance can flow unobstructed.
+2. The wrapper uses a descendent selector (`.lede p { font-size: … }`) that outspecifies the base rule.
+
+Option 2 restores the correct hierarchy: the base block is the floor, class-scoped rules modulate it. Option 1 removes the floor for that property and requires each consumer to be intentional.
+
+**Why this matters for future base-element work.** `site/static/styles.css` now carries a base-prose block that subpages inherit. The convention it establishes is: element selectors set structural properties (margins, padding, `display`, `list-style`, border widths); typographic properties (`font-family`, `font-size`, `line-height`, `color`) flow from `body` and are only overridden on elements that genuinely need a non-body default (`h1`–`h6`, `code`, `pre`). A future contributor adding an element to the base block should follow this rule, not the simpler pattern of setting everything on the element directly. The simpler pattern produces brittle inheritance and forces wrapper authors to fight the cascade instead of riding it.
+
+---
+
 ## Cross-references
 
 - [`design-system.md`](design-system.md) — the design theory these failure modes are encountered within.

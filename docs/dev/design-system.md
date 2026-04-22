@@ -73,6 +73,10 @@ The double-rule frame that surrounds the cover — a CSS `border` plus an `outli
 
 Interior pages, when they exist, should continue this pattern. Not cards. Not tiles. Typeset matter: numbered, ruled, grotesque for structure, serif for prose.
 
+**The base-prose block holds the editorial register for un-classed markup.** `site/static/styles.css` carries a base block of element selectors (`h1`–`h6`, `p`, `ul`, `ol`, `dl`, `blockquote`, `figure`, `code`, `pre`, `table`, `details/summary`, and minimal form elements) that establishes the editorial defaults before any class-scoped rule arrives. Its job is to make raw, un-classed markup on a subpage read as typeset matter rather than browser-default Times. The cover's class-scoped selectors (`.masthead__title`, `.lede p`, `.foot__block h3`) are more specific and continue to win. The base block is the floor; wrappers modulate it.
+
+The convention the base block follows — which any future addition must honor — is that element selectors set structural properties (margin, padding, display, borders) and only override typographic properties (`font-family`, `font-size`, `line-height`) when the element genuinely needs a non-body default at all times (`h1`–`h6`, `code`, `pre`). Inherited typography flows from `body` through wrapper rules to reach leaf elements. If a base element rule sets `font-size` explicitly on `p`, a wrapper that tries to resize its child `<p>` elements by setting `font-size` on itself will lose — the element selector outspecifies inheritance. See [`troubleshooting.md`](troubleshooting.md) for the specificity trap this creates and the correct fix posture.
+
 ---
 
 ## 3. What invariants keep it recoverable?
