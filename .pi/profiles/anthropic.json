@@ -1,0 +1,9 @@
+{
+  "default": "anthropic/claude-sonnet-4-6",
+  "per_agent": {
+    "rag-web-docs-changelog-writer": "anthropic/claude-haiku-4-5",
+    "rag-web-docs-dev-writer": "anthropic/claude-sonnet-4-6",
+    "rag-web-docs-user-writer": "anthropic/claude-sonnet-4-6",
+    "rag-web-docs-agent-writer": "anthropic/claude-sonnet-4-6"
+  }
+}

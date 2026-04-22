@@ -1,0 +1,4 @@
+# Pi per-agent session caches (rebuild on demand)
+agent-sessions/
+# Pi extension logs
+*.log
