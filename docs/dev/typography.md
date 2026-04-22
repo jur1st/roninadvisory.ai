@@ -1,6 +1,6 @@
 # Typography Delivery for rag-web
 
-> **Path C chosen (2026-04-21).** Adobe Typekit CDN delivering FreightText Pro, FreightDisp Pro, Acumin Pro. The Typekit Web Project has not yet been stood up; the operational steps below describe what the operator must do. Until the `<link>` is added to `site/index.html`, the site reads in the correct register via the graded fallback stacks.
+> **Path C live (2026-04-21).** Adobe Typekit kit `dwr4eme` is active. Kit link wired into `site/index.html` above `static/styles.css`. FreightText Pro, FreightDisp Pro, and Acumin Pro are rendering on production at `roninadvisory.ai`. The operational steps below are retained for reference — for future kit recreation or domain changes.
 
 Three paths for font delivery on this project are documented below. Path C is the committed path. Paths A and B are retained as alternatives — not chosen, retained for reversibility. If the Typekit relationship becomes unavailable, Path B (open-source faces) is the nearest viable substitute.
 
@@ -14,7 +14,9 @@ Unlocks the Adobe CC font library for web delivery. FreightText Pro, FreightDisp
 
 ### Operational setup
 
-The Typekit Web Project has not been created as of the lock-in (plan 04). The operator must complete these steps before the production site loads the correct faces:
+**Current state (2026-04-21): kit `dwr4eme` is live.** The `<link>` is present in `site/index.html` above `static/styles.css`. Domain allowlist includes `roninadvisory.ai`. No further setup is required unless the kit is recreated or a domain is added.
+
+If the kit must be recreated (Adobe account transfer, kit expiry, or domain expansion), the steps are:
 
 1. Sign in to [fonts.adobe.com](https://fonts.adobe.com) with the Creative Cloud account.
 2. Create a new **Web Project**. Select the three faces:
@@ -24,15 +26,15 @@ The Typekit Web Project has not been created as of the lock-in (plan 04). The op
 3. Add the following domains to the kit's **domain allowlist**:
    - `roninadvisory.ai`
    - The GitHub Pages preview host (typically `<username>.github.io`)
-4. Note the **7-character kit ID** Adobe issues (e.g. `abc1def`).
-5. In `site/index.html`, add the Typekit `<link>` element **above** the `static/styles.css` link in `<head>`:
+4. Note the **7-character kit ID** Adobe issues.
+5. In `site/index.html`, update the Typekit `<link>` element — it sits **above** the `static/styles.css` link in `<head>`:
 
 ```html
 <link rel="stylesheet" href="https://use.typekit.net/XXXXXXX.css">
 <link rel="stylesheet" href="static/styles.css">
 ```
 
-Replace `XXXXXXX` with the actual kit ID.
+Replace `XXXXXXX` with the new kit ID.
 
 ### Fallback chain while the kit is not loaded
 

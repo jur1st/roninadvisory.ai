@@ -7,6 +7,19 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Typekit kit integration (kit dwr4eme): Adobe licensed families freight-text-pro, freight-display-pro, and acumin-pro wired as the typographic enhancement to the fallback stack (Path C). Graded substitutes remain; the kit is the first-choice render path for the editorial register.
+- site/CNAME binding roninadvisory.ai to the GitHub Pages artifact — survives the legacy→workflow source flip.
+- Archive of the 2025 placeholder site (`docs/dev/mockups/_archive/legacy-placeholder/`): original index.html, logo.png, and provenance README preserve the firm's genesis prose and visual identity as an origin statement, not erased by the rewrite.
+
+### Changed
+
+- Copy refinement on the cover: eyebrow shifted to "A Technical Consulting Practice"; lede trimmed to "The firm publishes its thinking" (removed redundant signposting); principal title now "John Benson, Esq."
+- site/index.html carries the 2025 placeholder prose as an invisible HTML comment above `<main>`, preserving continuity of the firm's origin statement in the codebase.
+- GitHub Actions preflight hardened: replaced hand-rolled curl|tar install with taiki-e/install-action for robust cargo-binstall fallback, then switched to purpose-built marketplace actions (reviewdog/action-actionlint@v1, lycheeverse/lychee-action@v2) to avoid install-action's transient binary-availability edge case. Three CI iterations before stabilization.
+- GitHub Pages source flipped from legacy Settings to Actions workflow mode via gh API, completing the operator-gated deploy pipeline.
+
+### Added (prior sessions)
+
 - Design-system lock-in: the site's visual direction resolved to the editorial-masthead register (mockup A promoted to `site/`). The token catalog rewritten from the Tier-1 scaffold (blue accent, state colors) to the editorial contract — two-ink palette (deep ink + warm paper) with oxblood accent, no state tokens, optical type scale (xs→5xl), rule weights, and page-margin family. Tokens validated by `tools/scripts/validate-tokens.sh`.
 - Archived design alternatives: mockups B (typographic architecture) and C (the seal) moved to `docs/dev/mockups/_archive/` with a README explaining their theory value. Non-canonical alternatives retained for reversibility; the editorial direction is the shipped design.
 - Typography path committed to Path C (Adobe Typekit CDN): FreightDisp Pro, FreightText Pro, Acumin Pro. Site currently resolves to display-name substitutes (Georgia, Helvetica Neue, system monospace); Typekit kit provisioning is an operator action deferred to a follow-up. `docs/dev/typography.md` updated with Path C decision and operational setup steps.
