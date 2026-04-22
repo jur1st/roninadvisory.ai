@@ -22,18 +22,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install preflight tools
-        uses: taiki-e/install-action@v2
-        with:
-          tool: lychee,actionlint
-      - name: Lint workflow
-        run: actionlint .github/workflows/deploy-pages.yml
+      - name: Lint workflows (actionlint)
+        uses: rhysd/action-actionlint@v1
       - name: Validate tokens
         run: ./tools/scripts/validate-tokens.sh site/static/tokens.css
       - name: Verify .nojekyll
         run: test -f site/.nojekyll
       - name: Check links (offline)
-        run: lychee --offline --no-progress --verbose site/
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress --verbose site/
 
   deploy:
     needs: preflight
