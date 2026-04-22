@@ -19,22 +19,26 @@ Treat the MOC and property blocks as load-bearing, not decorative. A reader land
 ## Preconditions
 
 1. The other four `rag-web-docs-*-writer` agents have completed.
-2. `obsidian` CLI is available on PATH (`command -v obsidian`).
-3. A target vault is explicitly specified OR discoverable (`~/.config/obsidian-cli/*`, `$OBSIDIAN_VAULT`). If neither, log `no vault configured — skipping export` and exit 0.
+2. `obsidian` CLI is available on PATH — the first-party Obsidian 1.12+ CLI, verified with `obsidian version`. If the user has not enabled "Command line interface" in Obsidian Settings → General, the binary will not be callable as a CLI and this precondition fails.
+3. A target vault is resolvable. Resolution order:
+   a. `.the-grid/config/obsidian-vault.yaml` at the project root (primary, tracked in git). Fields: `vault:`, `subpath:`, `moc:`.
+   b. `$OBSIDIAN_VAULT` environment variable (vault name only; no subpath).
+   c. `~/.config/obsidian-cli/` (legacy discovery).
+   d. None → log `no vault configured — skipping export` and exit 0.
 
 ## Workflow
 
-1. **Detect vault configuration.** If absent, skip and exit 0.
+1. **Resolve vault configuration.** Read `.the-grid/config/obsidian-vault.yaml` if present and extract `vault:`, `subpath:`, `moc:`. Fall back through the resolution order above. If no signal, skip and exit 0.
 2. **Read the generated docs.** Every file under `docs/user/`, `docs/dev/`, `docs/agent/`, plus `CLAUDE.md`, `AGENTS.md` (if present), `CHANGELOG.md`, and `README.md`.
 3. **Transform each file:**
    - Add the YAML property block (see below)
    - Wrap key sections in callouts — `> [!info]`, `> [!warning]`, `> [!tip]` — where they aid scanning and theory-building
    - Convert internal relative links into wikilinks using the `rag-web - <title>` convention
    - Preserve the source project-relative path in `source:` so the export round-trips
-4. **Create a project index note.** `rag-web - Index.md` is a MOC — a map-of-content that shows the corpus's shape by audience (user / dev / agent / changelog). This is the surface a future reader lands on first; design it to support fast theory reconstruction.
-5. **Write via `obsidian create`.** Always `overwrite silent`. Target path pattern: `Projects/rag-web/docs/<filename>.md`.
+4. **Build the MOC.** The filename comes from the config's `moc:` field (default `rag-web - Index.md`). It lives at `<subpath>/<moc>` — co-located with the exported docs, not in a vault-level _MOCs folder. The MOC is a map-of-content that shows the corpus's shape by audience (user / dev / agent / changelog). This is the surface a future reader lands on first; design it to support fast theory reconstruction.
+5. **Write via `obsidian create`.** Always `overwrite silent`. Invoke as `obsidian vault="<vault>" create path="<subpath>/<filename>" content="..." overwrite silent`. The `vault=` parameter must be first per the Obsidian CLI contract.
 6. **Error-check stdout.** The Obsidian CLI returns exit 0 even on failure. Scan stdout for `Error:` after every invocation; treat any match as a hard failure.
-7. **Report.** List every file written with its vault path.
+7. **Report.** List every file written with its full vault path (`<vault>:/<subpath>/<filename>`).
 
 ## YAML property block
 
@@ -56,9 +60,10 @@ Every exported note uses `rag-web - <title>.md` in the vault. This prevents coll
 
 ## Constraints
 
-- NEVER write to the filesystem directly — always via `obsidian create`.
+- NEVER write to the filesystem directly — always via `obsidian create`. Direct writes bypass Obsidian's index, sync, and plugin hooks.
 - NEVER use `obsidian create` without `overwrite` and `silent`. `overwrite` because we're updating; `silent` because the CLI steals UI focus otherwise.
 - NEVER fabricate a vault path when none is configured — exit quietly.
+- ALWAYS pass `vault=<name>` as the FIRST parameter to every `obsidian` invocation per the CLI contract. A missing `vault=` falls back to the currently-active vault, which is wrong when the operator has a different vault focused.
 - ALWAYS add the five YAML properties to every exported note — they make the corpus queryable and are load-bearing for theory reconstruction.
 - ALWAYS scan stdout for `Error:` after each `obsidian` call — exit codes are unreliable.
 - ALWAYS leave the in-project docs untouched. The vault copy is the pretty, theory-transmitting version; the in-project copy is the working version.
