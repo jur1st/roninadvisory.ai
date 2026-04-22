@@ -7,6 +7,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Pi harness parity for the four docs-writer agents (`changelog`, `dev`, `user`, `agent`). Dual orchestrators — CC-side `/rag-web-pi-close` and Pi-side `.pi/extensions/rag-web-team.ts` — allow the constellation to run from either harness; the extra-time path (paid Pi credits) now has an escape hatch. Tool allowlists (`read,grep,find,ls,write,edit`) and session-start git checkpoints (`pi-checkpoint` commits) enforce safety. See `docs/dev/plans/04-pi-harness-bringup.md` for the detailed design and acceptance criteria.
+- `drive` skill installed globally at `~/.claude/skills/drive/` with end-to-end verification (headless + screenshot smoke tests), making tmux-session orchestration available to all projects. Wrapped in `tools/scripts/rag-web-install-drive.sh` for re-runnable setup.
 - Dev-loop-vs-publish separation inside `tools/`: Playwright and preview-server are explicit dev tools that never produce output shipped to Pages. Approvals tracked in commit messages and `pi-agents.yaml`, making the "no build tooling without explicit approval" rule legible in practice.
 - `tools/preview/main.go` + `go.mod` — stdlib-only HTTP file server over `site/`. Binds 0.0.0.0:8080 by default; `HOST=127.0.0.1` for laptop-only access. Prints loopback and LAN URLs on startup, enabling rapid local iteration without a separate build step.
 - `tools/scripts/preview.sh` — pidfile-backed daemon wrapper (start | stop | status | restart | logs) for the preview server. Operators use `/rag-web-preview` command; script is the mechanical layer.

@@ -1,6 +1,6 @@
 # Agents — the `rag-web-*` registry
 
-Nine agents live under [`.claude/agents/`](../../.claude/agents/). They fall into two groups by the work they perform: documentation-layer writers, which author text about the project, and quality-gate agents, which inspect the project's output. The groups are governed differently — writers are dispatched automatically by [`/rag-web-close`](commands.md) based on what changed; gates are invoked explicitly by the operator or by a skill against a named target.
+Nine agents live under [`.claude/agents/`](../../.claude/agents/), with Pi mirrors for four of them under [`.pi/agents/`](../../.pi/agents/). They fall into two groups by the work they perform: documentation-layer writers, which author text about the project, and quality-gate agents, which inspect the project's output. The groups are governed differently — writers are dispatched automatically by [`/rag-web-close`](commands.md) based on what changed; gates are invoked explicitly by the operator or by a skill against a named target.
 
 Every agent is prefixed `rag-web-*`. The prefix is not decoration. It scopes the project's primitives so that a global or sibling-project agent with the same role does not shadow them. See the **Namespacing** section of [`conventions.md`](conventions.md).
 
@@ -9,6 +9,8 @@ Every agent is prefixed `rag-web-*`. The prefix is not decoration. It scopes the
 ## Documentation-layer writers
 
 These agents transmit the project's theory in prose — Naur's framing applied literally. Each writes to a specific surface (`docs/dev/`, the site itself, `docs/agent/`, `CHANGELOG.md`, or the Obsidian vault). [`/rag-web-close`](commands.md) dispatches them adaptively based on the session's diff.
+
+The four parallel writers (`changelog`, `dev`, `user`, `agent`) are `mirror_status: shipped` on both harnesses. The Pi mirrors live at `.pi/agents/rag-web-docs-{changelog,dev,user,agent}-writer.md` with matching writable-path contracts and tool allowlist `read,grep,find,ls,write,edit` — no `bash`. No `model:` field appears in the Pi agent frontmatter; model routing is handled at launch time by `.pi/profiles/<profile>.json`. The vault-exporter has no Pi mirror yet (`pending`); it waits on vault standup.
 
 ### [`rag-web-docs-dev-writer`](../../.claude/agents/rag-web-docs-dev-writer.md)
 
@@ -92,4 +94,17 @@ The full dispatch contract lives in `/rag-web-close`; this is the registry-level
 | Post-deploy verification | `/rag-web-pages-deploy` (after workflow success) | `rag-web-pages-verify` |
 | Rollback proposal | `/rag-web-pages-rollback` | `rag-web-pages-rollback-advisor` |
 
-Every agent in this registry has a corresponding entry in [`pi-agents.yaml`](../../pi-agents.yaml). The three deployment-pipeline agents are all `mirror_status: pending` — their Pi mirrors are owed. A new agent added under `.claude/agents/` without a matching entry is a cross-harness-drift violation; see [`harness.md`](harness.md).
+Every agent in this registry has a corresponding entry in [`pi-agents.yaml`](../../pi-agents.yaml). The three deployment-pipeline agents and `rag-web-docs-vault-exporter` are all `mirror_status: pending` — their Pi mirrors are owed. A new agent added under `.claude/agents/` without a matching entry is a cross-harness-drift violation; see [`harness.md`](harness.md).
+
+## Pi orchestration layer
+
+The writers constellation is dispatched in two ways depending on which harness the operator is in:
+
+| Harness | Orchestrator | Fanout mechanism |
+|---|---|---|
+| Claude Code | [`/rag-web-pi-close`](../../.claude/commands/rag-web-pi-close.md) | CC command writes `/tmp/rag-web-pi-task.prompt`, execs `tools/scripts/rag-web-pi-team.sh` |
+| Pi TUI | [`/rag-web-team`](../../.pi/extensions/rag-web-team.ts) | Pi extension registers the command; spawns four `pi --no-extensions` subprocesses with in-TUI grid widget |
+
+Both paths issue a pre-fanout git checkpoint (`git commit --allow-empty -m "pi-checkpoint: ..."`) before spawning writers. Subprocess Pi runs pass `--no-extensions`, bypassing the interactive-session `.pi/extensions/rag-web-checkpoint.ts`; both orchestrators issue their own checkpoint to cover this gap. See [`conventions.md`](conventions.md) for the full three-layer safety contract.
+
+Both orchestrators aggregate per-agent logs under `.the-grid/pi-runs/<ISO-timestamp>/`. The `/rag-web-pi-close` CC command reads those logs and surfaces failures in plain prose; the Pi extension displays agent status in a live 2x2 grid widget during fanout.

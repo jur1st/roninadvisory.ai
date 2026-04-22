@@ -38,7 +38,9 @@ settings: [ ... same shape ... ]
 assets:   [ ... same shape ... ]
 ```
 
-The five top-level buckets (`commands`, `agents`, `skills`, `settings`, `assets`) exist so that a primitive's *kind* is preserved even when its Pi shape does not resemble the CC shape at all. A Pi "command" may be a script; a Pi "agent" may be a YAML entry in a different registry. The bucket survives; the file format does not have to.
+Six top-level buckets (`commands`, `agents`, `skills`, `extensions`, `settings`, `assets`) exist so that a primitive's *kind* is preserved even when its Pi shape does not resemble the CC shape at all. A Pi "command" may be a script; a Pi "agent" may be a YAML entry in a different registry; a Pi "extension" is a TypeScript module that hooks into Pi's event API — a class of primitive that has no CC equivalent. The bucket survives; the file format does not have to.
+
+The `extensions:` bucket was added in plan 04 to record Pi-specific runtime hooks (`rag-web-checkpoint.ts`, `rag-web-team.ts`). An extension entry with `mirror_status: not-applicable` signals that no CC analog exists or is meaningful — the exemption is structural, not a gap.
 
 The `skills:` bucket is now populated — the `rag-web-pages-deploy` skill is the first project-level skill, added in plan 03. A skill's `mirrors:` value points to a directory, not a file (`mirrors: .claude/skills/rag-web-pages-deploy/`), because the skill is a structured tree (SKILL.md + reference/ + templates/), not a single primitive. The drift check still applies: a skill entry with `mirror_status: pending` means the Pi side of the skill tree has not been built.
 
@@ -56,9 +58,15 @@ The preview server (`tools/preview/` Go binary, `tools/scripts/preview.sh`) is r
 
 `not-applicable` is the escape hatch, and it is load-bearing. Some artifacts — `tools/package.json`'s Playwright dev dependency, the publishable `site/` scaffold, shell scripts under `tools/scripts/` — are either harness-agnostic or specific to one harness's internal loop. Forcing a Pi mirror on them would be ritual, not parity. The registry records the exemption with its reason; the antipattern check skips entries marked `not-applicable`.
 
+### Asymmetric primitive shape
+
+Two CC and Pi primitives can be `mirror_status: shipped` even when their file formats are completely different. The `rag-web-pi-close` / `rag-web-team` pair is the canonical example: the CC side is a prompt-template command file (`.claude/commands/rag-web-pi-close.md`); the Pi side is a TypeScript extension that registers a `/rag-web-team` TUI command (`.pi/extensions/rag-web-team.ts`). Both are `shipped`. The `scope` line in each registry entry names the asymmetry; the `mirror_status` asserts that the behavioral contract is equivalent.
+
+The rule: `mirror_status: shipped` means the output contract is equivalent, not that the primitive's shape is identical. A `scope` line that names the asymmetry is required whenever the shapes differ.
+
 ### What the registry does not do
 
-It does not execute anything. It is a reviewable artifact. `/rag-web-close` reads it to flag drift; an operator reads it to audit; a future coding agent reads it to know which primitives are half-shipped. When the Pi Agent schema is stood up for real, the file may be reshaped — entries survive the reshape because they carry their scope in prose.
+It does not execute anything. It is a reviewable artifact. `/rag-web-close` reads it to flag drift; an operator reads it to audit; a future coding agent reads it to know which primitives are half-shipped. The file may be reshaped as Pi's schema matures — entries survive the reshape because they carry their scope in prose.
 
 ---
 
@@ -71,6 +79,8 @@ Recorded in [`CLAUDE.md`](../../CLAUDE.md):
 - **Rule warrant:** `README.md` requirement #1. Silent lock-in violates the project's stated intent. The rule exists because the drift is not visible inside a single session — it only becomes visible when a future operator discovers that a primitive they expected on both sides exists on only one.
 
 The check runs in `/rag-web-close` under the `Pi-harness follow-up` section. See [`commands.md`](commands.md) for the contract.
+
+As of plan 04, the four docs-writers (`rag-web-docs-{changelog,dev,user,agent}-writer`) are `shipped` on both harnesses. They are the first agents to clear `pending` status. The dual-harness doctrine is now operational for the writers constellation, not merely aspirational. The quality-gate agents, deploy-pipeline agents, and slash commands remain `pending` — their Pi mirrors are owed.
 
 ---
 

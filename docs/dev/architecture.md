@@ -20,7 +20,7 @@ The project has four working layers. Reading them in this order gives the mental
 
 3. **`docs/dev/`** — the theory. Developer-facing documentation, this file included. Plans live under `docs/dev/plans/`. Versioned with the source; read by humans and by agents. If something belongs in `CLAUDE.md` but is structural rather than durable, this is where it goes.
 
-4. **`.claude/`** and **`pi-agents.yaml`** — the agentic layer. Claude Code primitives live under `.claude/commands/` (slash commands), `.claude/agents/` (subagent definitions), and `.claude/skills/` (skill libraries). `pi-agents.yaml` tracks each primitive's Pi-harness status. The prefix is `rag-web-*` on everything project-specific, so that the project's commands do not shadow generic ones in the user's `~/.claude/`.
+4. **`.claude/`**, **`.pi/`**, and **`pi-agents.yaml`** — the agentic layer. Claude Code primitives live under `.claude/commands/` (slash commands), `.claude/agents/` (subagent definitions), and `.claude/skills/` (skill libraries). Pi primitives live under `.pi/agents/` (agent definitions), `.pi/extensions/` (TypeScript extensions that register TUI commands and event hooks), and `.pi/profiles/` (provider-keyed model-routing maps). `pi-agents.yaml` at the repo root tracks each primitive's Pi-harness status across both directories. The prefix is `rag-web-*` on everything project-specific, so that the project's commands do not shadow generic ones in the user's `~/.claude/` or the Pi TUI.
 
 5. **`tools/`** — developer-only tooling. `tools/scripts/*.sh` are the runtime-neutral entry points; `tools/package.json` + `tools/node_modules/` hold the Playwright dev dependency; `tools/preview/` holds the stdlib-only Go binary that serves `site/` over localhost for cross-device responsive review. Nothing under `tools/` ships to GitHub Pages. Both Playwright and the Go preview server were approved explicitly as dev dependencies — the approval model is recorded in the plan doc or session notes that introduced each tool, and the approval criterion is the same in both cases: dev workflow only, zero shipping surface.
 
@@ -78,8 +78,48 @@ Three `mirror_status` values carry the full vocabulary:
 
 The cost of the record is low — one YAML row per primitive. The cost of the drift it prevents is a whole harness.
 
+## The dual-harness is now operational
+
+As of the pi-agent-parity branch, the Pi side is no longer aspirational — it ships the same writer constellation the CC side ships, via a different dispatch mechanism with the same output contract.
+
+The architecture has two legs:
+
+**CC leg.** `/rag-web-close` dispatches four writer agents (`changelog`, `dev`, `user`, `agent`) as native Claude Code subagents, in parallel, using CC's built-in agent infrastructure. Defined in `.claude/commands/rag-web-close.md`. CC's permission model is the safety layer; no extensions required.
+
+**Pi leg.** The same four writers live under `.pi/agents/` as model-agnostic `.md` files. Two dispatch paths reach them:
+
+- `/rag-web-pi-close` (`.claude/commands/rag-web-pi-close.md`) — invoked from inside a CC session. Composes a task prompt, writes it to `/tmp/rag-web-pi-task.prompt`, and shells out to `tools/scripts/rag-web-pi-team.sh`, which spawns four `pi` subprocesses in parallel via the `drive` tmux layer (falling back to raw tmux when `drive` is absent). Logs land under `.the-grid/pi-runs/<timestamp>/`.
+- `/rag-web-team` (`.pi/extensions/rag-web-team.ts`) — registered inside the Pi TUI when the extension is loaded. Fans out the same four writers as Pi subprocesses via `child_process.spawn`, with a grid widget showing per-agent status. The operator chooses this path when Pi is already the active harness.
+
+The asymmetry is intentional and named: the CC-side entry point is a prompt-template command; the Pi-side entry point is a TypeScript extension with a TUI command. Both invoke the same underlying agent `.md` files. Both produce identical artifacts.
+
+### Profile-based model routing
+
+Pi's dispatch is model-agnostic at the agent level. The agent `.md` files carry no `model:` field. Model selection happens at launch time via profile files under `.pi/profiles/`:
+
+- `anthropic.json` — maps each writer to a model string in the `anthropic/claude-*` namespace. The changelog writer runs Haiku (cheaper, summary work); the three substantive writers run Sonnet 4.6.
+- `openrouter.json` — same mapping through the OpenRouter provider. Authored this session and exercised end-to-end.
+
+The operator selects a profile with `--profile=<name>` on the launcher or by setting `$RAG_WEB_PI_PROFILE` in the environment. No agent file is touched when switching providers. A Gemini profile is deferred until Gemini keys land; committing an empty profile would be a misrepresentation.
+
+This is the decision captured in plan `04`: hardcoding models per agent makes a provider swap a per-file edit; a single `defaultModel` in `settings.json` lacks per-agent granularity at swap time. Profiles thread the needle.
+
+### Safety at three layers
+
+The Pi dispatch path runs `pi --no-extensions` for each subprocess, which means the interactive-TUI `rag-web-checkpoint.ts` extension does not fire inside the subprocess. Safety is covered at three distinct points instead:
+
+1. **Tool allowlist (front-door lock).** Every subprocess Pi instance receives `--tools read,grep,find,ls,write,edit`. No `bash`. This is the narrowest safe surface for document writers. A writer that can't exec a shell can't delete the repo.
+
+2. **Launcher checkpoint (pre-fanout git commit).** Both `rag-web-pi-team.sh` and `rag-web-team.ts` issue a `git commit --allow-empty -m "pi-checkpoint: rag-web-team <timestamp>"` before spawning subprocesses. If the fanout produces a wrong write, `git reset --hard HEAD^` restores pre-fanout state exactly.
+
+3. **TUI-layer checkpoint (interactive sessions).** When a developer runs Pi interactively with `rag-web-checkpoint.ts` loaded, an empty commit fires on every `turn_start`. This covers exploratory Pi sessions that are not a fanout — the extension is the per-turn undo button. Subprocess runs bypass it by design (`--no-extensions`) and get the launcher checkpoint instead.
+
+The three layers address different threat surfaces. The allowlist prevents the wrong action. The launcher checkpoint enables recovery from a wrong write. The TUI checkpoint enables turn-by-turn recovery during interactive exploration. They are not redundant; each covers ground the others do not.
+
 ## Where this leaves us
 
-The whole project, seen in one frame: a marketing site with publisher-grade typography and dark-mode fidelity, built by hand against a token contract, authored through an agentic workflow that is itself designed for two runtimes, with every structural rule carrying the failure mode it was written to prevent.
+The whole project, seen in one frame: a marketing site with publisher-grade typography and dark-mode fidelity, built by hand against a token contract, authored through an agentic workflow that runs on two runtimes — each with its own dispatch path, a shared set of agent definitions, and a safety posture tuned to how that runtime works — with every structural rule carrying the failure mode it was written to prevent.
+
+The Pi harness is no longer a planned future state. `.pi/` is a working directory. The four docs-writers run from it. The model-routing layer is exercised. The recovery checkpoints fire. A contributor joining today can work from either harness and produce the same results.
 
 The theory lives in these documents. The code is the part that a fresh reader will still understand; the reasons are what you lose if you lose the people who made it. This is what the Naur framing is pointing at, and it is the framing the rest of these docs are written under.

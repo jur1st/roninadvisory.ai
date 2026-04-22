@@ -2,7 +2,7 @@
 
 Contributing to this project means working inside a small set of load-bearing conventions that exist because single-layer designs rot. This document describes those conventions — what they are, what failure mode each one prevents, and how the day-to-day rhythm uses them.
 
-Three of them are primary: the session-management three-way contract, the plan-doc convention, and the `.the-grid/` session artifact policy. A fourth — the dual-harness doctrine — runs as a cross-cutting rule through all of them.
+Three of them are primary: the session-management three-way contract, the plan-doc convention, and the `.the-grid/` session artifact policy. A fourth — the dual-harness doctrine — runs as a cross-cutting rule through all of them. As of the pi-agent-parity session, the Pi harness is operational; a fifth concern, the Pi dispatch prerequisites, is covered at the end of this document.
 
 ## The session-management three-way contract
 
@@ -31,11 +31,12 @@ The close command is explicit about what it is not: **it never auto-commits.** I
 
 ## The plan-doc convention
 
-Substantive work on this project routes through a plan document under `docs/dev/plans/`. Three exist today:
+Substantive work on this project routes through a plan document under `docs/dev/plans/`. Four exist today:
 
 - `01-bootstrap-session-management.md` — established the three-way contract itself.
 - `02-web-frontend-localization.md` — added the scaffold, Playwright CLI, four quality-gate agents, and the typography primer.
 - `03-pages-deployment.md` — added the GitHub Pages deployment layer: the `rag-web-pages-deploy` skill, three agents, four commands, the CI workflow, and `site/.nojekyll`.
+- `04-pi-harness-bringup.md` — stood up the Pi harness: the `.pi/` directory, four writer agents, two extensions, profile-based model routing, the `drive` tmux layer, three launcher scripts, and the CC-side `/rag-web-pi-close` command.
 
 A plan doc is not a ticket. It is a written theory of what is about to change, why the changes have the shape they do, and what the acceptance criteria are. The sections are fixed by convention:
 
@@ -103,9 +104,12 @@ A typical session on this project:
 1. **Prime.** Run `/rag-web-prime`. Read its four-axis report. This is the mental model.
 2. **Work.** Edit source, edit plans, add primitives. If the work involves layout or responsive design, start the local preview server (`tools/scripts/preview.sh start` or `/rag-web-preview start`) so that a phone or tablet on the same network can load the working `site/` directory in a real browser. If the work is substantive, there is a plan doc covering it; if a new substantive direction emerges mid-session, the close step will produce the plan.
 3. **Review.** For CSS changes, dispatch `rag-web-css-auditor` and `rag-web-token-enforcer`. For visible changes, dispatch `rag-web-visual-reviewer`. For responsive layout work, verify on a physical device via the preview server. Resolve findings.
-4. **Close.** Run `/rag-web-close`. Review the verify report, let the adaptive documentation dispatch run, review the agent outputs, then make the commit decision.
+4. **Close.** Two paths:
+   - **CC harness:** run `/rag-web-close`. The four writers dispatch as native CC subagents. Review agent outputs, then make the commit decision.
+   - **Pi harness (from inside CC):** run `/rag-web-pi-close`. Composes a task prompt, shells out to `tools/scripts/rag-web-pi-team.sh`, fans out four Pi subprocesses. Equivalent outputs, different runtime cost. Useful when CC credits are expensive.
+   - **Pi harness (Pi TUI):** load the extension with `pi -e .pi/extensions/rag-web-team.ts`, then type `/rag-web-team <task>`. Same fanout with an in-TUI grid widget per agent.
 
-The commit belongs to the operator. The close routine presents; the operator chooses.
+The commit belongs to the operator in all three paths. Every close variant presents options and waits.
 
 ## What happens if the conventions drift
 
@@ -117,12 +121,60 @@ Each convention has a visible failure mode and a named antipattern in `CLAUDE.md
 
 The antipatterns are named so they can be talked about. "That's auto-commit drift" is a short sentence that does a lot of work in a review. Each one includes the failure mode, the correct behavior, and the reason — so that the *why* survives the original context, which is the whole point of the Naur framing that runs through this project's docs.
 
+## Pi dispatch prerequisites
+
+The Pi leg of the project has one setup step that a cloned repo does not satisfy automatically: the `drive` skill must be installed at the user level.
+
+`drive` is a Python-based tmux-orchestration CLI that the primary launcher (`rag-web-pi-team.sh`) uses for session management. It is not checked into this repo because it is a user-level tool shared across projects, not a project-level dependency. Installing it once makes it available everywhere.
+
+To install:
+
+```bash
+bash tools/scripts/rag-web-install-drive.sh
+```
+
+The script is idempotent — safe to re-run on the same machine. It:
+
+1. Copies the `drive` skill from the reference location to `~/.claude/skills/drive/`.
+2. Runs `uv sync` to install Python deps.
+3. Verifies `--help` and `session list --json` produce sensible output.
+4. Registers a shell alias in `~/.config/zsh/aliases.zsh` so `drive` resolves in a fresh shell.
+5. Runs a headless smoke test (create session, exec `echo hello-drive`, kill session) and verifies exit code and output.
+
+Prerequisites the script checks: `uv`, `tmux`, `pi`, `jq` on PATH.
+
+Screenshot capability (used during interactive `drive` sessions) is deliberately not verified by the script. It requires a one-time Screen Recording grant for Terminal.app in macOS System Settings. If the screenshot feature becomes relevant to your work, run `drive screenshot <session>` once manually; macOS will prompt for the permission.
+
+**When `drive` is absent.** The launcher detects `drive` on PATH in a fresh shell and falls back automatically to `tools/scripts/rag-web-pi-team-fallback.sh`, which uses raw `tmux new-session` + `tmux send-keys`. The fallback produces identical logs and exit-code behavior; it omits the `drive` JSON polish and any screenshot features. It requires only `tmux` and `jq`.
+
+**Profile selection.** The Pi fanout reads model assignments from `.pi/profiles/<name>.json`. The default profile is `anthropic`. To use OpenRouter:
+
+```bash
+bash tools/scripts/rag-web-pi-team.sh --profile=openrouter
+```
+
+or, from inside a CC session:
+
+```
+/rag-web-pi-close openrouter
+```
+
+To add a new provider profile, create `.pi/profiles/<name>.json` with `default` and `per_agent` fields following the shape of `anthropic.json`. Do not commit an empty or placeholder profile — a profile that does not map to working credentials is a misrepresentation.
+
 ## Cross-references
 
 - `CLAUDE.md` at project root — the durable rules.
 - `.claude/commands/rag-web-prime.md` — the prime command definition.
-- `.claude/commands/rag-web-close.md` — the close command definition.
+- `.claude/commands/rag-web-close.md` — the CC-native close command.
+- `.claude/commands/rag-web-pi-close.md` — the CC-surface entry into the Pi fanout.
+- `.pi/extensions/rag-web-team.ts` — the Pi-TUI fanout extension.
+- `.pi/extensions/rag-web-checkpoint.ts` — the per-turn git checkpoint for interactive Pi sessions.
+- `.pi/profiles/` — provider-keyed model-routing maps.
+- `tools/scripts/rag-web-install-drive.sh` — drive install and verification script.
+- `tools/scripts/rag-web-pi-team.sh` — primary Pi launcher (drive-backed).
+- `tools/scripts/rag-web-pi-team-fallback.sh` — raw-tmux fallback launcher.
 - `pi-agents.yaml` at project root — the Pi-mirror registry.
 - [`plans/_template.md`](plans/_template.md) — the plan-doc template.
+- [`plans/04-pi-harness-bringup.md`](plans/04-pi-harness-bringup.md) — decisions behind the Pi harness shape.
 - [`architecture.md`](architecture.md) — the theory the conventions serve.
 - [`preview.md`](preview.md) — the local preview server; when and why to run it during a session.

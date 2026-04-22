@@ -2,12 +2,15 @@
 
 Two slash commands bracket every working session on this project. They are a pair: prime opens the session by establishing ground truth, close reconciles what happened against that ground truth and hands the commit decision back to the operator. Neither is optional for non-trivial work, and neither does the other's job.
 
+A third command, `/rag-web-pi-close`, is the "extra-time" harness path: when the operator wants to delegate the four writers to Pi subprocesses instead of CC agents, this command is the CC-side entry point.
+
 The shorthand:
 
 - **`/rag-web-prime` is a snapshot.** It captures, it does not change.
 - **`/rag-web-close` is an adaptive dispatcher with a commit gate.** It routes work to writers based on what changed, surfaces parity drift, and stops at the commit gate without crossing it.
+- **`/rag-web-pi-close` is an alternative dispatch path.** Same output contract as `/rag-web-close`'s writer dispatch; different runtime (Pi subprocesses). Operator picks harness at invocation.
 
-Source files: [`.claude/commands/rag-web-prime.md`](../../.claude/commands/rag-web-prime.md) and [`.claude/commands/rag-web-close.md`](../../.claude/commands/rag-web-close.md).
+Source files: [`.claude/commands/rag-web-prime.md`](../../.claude/commands/rag-web-prime.md), [`.claude/commands/rag-web-close.md`](../../.claude/commands/rag-web-close.md), and [`.claude/commands/rag-web-pi-close.md`](../../.claude/commands/rag-web-pi-close.md).
 
 ---
 
@@ -202,6 +205,38 @@ The command never commits. On workflow failure, it prints the failing job name a
 When the advisor reports ambiguity — no clean verify record in session summaries — the command surfaces that ambiguity rather than guessing. The operator decides.
 
 The rollback command's design mirrors the close command's commit gate: it is a gate that can only be opened by the operator, not by the agent holding the gate.
+
+---
+
+## `/rag-web-pi-close` — the Pi fanout dispatcher
+
+Source: [`.claude/commands/rag-web-pi-close.md`](../../.claude/commands/rag-web-pi-close.md).
+
+### What it is
+
+A CC command that delegates the four docs-writers to Pi subprocesses instead of CC agents. It exists for the "extra-time" case: when Anthropic credits make running CC writers expensive, this command routes the same work through the operator's Pi API key. The output contract — what files the writers produce, which paths they may touch, what commit options the operator sees — is identical to `/rag-web-close`'s writer dispatch.
+
+The Pi-side equivalent for operators already inside the Pi TUI is `/rag-web-team`, registered by [`.pi/extensions/rag-web-team.ts`](../../.pi/extensions/rag-web-team.ts). Operator picks harness at invocation; both produce equivalent output.
+
+### What it does
+
+1. Discovers the session's change set via `git status` and `git log`.
+2. Composes a task prompt (recent commits + touched paths + one-paragraph theory-shift) and writes it to `/tmp/rag-web-pi-task.prompt`.
+3. Execs `bash tools/scripts/rag-web-pi-team.sh --profile=${ARG:-anthropic}`. The launcher issues a pre-fanout git checkpoint, spawns four Pi subprocesses in parallel (one per writer), aggregates logs under `.the-grid/pi-runs/<timestamp>/`.
+4. Relays the launcher's per-agent summary table. For non-zero exits, reads the agent's log and surfaces the failure in plain prose.
+5. Presents the commit gate — same four options as `/rag-web-close` — and waits.
+
+The `--profile` argument selects a model-routing profile from `.pi/profiles/<profile>.json`. Default is `anthropic`; `openrouter` is also available. The profile file maps agent names to model strings; the subprocess `pi` invocation receives `--model <resolved>` at spawn time.
+
+### What it does not do
+
+It does not run the full `/rag-web-close` sequence. It does not verify prime reads, check `pi-agents.yaml` drift, or run the vault-exporter. Its scope is exactly: compose task, fan out writers, gate commit.
+
+### Parity status
+
+`mirror_status: shipped` in `pi-agents.yaml`. The Pi analog is `.pi/extensions/rag-web-team.ts` (asymmetric shape — CC command / prompt template vs. Pi extension / TypeScript). The asymmetry is named in the registry scope line and documented in [`conventions.md`](conventions.md).
+
+---
 
 ### Name-collision known issue
 

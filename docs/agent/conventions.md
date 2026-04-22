@@ -127,6 +127,68 @@ This is cosmetic, not functional. No behavioral change has been observed; the na
 
 ---
 
+## Pi extensions — a new primitive class
+
+Prior to plan 04, the Pi agentic surface had only agents and settings. Plan 04 introduced *extensions*: TypeScript modules that wire into Pi's event API (`turn_start`, `session_start`) and register TUI commands. Extensions are not agents (they do not run on tasks) and not commands (they are not prompt-template files invoked by the operator). They are runtime hooks.
+
+Two extensions ship with this project:
+
+- [`.pi/extensions/rag-web-checkpoint.ts`](../../.pi/extensions/rag-web-checkpoint.ts) — fires on `turn_start` in interactive Pi TUI sessions; issues `git commit --allow-empty` so `git reset --hard HEAD^` undoes a turn. `mirror_status: not-applicable` — CC enforces safety via harness-native permission modes; no CC analog is meaningful.
+- [`.pi/extensions/rag-web-team.ts`](../../.pi/extensions/rag-web-team.ts) — registers `/rag-web-team`; spawns four Pi subprocesses in parallel with an in-TUI grid widget; issues its own pre-fanout checkpoint. `mirror_status: shipped` — the CC analog is `/rag-web-pi-close`.
+
+Both are tracked in `pi-agents.yaml` under the `extensions:` bucket. Adding a new extension requires a registry entry in that bucket. The `mirror_status` logic is identical to other buckets: `shipped` means a CC behavioral equivalent exists; `not-applicable` means no CC analog is planned, with justification in the `scope` field.
+
+---
+
+## The three-layer safety contract for Pi writers
+
+When Pi writer subprocesses run — whether via the CC `rag-web-pi-team.sh` launcher or the Pi `rag-web-team` extension — three independent safety layers apply. Understanding all three is required before adding or modifying any Pi writer, because each layer guards a distinct failure mode.
+
+**Layer 1 — Tool allowlist (front-door lock).** Every Pi writer's frontmatter declares `tools: read,grep,find,ls,write,edit`. No `bash`. This means a writer subprocess cannot run shell commands, cannot invoke `git`, and cannot reach outside its declared writable paths via the shell. A writer that needs `bash` is not a docs-writer — it is a different kind of agent and requires a different safety posture. The allowlist is enforced at subprocess spawn by the `--tools` flag passed to `pi`.
+
+**Layer 2 — Interactive-TUI checkpoint.** [`.pi/extensions/rag-web-checkpoint.ts`](../../.pi/extensions/rag-web-checkpoint.ts) fires on `turn_start` in interactive Pi TUI sessions and issues `git commit --allow-empty -m "pi-checkpoint: <agent-name> <ISO>"`. This means any turn that produces a wrong write is recoverable with `git reset --hard HEAD^`. This layer protects the operator during direct interactive Pi use.
+
+**Layer 3 — Orchestrator-layer checkpoint.** Subprocess Pi runs pass `--no-extensions`, which bypasses the TUI-layer checkpoint entirely. Both orchestrators (`rag-web-pi-team.sh` and `rag-web-team.ts`) issue their own `git commit --allow-empty -m "pi-checkpoint: rag-web-team <ISO>"` before fanout. This covers the gap that `--no-extensions` creates.
+
+The three layers are additive and non-redundant:
+
+| Layer | What it prevents | What bypasses it |
+|---|---|---|
+| Tool allowlist | Shell escape, path bleed via bash | Nothing in normal operation |
+| TUI checkpoint | Bad writes in interactive turns | `--no-extensions` subprocess runs |
+| Orchestrator checkpoint | Bad writes in fanout runs | (nothing — covers the `--no-extensions` gap) |
+
+A future plan that introduces a `bash`-enabled Pi agent will need a fourth layer — the damage-control extension described in plan 04's Decision 6. The current posture is sized for shell-disabled writers and is explicitly insufficient for shell-enabled agents.
+
+---
+
+## Asymmetric primitive shape
+
+A CC primitive and its Pi analog may be `mirror_status: shipped` even when their implementation shapes are completely different. This is expected behavior, not a registry error.
+
+The canonical example: `/rag-web-pi-close` is a CC prompt-template command file; its Pi mirror is `.pi/extensions/rag-web-team.ts`, a TypeScript extension that registers a TUI command. One is a Markdown file invoked via the CC slash-command dispatcher; the other is compiled TypeScript hooked into Pi's event system. Both produce the same behavioral contract: four writers fan out in parallel, logs accumulate under `.the-grid/pi-runs/`, the operator sees a summary and a commit gate.
+
+The rule for registering an asymmetric pair:
+1. Both sides get their own `pi-agents.yaml` entry in the appropriate bucket (`commands:` for the CC side, `extensions:` for the Pi extension).
+2. Each entry's `scope` line names the counterpart and the asymmetry explicitly.
+3. Both entries carry `mirror_status: shipped`.
+
+What is NOT acceptable: a single entry that tries to represent both sides, or a `shipped` entry whose counterpart has not been built.
+
+---
+
+## Pi profile files — model routing without per-agent frontmatter
+
+Pi writer agents do not carry a `model:` field in their frontmatter. Model selection is deferred to `.pi/profiles/<name>.json` files, resolved at subprocess spawn time. The orchestrator passes `--model <resolved>` to each `pi` invocation.
+
+This design was chosen in plan 04 (Decision 4) over hardcoded-per-agent (inflexible to provider swap) and single-`defaultModel`-in-settings (lacks per-agent overrides). The profile file maps `default` and `per_agent.<agent-name>` to model strings.
+
+Available profiles at this time: `anthropic` (`.pi/profiles/anthropic.json`) and `openrouter` (`.pi/profiles/openrouter.json`). A `gemini.json` profile is explicitly deferred until Gemini keys are configured — committing an empty profile is a lie in the registry, and an absent file is honest.
+
+When adding a new Pi writer agent: add its name to the `per_agent` block of every existing profile file. An agent missing from a profile will run on the `default` model — this may be acceptable, but it should be an explicit decision, not an omission.
+
+---
+
 ## The `rag-web-*` namespace
 
 All project-specific slash commands, agents, and skills carry the `rag-web-*` prefix. Global or sibling-project primitives do not.
