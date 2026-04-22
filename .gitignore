@@ -35,3 +35,11 @@ node_modules/
 playwright-report/
 test-results/
 screenshots/
+
+# Local mockup previews — symlinks into docs/dev/mockups/, dev-only
+# Keeps site/ publishable-clean while exposing mockups through the preview server
+site/_mockups/
+
+# Visual-review captures — rag-web-visual-reviewer workspace, overwritten
+# per review. The verdict is the evidence; the PNGs are working state.
+.the-grid/review-screenshots/
