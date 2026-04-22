@@ -9,61 +9,76 @@
 #   not-applicable  no Pi analog planned (justify inline)
 #
 # /rag-web-close inspects this file as part of the Pi-harness-follow-up check.
-# The canonical Pi Agent schema will be set when Pi primitives are stood up;
-# this file may be reshaped at that point. Entries survive the reshape.
+# Plan 05 (2026-04-22) cleared the pending backlog for the quality-gate agents,
+# the deploy-pipeline agents, and the seven slash commands. The only remaining
+# pending entry is rag-web-docs-vault-exporter, deferred to Obsidian vault standup.
 
 version: 1
 
 commands:
   - name: rag-web-prime
     mirrors: .claude/commands/rag-web-prime.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Read-only session prime. Reports harness parity, content state,
-      publishing state, and work state.
+      publishing state, work state, and preview-server state. Pi analog
+      registered by .pi/extensions/rag-web-session.ts (asymmetric shape —
+      CC prompt-template file ↔ Pi TS extension registering /rag-web-prime
+      alongside /rag-web-close).
 
   - name: rag-web-close
     mirrors: .claude/commands/rag-web-close.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
-      Adaptive close. Verifies prime reads, dispatches documentation agents,
-      surfaces cross-harness drift, gates the commit.
+      Adaptive close. Verifies prime reads, dispatches documentation agents
+      in parallel via subprocess pi runs, surfaces cross-harness drift,
+      gates the commit without executing it. Pi analog bundled with
+      /rag-web-prime in .pi/extensions/rag-web-session.ts (asymmetric shape).
 
   - name: rag-web-pages-init
     mirrors: .claude/commands/rag-web-pages-init.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
-      One-time scaffolding for GitHub Pages deployment. Creates the workflow
-      and site/.nojekyll from skill templates; prints the GitHub-UI checklist.
+      One-time scaffolding for GitHub Pages deployment. Idempotency-guarded;
+      copies the workflow YAML and site/.nojekyll from skill templates;
+      prints the GitHub-UI checklist. Pi analog registered by
+      .pi/extensions/rag-web-pages.ts (asymmetric shape — CC prompt-template
+      file ↔ Pi TS extension bundling four /rag-web-pages-* commands).
 
   - name: rag-web-pages-check
     mirrors: .claude/commands/rag-web-pages-check.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Invokes the rag-web-pages-preflight agent; relays the structured report.
-      Read-only; safe to run any time.
+      Read-only; safe to run any time. Pi analog bundled in
+      .pi/extensions/rag-web-pages.ts.
 
   - name: rag-web-pages-deploy
     mirrors: .claude/commands/rag-web-pages-deploy.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
-      Triggers a GitHub Pages deployment. Confirms clean git state, runs
-      preflight, pushes or workflow_dispatches, tails the run, invokes verify.
+      Triggers a GitHub Pages deployment. Confirms clean git state, enforces
+      main branch, runs preflight, pushes or workflow_dispatches, tails the
+      run via `gh run watch`, invokes rag-web-pages-verify on success.
+      Pi analog bundled in .pi/extensions/rag-web-pages.ts.
 
   - name: rag-web-pages-rollback
     mirrors: .claude/commands/rag-web-pages-rollback.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Presents a rollback proposal via the advisor agent. Operator-gated;
-      the command itself never executes a rollback.
+      the command itself never executes a rollback. Pi analog bundled in
+      .pi/extensions/rag-web-pages.ts.
 
   - name: rag-web-preview
     mirrors: .claude/commands/rag-web-preview.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Manage the local Go-backed preview server (start/stop/status/restart/logs).
       Thin wrapper over tools/scripts/preview.sh; dev-only, not part of the
-      GitHub Pages pipeline.
+      GitHub Pages pipeline. Pi analog registered by
+      .pi/extensions/rag-web-preview.ts (asymmetric shape — CC prompt-template
+      file ↔ Pi TS extension registering the same slash command).
 
   - name: rag-web-pi-close
     mirrors: .claude/commands/rag-web-pi-close.md
@@ -111,59 +126,73 @@ agents:
     mirrors: .claude/agents/rag-web-docs-vault-exporter.md
     mirror_status: pending
     scope: >-
-      Optional. Exports finalized docs to the operator's Obsidian vault when configured.
+      Optional. Exports finalized docs to the operator's Obsidian vault when
+      configured. Deferred to vault standup — no Pi mirror yet. This is the
+      only remaining pending entry in the registry.
 
   - name: rag-web-visual-reviewer
     mirrors: .claude/agents/rag-web-visual-reviewer.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
-      Scores live rag-web UI against the 25-point sophistication rubric.
-      Drives Playwright CLI via scripts/capture-screenshot.sh.
+      Scores live rag-web UI against the 25-point sophistication rubric via
+      Playwright CLI (tools/scripts/capture-screenshot.sh). Pi mirror at
+      .pi/agents/rag-web-visual-reviewer.md; tool allowlist includes bash
+      for screenshot capture. Opus-tier via profile maps.
 
   - name: rag-web-css-auditor
     mirrors: .claude/agents/rag-web-css-auditor.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
-      Pattern-matches CSS against token compliance and fallback requirements
-      defined in static/tokens.css.
+      Pattern-matches CSS against token compliance and the three-line fallback
+      requirement defined in static/tokens.css. Pi mirror at
+      .pi/agents/rag-web-css-auditor.md; bash used optionally for
+      tools/scripts/validate-tokens.sh cross-check.
 
   - name: rag-web-token-enforcer
     mirrors: .claude/agents/rag-web-token-enforcer.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Catches hardcoded CSS values; suggests the corresponding design token
-      from static/tokens.css.
+      from static/tokens.css. Pi mirror at .pi/agents/rag-web-token-enforcer.md;
+      bash used for validate-tokens.sh to verify suggested token names resolve.
 
   - name: rag-web-visual-test-writer
     mirrors: .claude/agents/rag-web-visual-test-writer.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Generates bash scripts that capture systematic Playwright CLI
-      screenshots of rag-web pages via scripts/capture-screenshot.sh.
+      screenshots of rag-web pages via tools/scripts/capture-screenshot.sh.
+      Pi mirror at .pi/agents/rag-web-visual-test-writer.md; bash used for
+      `bash -n` syntax-check of the emitted scripts.
 
   - name: rag-web-pages-preflight
     mirrors: .claude/agents/rag-web-pages-preflight.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
-      Pre-deploy gate for GitHub Pages. Runs the preflight checklist
-      (nojekyll, actionlint, tokens, include-hidden-files, lychee) and
-      reports pass/fail per gate. Read-only and mechanical.
+      Pre-deploy gate for GitHub Pages. Runs the preflight checklist in order
+      (nojekyll, actionlint, tokens, include-hidden-files, lychee) and reports
+      pass/fail per gate. Read-only and mechanical. Pi mirror at
+      .pi/agents/rag-web-pages-preflight.md.
 
   - name: rag-web-pages-verify
     mirrors: .claude/agents/rag-web-pages-verify.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
-      Post-deploy verification. Fetches the live URL, checks HTTPS,
-      canonical content, asset resolution, and Jekyll leakage. Reports
-      divergence between committed and served state.
+      Post-deploy verification. Fetches the live URL, checks HTTPS, canonical
+      content, asset resolution, Jekyll leakage. Reports divergence between
+      committed and served state. Retries once on CDN lag. Pi mirror at
+      .pi/agents/rag-web-pages-verify.md; substitutes curl -sS for CC's
+      WebFetch (Pi has no WebFetch tool).
 
   - name: rag-web-pages-rollback-advisor
     mirrors: .claude/agents/rag-web-pages-rollback-advisor.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Lists recent Pages deployments, cross-references session summaries
       for last-known-good, proposes a rollback target with exact commands.
-      Never executes. Opus + effort:high for high-stakes infrequent decisions.
+      Never executes. Opus/effort-high for high-stakes infrequent decisions.
+      Pi mirror at .pi/agents/rag-web-pages-rollback-advisor.md; opus-tier
+      via profile maps.
 
 skills:
   - name: rag-web-pages-deploy
@@ -197,6 +226,51 @@ extensions:
       sessions and issues a git commit --allow-empty so `git reset --hard
       HEAD^` undoes a turn's work. CC enforces safety via the harness's
       built-in permission modes; no CC analog is planned or meaningful.
+
+  - name: rag-web-session
+    mirrors: .pi/extensions/rag-web-session.ts
+    mirror_status: shipped
+    scope: >-
+      Pi-side bundle for the two session-management slash commands.
+      Registers /rag-web-prime (five-axis read-only report) and /rag-web-close
+      (adaptive docs-writer dispatch + pi-agents.yaml drift check + advisory
+      commit gate). Mirrors .claude/commands/rag-web-{prime,close}.md.
+      Topic-grouped extension per plan 05 Decision 2; asymmetric shape —
+      CC prompt-template files ↔ single Pi TS extension.
+
+  - name: rag-web-pages
+    mirrors: .pi/extensions/rag-web-pages.ts
+    mirror_status: shipped
+    scope: >-
+      Pi-side bundle for the four GitHub Pages lifecycle slash commands.
+      Registers /rag-web-pages-init (idempotency-guarded scaffold),
+      /rag-web-pages-check (dispatches preflight agent), /rag-web-pages-deploy
+      (gates + push/workflow-dispatch + verify), /rag-web-pages-rollback
+      (dispatches advisor, presents proposal). Consumes
+      .claude/skills/rag-web-pages-deploy/reference/ + templates/ by path.
+      Mirrors .claude/commands/rag-web-pages-{init,check,deploy,rollback}.md;
+      topic-grouped per plan 05 Decision 2.
+
+  - name: rag-web-preview
+    mirrors: .pi/extensions/rag-web-preview.ts
+    mirror_status: shipped
+    scope: >-
+      Pi-side wrapper registering /rag-web-preview with start/stop/status/
+      restart/logs subcommands. Thin layer over the harness-agnostic
+      tools/scripts/preview.sh. Mirrors .claude/commands/rag-web-preview.md
+      (asymmetric shape — CC prompt-template file ↔ Pi TS extension).
+
+  - name: rag-web-damage-control
+    mirrors: .pi/extensions/rag-web-damage-control.ts
+    mirror_status: not-applicable
+    scope: >-
+      Pi-only safety-interception extension. Loads .pi/damage-control-rules.yaml
+      on session_start; intercepts tool_call events in interactive Pi TUI turns
+      to block or confirm destructive bash patterns and enforce zero-access /
+      read-only / no-delete path lists. Copied from reference with two
+      documented deviations (drops theme-override import; uses keyed setStatus
+      form). CC has no analog because CC enforces safety via harness-native
+      permission modes — same category as rag-web-checkpoint.
 
 settings:
   - name: claude-settings-json

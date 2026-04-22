@@ -97,6 +97,10 @@ Then it waits.
 
 The reason this gate exists is recorded as an antipattern in [`CLAUDE.md`](../../CLAUDE.md): `/rag-web-close` or a dispatched agent committing without operator review is the failure mode. Close is orchestration; commits are judgment. The two must not be the same actor, and the design keeps them separate by making close incapable of the crossing. See **Auto-commit on close** in [`conventions.md`](conventions.md) for the full antipattern.
 
+### Parity status (prime and close)
+
+Both commands are `mirror_status: shipped` in `pi-agents.yaml`. Their Pi analogs are bundled in [`.pi/extensions/rag-web-session.ts`](../../.pi/extensions/rag-web-session.ts), a single TypeScript extension that registers both `/rag-web-prime` and `/rag-web-close` inside the Pi TUI. The asymmetric shape — two CC prompt-template files to one Pi TS extension — follows plan 05 Decision 2: prime and close share the session-management contract, making topic-grouped bundling the natural carrier.
+
 ---
 
 ## Why the split matters
@@ -168,7 +172,7 @@ This is appropriate for trusted local networks (home, office) and not for shared
 
 ### Parity status
 
-`pi-agents.yaml` entry: `mirror_status: pending`. The Pi equivalent of the slash-command surface has not been built. The Go binary and `preview.sh` are `not-applicable` (harness-agnostic — both harnesses invoke the same script against the same binary). Only the slash-command wrapper is `pending`. See [`harness.md`](harness.md) for what `pending` means and when the flag clears.
+`pi-agents.yaml` entry: `mirror_status: shipped`. Pi analog is [`.pi/extensions/rag-web-preview.ts`](../../.pi/extensions/rag-web-preview.ts), a TypeScript extension that registers `/rag-web-preview` with the same subcommand verbs as the CC side — a thin wrapper over the same harness-agnostic `tools/scripts/preview.sh`. The Go binary and `preview.sh` are `not-applicable` (both harnesses invoke the same script). See [`harness.md`](harness.md) for the asymmetric-shape convention.
 
 ---
 
@@ -178,7 +182,7 @@ Four commands bracket the GitHub Pages deployment lifecycle. They are a cluster,
 
 The skill that provides theory, reference documentation, and workflow templates for this group is [`rag-web-pages-deploy`](../../.claude/skills/rag-web-pages-deploy/SKILL.md). The skill owns the *why*; these commands own the *when* and *how*. See [`agents.md`](agents.md) for the three agents they dispatch.
 
-All four entries in [`pi-agents.yaml`](../../pi-agents.yaml) are `mirror_status: pending`.
+All four commands are `mirror_status: shipped` in [`pi-agents.yaml`](../../pi-agents.yaml). Their Pi analogs are bundled in a single extension, [`.pi/extensions/rag-web-pages.ts`](../../.pi/extensions/rag-web-pages.ts), which registers all four `/rag-web-pages-*` slash commands. This asymmetric shape — four CC prompt-template files mapped to one Pi TS extension — was chosen in plan 05 Decision 2 because the four commands share the `rag-web-pages-deploy` skill content; topic-grouping colocates their shared state and reduces boilerplate without creating a single point of failure.
 
 ### `/rag-web-pages-init` — one-time scaffold
 

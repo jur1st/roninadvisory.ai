@@ -131,12 +131,16 @@ This is cosmetic, not functional. No behavioral change has been observed; the na
 
 Prior to plan 04, the Pi agentic surface had only agents and settings. Plan 04 introduced *extensions*: TypeScript modules that wire into Pi's event API (`turn_start`, `session_start`) and register TUI commands. Extensions are not agents (they do not run on tasks) and not commands (they are not prompt-template files invoked by the operator). They are runtime hooks.
 
-Two extensions ship with this project:
+Six extensions ship with this project:
 
 - [`.pi/extensions/rag-web-checkpoint.ts`](../../.pi/extensions/rag-web-checkpoint.ts) — fires on `turn_start` in interactive Pi TUI sessions; issues `git commit --allow-empty` so `git reset --hard HEAD^` undoes a turn. `mirror_status: not-applicable` — CC enforces safety via harness-native permission modes; no CC analog is meaningful.
 - [`.pi/extensions/rag-web-team.ts`](../../.pi/extensions/rag-web-team.ts) — registers `/rag-web-team`; spawns four Pi subprocesses in parallel with an in-TUI grid widget; issues its own pre-fanout checkpoint. `mirror_status: shipped` — the CC analog is `/rag-web-pi-close`.
+- [`.pi/extensions/rag-web-session.ts`](../../.pi/extensions/rag-web-session.ts) — registers `/rag-web-prime` and `/rag-web-close`; topic-grouped bundle for the two session-management commands. `mirror_status: shipped`.
+- [`.pi/extensions/rag-web-pages.ts`](../../.pi/extensions/rag-web-pages.ts) — registers `/rag-web-pages-{init,check,deploy,rollback}`; consumes the CC `rag-web-pages-deploy` skill's `reference/` and `templates/` directly by path. `mirror_status: shipped`.
+- [`.pi/extensions/rag-web-preview.ts`](../../.pi/extensions/rag-web-preview.ts) — registers `/rag-web-preview`; thin wrapper over `tools/scripts/preview.sh`. `mirror_status: shipped`.
+- [`.pi/extensions/rag-web-damage-control.ts`](../../.pi/extensions/rag-web-damage-control.ts) — interactive-TUI safety interceptor; guards bash-enabled agents. `mirror_status: not-applicable` — CC has no analog (harness-native permission modes). See the three-layer safety contract section below.
 
-Both are tracked in `pi-agents.yaml` under the `extensions:` bucket. Adding a new extension requires a registry entry in that bucket. The `mirror_status` logic is identical to other buckets: `shipped` means a CC behavioral equivalent exists; `not-applicable` means no CC analog is planned, with justification in the `scope` field.
+All six are tracked in `pi-agents.yaml` under the `extensions:` bucket. Adding a new extension requires a registry entry in that bucket. The `mirror_status` logic is identical to other buckets: `shipped` means a CC behavioral equivalent exists; `not-applicable` means no CC analog is planned, with justification in the `scope` field.
 
 ---
 
@@ -158,7 +162,7 @@ The three layers are additive and non-redundant:
 | TUI checkpoint | Bad writes in interactive turns | `--no-extensions` subprocess runs |
 | Orchestrator checkpoint | Bad writes in fanout runs | (nothing — covers the `--no-extensions` gap) |
 
-A future plan that introduces a `bash`-enabled Pi agent will need a fourth layer — the damage-control extension described in plan 04's Decision 6. The current posture is sized for shell-disabled writers and is explicitly insufficient for shell-enabled agents.
+Plan 05 introduced the damage-control layer for `bash`-enabled Pi agents: [`.pi/extensions/rag-web-damage-control.ts`](../../.pi/extensions/rag-web-damage-control.ts) (copied verbatim from the reference implementation) loads `.pi/damage-control-rules.yaml` on `session_start` and intercepts `tool_call` events in interactive Pi TUI turns to block destructive bash patterns and enforce zero-access / read-only / no-delete path lists. This layer guards interactive use; it does not apply inside subprocess runs (which pass `--no-extensions`) — layer 3 covers that gap. The three-layer contract is now complete and operational across the full agentic surface, including shell-enabled agents.
 
 ---
 
@@ -183,7 +187,7 @@ Pi writer agents do not carry a `model:` field in their frontmatter. Model selec
 
 This design was chosen in plan 04 (Decision 4) over hardcoded-per-agent (inflexible to provider swap) and single-`defaultModel`-in-settings (lacks per-agent overrides). The profile file maps `default` and `per_agent.<agent-name>` to model strings.
 
-Available profiles at this time: `anthropic` (`.pi/profiles/anthropic.json`) and `openrouter` (`.pi/profiles/openrouter.json`). A `gemini.json` profile is explicitly deferred until Gemini keys are configured — committing an empty profile is a lie in the registry, and an absent file is honest.
+Available profiles at this time: `anthropic` (`.pi/profiles/anthropic.json`), `openrouter` (`.pi/profiles/openrouter.json`), and `gemini` (`.pi/profiles/gemini.json`, added in plan 05 once `GEMINI_API_KEY` was confirmed). All three profiles carry a `per_agent` entry for every active rag-web agent — an agent missing from a profile will fall to `default`, which is acceptable only when made explicit, not by omission.
 
 When adding a new Pi writer agent: add its name to the `per_agent` block of every existing profile file. An agent missing from a profile will run on the `default` model — this may be acceptable, but it should be an explicit decision, not an omission.
 

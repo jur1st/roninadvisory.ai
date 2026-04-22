@@ -1,6 +1,6 @@
 # Agents — the `rag-web-*` registry
 
-Nine agents live under [`.claude/agents/`](../../.claude/agents/), with Pi mirrors for four of them under [`.pi/agents/`](../../.pi/agents/). They fall into two groups by the work they perform: documentation-layer writers, which author text about the project, and quality-gate agents, which inspect the project's output. The groups are governed differently — writers are dispatched automatically by [`/rag-web-close`](commands.md) based on what changed; gates are invoked explicitly by the operator or by a skill against a named target.
+Twelve agents live under [`.claude/agents/`](../../.claude/agents/), with Pi mirrors for eleven of them under [`.pi/agents/`](../../.pi/agents/). They fall into three groups by the work they perform: documentation-layer writers, which author text about the project; quality-gate agents, which inspect the project's output; and deployment-pipeline agents, which own the GitHub Pages lifecycle. The groups are governed differently — writers are dispatched automatically by [`/rag-web-close`](commands.md) based on what changed; gates and pipeline agents are invoked explicitly by the operator or by skill-driven commands against named targets.
 
 Every agent is prefixed `rag-web-*`. The prefix is not decoration. It scopes the project's primitives so that a global or sibling-project agent with the same role does not shadow them. See the **Namespacing** section of [`conventions.md`](conventions.md).
 
@@ -10,7 +10,7 @@ Every agent is prefixed `rag-web-*`. The prefix is not decoration. It scopes the
 
 These agents transmit the project's theory in prose — Naur's framing applied literally. Each writes to a specific surface (`docs/dev/`, the site itself, `docs/agent/`, `CHANGELOG.md`, or the Obsidian vault). [`/rag-web-close`](commands.md) dispatches them adaptively based on the session's diff.
 
-The four parallel writers (`changelog`, `dev`, `user`, `agent`) are `mirror_status: shipped` on both harnesses. The Pi mirrors live at `.pi/agents/rag-web-docs-{changelog,dev,user,agent}-writer.md` with matching writable-path contracts and tool allowlist `read,grep,find,ls,write,edit` — no `bash`. No `model:` field appears in the Pi agent frontmatter; model routing is handled at launch time by `.pi/profiles/<profile>.json`. The vault-exporter has no Pi mirror yet (`pending`); it waits on vault standup.
+The four parallel writers (`changelog`, `dev`, `user`, `agent`) are `mirror_status: shipped` on both harnesses. The Pi mirrors live at `.pi/agents/rag-web-docs-{changelog,dev,user,agent}-writer.md` with matching writable-path contracts and tool allowlist `read,grep,find,ls,write,edit` — no `bash`. No `model:` field appears in the Pi agent frontmatter; model routing is handled at launch time by `.pi/profiles/<profile>.json`. The vault-exporter has no Pi mirror yet (`mirror_status: pending`); it waits on vault standup and is the only remaining pending entry in the registry.
 
 ### [`rag-web-docs-dev-writer`](../../.claude/agents/rag-web-docs-dev-writer.md)
 
@@ -38,6 +38,8 @@ Exports finalized docs to the operator's Obsidian vault via the `obsidian` CLI. 
 
 These agents do not author documentation. They inspect the project's output against a contract — a design-token catalog, a sophistication rubric, a screenshot plan — and report. They are invoked explicitly by the operator or by a skill working on a named target, never by `/rag-web-close`. The authoring loop runs on human (or primary-agent) initiative; the close command does not impose quality gates at the session boundary because quality gates belong inside the edit loop, not at its end.
 
+All four quality-gate agents are `mirror_status: shipped` on both harnesses. Pi mirrors live at `.pi/agents/rag-web-{css-auditor,token-enforcer,visual-reviewer,visual-test-writer}.md`. Frontmatter tool allowlist adds `bash` (needed for `validate-tokens.sh` and `capture-screenshot.sh`); `rag-web-visual-reviewer` maps to the strongest model in each profile, matching its `opus + effort: high` CC posture.
+
 ### [`rag-web-visual-reviewer`](../../.claude/agents/rag-web-visual-reviewer.md)
 
 Scores the live rag-web UI against the 25-point Darko Labs sophistication rubric. Drives Playwright CLI via `tools/scripts/capture-screenshot.sh`. Model: `opus`, foreground — this agent runs interactively because the rubric's judgment is load-bearing and a background run would bury the verdict. Invoked by the operator after a visual change, or by the `web-frontend` skill as part of an authoring loop.
@@ -61,6 +63,8 @@ Generates bash scripts that capture a systematic set of Playwright CLI screensho
 These agents own the GitHub Pages deployment lifecycle. They are dispatched by the `/rag-web-pages-*` commands, not by `/rag-web-close`. They are the instruments; the skill [`rag-web-pages-deploy`](../../.claude/skills/rag-web-pages-deploy/SKILL.md) is the durable theory surface above them. See [`commands.md`](commands.md) for the command contracts and `docs/agent/` for the skill layer documented in that file.
 
 The pipeline has two mechanical agents and one advisory agent. The distinction is load-bearing: mechanical agents run gates and report facts; the advisory agent synthesizes a judgment and proposes an operator action. Model and effort reflect this split.
+
+All three deploy-pipeline agents are `mirror_status: shipped` on both harnesses. Pi mirrors live at `.pi/agents/rag-web-pages-{preflight,verify,rollback-advisor}.md`. `bash` is in each mirror's tool allowlist (preflight needs `actionlint`, `lychee`, `validate-tokens.sh`; verify substitutes `curl -sS` for CC's WebFetch). `rag-web-pages-rollback-advisor` maps to the strongest model in every profile, matching its `opus + effort: high` CC posture.
 
 ### [`rag-web-pages-preflight`](../../.claude/agents/rag-web-pages-preflight.md)
 
@@ -94,7 +98,7 @@ The full dispatch contract lives in `/rag-web-close`; this is the registry-level
 | Post-deploy verification | `/rag-web-pages-deploy` (after workflow success) | `rag-web-pages-verify` |
 | Rollback proposal | `/rag-web-pages-rollback` | `rag-web-pages-rollback-advisor` |
 
-Every agent in this registry has a corresponding entry in [`pi-agents.yaml`](../../pi-agents.yaml). The three deployment-pipeline agents and `rag-web-docs-vault-exporter` are all `mirror_status: pending` — their Pi mirrors are owed. A new agent added under `.claude/agents/` without a matching entry is a cross-harness-drift violation; see [`harness.md`](harness.md).
+Every agent in this registry has a corresponding entry in [`pi-agents.yaml`](../../pi-agents.yaml). As of plan 05, the only `mirror_status: pending` entry is `rag-web-docs-vault-exporter` — all other agents are `shipped` on both harnesses. A new agent added under `.claude/agents/` without a matching entry is a cross-harness-drift violation; see [`harness.md`](harness.md).
 
 ## Pi orchestration layer
 

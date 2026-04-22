@@ -80,7 +80,7 @@ Recorded in [`CLAUDE.md`](../../CLAUDE.md):
 
 The check runs in `/rag-web-close` under the `Pi-harness follow-up` section. See [`commands.md`](commands.md) for the contract.
 
-As of plan 04, the four docs-writers (`rag-web-docs-{changelog,dev,user,agent}-writer`) are `shipped` on both harnesses. They are the first agents to clear `pending` status. The dual-harness doctrine is now operational for the writers constellation, not merely aspirational. The quality-gate agents, deploy-pipeline agents, and slash commands remain `pending` — their Pi mirrors are owed.
+As of plan 04, the four docs-writers (`rag-web-docs-{changelog,dev,user,agent}-writer`) were the first agents to clear `pending` status, proving the dual-harness doctrine operational for the writers constellation. Plan 05 (2026-04-22) extended that parity to the full agentic surface: the four quality-gate agents, three deploy-pipeline agents, and all seven slash commands are now `shipped` on both harnesses. The only remaining `pending` entry is `rag-web-docs-vault-exporter`, explicitly deferred to Obsidian vault standup. The dual-harness doctrine is now operational across every active primitive, not merely the writers.
 
 ---
 
