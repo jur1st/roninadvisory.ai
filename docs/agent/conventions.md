@@ -127,6 +127,24 @@ This is cosmetic, not functional. No behavioral change has been observed; the na
 
 ---
 
+## The design-system contract
+
+The canonical design-token catalog is [`site/static/tokens.css`](../../site/static/tokens.css). That file is not a stylesheet — it is the vocabulary the site's visual direction speaks in. The editorial-masthead direction (plan 04) is the shipped design; the catalog's shape encodes that direction: two-ink palette (`--color-ink` / `--color-paper`) with a single second accent (`--color-mark`, oxblood), no state tokens (`--color-success` / `--color-warning` / `--color-error` are absent by design), an editorial type scale (`--size-xs` through `--size-5xl`), rule weights, and page-margin tokens.
+
+Three quality-gate agents enforce compliance against this contract:
+
+- [`rag-web-css-auditor`](../../.claude/agents/rag-web-css-auditor.md) — enforces the three-line semantic-color fallback pattern (static hex → OKLch token → `light-dark()` semantic pair) in every component color declaration.
+- [`rag-web-token-enforcer`](../../.claude/agents/rag-web-token-enforcer.md) — catches hardcoded CSS values (hex, pixel spacing, literal font strings) that should reference a catalog token.
+- [`rag-web-visual-reviewer`](../../.claude/agents/rag-web-visual-reviewer.md) — scores the rendered UI against the 25-point sophistication rubric; token compliance is one scored dimension.
+
+All three reference `site/static/tokens.css` by file path. They read the live catalog at invocation time; they carry no hardcoded token names in their bodies, so a catalog evolution that adds or renames tokens does not silently break them.
+
+- **Failure mode.** Rewriting the token catalog without a plan doc. Token-catalog drift is indistinguishable from vocabulary drift — the catalog *is* the vocabulary. A change that swaps `--color-mark` for `--color-accent-red`, or adds a fourth ink without a rationale, shifts the visual argument of the site without leaving a traceable decision. A future contributor reading the CSS sees a different design without understanding what changed or why.
+- **Rule.** A change to the token catalog is a theory-level change. It deserves a plan doc — scope, decision block, Pi Mirror section — before the first token is renamed. Patch-level corrections (typo in a comment, a hex fallback that resolves to the wrong shade) do not require a plan; palette shape changes do.
+- **Rule warrant.** Plan 04 records the decision to lock in the editorial direction and provides the decision trail (why oxblood and not a third ink, why no state colors, why the type scale stops at `--size-5xl`). A future plan that expands or reshapes the catalog should do the same. The validator gate (`tools/scripts/validate-tokens.sh`) enforces the minimums mechanically; the plan doc enforces the *reason* the minimums are what they are.
+
+---
+
 ## The `rag-web-*` namespace
 
 All project-specific slash commands, agents, and skills carry the `rag-web-*` prefix. Global or sibling-project primitives do not.

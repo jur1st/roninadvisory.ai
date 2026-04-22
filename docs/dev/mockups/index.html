@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design slate (resolved) — Ronin Advisory</title>
+<link rel="stylesheet" href="/static/tokens.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-prose);
+  font-size: var(--size-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 60rem;
+  padding: var(--space-10) var(--space-6) var(--space-12);
+}
+
+header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-2);
+}
+
+h1 {
+  font-family: var(--font-structure);
+  font-size: var(--size-2xl);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+  color: var(--color-text);
+}
+
+.lede {
+  max-width: 44rem;
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-muted);
+  line-height: var(--leading-prose);
+}
+
+.note {
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  color: var(--color-text-muted);
+  border-left: 2px solid var(--color-border);
+  padding: var(--space-2) var(--space-4);
+  margin: var(--space-6) 0 var(--space-10);
+}
+
+.slate {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 56rem) {
+  .slate { grid-template-columns: repeat(3, 1fr); }
+}
+
+.mockup {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  padding: var(--space-5) var(--space-5) var(--space-6);
+  background: var(--color-surface);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 120ms ease;
+}
+
+.mockup:hover,
+.mockup:focus-visible {
+  border-color: var(--color-accent);
+  color: inherit;
+  text-decoration: none;
+}
+
+.mockup:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.mockup .slug {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-3);
+}
+
+.mockup h2 {
+  font-family: var(--font-structure);
+  font-size: var(--size-lg);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-3);
+  color: var(--color-text);
+}
+
+.mockup .thesis {
+  margin: 0 0 var(--space-5);
+  line-height: var(--leading-prose);
+  color: var(--color-text);
+}
+
+.mockup dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-4);
+  margin: 0 0 var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+}
+
+.mockup dt {
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.mockup dd {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.mockup .open {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+footer {
+  margin-top: var(--space-12);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+}
+
+footer a {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
+footer a:hover { color: var(--color-accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Internal — design-system record</p>
+  <h1>Design slate (resolved)</h1>
+  <p class="lede">Three directions were explored for the Ronin Advisory Group front page. <strong>A — Editorial masthead</strong> was chosen and has shipped to <a href="/">the live site</a>. B and C are archived as recorded alternatives, not deleted — both retain theory value for a future contributor wondering why the editorial register won out. A and B converged independently on warm paper and oxidized red; that convergence was treated as a brand-color signal, not a coincidence, and landed in the shipped palette.</p>
+</header>
+
+<p class="note">This page is gitignored at <code>site/_mockups/</code> and lives in the repo at <code>docs/dev/mockups/</code>. It is a record of the slate's arc, not an under-review screen. Decisions and reasoning live in <a href="https://github.com/" onclick="return false"><code>docs/dev/plans/04-design-system-lock-in.md</code></a>.</p>
+
+<section class="slate" style="grid-template-columns: 1fr;">
+
+  <a class="mockup" href="/">
+    <p class="slug">A — Editorial masthead · <em>shipped</em></p>
+    <h2>The firm publishes its thinking</h2>
+    <p class="thesis">The front page reads as the cover of a quarterly; services render as its colophon. Positions Ronin Advisory as a publishing-forward consultancy where Gunnerbench is Issue 01 of a continuing editorial practice. This direction is the live site — edits land in <code>site/</code>.</p>
+    <dl>
+      <dt>Type</dt>      <dd>Freight Display / Text + Acumin Pro</dd>
+      <dt>Palette</dt>   <dd>Warm paper, oxblood, ink</dd>
+      <dt>Mark</dt>      <dd>None — the wordmark is the logotype</dd>
+      <dt>Gunnerbench</dt><dd>Inset card, foot position, "Issue 01"</dd>
+      <dt>Mode</dt>      <dd>Day / Night toggle in imprint strip</dd>
+    </dl>
+    <span class="open">Open live site →</span>
+  </a>
+
+</section>
+
+<footer>
+  <p>Archived directions (read-only reference): <a href="/_mockups/_archive/b/">B — Typographic architecture</a> · <a href="/_mockups/_archive/c/">C — The Seal</a> · Decision record: <code>docs/dev/plans/04-design-system-lock-in.md</code></p>
+</footer>
+
+</body>
+</html>

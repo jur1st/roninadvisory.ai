@@ -24,12 +24,12 @@ You scan CSS files for hardcoded values that violate the rag-web design token co
 
 4. **Scan for pixel font sizes.**
    Pattern: `font-size:\s*[0-9.]+px` outside token definitions.
-   Suggest a `--size-*` scale token (rag-web catalog: `--size-xs`, `--size-sm`, `--size-base`, `--size-lg`, `--size-xl`, `--size-2xl`). Note that `clamp()` is preferred for fluid type above `--size-xl`.
+   Suggest a `--size-*` scale token (rag-web catalog: `--size-xs`, `--size-sm`, `--size-base`, `--size-lg`, `--size-xl`, `--size-2xl`, `--size-3xl`, `--size-4xl`, `--size-5xl`). Note that `clamp()` is preferred for fluid type above `--size-xl`.
 
 5. **Scan for pixel spacing.**
    Patterns: `(margin|padding|gap|top|right|bottom|left|inset):\s*[0-9.]+px`
-   Map common pixel values to token equivalents: 4px→`--space-1`, 8px→`--space-2`, 12px→`--space-3`, 16px→`--space-4`, 20px→`--space-5`, 24px→`--space-6`, 32px→`--space-8`, 40px→`--space-10`, 48px→`--space-12`, 64px→`--space-16`, 80px→`--space-20`, 96px→`--space-24`.
-   Flag unmapped values as "no direct token — use closest or define new".
+   Map common pixel values to token equivalents (editorial catalog): 4px→`--space-1`, 8px→`--space-2`, 12px→`--space-3`, 16px→`--space-4`, 24px→`--space-5`, 32px→`--space-6`, 48px→`--space-7`, 72px→`--space-8`, 104px→`--space-9`, 144px→`--space-10`.
+   Flag unmapped values as "no direct token — use closest or define new". The catalog stops at `--space-10`; a larger value is a signal that the page is fighting the spatial grid.
 
 6. **Scan for literal font-family strings.**
    Pattern: `font-family:\s*['"A-Za-z]` where the value does not start with `var(`.

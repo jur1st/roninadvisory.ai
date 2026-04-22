@@ -7,6 +7,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Design-system lock-in: the site's visual direction resolved to the editorial-masthead register (mockup A promoted to `site/`). The token catalog rewritten from the Tier-1 scaffold (blue accent, state colors) to the editorial contract — two-ink palette (deep ink + warm paper) with oxblood accent, no state tokens, optical type scale (xs→5xl), rule weights, and page-margin family. Tokens validated by `tools/scripts/validate-tokens.sh`.
+- Archived design alternatives: mockups B (typographic architecture) and C (the seal) moved to `docs/dev/mockups/_archive/` with a README explaining their theory value. Non-canonical alternatives retained for reversibility; the editorial direction is the shipped design.
+- Typography path committed to Path C (Adobe Typekit CDN): FreightDisp Pro, FreightText Pro, Acumin Pro. Site currently resolves to display-name substitutes (Georgia, Helvetica Neue, system monospace); Typekit kit provisioning is an operator action deferred to a follow-up. `docs/dev/typography.md` updated with Path C decision and operational setup steps.
+- New design-system documentation: `docs/dev/design-system.md` (theory document framing the editorial claim and its three invariants) and `docs/dev/troubleshooting.md` (named failure-mode catalogue from mockup A's iteration).
 - Dev-loop-vs-publish separation inside `tools/`: Playwright and preview-server are explicit dev tools that never produce output shipped to Pages. Approvals tracked in commit messages and `pi-agents.yaml`, making the "no build tooling without explicit approval" rule legible in practice.
 - `tools/preview/main.go` + `go.mod` — stdlib-only HTTP file server over `site/`. Binds 0.0.0.0:8080 by default; `HOST=127.0.0.1` for laptop-only access. Prints loopback and LAN URLs on startup, enabling rapid local iteration without a separate build step.
 - `tools/scripts/preview.sh` — pidfile-backed daemon wrapper (start | stop | status | restart | logs) for the preview server. Operators use `/rag-web-preview` command; script is the mechanical layer.
@@ -31,8 +35,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Token catalog replaced: `site/static/tokens.css` now carries the editorial contract. Semantic color family expanded (ink, paper, ink-muted, rule, mark, surface, ink-soft), state tokens removed, spacing scale and type tokens aligned to editorial proportions. Tier-1 canonical aliases (`--color-text`, `--color-bg`, `--color-accent`) route to editorial tokens via `var()`.
+- `docs/dev/` corpus rewritten to match the editorial contract: `tokens.md` (token catalog), `typography.md` (paths committed), `architecture.md` (color pressure count updated), `authoring.md` (new token names and editorial voice), `contributing.md` (plan list extended). Naur-voice preserved across all updates.
+- `docs/agent/conventions.md` extended with "design-system contract" section recording the canonical token catalog and the three quality-gate agents that enforce it.
+- Quality-gate and doc-writer agents audited for token-name drift against the new catalog. `rag-web-token-enforcer` carried a stale pixel-to-token map (`--space-12` / `--space-16` / `--space-20` / `--space-24` no longer exist in the editorial catalog, and existing `--space-N` pixel values had shifted) — corrected in place. The other four agents (`rag-web-css-auditor`, `rag-web-visual-reviewer`, `rag-web-docs-dev-writer`, `rag-web-docs-user-writer`) verified clean — token-contract references are path-only, not name-hardcoded.
 - Project environment moves from "no harness contract" to "read-only prime, adaptive close"; sessions now open and close against the same shape instead of reinventing each time.
 - Frontend tooling posture: Playwright is admitted as a dev dependency (explicit carve-out from the CLAUDE.md no-build-tooling rule) on the condition that nothing it produces ships to GitHub Pages.
+
+### Removed
+
+- State tokens from the canonical catalog (`--color-success`, `--color-warning`, `--color-error`). The editorial palette is disciplined to two inks plus one accent; state colors are YAGNI until a consumer page needs one.
 
 ### Deferred
 

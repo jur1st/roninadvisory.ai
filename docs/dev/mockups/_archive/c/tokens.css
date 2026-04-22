@@ -1,0 +1,103 @@
+/* === rag-web mockup C — shadow tokens === */
+/*
+ * Narrows the project token scaffold toward a near-monochrome system
+ * where the mark is the only element permitted to carry visual weight.
+ * Keeps the three-line fallback pattern for every color; keeps Berkeley
+ * Mono / Helvetica Neue LT Com as the two voices.
+ *
+ * Shadow of /site/static/tokens.css. Do not promote without review:
+ * mockup tokens exist to be deleted.
+ */
+
+:root { color-scheme: light dark; }
+
+:root {
+  /* ── Ink: the mark + the type ─────────────────────────────────── */
+  --color-ink: #111111;
+  --color-ink: oklch(0.180 0.004 260);
+  --color-ink: light-dark(oklch(0.180 0.004 260), oklch(0.940 0.004 260));
+
+  /* ── Paper: the ground ────────────────────────────────────────── */
+  --color-paper: #f4f2ec;
+  --color-paper: oklch(0.960 0.010 85);
+  --color-paper: light-dark(oklch(0.960 0.010 85), oklch(0.140 0.010 260));
+
+  /* ── Mute: secondary type, hairlines, meta ───────────────────── */
+  --color-mute: #6b6a65;
+  --color-mute: oklch(0.520 0.008 85);
+  --color-mute: light-dark(oklch(0.520 0.008 85), oklch(0.640 0.008 260));
+
+  /* ── Rule: hairlines, borders ─────────────────────────────────── */
+  --color-rule: #9a968b;
+  --color-rule: oklch(0.720 0.010 85);
+  --color-rule: light-dark(oklch(0.720 0.010 85), oklch(0.340 0.010 260));
+
+  /* ── Accent: single permitted splash. Oxidized iron. ─────────── */
+  --color-accent: #8a2a1d;
+  --color-accent: oklch(0.430 0.135 28);
+  --color-accent: light-dark(oklch(0.430 0.135 28), oklch(0.620 0.140 28));
+
+  /* Legacy aliases for compatibility with the project scaffold ─── */
+  --color-text:        var(--color-ink);
+  --color-bg:          var(--color-paper);
+  --color-text-muted:  var(--color-mute);
+  --color-border:      var(--color-rule);
+  --color-surface:     var(--color-paper);
+
+  /* ── Typography ───────────────────────────────────────────────── */
+  /* Display anchor: Helvetica Neue LT Com (condensed + regular). Body: Berkeley Mono. */
+  --font-display: 'Helvetica Neue LT Com 67 MdCn', 'Helvetica Neue LT Com 57 Cn',
+                  'Helvetica Neue Condensed', 'HelveticaNeue-CondensedBold',
+                  'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-structure: 'Helvetica Neue LT Com 55 Roman', 'Helvetica Neue',
+                    ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'Berkeley Mono', 'Berkeley Mono Variable',
+               ui-monospace, 'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace;
+
+  /* ── Type scale — perfect fourth (1.333), anchored at 15px body ── */
+  --size-xs:    0.633rem;   /* 10.1 */
+  --size-sm:    0.844rem;   /* 13.5 */
+  --size-base:  0.9375rem;  /* 15.0 — body copy */
+  --size-md:    1.125rem;   /* 18.0 */
+  --size-lg:    1.500rem;   /* 24.0 */
+  --size-xl:    2.000rem;   /* 32.0 */
+  --size-2xl:   2.667rem;   /* 42.7 */
+  --size-3xl:   3.556rem;   /* 56.9 — display */
+  --size-4xl:   4.741rem;   /* 75.9 — hero mark caption */
+
+  --leading-tight:   1.05;
+  --leading-snug:    1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+
+  --tracking-tightest: -0.03em;
+  --tracking-tight:    -0.015em;
+  --tracking-normal:    0;
+  --tracking-wide:      0.04em;
+  --tracking-wider:     0.12em;
+  --tracking-widest:    0.22em;
+
+  /* ── Space scale (4px base) ──────────────────────────────────── */
+  --space-1:  0.25rem;
+  --space-2:  0.50rem;
+  --space-3:  0.75rem;
+  --space-4:  1.00rem;
+  --space-5:  1.25rem;
+  --space-6:  1.50rem;
+  --space-8:  2.00rem;
+  --space-10: 2.50rem;
+  --space-12: 3.00rem;
+  --space-16: 4.00rem;
+  --space-20: 5.00rem;
+  --space-24: 6.00rem;
+  --space-32: 8.00rem;
+
+  /* ── Layout ───────────────────────────────────────────────────── */
+  --width-prose:     56ch;
+  --width-content:   760px;
+  --width-container: 1180px;
+
+  --rule-hair: 1px;
+  --rule-med:  2px;
+  --rule-bold: 4px;
+}

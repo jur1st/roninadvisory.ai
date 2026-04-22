@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Ronin Advisory colophon mark">
+  <!--
+    Colophon mark. A concentric diamond-in-circle reads as a press
+    device — the kind of small metal ornament that sits on a title
+    page. Deliberately non-figurative: the crest does the work the
+    name already does, without adding a sigil for the firm.
+  -->
+  <g fill="none" stroke="currentColor" stroke-width="0.9">
+    <circle cx="24" cy="24" r="21.5" />
+    <circle cx="24" cy="24" r="17" />
+    <polygon points="24,9.5 38.5,24 24,38.5 9.5,24" />
+  </g>
+  <g fill="currentColor" stroke="none">
+    <circle cx="24" cy="24" r="1.6" />
+  </g>
+</svg>

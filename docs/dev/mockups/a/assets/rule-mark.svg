@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 24" role="img" aria-label="Editorial rule mark">
+  <!--
+    Editorial rule mark. Thin-thin-thick triple rule with a centered
+    diamond, a convention from mid-century editorial matter. Scales
+    across the masthead and between sections without redraw.
+  -->
+  <g fill="currentColor" stroke="currentColor">
+    <line x1="0"  y1="5"  x2="108" y2="5"  stroke-width="0.75" />
+    <line x1="132" y1="5"  x2="240" y2="5"  stroke-width="0.75" />
+    <line x1="0"  y1="11" x2="108" y2="11" stroke-width="0.75" />
+    <line x1="132" y1="11" x2="240" y2="11" stroke-width="0.75" />
+    <line x1="0"  y1="18" x2="108" y2="18" stroke-width="1.5" />
+    <line x1="132" y1="18" x2="240" y2="18" stroke-width="1.5" />
+    <polygon points="120,4 127,12 120,20 113,12" stroke="none" />
+  </g>
+</svg>

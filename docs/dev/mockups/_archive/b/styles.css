@@ -1,0 +1,629 @@
+/* ============================================================================
+ * Ronin Advisory — Mockup B — Direction: Typographic Architecture
+ * styles.css — layout and composition
+ * ============================================================================
+ *
+ * Thesis: the page is a specimen sheet. Letter-spacing is the grid.
+ * Type weight + negative space do the load-bearing work.
+ * Ink on paper. Two values plus a single accent spike.
+ * ========================================================================== */
+
+/* ── Font registration via local() ─────────────────────────────────────────
+ * Fonts confirmed installed on the operator's machine by
+ * tools/scripts/font-check.sh. For a non-operator viewer these @font-face
+ * blocks resolve nothing and the token fallback chain takes over — the
+ * composition still reads as disciplined typographic architecture.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('BerkeleyMono-Regular'), local('Berkeley Mono Regular');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('BerkeleyMono-Bold'), local('Berkeley Mono Bold');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('BerkeleyMono-Italic'), local('Berkeley Mono Italic');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ── Theme override ───────────────────────────────────────────────────────
+ * Without [data-theme], prefers-color-scheme drives light-dark().
+ * With [data-theme], color-scheme pivots and every light-dark() token flips.
+ * No color values are duplicated; the tokens are the single source. */
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
+
+/* ── Reset ────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  color: #0f1116;
+  color: var(--color-ink);
+  background: #f7f6f2;
+  background: var(--color-paper);
+  -webkit-text-size-adjust: 100%;
+  font-feature-settings: "kern" 1, "liga" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  min-height: 100vh;
+}
+
+/* ── Sheet — the page frame ───────────────────────────────────────────── */
+
+.sheet {
+  max-width: var(--width-container);
+  margin-inline: auto;
+  padding: var(--space-6) var(--gutter) var(--space-16);
+  border-left: 1px solid var(--color-rule-hair);
+  border-right: 1px solid var(--color-rule-hair);
+  min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .sheet { padding: var(--space-8) var(--gutter) var(--space-24); }
+}
+@media (min-width: 1200px) {
+  .sheet { padding: var(--space-12) var(--gutter) var(--space-32); }
+}
+
+/* ── Masthead — identification strip, top of sheet ────────────────────── */
+
+.masthead {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-block: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-ink);
+}
+
+.masthead__sigil {
+  font-weight: 700;
+  letter-spacing: var(--tracking-wider);
+}
+
+.masthead__meta {
+  justify-self: end;
+  display: flex;
+  gap: var(--space-4);
+  color: var(--color-ink-muted);
+}
+
+.masthead__meta span + span::before {
+  content: "·";
+  padding-right: var(--space-4);
+  color: var(--color-ink-muted);
+}
+
+@media (max-width: 520px) {
+  .masthead { grid-template-columns: auto 1fr; row-gap: var(--space-1); }
+  .masthead__meta { grid-column: 1 / -1; justify-self: start; gap: var(--space-2); }
+  .masthead__meta span + span::before { padding-right: var(--space-2); }
+}
+
+/* ── Wordmark — architecture at the anchor point ──────────────────────── */
+
+.wordmark {
+  display: block;
+  padding-block: var(--space-8) var(--space-5);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.wordmark__line {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(4rem, 18vw, 16rem);
+  line-height: var(--leading-architectural);
+  letter-spacing: var(--tracking-tightest);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin-inline-start: -0.03em;
+  font-feature-settings: "kern" 1, "case" 1;
+  text-wrap: nowrap;
+}
+
+@media (min-width: 1200px) {
+  .wordmark { padding-block: var(--space-12) var(--space-6); }
+}
+
+.wordmark__subtitle {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-ink-muted);
+}
+
+.wordmark__subtitle strong {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  .wordmark__subtitle { flex-direction: column; gap: var(--space-1); }
+}
+
+/* ── Statement — the positioning epigraph ─────────────────────────────── */
+
+.statement {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  padding-block: var(--space-12) var(--space-16);
+  border-bottom: 1px solid var(--color-rule-hair);
+}
+
+@media (min-width: 768px) {
+  .statement {
+    grid-template-columns: minmax(8ch, 16ch) minmax(0, 1fr) minmax(0, 32ch);
+    gap: var(--space-8);
+  }
+}
+
+.statement__label {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-ink-muted);
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--color-rule);
+  align-self: start;
+}
+
+.statement__body {
+  font-family: var(--font-structure);
+  font-weight: 700;
+  font-size: clamp(1.375rem, 2.8vw, 2.15rem);
+  line-height: 1.12;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  max-width: 34ch;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.statement__body em {
+  font-style: italic;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.78em;
+  letter-spacing: 0;
+  color: var(--color-ink-muted);
+  text-transform: none;
+}
+
+.statement__aside {
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  max-width: 38ch;
+}
+
+.statement__aside p { margin: 0 0 var(--space-3); }
+.statement__aside p:last-child { margin-bottom: 0; }
+
+/* ── Services — typeset strata ────────────────────────────────────────── */
+
+.services {
+  padding-block: var(--space-8) var(--space-12);
+}
+
+.services__header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-ink);
+}
+
+.services__header span:last-child { color: var(--color-ink-muted); }
+
+.services__list { list-style: none; margin: 0; padding: 0; }
+
+.service {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  column-gap: var(--space-4);
+  row-gap: var(--space-2);
+  padding-block: var(--space-6) var(--space-6);
+  border-bottom: 1px solid var(--color-rule-hair);
+}
+
+.service:last-child { border-bottom: 1px solid var(--color-rule); }
+
+@media (min-width: 768px) {
+  .service {
+    grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 38ch);
+    column-gap: var(--space-8);
+    padding-block: var(--space-8) var(--space-6);
+  }
+}
+
+.service__num {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-ink-muted);
+  padding-top: 0.55rem;
+  font-variant-numeric: tabular-nums;
+  align-self: start;
+}
+
+.service__name {
+  font-family: var(--font-structure);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 2.25rem);
+  line-height: 1.04;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.service__name::before {
+  content: "— ";
+  color: var(--color-ink-muted);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.service__body {
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  margin: 0;
+  grid-column: 2 / -1;
+}
+
+@media (min-width: 768px) {
+  .service__body {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    align-self: start;
+    padding-top: 0.65rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .services__header span:nth-child(2) { display: none; }
+  .service {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    column-gap: var(--space-3);
+  }
+}
+
+/* ── Gunnerbench strip — the single accent lives here ─────────────────── */
+
+.gunnerbench {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  padding: var(--space-8) 0;
+  border-top: 3px solid var(--color-accent);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+@media (min-width: 768px) {
+  .gunnerbench {
+    grid-template-columns: minmax(10ch, 18ch) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-8);
+  }
+}
+
+.gunnerbench__label {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.gunnerbench__title {
+  font-family: var(--font-structure);
+  font-weight: 700;
+  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.gunnerbench__title em {
+  font-family: var(--font-mono);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.65em;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-ink-muted);
+  display: block;
+  margin-top: var(--space-1);
+}
+
+.gunnerbench__link {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-ink);
+  text-decoration: none;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid var(--color-ink);
+  justify-self: start;
+  transition: color 120ms linear, border-color 120ms linear;
+}
+
+.gunnerbench__link:hover,
+.gunnerbench__link:focus-visible {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+  outline: none;
+}
+
+.gunnerbench__link::after { content: "  ->"; }
+
+/* ── Contact — mailto only ────────────────────────────────────────────── */
+
+.contact {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  padding-block: var(--space-12) var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .contact {
+    grid-template-columns: minmax(10ch, 16ch) minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+.contact__label {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-ink-muted);
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-rule);
+  align-self: start;
+}
+
+.contact__body { max-width: 56ch; }
+
+.contact__prompt {
+  font-family: var(--font-structure);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  line-height: 1.12;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-4);
+  text-wrap: balance;
+}
+
+.contact__mail {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-ink);
+  padding-bottom: 0.08em;
+  transition: color 120ms linear, border-color 120ms linear;
+  word-break: break-all;
+}
+
+.contact__mail:hover,
+.contact__mail:focus-visible {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+  outline: none;
+}
+
+.contact__note {
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-muted);
+  margin: var(--space-4) 0 0;
+  max-width: 52ch;
+}
+
+/* ── Mode — theme toggle typeset as a ledger stratum ──────────────────────
+ * Matches the .contact / .statement label-plus-body rhythm so the toggle
+ * reads as another § row, not as UI chrome. DAY / NIGHT are typographic
+ * affordances: the active side is at full ink, the inactive at muted ink. */
+
+.mode {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-8) var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .mode {
+    grid-template-columns: minmax(10ch, 16ch) minmax(0, 1fr) minmax(0, 32ch);
+    gap: var(--space-8);
+    align-items: baseline;
+  }
+}
+
+.mode__label {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-ink-muted);
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-rule);
+  align-self: start;
+}
+
+.mode__toggle {
+  /* strip the browser button chrome — this is type, not UI */
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  font-weight: 700;
+  justify-self: start;
+}
+
+.mode__state {
+  color: var(--color-ink-muted);
+  padding-bottom: 0.15em;
+  border-bottom: 1px solid transparent;
+  transition: color 120ms linear, border-color 120ms linear;
+}
+
+.mode__sep {
+  color: var(--color-ink-muted);
+  font-weight: 400;
+}
+
+/* Active-side styling: the state that matches the resolved mode gets full
+   ink and an underline; the other stays muted. data-mode is written by JS
+   after it reads the effective theme (stored override or system preference). */
+
+.mode__toggle[data-mode="light"] .mode__state--day,
+.mode__toggle[data-mode="dark"]  .mode__state--night {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-ink);
+}
+
+.mode__toggle:hover .mode__state,
+.mode__toggle:focus-visible .mode__state {
+  color: var(--color-ink);
+}
+
+.mode__toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.mode__note {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  line-height: var(--leading-relaxed);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-ink-muted);
+  max-width: 38ch;
+}
+
+@media (max-width: 520px) {
+  .mode__note { display: none; }
+}
+
+/* ── Colophon — foot-of-sheet ledger ──────────────────────────────────── */
+
+.colophon {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-ink-muted);
+}
+
+@media (min-width: 768px) {
+  .colophon {
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+  }
+}
+
+.colophon__right { justify-self: start; }
+
+@media (min-width: 768px) {
+  .colophon__right { justify-self: end; }
+}
+
+.colophon__right span + span::before {
+  content: "·";
+  padding: 0 var(--space-2);
+}
+
+/* ── Motion + focus ───────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+</content>
+</invoke>

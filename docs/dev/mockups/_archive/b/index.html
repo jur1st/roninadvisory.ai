@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ronin Advisory Group — Technical consulting, digital forensics, AI engineering, AI risk</title>
+  <meta name="description" content="Ronin Advisory Group. Independent technical counsel in digital forensics and AI systems. Led by John Benson.">
+  <meta name="theme-color" content="#0f1116">
+
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Theme persistence — inline in <head> to avoid FOUC.
+       Without data-theme, prefers-color-scheme drives via light-dark().
+       With data-theme, the user override takes over. -->
+  <script>
+    (() => {
+      const KEY = 'rag-theme';
+      const stored = localStorage.getItem(KEY);
+      if (stored === 'light' || stored === 'dark') {
+        document.documentElement.setAttribute('data-theme', stored);
+      }
+      window.addEventListener('DOMContentLoaded', () => {
+        const btn = document.querySelector('[data-theme-toggle]');
+        if (!btn) return;
+        const sync = () => {
+          const current = document.documentElement.getAttribute('data-theme')
+            || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          btn.setAttribute('aria-pressed', current === 'dark' ? 'true' : 'false');
+          btn.dataset.mode = current;
+        };
+        sync();
+        btn.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme')
+            || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem(KEY, next);
+          sync();
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+
+  <main class="sheet" role="main">
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         MASTHEAD — top-of-sheet identification ledger
+         ══════════════════════════════════════════════════════════════════ -->
+    <header class="masthead" aria-label="Masthead">
+      <div class="masthead__sigil">R · A · G</div>
+      <div class="masthead__center" aria-hidden="true"></div>
+      <div class="masthead__meta">
+        <span>Vol. I</span>
+        <span>No. 001</span>
+        <span>MMXXVI</span>
+      </div>
+    </header>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         WORDMARK — architecture at the anchor point
+         ══════════════════════════════════════════════════════════════════ -->
+    <section class="wordmark" aria-label="Ronin Advisory Group">
+      <span class="wordmark__line" aria-hidden="true">Ronin</span>
+      <span class="wordmark__line" aria-hidden="true">Advisory</span>
+      <h1 style="position:absolute;left:-9999px;">Ronin Advisory Group</h1>
+      <div class="wordmark__subtitle">
+        <strong>Ronin Advisory Group, LLC</strong>
+        <span>Independent counsel · Digital forensics · AI systems</span>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         STATEMENT — positioning epigraph
+         ══════════════════════════════════════════════════════════════════ -->
+    <section class="statement" aria-label="About">
+      <div class="statement__label">§ On the Firm</div>
+      <p class="statement__body">
+        Independent technical counsel for matters where the record has to hold up.
+        <em>rōnin · 浪人 · one bound to no house, accountable to the work.</em>
+      </p>
+      <div class="statement__aside">
+        <p>
+          Ronin Advisory Group conducts digital forensics examinations and
+          advises on AI systems under build or scrutiny. The firm takes
+          engagements where evidentiary integrity, methodological clarity,
+          and written documentation are load-bearing.
+        </p>
+        <p>
+          Principal: John Benson. Background in forensic examination and
+          applied AI engineering. Retained directly; no account managers.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SERVICES — typeset strata. Four, named explicitly.
+         ══════════════════════════════════════════════════════════════════ -->
+    <section class="services" aria-labelledby="services-head">
+      <header class="services__header" id="services-head">
+        <span>§ Practice</span>
+        <span>Four services · Retained singly or in concert</span>
+        <span>04</span>
+      </header>
+
+      <ol class="services__list">
+
+        <li class="service">
+          <span class="service__num">01</span>
+          <h2 class="service__name">Technical consulting</h2>
+          <p class="service__body">
+            Architecture review, system-level due diligence, and written
+            counsel on technology decisions where the downstream risk is
+            carried by the operator, not the vendor.
+          </p>
+        </li>
+
+        <li class="service">
+          <span class="service__num">02</span>
+          <h2 class="service__name">Digital forensics examination</h2>
+          <p class="service__body">
+            Evidence collection, preservation, and analysis across
+            endpoints, cloud accounts, and mobile devices. Reports written
+            to the standard of the venue they will be read in.
+          </p>
+        </li>
+
+        <li class="service">
+          <span class="service__num">03</span>
+          <h2 class="service__name">AI software engineering</h2>
+          <p class="service__body">
+            Hands-on design and implementation of agentic systems, retrieval
+            pipelines, and model-integrated tooling. Deliverables are
+            running code with documented reasoning.
+          </p>
+        </li>
+
+        <li class="service">
+          <span class="service__num">04</span>
+          <h2 class="service__name">AI risk management</h2>
+          <p class="service__body">
+            Pre-deployment review, red-team engagements, and governance
+            frameworks for organizations putting AI into production
+            against obligations they are unable to delegate.
+          </p>
+        </li>
+
+      </ol>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         GUNNERBENCH — periodical strip. The single accent spike.
+         ══════════════════════════════════════════════════════════════════ -->
+    <section class="gunnerbench" aria-labelledby="gb-head">
+      <div class="gunnerbench__label">Periodical</div>
+      <h2 class="gunnerbench__title" id="gb-head">
+        Gunnerbench
+        <em>Notes on tooling, methodology, and the ground truth of working systems.</em>
+      </h2>
+      <a class="gunnerbench__link" href="#" aria-label="Read Gunnerbench">Read current issue</a>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         CONTACT — declarative. mailto only, no phone.
+         ══════════════════════════════════════════════════════════════════ -->
+    <section class="contact" aria-labelledby="contact-head">
+      <div class="contact__label" id="contact-head">§ Engagements</div>
+      <div class="contact__body">
+        <p class="contact__prompt">
+          Inquiries by letter. Initial correspondence in writing.
+        </p>
+        <a class="contact__mail" href="mailto:john@roninadvisory.ai">john@roninadvisory.ai</a>
+        <p class="contact__note">
+          Conflict checks and scoping are conducted before retainer.
+          Attach a brief description of the matter; do not send privileged
+          material until counsel is engaged.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         MODE — theme stratum. Typeset as DAY / NIGHT; inactive side dimmed.
+         Sits as a ledger row above the colophon — reads as page metadata,
+         not as UI chrome.
+         ══════════════════════════════════════════════════════════════════ -->
+    <section class="mode" aria-labelledby="mode-head">
+      <div class="mode__label" id="mode-head">§ Mode</div>
+      <button
+        class="mode__toggle"
+        type="button"
+        data-theme-toggle
+        aria-pressed="false"
+        aria-label="Toggle day or night typesetting">
+        <span class="mode__state mode__state--day"  aria-hidden="true">Day</span>
+        <span class="mode__sep"                     aria-hidden="true">/</span>
+        <span class="mode__state mode__state--night" aria-hidden="true">Night</span>
+      </button>
+      <div class="mode__note">Overrides system preference &middot; Remembered locally</div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         COLOPHON — foot-of-sheet ledger
+         ══════════════════════════════════════════════════════════════════ -->
+    <footer class="colophon" role="contentinfo">
+      <div class="colophon__left">
+        <span>© Ronin Advisory Group, LLC</span>
+      </div>
+      <div class="colophon__right">
+        <span>Typeset in Helvetica Neue &amp; Berkeley Mono</span>
+        <span>roninadvisory.ai</span>
+      </div>
+    </footer>
+
+  </main>
+
+</body>
+</html>
+</content>
+</invoke>

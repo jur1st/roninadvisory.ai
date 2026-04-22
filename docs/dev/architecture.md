@@ -28,7 +28,7 @@ A visitor sees only layer 1. A contributor edits layer 1 mediated by the contrac
 
 ## Why the token contract is shaped the way it is
 
-`site/static/tokens.css` is the single source of every visual property that appears on the page: colors, typography stacks, type scale, line heights, letter spacing, a spatial grid, and a handful of layout widths. Nothing in `site/index.html` — or in any future CSS we write — should hard-code a hex, an `oklch()`, a pixel, or a font name.
+`site/static/tokens.css` is the single source of every visual property that appears on the page: colors, typography stacks, type scale, line heights, letter spacing, a spatial grid, rule weights, page margins, and a handful of layout widths. Nothing in `site/index.html` — or in any future CSS we write — should hard-code a hex, an `oklch()`, a pixel, or a font name.
 
 Three design pressures shape the file.
 
@@ -42,11 +42,13 @@ Three design pressures shape the file.
 
 This is progressive enhancement as a deliberate design: a site that reads correctly on a five-year-old phone *and* honors a fresh dark-mode preference on a 2026 browser, with no runtime switch and no server-side variant. The `rag-web-css-auditor` agent enforces the three-line pattern so the contract cannot silently erode.
 
-**Third, space is tokenized on a quarter-rem grid** (`--space-1` = 0.25rem through `--space-24` = 6rem). Rem rather than px so the scale respects the visitor's root-size preference. A grid rather than arbitrary numbers because once "margin: 18px" appears in one place, "margin: 17px" appears in another, and the composition loses rhythm. The `rag-web-token-enforcer` agent maps raw pixel values back to the nearest token so that drift surfaces at review time, not six months later.
+The palette is two inks — a deep warm ink and a warm off-white paper — with a single second accent (oxblood). The catalog carries 7 editorial semantic tokens (`--color-ink`, `--color-paper`, `--color-ink-muted`, `--color-rule`, `--color-mark`, `--color-surface`, `--color-ink-soft`) plus 6 Tier-1 canonical aliases (`--color-text`, `--color-bg`, `--color-text-muted`, `--color-border`, `--color-accent`, `--color-accent-hover`). State tokens (success, warning, error) are deliberately absent — they are not used on the current site and adding one is a register shift that deserves a plan record. See `docs/dev/plans/04-design-system-lock-in.md` Decision 3.
+
+**Third, space is tokenized on an editorial stepped progression** (`--space-1` = 0.25rem through `--space-10` = 9rem). The first four steps are quarter-rem; beyond that the steps are larger, scaled for the wide horizontal spacers a cover layout needs. Rem rather than px so the scale respects the visitor's root-size preference. A grid rather than arbitrary numbers because once "margin: 18px" appears in one place, "margin: 17px" appears in another, and the composition loses rhythm. The `rag-web-token-enforcer` agent maps raw pixel values back to the nearest token so that drift surfaces at review time, not six months later.
 
 The metaphor worth naming: tokens are the project's **design vocabulary**. Every page speaks with the same words. If a page needs a word that isn't in the vocabulary, the correct move is to add it to the vocabulary — not to smuggle a one-off hex into the HTML.
 
-See [`tokens.md`](tokens.md) for the full catalog and worked examples, and [`authoring.md`](authoring.md) for the enforcement contract.
+See [`tokens.md`](tokens.md) for the full catalog and worked examples, [`design-system.md`](design-system.md) for the theory behind the editorial palette, and [`authoring.md`](authoring.md) for the enforcement contract.
 
 ## The session-management three-way contract
 

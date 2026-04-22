@@ -31,11 +31,12 @@ The close command is explicit about what it is not: **it never auto-commits.** I
 
 ## The plan-doc convention
 
-Substantive work on this project routes through a plan document under `docs/dev/plans/`. Three exist today:
+Substantive work on this project routes through a plan document under `docs/dev/plans/`. Four exist today:
 
 - `01-bootstrap-session-management.md` — established the three-way contract itself.
 - `02-web-frontend-localization.md` — added the scaffold, Playwright CLI, four quality-gate agents, and the typography primer.
 - `03-pages-deployment.md` — added the GitHub Pages deployment layer: the `rag-web-pages-deploy` skill, three agents, four commands, the CI workflow, and `site/.nojekyll`.
+- `04-design-system-lock-in.md` — promoted mockup A (editorial masthead) to `site/`; rewrote the token catalog from the Tier-1 scaffold to the editorial palette (two-ink, oxblood, no state tokens); committed typography to Path C (Adobe Typekit); authored the design-system theory document and the failure-mode catalogue.
 
 A plan doc is not a ticket. It is a written theory of what is about to change, why the changes have the shape they do, and what the acceptance criteria are. The sections are fixed by convention:
 
@@ -125,4 +126,6 @@ The antipatterns are named so they can be talked about. "That's auto-commit drif
 - `pi-agents.yaml` at project root — the Pi-mirror registry.
 - [`plans/_template.md`](plans/_template.md) — the plan-doc template.
 - [`architecture.md`](architecture.md) — the theory the conventions serve.
+- [`design-system.md`](design-system.md) — the editorial design theory: what the site claims, how it makes that visible, and what invariants keep it recoverable.
+- [`troubleshooting.md`](troubleshooting.md) — named failure modes from the editorial-masthead iteration; each entry is a pattern, not an incident report.
 - [`preview.md`](preview.md) — the local preview server; when and why to run it during a session.
