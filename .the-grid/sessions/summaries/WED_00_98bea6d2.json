@@ -1,7 +1,0 @@
-{
-  "session_id": "98bea6d2-f1f6-4acf-9590-73b930e03cb3",
-  "slug": "archived-legacy-website-as",
-  "timestamp": "2026-04-22T00:59:54.571Z",
-  "summary": "Archived legacy website as easter egg comments\n\n- Preserved old placeholder website copy in HTML comments within site/index.html as an easter egg\n- Moved legacy logo and assets to docs/dev/mockups/_archive/legacy-placeholder/ for posterity\n- Updated site configuration (CNAME) and current index to reflect new state\n\n[complete]",
-  "source": "bundle"
-}
