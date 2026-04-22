@@ -1,0 +1,139 @@
+# rag-web damage-control rules
+#
+# Consumed by .pi/extensions/rag-web-damage-control.ts on session_start in
+# interactive Pi TUI turns. Subprocess Pi runs (--no-extensions) bypass this
+# layer and rely on the tool allowlist + orchestrator git-checkpoint instead.
+#
+# Starter rule set derived from the Pi Agent skill template at
+# /Volumes/home/00-Meta/02-Tools-Config/02.59-Pi-Agent/skill/templates/damage-control-yaml.md
+# with rag-web-specific additions at the bottom of each section.
+#
+# To extend: add patterns to bashToolPatterns (standard regex), paths to
+# zeroAccessPaths / readOnlyPaths / noDeletePaths. The TypeScript body should
+# stay upstream-compatible; additions live here.
+
+bashToolPatterns:
+
+  # ── Filesystem destruction ─────────────────────────────────────────────────
+  - pattern: '\brm\s+(-[^\s]*)*-[rRf]'
+    reason: rm with recursive or force flags
+  - pattern: '\brm\s+--recursive'
+    reason: rm with --recursive flag
+  - pattern: '\bsudo\s+rm\b'
+    reason: sudo rm
+  - pattern: '\bchmod\s+(-[^\s]+\s+)*777\b'
+    reason: chmod 777 (world writable)
+  - pattern: '\bchmod\s+-[Rr].*777'
+    reason: recursive chmod 777
+  - pattern: '\bdd\s+.*of=/dev/'
+    reason: dd writing to a raw device
+
+  # ── Remote code execution ──────────────────────────────────────────────────
+  - pattern: 'curl\s+.*\|\s*(ba)?sh'
+    reason: curl piped to shell (arbitrary remote code execution)
+  - pattern: 'wget\s+.*\|\s*(ba)?sh'
+    reason: wget piped to shell (arbitrary remote code execution)
+  - pattern: 'curl\s+.*\|\s*sudo'
+    reason: curl piped to sudo
+
+  # ── Git history rewrite / force operations ─────────────────────────────────
+  - pattern: '\bgit\s+push\s+.*--force(?!-with-lease)'
+    reason: git push --force (use --force-with-lease instead)
+  - pattern: '\bgit\s+push\s+(-[^\s]*)*-f\b'
+    reason: git push -f (use --force-with-lease instead)
+  - pattern: '\bgit\s+reset\s+--hard\b'
+    reason: git reset --hard (use --soft or stash first)
+    ask: true
+  - pattern: '\bgit\s+filter-branch\b'
+    reason: git filter-branch rewrites entire history
+  - pattern: '\bgit\s+stash\s+clear\b'
+    reason: git stash clear deletes ALL stashes permanently
+
+  # ── Discard working tree ───────────────────────────────────────────────────
+  - pattern: '\bgit\s+checkout\s+--\s*\.'
+    reason: Discards all uncommitted changes
+    ask: true
+  - pattern: '\bgit\s+restore\s+\.'
+    reason: Discards all uncommitted changes
+    ask: true
+  - pattern: '\bgit\s+clean\s+(-[^\s]*)*-[fd]'
+    reason: git clean removes untracked files
+    ask: true
+
+  # ── SQL mass delete ────────────────────────────────────────────────────────
+  - pattern: 'DELETE\s+FROM\s+\w+\s*;'
+    reason: DELETE without WHERE clause deletes ALL rows
+  - pattern: '\bTRUNCATE\s+TABLE\b'
+    reason: TRUNCATE TABLE deletes ALL rows
+  - pattern: '\bDROP\s+(TABLE|DATABASE|SCHEMA)\b'
+    reason: DROP TABLE/DATABASE/SCHEMA is irreversible
+
+  # ── Process termination ────────────────────────────────────────────────────
+  - pattern: '\bkill\s+-9\s+-1\b'
+    reason: kill -9 -1 terminates ALL processes (including this shell)
+
+  # ── rag-web additions ──────────────────────────────────────────────────────
+  - pattern: '\bgh\s+workflow\s+run\s+.*--ref\s+main\b'
+    reason: Direct workflow_dispatch on main; route through /rag-web-pages-deploy
+    ask: true
+
+zeroAccessPaths:
+  # Environment and secrets
+  - ".env"
+  - ".env.local"
+  - ".env.production"
+  - ".env.staging"
+  - "*.env"
+  # SSH, GPG, credentials
+  - "~/.ssh/"
+  - "~/.gnupg/"
+  - "~/.aws/"
+  - "~/.config/gcloud/"
+  # Operator-scoped secret stores
+  - "~/.config/zsh/secrets.zsh"
+  - "~/.claude.json"
+  # Certificate and key files
+  - "*.pem"
+  - "*.key"
+  - "*.p12"
+  - "*.pfx"
+  # Credential files
+  - "credentials.json"
+  - "*-credentials.json"
+  - "*serviceAccount*.json"
+  - "serviceAccountKey.json"
+  # rag-web — operator session records (treat as sensitive)
+  - ".the-grid/sessions/context_bundles/"
+
+readOnlyPaths:
+  # Lock files — never edit these directly
+  - "package-lock.json"
+  - "yarn.lock"
+  - "pnpm-lock.yaml"
+  - "uv.lock"
+  - "Cargo.lock"
+  - "go.sum"
+  # Git internals
+  - ".git/objects"
+  # Build output — regenerate rather than edit
+  - "dist/"
+  - "build/"
+  - "node_modules/"
+  # rag-web — safety-load-bearing primitives
+  - ".pi/extensions/rag-web-checkpoint.ts"
+  - ".pi/extensions/rag-web-damage-control.ts"
+
+noDeletePaths:
+  # Git repository
+  - ".git/"
+  # Legal
+  - "LICENSE"
+  - "LICENSE.*"
+  # Project documentation
+  - "README.md"
+  - "README.*"
+  # rag-web — agentic-layer trees
+  - ".claude/"
+  - ".pi/"
+  - "pi-agents.yaml"
+  - "CLAUDE.md"

@@ -1,0 +1,9 @@
+{
+  "name": "rag-web-pi-extensions",
+  "private": true,
+  "type": "module",
+  "description": "Dependency envelope for rag-web Pi Agent extensions (.pi/extensions/*.ts). Mirrors the reference project at examples/pi-vs-claude-code/package.json.",
+  "dependencies": {
+    "yaml": "^2.8.0"
+  }
+}

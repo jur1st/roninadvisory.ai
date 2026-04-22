@@ -1,0 +1,16 @@
+{
+  "default": "google/gemini-2.5-pro",
+  "per_agent": {
+    "rag-web-docs-changelog-writer": "google/gemini-2.5-flash",
+    "rag-web-docs-dev-writer": "google/gemini-2.5-pro",
+    "rag-web-docs-user-writer": "google/gemini-2.5-pro",
+    "rag-web-docs-agent-writer": "google/gemini-2.5-pro",
+    "rag-web-css-auditor": "google/gemini-2.5-pro",
+    "rag-web-token-enforcer": "google/gemini-2.5-pro",
+    "rag-web-visual-reviewer": "google/gemini-3.1-pro-preview",
+    "rag-web-visual-test-writer": "google/gemini-2.5-pro",
+    "rag-web-pages-preflight": "google/gemini-2.5-pro",
+    "rag-web-pages-verify": "google/gemini-2.5-pro",
+    "rag-web-pages-rollback-advisor": "google/gemini-3.1-pro-preview"
+  }
+}

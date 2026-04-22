@@ -168,11 +168,14 @@ agents:
 skills:
   - name: rag-web-pages-deploy
     mirrors: .claude/skills/rag-web-pages-deploy/
-    mirror_status: pending
+    mirror_status: not-applicable
     scope: >-
-      GitHub Pages lifecycle: init, preflight, deploy, verify, rollback.
-      Dated spec, workflow commentary, checklists, rollback runbook,
-      custom-domain setup, troubleshooting. April 2026 spec.
+      Pi has no skill-primitive class equivalent. The SKILL.md theory layer
+      plus reference/ (dated spec, checklists, rollback runbook, troubleshooting)
+      plus templates/ (workflow + nojekyll) are consumed by
+      .pi/extensions/rag-web-pages.ts directly by path. The reference docs and
+      templates are harness-agnostic; only CC's progressive-disclosure dispatch
+      is CC-specific. Resolved in plan 05 (Decision 3, 2026-04-22).
 
 extensions:
   - name: rag-web-team

@@ -2,3 +2,5 @@
 agent-sessions/
 # Pi extension logs
 *.log
+# Node modules for extension dependencies (yaml, etc.)
+node_modules/

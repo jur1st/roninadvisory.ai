@@ -4,6 +4,13 @@
     "rag-web-docs-changelog-writer": "anthropic/claude-haiku-4-5",
     "rag-web-docs-dev-writer": "anthropic/claude-sonnet-4-6",
     "rag-web-docs-user-writer": "anthropic/claude-sonnet-4-6",
-    "rag-web-docs-agent-writer": "anthropic/claude-sonnet-4-6"
+    "rag-web-docs-agent-writer": "anthropic/claude-sonnet-4-6",
+    "rag-web-css-auditor": "anthropic/claude-sonnet-4-6",
+    "rag-web-token-enforcer": "anthropic/claude-sonnet-4-6",
+    "rag-web-visual-reviewer": "anthropic/claude-opus-4-7",
+    "rag-web-visual-test-writer": "anthropic/claude-sonnet-4-6",
+    "rag-web-pages-preflight": "anthropic/claude-sonnet-4-6",
+    "rag-web-pages-verify": "anthropic/claude-sonnet-4-6",
+    "rag-web-pages-rollback-advisor": "anthropic/claude-opus-4-7"
   }
 }
