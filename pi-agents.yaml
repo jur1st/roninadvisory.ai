@@ -65,30 +65,47 @@ commands:
       Thin wrapper over tools/scripts/preview.sh; dev-only, not part of the
       GitHub Pages pipeline.
 
+  - name: rag-web-pi-close
+    mirrors: .claude/commands/rag-web-pi-close.md
+    mirror_status: shipped
+    scope: >-
+      CC-side entry into the Pi docs-writer fanout. Mirror of /rag-web-close
+      for the extra-time case. Pi analog is .pi/extensions/rag-web-team.ts
+      (asymmetric shape — CC command delegates to a shell launcher; Pi side
+      is a TUI extension registering /rag-web-team).
+
 agents:
   - name: rag-web-docs-dev-writer
     mirrors: .claude/agents/rag-web-docs-dev-writer.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Writes developer-facing docs under docs/dev/ from source and recent changes.
+      Pi mirror at .pi/agents/rag-web-docs-dev-writer.md with matching
+      writable-path contract and tool allowlist (read,grep,find,ls,write,edit).
 
   - name: rag-web-docs-user-writer
     mirrors: .claude/agents/rag-web-docs-user-writer.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Authors visitor-facing site copy (HTML page content, about, services).
+      Pi mirror at .pi/agents/rag-web-docs-user-writer.md with matching
+      writable-path contract (site/, docs/user/) and tool allowlist.
 
   - name: rag-web-docs-agent-writer
     mirrors: .claude/agents/rag-web-docs-agent-writer.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Writes docs about the agentic layer (docs/agent/) from .claude/ and CLAUDE.md.
+      Pi mirror at .pi/agents/rag-web-docs-agent-writer.md with matching
+      writable-path contract and tool allowlist.
 
   - name: rag-web-docs-changelog-writer
     mirrors: .claude/agents/rag-web-docs-changelog-writer.md
-    mirror_status: pending
+    mirror_status: shipped
     scope: >-
       Appends session changes to CHANGELOG.md from git log and diff.
+      Pi mirror at .pi/agents/rag-web-docs-changelog-writer.md with matching
+      writable-path contract (CHANGELOG.md only) and tool allowlist.
 
   - name: rag-web-docs-vault-exporter
     mirrors: .claude/agents/rag-web-docs-vault-exporter.md
@@ -157,6 +174,27 @@ skills:
       Dated spec, workflow commentary, checklists, rollback runbook,
       custom-domain setup, troubleshooting. April 2026 spec.
 
+extensions:
+  - name: rag-web-team
+    mirrors: .pi/extensions/rag-web-team.ts
+    mirror_status: shipped
+    scope: >-
+      Pi-side parallel-fanout orchestrator. Registers /rag-web-team; spawns
+      the four docs-writers via child_process.spawn (pi -p --no-extensions);
+      renders per-agent progress in a 2x2 grid widget; issues its own
+      pre-fanout git-checkpoint. Mirror of .claude/commands/rag-web-pi-close.md
+      (asymmetric shape — CC uses a shell-invoked command; Pi uses a TUI
+      extension).
+
+  - name: rag-web-checkpoint
+    mirrors: .pi/extensions/rag-web-checkpoint.ts
+    mirror_status: not-applicable
+    scope: >-
+      Pi-only YOLO-mitigation. Fires on turn_start in interactive Pi TUI
+      sessions and issues a git commit --allow-empty so `git reset --hard
+      HEAD^` undoes a turn's work. CC enforces safety via the harness's
+      built-in permission modes; no CC analog is planned or meaningful.
+
 settings:
   - name: claude-settings-json
     mirrors: .claude/settings.json
@@ -180,7 +218,11 @@ assets:
     mirror_status: not-applicable
     scope: >-
       Shell scripts (validate-tokens.sh, capture-screenshot.sh, font-check.sh,
-      preview.sh). Harness-agnostic; invoked identically from either runtime.
+      preview.sh, rag-web-install-drive.sh, rag-web-pi-team.sh,
+      rag-web-pi-team-fallback.sh). Harness-agnostic; invoked identically
+      from either runtime. The rag-web-pi-* scripts are the shell half of
+      the dual orchestrator — called by /rag-web-pi-close on the CC side,
+      mirrored by .pi/extensions/rag-web-team.ts on the Pi side.
 
   - name: rag-web-preview-server
     mirrors: tools/preview/
