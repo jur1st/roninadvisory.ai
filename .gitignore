@@ -19,6 +19,9 @@
 .the-grid/preview.pid
 .the-grid/preview.log
 
+# Pi fanout run artifacts (per-agent logs, invoke scripts, exit sentinels)
+.the-grid/pi-runs/
+
 # Preview server build output (rebuilt on each `preview.sh start`)
 tools/preview/preview
 

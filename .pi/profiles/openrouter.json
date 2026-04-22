@@ -1,0 +1,9 @@
+{
+  "default": "openrouter/anthropic/claude-sonnet-4.6",
+  "per_agent": {
+    "rag-web-docs-changelog-writer": "openrouter/anthropic/claude-sonnet-4.6",
+    "rag-web-docs-dev-writer": "openrouter/anthropic/claude-sonnet-4.6",
+    "rag-web-docs-user-writer": "openrouter/anthropic/claude-sonnet-4.6",
+    "rag-web-docs-agent-writer": "openrouter/anthropic/claude-sonnet-4.6"
+  }
+}
