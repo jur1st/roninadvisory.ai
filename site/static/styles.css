@@ -75,6 +75,409 @@ a:focus-visible {
 
 img, svg { display: block; max-width: 100%; }
 
+/* === Base prose === */
+/*
+ * Today there is exactly one page, and every textual region it contains
+ * is addressed by a class-scoped selector on the cover. That arrangement
+ * does not survive the first subpage. The moment an author drops a
+ * <blockquote>, a <table>, or a <dl> into a new document, the browser's
+ * default user-agent styles take over and the editorial register breaks:
+ * Times at default size, sans-serif headings, blue underlined links,
+ * body-text leading on display-size type. This block holds the line.
+ *
+ * The rules below are element selectors (no classes). They set defaults
+ * that belong to the editorial register — serif prose, grotesque
+ * structure, the two-ink palette, tokenized spacing — so that un-classed
+ * markup on a future page reads as typeset matter without requiring
+ * new classes. The cover's class-scoped selectors (.masthead__title,
+ * .lede p, .foot__block h3) are more specific and continue to win; this
+ * block is the floor, not a ceiling.
+ *
+ * No state colors are introduced. The catalog is two-ink by design;
+ * if a subpage needs an error or success tone, that earns a token
+ * in tokens.css first, per the three-invariant rule.
+ */
+
+/* Headings in prose context. The cover's masthead handles display-scale
+   cases; these defaults serve sub-pages where a heading is a section
+   marker, not a cover voice. Tight leading, display serif, no top margin
+   on the first in a flow. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+  margin: var(--space-7) 0 var(--space-4);
+  font-weight: 500;
+}
+
+h1 { font-size: var(--size-2xl); letter-spacing: var(--tracking-display); }
+h2 { font-size: var(--size-xl); }
+h3 { font-size: var(--size-lg); letter-spacing: var(--tracking-tight); }
+
+/* h4-h6 drop to the grotesque register: at these sizes the distinction
+   is "this is a label for the block beneath," which is Acumin's job in
+   this system, not Freight's. */
+h4, h5, h6 {
+  font-family: var(--font-grotesque);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-ink-muted);
+  line-height: var(--leading-snug);
+  font-weight: 600;
+}
+
+h4 { font-size: var(--size-sm); }
+h5 { font-size: var(--size-xs); letter-spacing: var(--tracking-caps-lg); }
+h6 { font-size: var(--size-xs); letter-spacing: var(--tracking-caps-lg); color: var(--color-ink-soft); }
+
+/* When a heading opens a block of flow content, suppress its top margin
+   so authors don't need a utility to do the obvious thing. */
+h1:first-child, h2:first-child, h3:first-child,
+h4:first-child, h5:first-child, h6:first-child { margin-top: 0; }
+
+/* Body prose. font-family, font-size, line-height, and color all inherit
+   from <body>, so they are deliberately absent from this rule — setting
+   them here would override any wrapper that wants to shift the tone
+   (the cover's .lede scales up to --size-lg; future pull-quotes will do
+   similar work). Only non-inherited defaults are set: block margin,
+   prose measure, and text-wrap. */
+p {
+  margin: 0 0 var(--space-4);
+  max-width: var(--width-prose);
+  text-wrap: pretty;
+}
+
+/* Tight sibling — two paragraphs in immediate flow get an indent on the
+   second rather than a blown-out space, following editorial convention.
+   The cover's .lede already does this at its own scope; this is the
+   default for un-classed prose. */
+p + p { text-indent: 1.25em; margin-top: 0; }
+
+/* Lists. Inherited typography falls through from <body>; this rule only
+   sets the non-inherited defaults (block margin, interior padding). A
+   max-width is deliberately NOT set — lists legitimately fill their
+   container in grid and colophon contexts (see .services). A future
+   prose wrapper (.prose, .copy, or similar) is the right place to
+   apply width constraints, not the element selector. */
+ul, ol {
+  margin: 0 0 var(--space-4);
+  padding-left: var(--space-6);
+}
+
+li { margin-bottom: var(--space-2); }
+li:last-child { margin-bottom: 0; }
+
+/* Nested lists belong to the item above them, not the parent block. Zero
+   out the bottom margin and tighten the top so the nesting reads as
+   sub-items rather than a second column of content. */
+ul ul, ul ol, ol ul, ol ol {
+  margin: var(--space-2) 0 0;
+}
+
+/* Description lists are the correct form for glossary entries and
+   colophon-adjacent labeled content. Grotesque term, serif definition. */
+dl {
+  margin: 0 0 var(--space-4);
+  max-width: var(--width-prose);
+}
+
+dt {
+  font-family: var(--font-grotesque);
+  font-size: var(--size-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-ink-muted);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-1);
+}
+dt:first-child { margin-top: 0; }
+
+dd {
+  /* Inherited typography falls through from <body>; only the non-inherited
+     margin reset is set here so authors don't fight the browser default. */
+  margin: 0;
+}
+
+/* Emphasis and inline register marks. */
+strong, b { font-weight: 600; color: var(--color-ink); }
+em, i    { font-style: italic; }
+
+/* <small> is the colophon voice in inline form — grotesque, muted,
+   slightly tracked. Not just "shrunk text." */
+small {
+  font-family: var(--font-grotesque);
+  font-size: var(--size-sm);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink-muted);
+}
+
+/* sub/sup use lining numerals so they don't collide with oldstyle body
+   figures at tiny sizes. */
+sub, sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  font-variant-numeric: lining-nums;
+}
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+/* <mark> inverts to the second ink — the only editorial highlight in
+   the catalog. Kept rare by convention, not by rule. */
+mark {
+  background: var(--color-mark);
+  color: var(--color-paper);
+  padding: 0 var(--space-1);
+}
+
+/* Abbreviation and bibliographic marks. <abbr> gets a hairline
+   underline in the rule color rather than the default dotted line. */
+abbr[title] {
+  text-decoration: underline dotted var(--color-rule);
+  text-underline-offset: 0.2em;
+  cursor: help;
+}
+
+kbd, samp, var {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--color-ink);
+}
+var { font-style: italic; }
+
+/* <q> uses the browser's locale-aware quotes. <cite> is italic in the
+   serif — it's a title, not a quotation. */
+q    { font-style: italic; }
+cite { font-style: italic; font-family: var(--font-text); color: var(--color-ink-soft); }
+
+/* Blockquote. The left-rail hairline in the second ink is the editorial
+   convention — a pull-quote's visual mark without becoming an ornament.
+   Inset enough that it reads as a callout, not a stack of indented text. */
+blockquote {
+  font-family: var(--font-text);
+  font-size: var(--size-lg);
+  font-style: italic;
+  line-height: var(--leading-snug);
+  color: var(--color-ink-soft);
+  border-left: var(--rule-thin) solid var(--color-mark);
+  padding: var(--space-2) 0 var(--space-2) var(--space-5);
+  margin: var(--space-6) 0;
+  max-width: var(--width-prose);
+  text-wrap: pretty;
+}
+
+blockquote p { font-size: inherit; font-style: inherit; color: inherit; max-width: none; }
+blockquote p + p { text-indent: 0; margin-top: var(--space-3); }
+
+/* A trailing <cite> in a blockquote is the attribution line — grotesque,
+   muted, small, set on its own block. The em-dash is author-supplied;
+   we don't inject content that changes what the HTML means. */
+blockquote cite {
+  display: block;
+  margin-top: var(--space-3);
+  font-family: var(--font-grotesque);
+  font-style: normal;
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-ink-muted);
+}
+
+/* Horizontal rule. A hairline in the rule ink, with generous vertical
+   space on either side — this is a section break, not a divider line. */
+hr {
+  border: 0;
+  border-top: var(--rule-hairline) solid var(--color-rule);
+  margin: var(--space-7) 0;
+  max-width: var(--width-prose);
+}
+
+/* Figure and figcaption. Caption in grotesque, muted, left-aligned
+   against the figure's edge — printed-matter plate-caption convention. */
+figure {
+  margin: var(--space-6) 0;
+  max-width: var(--width-prose);
+}
+
+figcaption {
+  font-family: var(--font-grotesque);
+  font-size: var(--size-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-ink-muted);
+  margin-top: var(--space-3);
+}
+
+/* Inline code and code blocks. Mono register for literal machine strings;
+   the subtle surface background marks it as a different voice from prose
+   without competing with the oxblood second ink. */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--color-surface);
+  padding: 0 var(--space-1);
+  color: var(--color-ink);
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  line-height: var(--leading-normal);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  padding: var(--space-4) var(--space-5);
+  margin: var(--space-5) 0;
+  overflow-x: auto;
+  border-left: var(--rule-thin) solid var(--color-rule);
+  max-width: var(--width-content);
+}
+
+/* Inline code inside a pre block is already on the mono surface; strip
+   its own background so it doesn't render as a box-inside-a-box. */
+pre > code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Tables. Editorial tables are ruled, not boxed — hairline top and
+   bottom on rows, no vertical rules. th is grotesque at small size,
+   the way a printed table's column headers sit above the data. */
+table {
+  width: 100%;
+  max-width: var(--width-content);
+  border-collapse: collapse;
+  margin: var(--space-5) 0;
+  font-family: var(--font-text);
+  font-size: var(--size-base);
+  line-height: var(--leading-snug);
+  color: var(--color-ink);
+}
+
+caption {
+  font-family: var(--font-grotesque);
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps-lg);
+  color: var(--color-ink-muted);
+  text-align: left;
+  padding-bottom: var(--space-3);
+  border-bottom: var(--rule-thin) solid var(--color-rule);
+  caption-side: top;
+}
+
+thead th {
+  border-bottom: var(--rule-thin) solid var(--color-rule);
+}
+
+th, td {
+  text-align: left;
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  border-bottom: var(--rule-hairline) solid var(--color-rule);
+  vertical-align: baseline;
+}
+
+th {
+  font-family: var(--font-grotesque);
+  font-size: var(--size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-ink-muted);
+}
+
+tbody tr:last-child td { border-bottom: 0; }
+
+/* Details/summary. The disclosure affordance is the italic display face
+   on the summary line — reads as a chapter cue, not a toggle widget. */
+details {
+  margin: var(--space-4) 0;
+  max-width: var(--width-prose);
+  border-top: var(--rule-hairline) solid var(--color-rule);
+  border-bottom: var(--rule-hairline) solid var(--color-rule);
+  padding: var(--space-3) 0;
+}
+
+summary {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--size-lg);
+  color: var(--color-ink);
+  cursor: pointer;
+  list-style: none;
+  padding: var(--space-1) 0;
+}
+
+summary::-webkit-details-marker { display: none; }
+
+details[open] summary {
+  margin-bottom: var(--space-3);
+  border-bottom: var(--rule-hairline) solid var(--color-rule);
+  padding-bottom: var(--space-3);
+}
+
+summary:focus-visible {
+  outline: 2px solid var(--color-mark);
+  outline-offset: 3px;
+}
+
+/* Minimal form primitives. Intentionally sparse — a real form page will
+   earn its own classed components. These defaults keep a raw <input> or
+   <button> from rendering as an OS widget against the editorial page.
+   The cover's .edition button is more specific and is unaffected. */
+label {
+  display: block;
+  font-family: var(--font-grotesque);
+  font-size: var(--size-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-2);
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  font-family: var(--font-text);
+  font-size: var(--size-base);
+  line-height: var(--leading-snug);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  border: 0;
+  border-bottom: var(--rule-thin) solid var(--color-rule);
+  padding: var(--space-2) 0;
+  width: 100%;
+  max-width: var(--width-prose);
+}
+
+input[type="text"]:focus-visible,
+input[type="email"]:focus-visible,
+textarea:focus-visible {
+  outline: 0;
+  border-bottom-color: var(--color-mark);
+}
+
+textarea { min-height: var(--space-9); resize: vertical; }
+
+button {
+  font-family: var(--font-grotesque);
+  font-size: var(--size-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-ink);
+  background: transparent;
+  border: var(--rule-thin) solid var(--color-rule);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-mark);
+  outline-offset: 3px;
+}
+
 /* ── Page frame ────────────────────────────────────────────── */
 /*
  * The inner frame is a classic editorial convention: a printed
