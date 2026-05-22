@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  About -- GunnerBench
+  ============================================================
+  A self-contained About page for the GunnerBench laboratory.
+  Maintained by The Ronin Advisory Group LLC.
+  Canonical URL: https://roninadvisory.ai/gb/
+  Self-contained: no external stylesheets, scripts, images, or fonts.
+  ============================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About -- GunnerBench</title>
+<meta name="description" content="GunnerBench is a workbench, not just a scoreboard -- an instrument for allocating trust to LLM systems for work that carries an obligation. Published as findings, not released as a product. Operated by The Ronin Advisory Group LLC.">
+<meta name="author" content="The Ronin Advisory Group LLC">
+<meta name="theme-color" content="#226d8b">
+
+<!-- Canonical URL. The published location is https://roninadvisory.ai/gb/
+     (this page is the index of the /gb/ directory). Set explicitly so search
+     engines and link-preview scrapers anchor on the production URL even if
+     the page is served from a staging path. -->
+<link rel="canonical" href="https://roninadvisory.ai/gb/">
+
+<!-- Open Graph metadata for link previews on Facebook, LinkedIn, Slack,
+     iMessage, Discord, and most other surfaces that scrape OG tags. The
+     description and title mirror the canonical <meta description> + <title>.
+     og:image is intentionally OMITTED for now; previewers fall back to a
+     no-image card. Add a 1200x630 PNG to images/og.png + an og:image tag
+     when the OG asset is ready. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GunnerBench">
+<meta property="og:title" content="About GunnerBench">
+<meta property="og:description" content="GunnerBench is a workbench, not just a scoreboard -- an instrument for allocating trust to LLM systems for work that carries an obligation. Published as findings, not released as a product. Operated by The Ronin Advisory Group LLC.">
+<meta property="og:url" content="https://roninadvisory.ai/gb/">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter Card -- "summary" (small-card) variant until an og:image lands;
+     when og:image is added, upgrade to "summary_large_image" for richer
+     previews on Twitter / X / threads-style timeline surfaces. -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="About GunnerBench">
+<meta name="twitter:description" content="GunnerBench is a workbench, not just a scoreboard -- an instrument for allocating trust to LLM systems for work that carries an obligation. Published as findings, not released as a product. Operated by The Ronin Advisory Group LLC.">
+
+<!-- Inline-SVG favicon: a small calibrated-teal square on a neutral field.
+     Embedded as a data URI so the page stays self-contained. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23fafafa'/><rect x='5.5' y='5.5' width='5' height='5' fill='%23226d8b'/></svg>">
+
+<style>
+  /* Design tokens: three font roles, calibrated-teal accent at
+     hue 215, light/dark surfaces via light-dark(). */
+  :root {
+    color-scheme: light dark;
+
+    --bg: #fafafa;
+    --bg: oklch(98.5% 0.003 220);
+    --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+
+    --paper: #ffffff;
+    --paper: oklch(99.5% 0.002 220);
+    --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+
+    --fg: #1a1b22;
+    --fg: oklch(20% 0.022 240);
+    --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+
+    --muted: #6a6f7c;
+    --muted: oklch(48% 0.020 240);
+    --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+
+    --rule: #d6d9dd;
+    --rule: oklch(85% 0.010 220);
+    --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+
+    --accent: #226d8b;
+    --accent: oklch(45% 0.13 215);
+    --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+
+    --accent-hi: #1c5972;
+    --accent-hi: oklch(38% 0.15 215);
+    --accent-hi: light-dark(oklch(38% 0.15 215), oklch(82% 0.14 215));
+
+    --trace: var(--accent);
+    --graticule: light-dark(oklch(85% 0.05 215), oklch(40% 0.05 215));
+
+    --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Arial, sans-serif;
+    --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                  "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                  monospace;
+    --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                  "Times New Roman", serif;
+
+    --scale-100: 0.78rem;
+    --scale-200: 0.88rem;
+    --scale-300: 1.00rem;
+    --scale-400: 1.18rem;
+    --scale-500: 1.40rem;
+    --scale-600: 1.78rem;
+    --scale-700: 2.40rem;
+
+    --leading-tight: 1.2;
+    --leading-snug:  1.35;
+    --leading-body:  1.55;
+
+    --space-100: 0.25rem;
+    --space-200: 0.5rem;
+    --space-300: 0.75rem;
+    --space-400: 1rem;
+    --space-500: 1.5rem;
+    --space-600: 2rem;
+    --space-700: 3rem;
+    --space-800: 4rem;
+    --space-900: 6rem;
+
+    --rule-hairline: 1px solid var(--rule);
+  }
+
+  /* ========================================================
+     Base reset / page frame
+     ======================================================== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: var(--leading-body);
+    /* No overflow-x: hidden as a band-aid; layout fixes prevent the overflow.
+       overflow-x: clip is acceptable as a defensive guard against rogue
+       descendant content (svg viewBox + breakout negative margins). */
+    overflow-x: clip;
+  }
+  img, svg { max-width: 100%; }
+
+  /* The outer page frame. Padding is the page's gutter; tightens at narrow widths. */
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--space-700);
+  }
+
+  /* ========================================================
+     Chrome strip -- bench-instrument grammar lifted from Design B.
+     Three counters in mono, commit-pulse polyline on the right.
+     Not sticky -- introduces the page and steps off.
+     ======================================================== */
+  .chrome {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-400) 0 var(--space-300) 0;
+  }
+
+  .readout {
+    display: grid;
+    /* Three counters + flexible trace column. */
+    grid-template-columns: repeat(3, minmax(7rem, auto)) 1fr;
+    align-items: end;
+    gap: var(--space-500);
+    padding: var(--space-300) 0;
+    border-top: var(--rule-hairline);
+    border-bottom: var(--rule-hairline);
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  .readout .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-100);
+    min-width: 0;
+  }
+
+  .readout .label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .readout .value {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+
+  .readout .trace {
+    height: 28px;
+    width: 100%;
+    align-self: center;
+    overflow: visible;
+  }
+
+  .wayfinder {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: var(--space-300);
+    gap: var(--space-400);
+    flex-wrap: wrap;
+  }
+  .wayfinder .here {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+  .wayfinder .lab {
+    font-family: var(--font-sans);
+    font-size: var(--scale-100);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  /* Wayfinder link: muted in resting state, picks up the
+     calibrated-teal accent on hover and focus. */
+  .wayfinder .lab a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  .wayfinder .lab a:hover,
+  .wayfinder .lab a:focus-visible {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    outline: none;
+  }
+
+  /* ========================================================
+     Body column -- single 640px serif column with three
+     break-out widths (640 / 780 / 1080). The center is the
+     `--body` width; .breakout-wide steps to 780; .breakout-svg
+     steps to 1080.
+     ======================================================== */
+  .body {
+    max-width: 640px;
+    margin: 0 auto;
+    padding-top: var(--space-700);
+  }
+
+  .body > * { max-width: 100%; }
+
+  .breakout-wide {
+    max-width: min(780px, 100%);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .breakout-svg {
+    max-width: min(1080px, 100%);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Desktop-only: pull breakouts wider than the 640px body container.
+     Negative margins kick in only when there's actual room around the body. */
+  @media (min-width: 900px) {
+    .breakout-wide {
+      width: auto;
+      max-width: 780px;
+      margin-left: -70px;
+      margin-right: -70px;
+    }
+  }
+  @media (min-width: 1200px) {
+    .breakout-svg {
+      width: auto;
+      max-width: 1080px;
+      margin-left: -220px;
+      margin-right: -220px;
+    }
+  }
+
+  /* ========================================================
+     Typography
+     ======================================================== */
+  h1.hero {
+    font-family: var(--font-prose);
+    /* clamp() ensures the hero never overflows narrow viewports.
+       min 2.2rem (~35px) at very narrow; max 3.6rem (~58px) at wide. */
+    font-size: clamp(2.2rem, 1.4rem + 2.6vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.012em;
+    margin: 0 0 var(--space-600) 0;
+    font-weight: 400;
+  }
+
+  h2.section {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--scale-500);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: var(--space-700) 0 var(--space-400) 0;
+    padding-bottom: var(--space-200);
+    position: relative;
+    color: var(--fg);
+  }
+  h2.section::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2.4em;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .lede {
+    font-size: var(--scale-400);
+    line-height: 1.5;
+    margin: 0 0 var(--space-500) 0;
+  }
+  p {
+    margin: 0 0 var(--space-400) 0;
+    line-height: 1.65;
+  }
+
+  .accent-underline {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+
+  a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  a:hover { text-decoration-color: var(--accent-hi); }
+
+  code, .mono {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+
+  /* Section seam: 96px composition = 28px hairline + 14px gap + 5x5 teal square + 14px gap + 28px hairline */
+  .seam {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: var(--space-700) 0;
+    color: var(--rule);
+  }
+  .seam .h-rule {
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+  .seam .sq {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+  }
+
+  /* Pull-quote: italic serif, 3px calibrated-teal left rule */
+  .pullquote {
+    font-family: var(--font-prose);
+    font-style: italic;
+    font-size: var(--scale-500);
+    line-height: 1.4;
+    border-left: 3px solid var(--accent);
+    padding: var(--space-200) 0 var(--space-200) var(--space-500);
+    margin: var(--space-600) 0;
+    color: var(--fg);
+  }
+
+  /* Standalone triplet at S6 seam: serif scale-400 centered with accent middots */
+  .triplet {
+    font-family: var(--font-prose);
+    font-size: var(--scale-400);
+    text-align: center;
+    margin: var(--space-700) 0;
+    line-height: 1.5;
+  }
+  .triplet .middot { color: var(--accent); margin: 0 0.5em; }
+
+  /* Figure caption */
+  figcaption {
+    font-family: var(--font-sans);
+    font-size: var(--scale-200);
+    color: var(--muted);
+    text-align: center;
+    margin-top: var(--space-300);
+    line-height: var(--leading-snug);
+  }
+
+  /* Closer */
+  .closer-block { margin-top: var(--space-800); }
+  .identity {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    margin: 0 0 var(--space-700) 0;
+  }
+  .closer {
+    font-family: var(--font-prose);
+    font-size: var(--scale-500);
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+  }
+  /* Cursor-tick teal final period. Slight optical weight bump
+     so the period reads as deliberate punctuation, not a body
+     glyph. The em-size keeps it on the prose baseline. */
+  .closer .signal {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 1.1em;
+    line-height: 1;
+    margin-left: 0.01em;
+  }
+
+  .cadence-wrap {
+    margin: var(--space-600) 0;
+    display: flex;
+    justify-content: center;
+  }
+  .cadence-wrap svg { display: block; }
+
+  .footer-rule {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    width: 4rem;
+    margin: var(--space-700) auto var(--space-400) auto;
+  }
+  .copyright {
+    font-family: var(--font-sans);
+    font-size: var(--scale-100);
+    color: var(--muted);
+    text-align: center;
+    margin: 0 0 var(--space-800) 0;
+    letter-spacing: 0.02em;
+  }
+
+  /* ========================================================
+     SVG figures -- block, full-width of their breakout frame.
+     ======================================================== */
+  figure { margin: var(--space-600) 0; }
+  figure svg { display: block; width: 100%; height: auto; }
+
+  .square-ornament {
+    width: 48px;
+    height: 48px;
+    color: var(--muted);
+    margin: var(--space-500) auto;
+    display: block;
+  }
+
+  /* ========================================================
+     Responsive breakpoints
+     - 1024px: same body grammar; chrome stays wide
+     - 768px: page padding tightens, breakouts cap at viewport
+     - 480px: mobile-overflow fix kicks in (counter reflow)
+     - 380px: tightest band (iPhone-portrait)
+     ======================================================== */
+  @media (max-width: 1024px) {
+    .page { padding: 0 var(--space-600); }
+  }
+
+  @media (max-width: 800px) {
+    .page { padding: 0 var(--space-500); }
+    .chrome { padding: var(--space-400) 0 var(--space-300) 0; }
+    .readout { gap: var(--space-400); }
+    /* Breakouts already capped at 100% via min(); negative margin gated to >=900px. */
+  }
+
+  /* Narrow viewports (<=480px): chrome stacks to a single-column
+     counter list, trace polyline hides, wayfinder wraps cleanly, and
+     page gutters tighten so prose clears the viewport edge. */
+  @media (max-width: 480px) {
+    .page { padding: 0 var(--space-400); }
+    .body { padding-top: var(--space-600); }
+    .chrome { max-width: 100%; }
+    .readout {
+      grid-template-columns: 1fr;
+      gap: var(--space-300);
+      padding: var(--space-300) 0;
+    }
+    .readout .trace { display: none; }
+    .readout .field {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-400);
+    }
+    .readout .label { flex: 0 0 auto; }
+    .readout .value { flex: 0 0 auto; font-size: 1.1rem; }
+    .wayfinder { flex-direction: column; gap: var(--space-200); align-items: flex-start; }
+    h1.hero { font-size: clamp(2rem, 7vw, 2.6rem); }
+    .pullquote {
+      padding-left: var(--space-400);
+      font-size: var(--scale-400);
+    }
+    .triplet { font-size: var(--scale-300); }
+    .closer { font-size: var(--scale-400); }
+  }
+
+  @media (max-width: 380px) {
+    .page { padding: 0 var(--space-300); }
+    h1.hero { font-size: clamp(1.85rem, 8vw, 2.3rem); }
+    .readout .field { gap: var(--space-300); }
+    .readout .label { font-size: 0.68rem; }
+  }
+
+  /* Print: force light; hide chrome; the prose is the artifact */
+  @media print {
+    :root { color-scheme: light; }
+    .chrome { display: none; }
+    .body { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Chrome strip — three counters in mono with a commit-pulse polyline
+       on the right; wayfinder underneath. -->
+  <div class="chrome">
+    <div class="readout" role="group" aria-label="lab counters">
+      <div class="field">
+        <span class="label">Cells logged</span>
+        <span class="value">189</span>
+      </div>
+      <div class="field">
+        <span class="label">Campaigns</span>
+        <span class="value">21</span>
+      </div>
+      <div class="field">
+        <span class="label">Judgments rendered</span>
+        <span class="value">343</span>
+      </div>
+      <svg class="trace" viewBox="0 0 120 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <title>Commit-pulse polyline -- last 20 days of harness commits, baseline at bottom.</title>
+        <!-- baseline graticule -->
+        <line x1="0" y1="20" x2="120" y2="20" stroke="var(--graticule)" stroke-width="0.5"/>
+        <!-- 20-day commit pulse, baseline at bottom -->
+        <polyline
+          points="0,20 6.3,20 12.6,19.8 18.9,20 25.3,19.2 31.6,18.4 37.9,14.2 44.2,20 50.5,20 56.8,20 63.2,19.8 69.5,20 75.8,20 82.1,13.8 88.4,19.2 94.7,2.0 101.1,6.8 107.4,19.6 113.7,17.2 120,13.6"
+          fill="none"
+          stroke="var(--trace)"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          vector-effect="non-scaling-stroke"/>
+      </svg>
+    </div>
+    <div class="wayfinder">
+      <span class="here">About GunnerBench</span>
+      <span class="lab">GunnerBench &#183; <a href="https://roninadvisory.ai/" aria-label="Back to roninadvisory.ai">The Ronin Advisory Group LLC</a></span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       Body column -- single 640px serif column, three breakout widths
+       ============================================================ -->
+  <article class="body">
+
+    <!-- ============= S1 -- Opening ============= -->
+    <h1 class="hero">A workbench for deciding which language model to trust with the work that carries an obligation.</h1>
+
+    <p class="lede">
+      GunnerBench is an ongoing project started in early 2024 that measures
+      how language models behave under controlled variation, and writes the
+      differences down for the professional who has to choose between them. The reader we have in
+      mind is anyone whose decision will travel forward to someone else who
+      is counting on it -- legal professionals, software engineers building
+      tools that others depend on, the prospective engineer learning to take
+      on that same obligation, and the pro-se litigant whose freedom depends
+      on the answer. What we offer here is not advice or opinion to be
+      relied on, but evidence for the reader to examine and consider for
+      what it is -- nothing more, nothing less. The work is published as
+      findings, not released as a product; the apparatus is in service of
+      the knowledge, and the knowledge is what we put on the
+      <span class="accent-underline">page</span>.
+    </p>
+
+    <p>
+      The bench is tool and jig and project and record. It is the instrument that
+      measures, the fixture that holds the piece while the cut is made, the
+      workpiece itself when a new measurement is needed, and the ledger that
+      remembers what every piece looked like when it left. The same surface does
+      all four. The reader who walks in here is not visiting a product; they are
+      walking past someone at a workbench in the middle of a long afternoon.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S2 -- The bench ============= -->
+    <h2 class="section">The bench</h2>
+
+    <p>
+      The bench is built by the work. The first time a new kind of question lands
+      on it, the bench will not be ready, and the answering of the question
+      rebuilds the bench in the process. Tomorrow the bench will be a little
+      different than it is today, and a year from now the difference will be
+      legible, and ten years from now the bench will look like the work that
+      built it. The bench is therefore a record of attention as much as it is a
+      record of results.
+    </p>
+
+    <!-- Iron-square ornament -->
+    <svg class="square-ornament" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+      <title>An iron square -- the L-shaped carpenter's tool.</title>
+      <g transform="translate(3 0)">
+        <!-- Long arm (horizontal), thin -->
+        <rect x="6" y="12" width="46" height="6" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <!-- Short arm (vertical) -->
+        <rect x="6" y="12" width="6" height="40" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <!-- Calibrated-teal stroke at the right-angle vertex (inside corner arc) -->
+        <path d="M 14 20 Q 14 22 16 22" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
+        <!-- Tick marks on the long arm (carpenter-square scale) -->
+        <line x1="20" y1="14.5" x2="20" y2="15.5" stroke="currentColor" stroke-width="0.6"/>
+        <line x1="26" y1="14.5" x2="26" y2="15.5" stroke="currentColor" stroke-width="0.6"/>
+        <line x1="32" y1="14" x2="32" y2="16" stroke="currentColor" stroke-width="0.6"/>
+        <line x1="38" y1="14.5" x2="38" y2="15.5" stroke="currentColor" stroke-width="0.6"/>
+        <line x1="44" y1="14.5" x2="44" y2="15.5" stroke="currentColor" stroke-width="0.6"/>
+      </g>
+    </svg>
+
+    <p>
+      Square is square whether the operator measures it with a laser or with the
+      simple iron square Babylonian builders used four thousand years ago. The
+      precision of the work does not depend on the fanciness of the tools, and
+      the velocity of the machine does not change what counts as plumb. Quality
+      depends on the patience of the hand more than the velocity of the machine,
+      and the right pace for the bench is the pace at which the hand can still
+      see what it just did.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S3 -- Three uses ============= -->
+    <h2 class="section">Three uses</h2>
+
+    <p>
+      The bench exists for three uses, in this order. <strong>First,
+      <em>where to allocate trust</em></strong> -- which model, which route,
+      which harness can the work be bet on for this kind of task, and where does
+      that trust break down. The reader who carries the answer to a client or a
+      patient or a stranger on a bridge needs this question answered before the
+      others matter.
+    </p>
+
+    <p>
+      <strong>Second, <em>what is actually effective</em></strong> -- which
+      prompts, which primitives, which configurations, which workflows move the
+      needle, and which ones sound effective in a blog post but do not survive
+      contact with real cells. Effectiveness is downstream of trust; a clever
+      prompt on an untrustworthy model is a clever prompt on an untrustworthy
+      model.
+    </p>
+
+    <p>
+      <strong>Third, <em>what to look at next</em></strong> -- which question,
+      which knob, which gap is the next investigation worth the day. The bench
+      ends every session pointing at the next question more clearly than it
+      started, and that pointing is part of the bench's output.
+    </p>
+
+    <!-- Triangulation SVG, breakout to 780 -->
+    <figure class="breakout-wide">
+      <svg viewBox="0 56 780 312" role="img" aria-labelledby="tri-title tri-desc">
+        <title id="tri-title">The lab's three uses arranged as triangulation, with the workbench at the centroid.</title>
+        <desc id="tri-desc">Three vertices labeled in sans for the three uses; a workbench glyph at the centroid labeled in serif.</desc>
+
+        <!-- Triangulation lines from centroid (390, 215) to each vertex -->
+        <g stroke="var(--accent)" stroke-width="1" opacity="0.55" fill="none">
+          <line x1="390" y1="215" x2="170" y2="100"/>
+          <line x1="390" y1="215" x2="610" y2="100"/>
+          <line x1="390" y1="215" x2="390" y2="320"/>
+        </g>
+
+        <!-- Vertex discs -->
+        <g fill="var(--accent)">
+          <circle cx="170" cy="100" r="4"/>
+          <circle cx="610" cy="100" r="4"/>
+          <circle cx="390" cy="320" r="4"/>
+        </g>
+
+        <!-- Vertex labels in sans -->
+        <g style="font-family: var(--font-sans); font-size: 16px; fill: currentColor;">
+          <text x="170" y="78" text-anchor="middle">where to allocate trust</text>
+          <text x="610" y="78" text-anchor="middle">what is actually effective</text>
+          <text x="390" y="346" text-anchor="middle">what to look at next</text>
+        </g>
+
+        <!-- Workbench glyph at centroid -->
+        <g transform="translate(390 215)">
+          <!-- bench top: three thin lines -->
+          <line x1="-18" y1="-6" x2="18" y2="-6" stroke="var(--accent)" stroke-width="1.2"/>
+          <line x1="-18" y1="-3" x2="18" y2="-3" stroke="currentColor" stroke-width="0.6"/>
+          <line x1="-18" y1="0" x2="18" y2="0" stroke="currentColor" stroke-width="0.6"/>
+          <!-- legs splayed -->
+          <line x1="-14" y1="0" x2="-18" y2="14" stroke="var(--muted)" stroke-width="1"/>
+          <line x1="14" y1="0" x2="18" y2="14" stroke="var(--muted)" stroke-width="1"/>
+        </g>
+
+        <!-- Centroid label, serif italic -->
+        <text x="390" y="252" text-anchor="middle"
+              style="font-family: var(--font-prose); font-style: italic; font-size: 15px; fill: currentColor;">
+          the workbench
+        </text>
+      </svg>
+      <figcaption>The three uses, mutually informing; the bench is what holds them.</figcaption>
+    </figure>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S4 -- Engineering before materials science ============= -->
+    <h2 class="section">Engineering before materials science</h2>
+
+    <p>
+      The approach works without a formal interpretability science behind it for
+      the same reason traditional engineering worked for centuries before
+      materials science caught up to it. The bench observes what the work
+      actually did, writes down what it saw, compares the observation to the
+      next piece of work, and decides on the evidence of the last. The
+      observation, the writing-down, the comparison, and the decision are the
+      method. There is no fifth step that is somebody else's job.
+    </p>
+
+    <p>
+      The computational speed of the underlying machines is not used to think
+      faster. It is used to slow the day down. The work that took the bench an
+      hour by hand in 2024 takes seconds today, which means an afternoon that
+      once produced one piece of evidence can now produce a hundred, and the
+      hundredth is read with the same care as the first.
+      <em>Velocity bought, not spent.</em>
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S5 -- Obligation ============= -->
+    <h2 class="section">Obligation</h2>
+
+    <p>
+      The professional engineer who signs and seals a bridge design takes on a
+      solemn obligation to the strangers who will cross that bridge -- an
+      obligation older than the materials science that now justifies the math,
+      and operative whether or not the math arrives. In some engineering
+      traditions the practitioner wears a ring on the working hand, given when
+      the oath is taken, as a daily reminder of what was sworn to.
+    </p>
+
+    <div class="pullquote breakout-wide">
+      obligation older than the materials science that now justifies the math
+    </div>
+
+    <p>
+      The legal professional counseling a client, the software engineer
+      building a tool others will depend on, the contractor warranting a
+      system, the pro-se litigant relying on whichever tool happens to be
+      free -- the obligation is the same shape. In some bar traditions the
+      signed oath of admission hangs beside the certificate of admission so
+      the obligation can be looked at every day. The responsibility is
+      carried forward, in every one of those rows, to the person whose life
+      or work or freedom depends on the decision.
+    </p>
+
+    <!-- Obligation chain — vendor / professional / recipient -->
+    <figure class="breakout-svg">
+      <svg viewBox="110 0 872 220" role="img" aria-labelledby="ob-title ob-desc">
+        <title id="ob-title">The obligation flows from the professional to the end-recipient; the vendor's line is broken.</title>
+        <desc id="ob-desc">A horizontal chain of three nodes: vendor on the left (open circle, dashed line out), the professional in the middle (closed disc with a calibrated-teal ring), end-recipient on the right (closed disc). A heavy calibrated-teal arrow runs from the professional to the end-recipient.</desc>
+
+        <!-- Vendor node (open circle, muted) -->
+        <g transform="translate(170 130)">
+          <circle r="8" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+        </g>
+        <text x="170" y="100"
+              style="font-family: var(--font-sans); font-size: 16px; fill: currentColor;"
+              text-anchor="middle">the vendor</text>
+
+        <!-- Professional node: closed circle with teal ring -->
+        <g transform="translate(540 130)">
+          <circle r="10" fill="currentColor"/>
+          <circle r="16" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        </g>
+        <text x="540" y="100"
+              style="font-family: var(--font-sans); font-size: 16px; fill: currentColor;"
+              text-anchor="middle">the professional</text>
+
+        <!-- End-recipient node -->
+        <g transform="translate(910 130)">
+          <circle r="8" fill="currentColor"/>
+        </g>
+        <text x="910" y="100"
+              style="font-family: var(--font-sans); font-size: 16px; fill: currentColor;"
+              text-anchor="middle">the recipient</text>
+
+        <!-- Dashed vendor -> recipient line, with visible break at midline.
+             Left segment (vendor → professional) carries slightly more weight
+             to balance the right-side accent arrow's visual mass. -->
+        <g fill="none">
+          <line x1="186" y1="130" x2="500" y2="130" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 5"/>
+          <line x1="580" y1="130" x2="894" y2="130" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 5"/>
+        </g>
+
+        <!-- Heavy accent arrow from professional to recipient -->
+        <defs>
+          <marker id="arrow-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"/>
+          </marker>
+        </defs>
+        <line x1="556" y1="148" x2="894" y2="148"
+              stroke="var(--accent)" stroke-width="3"
+              marker-end="url(#arrow-accent)"/>
+
+        <!-- Caption -->
+        <text x="540" y="200"
+              style="font-family: var(--font-prose); font-style: italic; font-size: 14px; fill: var(--muted);"
+              text-anchor="middle">
+          Where the obligation actually sits.
+        </text>
+      </svg>
+      <figcaption>The obligation runs from the professional in the middle to the person who depends on the decision. The vendor's line is attenuated and broken.</figcaption>
+    </figure>
+
+    <p>
+      The vendor selling the underlying system rarely shares the obligation.
+      They sell capability and they sell terms of service, and the obligation
+      to the person at the end of the chain remains where it has always been --
+      with the professional who signed the work. The whole point of the
+      professional who is now also a builder is that this person has, by virtue
+      of the tools available to them, become the integration layer between a
+      vendor's product and a recipient's life. The
+      <em>trust-allocation is the work</em>, and a leaderboard is not the
+      place to do it.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S6 -- Project History (no continuity timeline) ============= -->
+    <h2 class="section">Project History</h2>
+
+    <p>
+      The practice predates the codebase. The workbench has been running in
+      some form since early 2024, introduced publicly that year at
+      <a href="https://john-benson.com/ai/gunnerbench/"
+         target="_blank"
+         rel="noopener noreferrer"><span class="mono">john-benson.com/ai/gunnerbench/</span></a>,
+      and the first hand-run benchmark of this lineage was conducted from May
+      through September 2024 as a Notion workspace against the v1 generation
+      of models -- Anthropic's Claude 3 family, OpenAI's GPT-4 and GPT-4
+      Turbo, Google's Gemini 1.5 pair, and a row of open-weights models
+      against the same prompts. The
+      <a href="https://field-fall-b93.notion.site/GunnerBench-3e0fe64fb8714eb383b03f620f9dd6e6"
+         target="_blank"
+         rel="noopener noreferrer"><span class="mono">original Notion workspace</span></a>
+      remains hosted as a historical artifact; the v1 models themselves are
+      decommissioned, so the archive is a fidelity record of work no operator
+      starting today can re-run.
+    </p>
+
+    <p>
+      The eighteen months between that v1 and the current Go and SQLite harness
+      were spent watching the models change faster than any hand-run methodology
+      could keep up with, and refusing to ship a methodology that could not keep
+      up. Where the v1 ran in Notion as the operator's working notebook --
+      pasting answers into pages, judging by hand, the harness being the
+      operator -- the current bench writes cells into a database the moment a
+      model produces them, judges them on the same volume of artifact the
+      operator would otherwise read, and emits findings as files that survive
+      the model that produced them. The harness is fast so the operator does
+      not have to be.
+    </p>
+
+    <!-- Locked phrase, centered triplet -->
+    <div class="triplet">
+      contemplation over velocity, results over summaries, evidence over takes
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S7 -- Findings, not product ============= -->
+    <h2 class="section">Findings, not product</h2>
+
+    <p>
+      GunnerBench is published as findings, not released as a product. The lab
+      believes in open source, and believes that the sharing of knowledge --
+      what to look at, how to look at it, what the looking turned up -- is the
+      part of the practice that travels, more than the sharing of the apparatus
+      that produced it. The code is in service of the knowledge, not the other
+      way around.
+    </p>
+
+    <div class="pullquote breakout-wide">
+      published as findings, not released as a product
+    </div>
+
+    <p>
+      If something in the work moves a reader to set up their own bench against
+      the questions they carry the obligation for, that is the right outcome.
+      The point of publishing is not to recruit users for an apparatus; it is
+      to demonstrate that the discipline can be done, and to make the doing of
+      it visible enough that another practitioner can recognize the shape of
+      the work in their own field.
+    </p>
+
+    <p class="lede" style="margin-top: var(--space-600);">
+      The product you make for yourself, applied to the systems you actually
+      need to trust, will be worth more than admiring the product made here.
+    </p>
+
+    <!-- ============= S8 -- Close ============= -->
+    <div class="closer-block">
+      <p class="identity">
+        GunnerBench is built and operated by The Ronin Advisory Group LLC.
+      </p>
+
+      <!-- Cadence trace, scaled from 140x18 to 240x28, stroke 1.5px -->
+      <div class="cadence-wrap" aria-hidden="true">
+        <svg width="240" height="28" viewBox="0 0 240 28" preserveAspectRatio="none">
+          <title>A small cadence trace -- the lab's pulse, no labels.</title>
+          <!-- baseline -->
+          <line x1="0" y1="26" x2="240" y2="26" stroke="var(--graticule)" stroke-width="0.5"/>
+          <!-- decorative waveform, low amplitude, terminal slope rises gently -->
+          <polyline
+            points="0,24 14,22 28,23 42,18 56,20 70,16 84,19 98,15 112,17 126,14 140,18 154,12 168,17 182,10 196,15 210,8 224,12 240,6"
+            fill="none"
+            stroke="var(--trace)"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <p class="closer">
+        The lab is now built. The next question goes here<span class="signal">.</span>
+      </p>
+
+      <hr class="footer-rule">
+      <p class="copyright">
+        &#169; 2026 The Ronin Advisory Group LLC
+      </p>
+    </div>
+
+  </article>
+</div>
+
+</body>
+</html>
