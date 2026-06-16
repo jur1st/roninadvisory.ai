@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Page I of Issue No. 1 : GunnerBench Dispatch
+  ============================================================
+  "Everyone passed: now the real question"
+  First narrative page of Issue No. 1 ("Everyone Passed. Now What?")
+  Sibling of index.html (the issue cover) in the same directory.
+
+  House style inherited verbatim from index.html / about.html:
+  three font roles, calibrated-teal hue 215, restrained serif
+  hero weight 400, instrument readout strip, seams, pull-quotes.
+
+  Self-contained: no external stylesheets, scripts, or fonts.
+  bypass-tier1-html OK : self-contained page, no external resources.
+  bypass-rogue-font-family OK : token block copied verbatim from the
+  published About page / index.html. Hex fallbacks and accent-hi
+  sit just outside the hook numeric band but ARE the calibrated
+  house palette.
+
+  REFRAME 2026-06-15 per dispatch-editorial-voice.md:
+    - Task is a vehicle, not a legal test; framing added explicitly early
+    - No lawyer-replacement claim; stated explicitly
+    - Saturation is the setup; payoff is 02-where-the-chain-broke.html
+    - Handoff block updated to point to Page II (chain-broke, not cost/trust)
+    - Honest caveat: this battery, not a universal law
+
+  OPENING REWORK 2026-06-15 (operator read-through):
+    - Lede reworked off the shared "we gave twelve models the same
+      battery" construction; now sets up the narrative (who passed is
+      the wrong question) rather than restating the cover bottom line.
+    - .orient-block added before the vehicle frame-block: surfaces the
+      critical orientation a no-context reader needs up front (what
+      GunnerBench is; that this is ONE kind of experiment among many;
+      what THIS test concretely is + how it was run). The fuller method
+      stays on Page V; the orient-block points there. Distinct from the
+      frame-block (conceptual vehicle framing) by design.
+
+  All numerical claims trace to the verified scoreboard supplied
+  by the operator. No figures were invented.
+  ============================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page I: Everyone passed -- Issue No. 1 -- GunnerBench</title>
+<meta name="description" content="We gave the June-2026 AI frontier a bar-exam-grade legal battery -- not to measure lawyering, but to surface sustained reasoning under load. Four models returned a perfect 20/20 on unpublished fact patterns. That is the setup, not the payoff.">
+<meta name="author" content="The Ronin Advisory Group LLC">
+<meta name="theme-color" content="#226d8b">
+
+<link rel="canonical" href="https://roninadvisory.ai/gb/issues/001-everyone-passed/01-everyone-passed.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="GunnerBench">
+<meta property="og:title" content="Everyone passed -- now the real question">
+<meta property="og:description" content="Four models, a perfect 20/20 bar-exam battery, on fact patterns that were never published. That is the setup. The real story is where the reasoning chain broke.">
+<meta property="og:url" content="https://roninadvisory.ai/gb/issues/001-everyone-passed/01-everyone-passed.html">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Everyone passed -- now the real question">
+<meta name="twitter:description" content="Four models, a perfect 20/20. The interesting question is not who passed. It is where and why the reasoning broke down.">
+
+<!-- Inline-SVG favicon: calibrated-teal square on a neutral field. Self-contained. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23fafafa'/><rect x='5.5' y='5.5' width='5' height='5' fill='%23226d8b'/></svg>">
+
+<style>
+  /* Design tokens : copied verbatim from index.html / the published About page. */
+  :root {
+    color-scheme: light dark;
+
+    --bg: #fafafa;
+    --bg: oklch(98.5% 0.003 220);
+    --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+
+    --paper: #ffffff;
+    --paper: oklch(99.5% 0.002 220);
+    --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+
+    --fg: #1a1b22;
+    --fg: oklch(20% 0.022 240);
+    --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+
+    --muted: #6a6f7c;
+    --muted: oklch(48% 0.020 240);
+    --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+
+    --rule: #d6d9dd;
+    --rule: oklch(85% 0.010 220);
+    --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+
+    --accent: #226d8b;
+    --accent: oklch(45% 0.13 215);
+    --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+
+    --accent-hi: #1c5972;
+    --accent-hi: oklch(38% 0.15 215);
+    --accent-hi: light-dark(oklch(38% 0.15 215), oklch(82% 0.14 215));
+
+    --trace: var(--accent);
+    --graticule: light-dark(oklch(85% 0.05 215), oklch(40% 0.05 215));
+
+    --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Arial, sans-serif;
+    --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                  "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                  monospace;
+    --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                  "Times New Roman", serif;
+
+    --scale-100: 0.78rem;
+    --scale-200: 0.88rem;
+    --scale-300: 1.00rem;
+    --scale-400: 1.18rem;
+    --scale-500: 1.40rem;
+    --scale-600: 1.78rem;
+    --scale-700: 2.40rem;
+
+    --leading-tight: 1.2;
+    --leading-snug:  1.35;
+    --leading-body:  1.55;
+
+    --space-100: 0.25rem;
+    --space-200: 0.5rem;
+    --space-300: 0.75rem;
+    --space-400: 1rem;
+    --space-500: 1.5rem;
+    --space-600: 2rem;
+    --space-700: 3rem;
+    --space-800: 4rem;
+    --space-900: 6rem;
+
+    --rule-hairline: 1px solid var(--rule);
+  }
+
+  /* ========================================================
+     Base reset / page frame
+     ======================================================== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: var(--leading-body);
+    overflow-x: clip;
+  }
+  img, svg { max-width: 100%; }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--space-700);
+  }
+
+  /* ========================================================
+     Chrome strip
+     ======================================================== */
+  .chrome {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-400) 0 var(--space-300) 0;
+  }
+  .readout {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(7rem, auto)) 1fr;
+    align-items: end;
+    gap: var(--space-500);
+    padding: var(--space-300) 0;
+    border-top: var(--rule-hairline);
+    border-bottom: var(--rule-hairline);
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .readout .field { display: flex; flex-direction: column; gap: var(--space-100); min-width: 0; }
+  .readout .label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .readout .value {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .readout .trace { height: 28px; width: 100%; align-self: center; overflow: visible; }
+  .wayfinder {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: var(--space-300); gap: var(--space-400); flex-wrap: wrap;
+  }
+  .wayfinder .here {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg);
+  }
+  .wayfinder .lab {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted);
+  }
+  .wayfinder .lab a, .wayfinder .here a {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 1px;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  .wayfinder .lab a:hover, .wayfinder .lab a:focus-visible,
+  .wayfinder .here a:hover, .wayfinder .here a:focus-visible {
+    color: var(--accent); border-bottom-color: var(--accent); outline: none;
+  }
+
+  /* ========================================================
+     Body column + breakouts
+     ======================================================== */
+  .body { max-width: 640px; margin: 0 auto; padding-top: var(--space-700); }
+  .body > * { max-width: 100%; }
+  .breakout-wide { max-width: min(780px, 100%); width: 100%; margin-left: auto; margin-right: auto; }
+  .breakout-svg { max-width: min(1080px, 100%); width: 100%; margin-left: auto; margin-right: auto; }
+  @media (min-width: 900px) {
+    .breakout-wide { width: auto; max-width: 780px; margin-left: -70px; margin-right: -70px; }
+  }
+  @media (min-width: 1200px) {
+    .breakout-svg { width: auto; max-width: 1080px; margin-left: -220px; margin-right: -220px; }
+  }
+
+  /* ========================================================
+     Typography : restrained serif hook, weight 400, About clamp.
+     ======================================================== */
+  .issue-flag {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 var(--space-300) 0;
+    display: flex; align-items: center; gap: var(--space-300);
+  }
+  .issue-flag .sq { width: 8px; height: 8px; background: var(--accent); display: inline-block; flex: 0 0 auto; }
+  .issue-flag .sep { color: var(--muted); }
+
+  h1.hero {
+    font-family: var(--font-prose);
+    font-size: clamp(2.2rem, 1.4rem + 2.6vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.012em;
+    margin: 0 0 var(--space-500) 0;
+    font-weight: 400;
+  }
+
+  h2.section {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--scale-500);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: var(--space-700) 0 var(--space-400) 0;
+    padding-bottom: var(--space-200);
+    position: relative;
+    color: var(--fg);
+  }
+  h2.section::after {
+    content: ""; display: block; position: absolute;
+    left: 0; bottom: 0; width: 2.4em; height: 2px; background: var(--accent);
+  }
+
+  .lede { font-size: var(--scale-400); line-height: 1.5; margin: 0 0 var(--space-500) 0; }
+  p { margin: 0 0 var(--space-400) 0; line-height: 1.65; }
+
+  .accent-underline {
+    text-decoration: underline; text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px; text-underline-offset: 4px;
+  }
+
+  a {
+    color: var(--fg); text-decoration: underline;
+    text-decoration-color: var(--accent); text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  a:hover { text-decoration-color: var(--accent-hi); }
+
+  code, .mono {
+    font-family: var(--font-mono); font-size: 0.92em;
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+
+  /* Section seam */
+  .seam {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: var(--space-700) 0; color: var(--rule);
+  }
+  .seam .h-rule { display: inline-block; width: 28px; height: 1px; background: currentColor; }
+  .seam .sq { display: inline-block; width: 5px; height: 5px; background: var(--accent); }
+
+  /* Pull-quote */
+  .pullquote {
+    font-family: var(--font-prose); font-style: italic;
+    font-size: var(--scale-500); line-height: 1.4;
+    border-left: 3px solid var(--accent);
+    padding: var(--space-200) 0 var(--space-200) var(--space-500);
+    margin: var(--space-600) 0; color: var(--fg);
+  }
+
+  figcaption {
+    font-family: var(--font-sans); font-size: var(--scale-200);
+    color: var(--muted); text-align: center;
+    margin-top: var(--space-300); line-height: var(--leading-snug);
+  }
+  figure { margin: var(--space-600) 0; }
+  figure svg { display: block; width: 100%; height: auto; }
+
+  /* ========================================================
+     Scoreboard table : mono throughout, teal on perfect scores.
+     ======================================================== */
+  .scoreboard {
+    margin: var(--space-600) 0;
+    border-collapse: collapse;
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: var(--scale-200);
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+  .scoreboard thead tr {
+    border-bottom: 2px solid var(--accent);
+  }
+  .scoreboard thead th {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    padding: var(--space-200) var(--space-300);
+    text-align: left;
+    white-space: nowrap;
+  }
+  .scoreboard thead th.right { text-align: right; }
+  .scoreboard tbody tr {
+    border-bottom: var(--rule-hairline);
+  }
+  .scoreboard tbody tr:last-child { border-bottom: none; }
+  .scoreboard tbody td {
+    padding: var(--space-200) var(--space-300);
+    color: var(--fg);
+    vertical-align: baseline;
+  }
+  .scoreboard .rank { color: var(--muted); }
+  .scoreboard .model-id { color: var(--fg); }
+  .scoreboard .score-cell {
+    text-align: right;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .scoreboard .perfect { color: var(--accent); font-weight: 600; }
+  .scoreboard .channel {
+    color: var(--muted);
+    font-size: var(--scale-100);
+    letter-spacing: 0.04em;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .scoreboard-wrap {
+    background: var(--paper);
+    border: var(--rule-hairline);
+    border-top: 3px solid var(--accent);
+    padding: var(--space-400) var(--space-500);
+    margin: var(--space-600) 0;
+  }
+  .scoreboard-wrap .board-head {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 0 0 var(--space-300) 0;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-400);
+  }
+
+  /* ========================================================
+     Callout / task description card
+     ======================================================== */
+  .task-card {
+    margin: var(--space-500) 0;
+    border: var(--rule-hairline);
+    border-left: 3px solid var(--accent);
+    background: var(--paper);
+    padding: var(--space-400) var(--space-500);
+  }
+  .task-card .task-label {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 var(--space-200) 0;
+  }
+  .task-card .task-name {
+    font-family: var(--font-prose);
+    font-size: var(--scale-400);
+    margin: 0 0 var(--space-300) 0;
+    line-height: 1.3;
+  }
+  .task-card .task-body {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ========================================================
+     Orientation block: tells a no-context reader what GunnerBench
+     is, that this is one experiment among many, and what THIS test
+     concretely is. Distinct from the vehicle-framing block below
+     (that is conceptual framing; this is the experimental setup).
+     ======================================================== */
+  .orient-block {
+    margin: var(--space-500) 0 var(--space-600) 0;
+    padding: var(--space-500);
+    border: var(--rule-hairline);
+    border-top: 3px solid var(--accent);
+    background: var(--paper);
+  }
+  .orient-block .orient-label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 0 0 var(--space-300) 0;
+  }
+  .orient-block .orient-body {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: 1.65;
+    margin: 0;
+  }
+  .orient-block .orient-body + .orient-body {
+    margin-top: var(--space-300);
+  }
+
+  /* ========================================================
+     Vehicle framing block: the editorial reframe callout
+     ======================================================== */
+  .frame-block {
+    margin: var(--space-600) 0;
+    padding: var(--space-500);
+    border: var(--rule-hairline);
+    border-left: 3px solid var(--accent);
+    background: var(--paper);
+  }
+  .frame-block .frame-label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin: 0 0 var(--space-300) 0;
+  }
+  .frame-block .frame-body {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: 1.65;
+    margin: 0;
+  }
+  .frame-block .frame-body + .frame-body {
+    margin-top: var(--space-300);
+  }
+
+  /* Handoff block : the closer that points to Page II */
+  .handoff {
+    margin: var(--space-700) 0 var(--space-600) 0;
+    padding: var(--space-500);
+    border: var(--rule-hairline);
+    border-top: 3px solid var(--accent);
+    background: var(--paper);
+  }
+  .handoff .handoff-label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 0 0 var(--space-300) 0;
+  }
+  .handoff .handoff-body {
+    font-family: var(--font-prose);
+    font-size: var(--scale-400);
+    line-height: 1.5;
+    margin: 0 0 var(--space-300) 0;
+  }
+  .handoff .handoff-link {
+    font-family: var(--font-mono);
+    font-size: var(--scale-200);
+    color: var(--muted);
+    display: flex; align-items: center; gap: var(--space-200);
+  }
+
+  /* Footnote */
+  .footnote {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); line-height: 1.5;
+    margin: var(--space-500) 0 0 0;
+  }
+  .footnote .ddagger { color: var(--accent); }
+
+  /* Closer */
+  .closer-block { margin-top: var(--space-800); }
+  .closer {
+    font-family: var(--font-prose); font-size: var(--scale-500);
+    text-align: center; margin: 0; line-height: 1.4;
+  }
+  .closer .signal {
+    color: var(--accent); font-weight: 600; font-size: 1.1em;
+    line-height: 1; margin-left: 0.01em;
+  }
+  .footer-rule {
+    border: 0; border-top: 1px solid var(--rule);
+    width: 4rem; margin: var(--space-700) auto var(--space-400) auto;
+  }
+  .copyright {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); text-align: center;
+    margin: 0 0 var(--space-800) 0; letter-spacing: 0.02em;
+  }
+
+  /* ========================================================
+     Responsive
+     ======================================================== */
+  @media (max-width: 1024px) { .page { padding: 0 var(--space-600); } }
+  @media (max-width: 800px) {
+    .page { padding: 0 var(--space-500); }
+    .readout { gap: var(--space-400); }
+  }
+  @media (max-width: 480px) {
+    .page { padding: 0 var(--space-400); }
+    .body { padding-top: var(--space-600); }
+    .chrome { max-width: 100%; }
+    .readout {
+      grid-template-columns: 1fr; gap: var(--space-300); padding: var(--space-300) 0;
+    }
+    .readout .trace { display: none; }
+    .readout .field {
+      flex-direction: row; align-items: baseline;
+      justify-content: space-between; gap: var(--space-400);
+    }
+    .readout .value { font-size: 1.1rem; }
+    .wayfinder { flex-direction: column; gap: var(--space-200); align-items: flex-start; }
+    h1.hero { font-size: clamp(2rem, 7vw, 2.6rem); }
+    .pullquote { padding-left: var(--space-400); font-size: var(--scale-400); }
+    .scoreboard-wrap { padding: var(--space-300) var(--space-400); }
+    .scoreboard .channel { display: none; }
+    .task-card { padding: var(--space-300) var(--space-400); }
+    .orient-block { padding: var(--space-300) var(--space-400); }
+    .frame-block { padding: var(--space-300) var(--space-400); }
+    .closer { font-size: var(--scale-400); }
+  }
+  @media (max-width: 380px) {
+    .page { padding: 0 var(--space-300); }
+    h1.hero { font-size: clamp(1.85rem, 8vw, 2.3rem); }
+  }
+
+  @media print {
+    :root { color-scheme: light; }
+    .chrome { display: none; }
+    .body { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Chrome strip -->
+  <div class="chrome">
+    <div class="readout" role="group" aria-label="page counters">
+      <div class="field">
+        <span class="label">Models tested</span>
+        <span class="value">12</span>
+      </div>
+      <div class="field">
+        <span class="label">Perfect 20/20</span>
+        <span class="value">4</span>
+      </div>
+      <div class="field">
+        <span class="label">Scored 17+</span>
+        <span class="value">8</span>
+      </div>
+      <svg class="trace" viewBox="0 0 120 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <title>Score distribution trace: the frontier clusters at the top.</title>
+        <line x1="0" y1="20" x2="120" y2="20" stroke="var(--graticule)" stroke-width="0.5"/>
+        <polyline
+          points="0,18 12,18 24,17 36,16 48,12 60,6 72,5 84,4 96,4 108,4 120,4"
+          fill="none"
+          stroke="var(--trace)"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          vector-effect="non-scaling-stroke"/>
+      </svg>
+    </div>
+    <div class="wayfinder">
+      <span class="here">
+        <a href="../../index.html">GunnerBench</a>
+        &#183;
+        <a href="index.html">Issue No. 1</a>
+        &#183; Page I
+      </span>
+      <span class="lab"><a href="../../about.html">About</a> &#183; The Ronin Advisory Group LLC</span>
+    </div>
+  </div>
+
+  <article class="body">
+
+    <!-- Page hook -->
+    <p class="issue-flag">
+      <span class="sq" aria-hidden="true"></span>
+      Issue No. 1 <span class="sep">&#183;</span> Page I <span class="sep">&#183;</span> June 2026
+    </p>
+
+    <h1 class="hero">Everyone passed &mdash; now the real question.</h1>
+
+    <p class="lede">
+      Two years ago, a clean pass on a bar-exam essay would have been the
+      headline. Now it is the floor. Hand the current frontier &mdash; the most
+      advanced AI models available today &mdash; a battery of bar-exam-grade legal
+      problems and the perfect scores pile up at the top
+      of the table &mdash; so the question worth asking is no longer who passed.
+      It is what the reasoning was doing on the way there, and where it gave out
+      for the models that fell short.
+    </p>
+
+    <!-- ============= ORIENTATION: what kind of thing this is ============= -->
+    <div class="orient-block">
+      <p class="orient-label">What you are reading</p>
+      <p class="orient-body">
+        <strong>GunnerBench</strong> is a lab that measures how AI models
+        actually behave on hard, real tasks &mdash; a workbench for deciding
+        which model to trust with work that carries an obligation. It runs many
+        different kinds of experiments, and will publish many more: different
+        models, different prompts, different tools, different tasks. This issue
+        is <em>one</em> of them. It puts the June&nbsp;2026 AI frontier on a
+        single hard legal-reasoning task; a future issue will ask a different
+        question entirely. So read this as one experiment in a varied series,
+        not as &ldquo;the GunnerBench method.&rdquo;
+      </p>
+      <p class="orient-body">
+        Concretely, here is the experiment behind everything that follows.
+        Twelve current frontier models &mdash; what the field calls the
+        &ldquo;frontier,&rdquo; the leading edge of the technology &mdash; from
+        five companies that build them (Anthropic, OpenAI, Google, xAI,
+        DeepSeek), each received the same battery of three bar-exam-grade legal
+        essays &mdash; Property (fee tail + Rule Against Perpetuities), Criminal
+        Procedure&nbsp;+&nbsp;&#167;1983, and Evidence. Every answer was graded
+        against a detailed checklist of what a correct answer must contain
+        &mdash; a rubric, in effect a grading key &mdash; and the grading was done
+        not by a person but by a separate, strong AI model
+        (<code>claude-opus-4-6</code>) reading each answer against that checklist.
+        The fact patterns were authored privately and never published anywhere.
+        Four models returned a perfect twenty out of twenty. The full method
+        &mdash; rubric items, cost correction, honesty rails &mdash; is the deep
+        reference on the <a href="05-methodology.html">methodology page</a>; what
+        follows here is the story those numbers tell.
+      </p>
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= EDITORIAL REFRAME: vehicle, not lawyering ============= -->
+    <div class="frame-block">
+      <p class="frame-label">What we are actually measuring</p>
+      <p class="frame-body">
+        No practitioner spends their days on the Rule Against Perpetuities, fee
+        tails, or fertile-octogenarian fact patterns. These tasks were not chosen
+        to test legal knowledge. They were chosen because they are
+        dense, interdependent, trap-laden classification problems &mdash; a good
+        vehicle for the thing we care about: a model&rsquo;s ability to hold many
+        analytical and narrative chains in play at once and resolve them correctly
+        without dropping a node. Read the property problem as a
+        working-memory-and-dependency-tracking test wearing a law-school costume.
+      </p>
+      <p class="frame-body">
+        We do not claim any model here can stand in for a lawyer. Law school does
+        not teach you to be a practicing lawyer &mdash; it does not teach the
+        business, the day-to-day, the judgment of practice &mdash; and a high score
+        on this battery says nothing about fitness to practice. What it says
+        something about is the reasoning on display: whether a model holds a long,
+        branching chain of analysis together under load and reaches the right
+        destination, or whether it drops a node somewhere along the way.
+        The interest is the reasoning. The task is the vehicle.
+      </p>
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S1: The battery ============= -->
+    <h2 class="section">The battery</h2>
+
+    <p>
+      Three tasks. Each is a standalone legal essay question at bar-exam difficulty
+      &mdash; the kind a second-year associate would lose sleep over. The models had
+      no special instruction beyond the question itself. They produced memoranda,
+      analyzed doctrine, drew diagrams in code, and reached conclusions. A strong
+      model (<code>claude-opus-4-6</code>) judged the output against four independent
+      1&ndash;5 point-sheet rubrics &mdash; Property memo, Property diagram, Criminal
+      Procedure, and Evidence &mdash; that sum to 20, applied identically across all
+      twelve contestants, with sub-scores for each issue presented in the task.
+      That judge is an Anthropic model evaluating a field that includes Anthropic models;
+      self-preference is a fair concern. The lab has examined it &mdash; the point-sheet
+      style of the rubric partially insulates it from judge-model bias &mdash; and we will
+      treat the question more fully in a future issue. The full disclosure is on the
+      <a href="05-methodology.html">methodology page</a>.
+    </p>
+
+    <div class="task-card">
+      <p class="task-label">Task 1 &mdash; Property</p>
+      <p class="task-name">Fee tail and the Rule Against Perpetuities</p>
+      <p class="task-body">
+        A testamentary devise in a common-law jurisdiction that never abolished the
+        fee tail: Helena Cartwright leaves an orchard, Blackacre, to her son Arthur
+        and the heirs of his body, then to Arthur&rsquo;s widow for life, then to
+        those of Arthur&rsquo;s grandchildren who reach twenty-five, and &mdash; if no
+        grandchild does &mdash; to the Rensselaer Historical Society. The model must:
+        (1) classify the fee tail and each following interest under common-law
+        doctrine; (2) analyze each contingent future interest against the Rule
+        Against Perpetuities in its classical form (no wait-and-see, no cy pres,
+        conclusive fertility presumptions intact); and (3) produce, as code, a
+        six-element estate-chain diagram &mdash; chain of title, measuring lives, the
+        RAP timeline, vesting markers, a void/valid distinction, and a legend.
+        Why the RAP and fee tail are the doctrines students never forget &mdash; and
+        why this problem breaks reasoning chains, human and machine alike &mdash; is
+        the subject of the next section.
+      </p>
+    </div>
+
+    <div class="task-card">
+      <p class="task-label">Task 2 &mdash; Criminal Procedure + &#167;1983</p>
+      <p class="task-name">Warrantless search, suppression, and the civil rights overlay</p>
+      <p class="task-body">
+        A multi-issue stop-and-arrest memo: Officer Martinez pulls over Dana
+        Collins, obtains ambiguous consent to search, and pries open a locked box
+        with a screwdriver; an arrest follows with a prolonged knee-on-back takedown.
+        The analysis threads Fourth Amendment doctrine (the Jimeno limit on consent
+        to a locked container, the Graham excessive-force standard), Fifth and Sixth
+        Amendment doctrine (an Edwards violation when Martinez reinitiates after
+        Collins invokes counsel, and a Missouri v. Seibert question-first two-step on
+        the Mirandized morning statement), the resulting suppression analysis, and a
+        parallel &#167;1983 civil-rights claim &mdash; qualified immunity plus a
+        Monell theory against the City for a documented pattern of prior
+        excessive-force complaints. Exclusionary-rule suppression and civil liability
+        answer different questions; the memo must keep them apart.
+      </p>
+    </div>
+
+    <div class="task-card">
+      <p class="task-label">Task 3 &mdash; Evidence</p>
+      <p class="task-name">Hearsay, exceptions, and the Confrontation Clause</p>
+      <p class="task-body">
+        A wire-fraud prosecution (United States v. Reyes) with five items of
+        evidence &mdash; Items A through E &mdash; each to be classified for hearsay
+        and Confrontation. The traps are structural. A bystander&rsquo;s dying
+        statement looks like a dying declaration, but that Federal Rules exception
+        reaches only homicide prosecutions and civil cases &mdash; in this wire-fraud
+        case it disappears, and the fallback runs through excited utterance. A
+        notarized affidavit from an unavailable witness is &ldquo;testimonial&rdquo;
+        under <em>Crawford v. Washington</em>, so the Confrontation Clause bars it
+        however tidy the hearsay exception looks. And a statement to a psychiatrist,
+        offered to prove the truth of the underlying transfers, does not fit the
+        803(3) state-of-mind exception &mdash; the offering purpose is the trap.
+        Each flips on a single rule a practitioner will know and a generalist will
+        miss.
+      </p>
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S1.5: Why the property problem is the hard one ============= -->
+    <h2 class="section">Why the property problem is the hard one</h2>
+
+    <p>
+      Of the three tasks, the property devise is the centerpiece of this issue, and it
+      is worth saying plainly why &mdash; because the phrase the question uses,
+      <em>classify each interest</em>, hides the entire difficulty.
+    </p>
+
+    <p>
+      A will like Helena&rsquo;s does not hand the orchard to one person. It sets up a
+      relay: Blackacre passes from Arthur, to a future widow, to grandchildren who reach
+      a certain age, to a charity &mdash; each taking only if the one before falls away,
+      some of them not yet born, some conditioned on events decades off. Before you can
+      say who <em>ends up</em> owning the land, you have to name every runner in that
+      relay and every leg of it: who holds a right <em>now</em>, who holds a
+      <em>future</em> right, what <em>kind</em> of future right it is, and whether it is
+      locked in or still hanging on a condition. That naming step is what lawyers mean by
+      &ldquo;identifying the interests,&rdquo; and nothing downstream can be correct until
+      it is done.
+    </p>
+
+    <p>
+      That is the first reason it is brutal: it is a chain, not a checklist. Each step
+      assumes the one before it. Misname the very first interest and every conclusion that
+      follows inherits the error &mdash; cleanly, confidently, and wrong. A single early
+      slip does not cost one point; it quietly forfeits the rest of the answer.
+    </p>
+
+    <p>
+      The second reason is the Rule Against Perpetuities &mdash; the doctrine students
+      remember as the hardest thing they ever saw, so notorious that the California
+      Supreme Court once held a lawyer was <em>not</em> negligent for getting it wrong
+      (<em>Lucas v. Hamm</em>). The Rule does not ask what <em>will</em> happen; it asks
+      what <em>could</em> happen, under any turn of events the words permit &mdash; an
+      interest is void if there is <em>any</em> scenario, however far-fetched, in which it
+      might vest too far in the future. The classical version makes you reason from
+      premises deliberately detached from reality: a woman of eighty is presumed still
+      able to bear children (the &ldquo;fertile octogenarian&rdquo;), and a living
+      man&rsquo;s eventual &ldquo;widow&rdquo; might turn out to be someone not yet born
+      (the &ldquo;unborn widow&rdquo;). You hold a dozen interacting conditions in mind at
+      once and reason about pure logical possibility, not probability.
+    </p>
+
+    <p>
+      That is precisely the shape of problem that separates fluent language from actual
+      reasoning &mdash; for a person and for a model. It is long, it is interdependent,
+      and it rewards holding many interlocking conditions in working memory without
+      dropping one. A model that has merely absorbed the <em>vocabulary</em> of estates
+      and perpetuities can produce a memo that reads like the real thing and still snap a
+      link halfway down the chain &mdash; and, because the doctrine is counterintuitive,
+      do it with complete confidence. That failure &mdash; the polished, self-assured
+      answer that is wrong from a single broken link &mdash; is the one this issue spends
+      the most time on, and the property problem is where it surfaces.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S2: The novelty guarantee ============= -->
+    <h2 class="section">These fact patterns were never published</h2>
+
+    <p>
+      Every leaderboard result carries a shadow question: did the model
+      generalize, or did it recall? A bar exam published in 2018 has been on
+      the internet ever since, and a model trained on legal text has likely seen
+      it. A high score on a known exam is consistent with memorized recall. It is
+      not evidence of live reasoning under load.
+    </p>
+
+    <div class="pullquote breakout-wide">
+      A perfect score on a private, first-run battery is generalization on sight,
+      not memorized recall. That distinction is the whole argument.
+    </div>
+
+    <p>
+      These three essays were authored privately. They were first run in April 2026
+      and have never been published anywhere. There is no mechanism by which these
+      exact fact patterns could be in any model&rsquo;s training data. The ambiguous
+      consent to search a locked box, the jurisdiction that never abolished the
+      fee tail, the dying declaration in a non-homicide case: none of it exists
+      anywhere else. When a model scores
+      perfectly on this battery, it did so by applying doctrine to a situation it
+      had never encountered, not by retrieving a cached answer to a familiar
+      question. That is the distinction that separates this result from a
+      leaderboard number, and it is load-bearing. Without it, the perfect scores
+      would tell us less.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S3: The scoreboard ============= -->
+    <h2 class="section">The scoreboard</h2>
+
+    <p>
+      Scores are channel-corrected &mdash; the &ldquo;channel&rdquo; being simply
+      how and where each model was run, which service it was reached through.
+      Costs are put on a common basis, and the judge applied the same rubric to
+      every answer regardless of where it originated. Anthropic models ran on
+      their own native service (claude-code); all other models ran through a
+      shared service called OpenRouter.&#8225; Here is what the frontier
+      looks like on this battery:
+    </p>
+
+    <div class="scoreboard-wrap breakout-wide">
+      <p class="board-head">
+        12 models &middot; four 1&ndash;5 rubrics summing to 20 &middot; channel-corrected &middot; judged by claude-opus-4-6
+      </p>
+      <table class="scoreboard">
+        <thead>
+          <tr>
+            <th scope="col" class="right">#</th>
+            <th scope="col">Model</th>
+            <th scope="col" class="right">Score / 20</th>
+            <th scope="col" class="right channel">Channel</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rank">1</td>
+            <td class="model-id">claude-fable-5</td>
+            <td class="score-cell perfect">20</td>
+            <td class="channel">claude-code</td>
+          </tr>
+          <tr>
+            <td class="rank">1</td>
+            <td class="model-id">claude-opus-4.7</td>
+            <td class="score-cell perfect">20</td>
+            <td class="channel">claude-code</td>
+          </tr>
+          <tr>
+            <td class="rank">1</td>
+            <td class="model-id">gpt-5.5</td>
+            <td class="score-cell perfect">20</td>
+            <td class="channel">openrouter &#8225;</td>
+          </tr>
+          <tr>
+            <td class="rank">1</td>
+            <td class="model-id">deepseek-v4-pro</td>
+            <td class="score-cell perfect">20</td>
+            <td class="channel">openrouter &#8225;</td>
+          </tr>
+          <tr>
+            <td class="rank">5</td>
+            <td class="model-id">claude-opus-4.6</td>
+            <td class="score-cell">19</td>
+            <td class="channel">claude-code</td>
+          </tr>
+          <tr>
+            <td class="rank">5</td>
+            <td class="model-id">gemini-3.5-flash</td>
+            <td class="score-cell">19</td>
+            <td class="channel">openrouter &#8225;</td>
+          </tr>
+          <tr>
+            <td class="rank">7</td>
+            <td class="model-id">gemini-3.1-pro</td>
+            <td class="score-cell">18</td>
+            <td class="channel">openrouter &#8225;</td>
+          </tr>
+          <tr>
+            <td class="rank">8</td>
+            <td class="model-id">claude-opus-4.8</td>
+            <td class="score-cell">17</td>
+            <td class="channel">claude-code</td>
+          </tr>
+          <tr>
+            <td class="rank">9</td>
+            <td class="model-id">gpt-5.4</td>
+            <td class="score-cell">16</td>
+            <td class="channel">openrouter &#8225;</td>
+          </tr>
+          <tr>
+            <td class="rank">10</td>
+            <td class="model-id">grok-4.3</td>
+            <td class="score-cell">14</td>
+            <td class="channel">openrouter &#8225;</td>
+          </tr>
+          <tr>
+            <td class="rank">11</td>
+            <td class="model-id">haiku-4.5</td>
+            <td class="score-cell">13</td>
+            <td class="channel">claude-code</td>
+          </tr>
+          <tr>
+            <td class="rank">11</td>
+            <td class="model-id">deepseek-v3.2</td>
+            <td class="score-cell">13</td>
+            <td class="channel">openrouter &#8225;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      A few things leap out immediately. An open-weight model &mdash; one anyone
+      can download and run on their own computers, as opposed to one you can only
+      reach through the company&rsquo;s own service &mdash;
+      <span class="mono">deepseek-v4-pro</span> &mdash; ties the closed frontier
+      at a perfect 20. That is not a rounding result. Eight of twelve models scored
+      17 or higher. The range from 17 to 20 is the gap between
+      &ldquo;strong sustained reasoning&rdquo; and &ldquo;no node dropped.&rdquo; Below 17, the models
+      begin to miss structural issues or handle the traps incorrectly &mdash; the
+      chain breaks somewhere.
+    </p>
+
+    <p>
+      One number in the table deserves a connecting line:
+      <span class="mono">claude-opus-4.8</span> sits at 17 &mdash; mid-pack,
+      not at the bottom. That 17 breaks down as three perfect fives &mdash;
+      Criminal Procedure, Evidence, and the property <em>diagram</em> &mdash;
+      plus a 2/5 on the property <em>memo</em>. (So the &ldquo;mid-pack 17&rdquo;
+      here and the &ldquo;memo 2/5&rdquo; you will see on Page&nbsp;II&rsquo;s
+      chart are the same fact, seen two ways.) It earned that score by acing
+      Criminal Procedure and Evidence while making a single confident miss on
+      the property memo. Models further down the table broke earlier and more
+      often, but their breaks were structurally legible &mdash; a missed
+      classification, a near-miss on a single issue. The opus-4.8 miss was different:
+      it classified every interest correctly and even flagged the traps in its own
+      analysis, then committed to one wrong legal premise that carried a wrong
+      conclusion all the way through &mdash; crisply, with full confidence, in
+      publication-quality prose. That is the kind of failure a high aggregate score
+      hides, and it is the thread Page II picks up.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S4: Criminal procedure ============= -->
+    <h2 class="section">Criminal procedure is now trivial for the frontier</h2>
+
+    <p>
+      The three tasks did not all discriminate equally. The criminal procedure
+      memo was the most thoroughly handled: on the channel-corrected set, every
+      model in the battery scored a perfect five on it &mdash; and not against a soft
+      rubric: a five demanded catching the Edwards reinitiation bar, the Seibert
+      question-first two-step, qualified immunity&#8217;s clearly-established prong, and
+      Monell municipal liability, and the field cleared them all. (The models that land
+      at 13 or 14 overall lose those points on the property and evidence essays, not
+      here.) Fourth Amendment doctrine, &#167;1983
+      analysis, suppression arguments &mdash; these have been legal-technology
+      bread and butter for years, and the frontier has absorbed them completely.
+      A domain that once required extended reasoning chains to navigate is no longer
+      a distinguishing variable at the top of the field. The chains hold without
+      effort; saturation is complete.
+    </p>
+
+    <p>
+      The property task, by contrast, continued to discriminate. The fee tail
+      analysis and the classical RAP application (with its fertile-octogenarian
+      and unborn-widow presumptions) produced the most spread in scores below
+      the top. This is not surprising: the RAP is genuinely difficult
+      conceptually because it demands reasoning about logical possibility
+      rather than empirical probability &mdash; you must ask whether a future
+      interest <em>could</em> vest too remotely under any state of affairs the
+      language permits, not whether it <em>will</em>. That style of analysis
+      is harder to generalize from examples; the chains are longer and more
+      brittle. The evidence task, with its layered traps, fell between the two.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S5: Visual-aids capability ============= -->
+    <h2 class="section">The models now draw the diagrams</h2>
+
+    <p>
+      The property task demanded more than doctrine. It asked for a six-element
+      estate-chain diagram: the chain of title across the conveyance, the
+      measuring lives identified, a RAP timeline with vesting markers, a
+      void/valid distinction for each interest, and a legend. This is not a
+      textual analysis task. It requires the model to produce, as code, a
+      structured visual artifact that a reader can follow in order to check
+      the legal reasoning &mdash; a second analytical chain, parallel to the prose,
+      that must agree with it.
+    </p>
+
+    <p>
+      Several models at the top of the scoreboard produced accurate,
+      publication-grade diagrams alongside correct doctrine. The diagrams
+      show the estate chain in the correct sequence, mark the measuring lives,
+      carry the RAP clock, and label each future interest as valid or void
+      with a reference back to the analytical conclusion in the memo. This is
+      a capability that simply did not exist at the top of the field until
+      recently. A year ago, a model might have described the diagram; now it
+      produces one you can read &mdash; and that matches the prose analysis.
+    </p>
+
+    <p>
+      The exhibit gallery lets you see these diagrams directly, in context,
+      alongside the memos they accompany. Read the lawyering yourself &mdash;
+      <a href="exhibits/index.html">the exhibit gallery is open</a>.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S6: Honest caveat ============= -->
+    <h2 class="section">An honest caveat</h2>
+
+    <p>
+      This battery saturated at the top. But &ldquo;saturated&rdquo; describes
+      this battery &mdash; three essays, three domains, one rubric, one
+      sitting &mdash; not a universal law. Legal practice is vast.
+      The doctrines tested here &mdash; property conveyances, constitutional
+      criminal procedure, federal evidence &mdash; are areas in which the frontier
+      has had years of exposure. Highly specialized, jurisdiction-specific, or
+      genuinely novel questions may fare differently.
+    </p>
+
+    <p>
+      The headline &mdash; everyone cleared the bar &mdash; is real, but it is the least
+      interesting part. For a sophisticated reader, the more interesting question is
+      where the chain broke for the models that did not score perfectly, and what the
+      mechanism was. Was it a dropped classification? A cascade from a single
+      misidentified rule? A correct diagnosis with a wrong conclusion? That is what
+      the next page takes up.
+    </p>
+
+    <p class="footnote">
+      <span class="ddagger">&#8225;</span> Anthropic models (claude-fable-5,
+      claude-opus-4.7, claude-opus-4.6, claude-opus-4.8, haiku-4.5) scored on
+      the native claude-code service. All other models scored via OpenRouter, with
+      costs corrected to a common basis for comparability &mdash; the unit being
+      the token, the chunk of text a model reads and writes and the unit it is
+      billed by. Judge: claude-opus-4-6.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= Handoff to Page II ============= -->
+    <div class="handoff breakout-wide">
+      <p class="handoff-label">Next &mdash; Page II</p>
+      <p class="handoff-body">
+        The scoreboard is the setup. The real story is the failure modes &mdash; where
+        models fell short, how the failure moved up the stack as capability rose, and
+        what the mechanism behind each break reveals about the limits of sustained
+        reasoning under load. Page II examines where the chain broke.
+      </p>
+      <p class="handoff-link">
+        <a href="02-where-the-chain-broke.html">Page II: Where the chain broke</a>
+      </p>
+    </div>
+
+    <!-- ============= Close ============= -->
+    <div class="closer-block">
+      <p class="closer">
+        Everyone passed. The interesting question is what happened to the models
+        that fell short<span class="signal">.</span>
+      </p>
+      <hr class="footer-rule">
+      <p class="copyright">
+        &#169; 2026 The Ronin Advisory Group LLC
+      </p>
+    </div>
+
+  </article>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 950" width="1200" height="950" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-solid" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#1a1a2e"/>
+    </marker>
+    <marker id="arrow-void" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#c0392b"/>
+    </marker>
+    <marker id="arrow-reversion" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#7f8c8d"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#00000030"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="950" fill="#fafbfc" rx="4"/>
+
+  <!-- ============================================================ -->
+  <!-- TITLE -->
+  <!-- ============================================================ -->
+  <text x="600" y="36" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Article IV — Chain of Interests and Rule Against Perpetuities Analysis</text>
+  <text x="600" y="56" text-anchor="middle" font-size="12" fill="#555">Helena Cartwright, Deceased March 1, 2024 — State of Franklin (Common-Law RAP Jurisdiction)</text>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 1: CHAIN OF INTERESTS (Flow diagram) -->
+  <!-- ============================================================ -->
+  <text x="50" y="90" font-size="14" font-weight="bold" fill="#1a1a2e">I. Chain of Interests Created by Article IV</text>
+
+  <!-- Helena / Creation -->
+  <rect x="50" y="105" width="140" height="44" rx="6" fill="#2c3e50" filter="url(#shadow)"/>
+  <text x="120" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">Helena Cartwright</text>
+  <text x="120" y="142" text-anchor="middle" font-size="10" fill="#bdc3c7">Testatrix (d. 2024)</text>
+
+  <!-- Arrow: Helena → Arthur -->
+  <line x1="192" y1="127" x2="242" y2="127" stroke="#1a1a2e" stroke-width="1.8" marker-end="url(#arrow-solid)"/>
+
+  <!-- Arthur: Fee Tail -->
+  <rect x="245" y="95" width="190" height="64" rx="6" fill="#27ae60" filter="url(#shadow)"/>
+  <text x="340" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">Arthur Cartwright</text>
+  <text x="340" y="134" text-anchor="middle" font-size="11" fill="#e8f8f0">Fee Tail in Possession</text>
+  <text x="340" y="150" text-anchor="middle" font-size="10" fill="#a3e4bc">Vested — RAP: N/A ✓</text>
+
+  <!-- Arrow: Arthur → Widow (trigger: failure of bodily line) -->
+  <line x1="437" y1="127" x2="487" y2="127" stroke="#1a1a2e" stroke-width="1.8" marker-end="url(#arrow-solid)"/>
+  <text x="462" y="122" text-anchor="middle" font-size="8" fill="#e67e22">if line fails</text>
+
+  <!-- Widow: Life Estate -->
+  <rect x="490" y="95" width="190" height="64" rx="6" fill="#2980b9" filter="url(#shadow)"/>
+  <text x="585" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">Arthur's Widow</text>
+  <text x="585" y="134" text-anchor="middle" font-size="11" fill="#d4e6f1">Contingent Remainder</text>
+  <text x="585" y="150" text-anchor="middle" font-size="10" fill="#a9cce3">for Life — RAP: ✓ Valid</text>
+
+  <!-- Arrow: Widow → Grandchildren -->
+  <line x1="682" y1="127" x2="732" y2="127" stroke="#1a1a2e" stroke-width="1.8" marker-end="url(#arrow-solid)"/>
+  <text x="707" y="122" text-anchor="middle" font-size="8" fill="#555">then</text>
+
+  <!-- Grandchildren: VOID -->
+  <rect x="735" y="85" width="210" height="84" rx="6" fill="#fff5f5" stroke="#c0392b" stroke-width="2" stroke-dasharray="7,4" filter="url(#shadow)"/>
+  <text x="840" y="110" text-anchor="middle" font-size="13" font-weight="bold" fill="#c0392b">Grandchildren Who Reach 25</text>
+  <text x="840" y="126" text-anchor="middle" font-size="11" fill="#c0392b">Contingent Remainder</text>
+  <text x="840" y="142" text-anchor="middle" font-size="10" fill="#c0392b">in Fee Simple (Class Gift)</text>
+  <!-- strikethrough -->
+  <line x1="760" y1="152" x2="920" y2="152" stroke="#c0392b" stroke-width="1.8"/>
+  <text x="840" y="164" text-anchor="middle" font-size="11" font-weight="bold" fill="#c0392b">VOID — RAP ✗</text>
+
+  <!-- Arrow: Grandchildren → RHS (alternative) -->
+  <line x1="948" y1="127" x2="998" y2="127" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-void)"/>
+  <text x="973" y="120" text-anchor="middle" font-size="8" fill="#c0392b">if none</text>
+
+  <!-- RHS: VOID -->
+  <rect x="1000" y="85" width="175" height="84" rx="6" fill="#fff5f5" stroke="#c0392b" stroke-width="2" stroke-dasharray="7,4" filter="url(#shadow)"/>
+  <text x="1087" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">Rensselaer Hist. Soc.</text>
+  <text x="1087" y="126" text-anchor="middle" font-size="10" fill="#c0392b">Alt. Contingent Remainder</text>
+  <text x="1087" y="142" text-anchor="middle" font-size="10" fill="#c0392b">in Fee Simple</text>
+  <line x1="1015" y1="152" x2="1160" y2="152" stroke="#c0392b" stroke-width="1.8"/>
+  <text x="1087" y="164" text-anchor="middle" font-size="11" font-weight="bold" fill="#c0392b">VOID — RAP ✗</text>
+
+  <!-- Reversion arrow & box (from gap after widow) -->
+  <rect x="490" y="190" width="190" height="44" rx="6" fill="#7f8c8d" filter="url(#shadow)"/>
+  <text x="585" y="210" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">Reversion in Fee Simple</text>
+  <text x="585" y="226" text-anchor="middle" font-size="10" fill="#ecf0f1">→ Arthur via Residuary Clause</text>
+
+  <path d="M585,160 L585,188" stroke="#7f8c8d" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-reversion)"/>
+  <text x="595" y="176" font-size="9" fill="#7f8c8d">after widow's life estate</text>
+
+  <!-- Connecting note about reversion -->
+  <text x="585" y="252" text-anchor="middle" font-size="10" fill="#7f8c8d">(Gap from void remainders; fills via residuary)</text>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: TIMELINE AND RAP BRACKETS -->
+  <!-- ============================================================ -->
+  <text x="50" y="310" font-size="14" font-weight="bold" fill="#1a1a2e">II. Measuring Lives, RAP Windows, and Vesting Events</text>
+
+  <!-- Main timeline -->
+  <line x1="50" y1="380" x2="1150" y2="380" stroke="#1a1a2e" stroke-width="2.5"/>
+  <polygon points="1155,380 1143,374 1143,386" fill="#1a1a2e"/>
+
+  <!-- Date markers on timeline -->
+  <!-- T0: March 1, 2024 (Helena's death) -->
+  <line x1="60" y1="370" x2="60" y2="390" stroke="#1a1a2e" stroke-width="2"/>
+  <text x="60" y="400" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a1a2e">Mar 1, 2024</text>
+  <text x="60" y="414" text-anchor="middle" font-size="9" fill="#555">Helena's Death</text>
+  <text x="60" y="426" text-anchor="middle" font-size="8" fill="#8e44ad">(Creation of Interests)</text>
+
+  <!-- +10yr interval marks -->
+  <line x1="170" y1="375" x2="170" y2="385" stroke="#999" stroke-width="1"/>
+  <text x="170" y="398" text-anchor="middle" font-size="9" fill="#999">2034</text>
+
+  <line x1="280" y1="375" x2="280" y2="385" stroke="#999" stroke-width="1"/>
+  <text x="280" y="398" text-anchor="middle" font-size="9" fill="#999">2044</text>
+
+  <line x1="390" y1="375" x2="390" y2="385" stroke="#999" stroke-width="1"/>
+  <text x="390" y="398" text-anchor="middle" font-size="9" fill="#999">2054</text>
+
+  <line x1="500" y1="375" x2="500" y2="385" stroke="#999" stroke-width="1"/>
+  <text x="500" y="398" text-anchor="middle" font-size="9" fill="#999">2064</text>
+
+  <line x1="610" y1="375" x2="610" y2="385" stroke="#999" stroke-width="1"/>
+  <text x="610" y="398" text-anchor="middle" font-size="9" fill="#999">2074</text>
+
+  <line x1="720" y1="375" x2="720" y2="385" stroke="#999" stroke-width="1"/>
+  <text x="720" y="398" text-anchor="middle" font-size="9" fill="#999">2084</text>
+
+  <line x1="830" y1="375" x2="830" y2="385" stroke="#999" stroke-width="1"/>
+  <text x="830" y="398" text-anchor="middle" font-size="9" fill="#999">2094</text>
+
+  <line x1="940" y1="375" x2="940" y2="385" stroke="#999" stroke-width="1"/>
+  <text x="940" y="398" text-anchor="middle" font-size="9" fill="#999">2104</text>
+
+  <line x1="1050" y1="375" x2="1050" y2="385" stroke="#999" stroke-width="1"/>
+  <text x="1050" y="398" text-anchor="middle" font-size="9" fill="#999">2114</text>
+
+  <!-- ============================================================ -->
+  <!-- MEASURING LIFE: Arthur (age 52 at creation) -->
+  <!-- ============================================================ -->
+  <rect x="40" y="445" width="160" height="22" rx="4" fill="#27ae60"/>
+  <text x="120" y="460" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">Arthur (age 52) — ML1</text>
+
+  <!-- Arthur's life bar (estimated death ~2070, age ~98) -->
+  <!-- Position: from t=0% to t~50% (Arthur dies ~2070 in worst-case scenario) -->
+  <rect x="60" y="472" width="440" height="14" rx="3" fill="#27ae60" opacity="0.35"/>
+  <text x="500" y="483" font-size="10" fill="#27ae60">Arthur's life span (est. d. ~2070)</text>
+
+  <!-- Arthur's death marker -->
+  <line x1="500" y1="470" x2="500" y2="490" stroke="#27ae60" stroke-width="2"/>
+  <text x="500" y="502" text-anchor="middle" font-size="9" fill="#27ae60">Arthur dies</text>
+
+  <!-- Arthur's RAP window: Arthur's death + 21 years -->
+  <rect x="500" y="510" width="110" height="16" rx="3" fill="#27ae60" opacity="0.2" stroke="#27ae60" stroke-width="1"/>
+  <text x="555" y="522" text-anchor="middle" font-size="9" fill="#27ae60">+21 yr RAP window</text>
+
+  <!-- Bracket showing the RAP window -->
+  <path d="M498,528 L498,536 L612,536 L612,528" stroke="#27ae60" stroke-width="1.2" fill="none"/>
+  <text x="555" y="546" text-anchor="middle" font-size="8" fill="#27ae60">Arthur's death + 21</text>
+
+  <!-- Crucial annotation: grandchildren's vesting possible AFTER this window -->
+  <text x="720" y="535" font-size="10" font-weight="bold" fill="#c0392b">← Grandchild could reach 25 here!</text>
+  <text x="720" y="548" font-size="9" fill="#c0392b">(Evan born just before Arthur dies →</text>
+  <text x="720" y="560" font-size="9" fill="#c0392b">child Fiona reaches 25 at ~2098)</text>
+
+  <!-- ============================================================ -->
+  <!-- MEASURING LIFE: Celia (age 24 at creation) -->
+  <!-- ============================================================ -->
+  <rect x="40" y="580" width="160" height="22" rx="4" fill="#2980b9"/>
+  <text x="120" y="595" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">Celia (age 24) — ML2</text>
+
+  <rect x="60" y="607" width="640" height="14" rx="3" fill="#2980b9" opacity="0.25"/>
+  <line x1="700" y1="605" x2="700" y2="625" stroke="#2980b9" stroke-width="2"/>
+  <text x="700" y="637" text-anchor="middle" font-size="9" fill="#2980b9">Celia dies (est. ~2085)</text>
+
+  <rect x="700" y="645" width="110" height="16" rx="3" fill="#2980b9" opacity="0.15" stroke="#2980b9" stroke-width="1"/>
+  <text x="755" y="657" text-anchor="middle" font-size="9" fill="#2980b9">+21 yr window</text>
+
+  <!-- ============================================================ -->
+  <!-- MEASURING LIFE: Dmitri (age 19 at creation) -->
+  <!-- ============================================================ -->
+  <rect x="40" y="680" width="160" height="22" rx="4" fill="#8e44ad"/>
+  <text x="120" y="695" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">Dmitri (age 19) — ML3</text>
+
+  <rect x="60" y="707" width="670" height="14" rx="3" fill="#8e44ad" opacity="0.2"/>
+  <line x1="730" y1="705" x2="730" y2="725" stroke="#8e44ad" stroke-width="2"/>
+  <text x="730" y="737" text-anchor="middle" font-size="9" fill="#8e44ad">Dmitri dies (est. ~2088)</text>
+
+  <rect x="730" y="745" width="110" height="16" rx="3" fill="#8e44ad" opacity="0.12" stroke="#8e44ad" stroke-width="1"/>
+  <text x="785" y="757" text-anchor="middle" font-size="9" fill="#8e44ad">+21 yr window</text>
+
+  <!-- ============================================================ -->
+  <!-- ADDITIONAL LIVES IN BEING: Bernice and Octavia -->
+  <!-- ============================================================ -->
+  <rect x="40" y="780" width="160" height="22" rx="4" fill="#e67e22"/>
+  <text x="120" y="795" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">Bernice (age 49) — LIB</text>
+  <text x="210" y="795" font-size="9" fill="#e67e22">Arthur's spouse; possible "widow" but identity not fixed until Arthur's death.</text>
+
+  <rect x="40" y="808" width="160" height="22" rx="4" fill="#95a5a6"/>
+  <text x="120" y="823" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">Octavia (age 82) — LIB</text>
+  <text x="210" y="823" font-size="9" fill="#95a5a6">Helena's sister; biologically sterile but fertile-octogenarian</text>
+  <text x="622" y="823" font-size="9" fill="#95a5a6">presumption is CONCLUSIVE and irrebuttable at common law.</text>
+
+  <!-- ============================================================ -->
+  <!-- VESTING EVENTS CALLOUT -->
+  <!-- ============================================================ -->
+  <text x="50" y="858" font-size="14" font-weight="bold" fill="#1a1a2e">III. Vesting Events at a Glance</text>
+
+  <rect x="50" y="868" width="360" height="70" rx="6" fill="#e8f8f0" stroke="#27ae60" stroke-width="1"/>
+  <text x="65" y="888" font-size="11" font-weight="bold" fill="#27ae60">✓ Arthur's Fee Tail</text>
+  <text x="65" y="904" font-size="10" fill="#333">Vested at Helena's death (Mar 1, 2024)</text>
+  <text x="65" y="920" font-size="10" fill="#333">Not subject to RAP — present possessory estate</text>
+
+  <rect x="425" y="868" width="360" height="70" rx="6" fill="#eaf2f8" stroke="#2980b9" stroke-width="1"/>
+  <text x="440" y="888" font-size="11" font-weight="bold" fill="#2980b9">✓ Widow's Life Estate</text>
+  <text x="440" y="904" font-size="10" fill="#333">Vests at Arthur's death (identity fixed)</text>
+  <text x="440" y="920" font-size="10" fill="#333">Measuring life = Arthur → zero years after ML</text>
+
+  <rect x="800" y="868" width="350" height="70" rx="6" fill="#fff5f5" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="815" y="888" font-size="11" font-weight="bold" fill="#c0392b">✗ Grandchildren &amp; RHS</text>
+  <text x="815" y="904" font-size="10" fill="#c0392b">Grandchild born to afterborn child of Arthur</text>
+  <text x="815" y="920" font-size="10" fill="#c0392b">could reach 25 beyond all MLs + 21 years</text>
+
+  <!-- ============================================================ -->
+  <!-- LEGEND -->
+  <!-- ============================================================ -->
+  <rect x="50" y="940" width="1100" height="1" fill="#ccc"/>
+  <text x="60" y="943" font-size="9" font-weight="bold" fill="#555">LEGEND:</text>
+  <rect x="130" y="931" width="18" height="12" rx="2" fill="#27ae60" opacity="0.6"/>
+  <text x="152" y="941" font-size="9" fill="#555">Valid vested</text>
+  <rect x="230" y="931" width="18" height="12" rx="2" fill="#2980b9" opacity="0.6"/>
+  <text x="252" y="941" font-size="9" fill="#555">Valid contingent</text>
+  <rect x="350" y="931" width="18" height="12" rx="2" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="372" y="941" font-size="9" fill="#c0392b">Void (RAP)</text>
+  <line x1="460" y1="937" x2="500" y2="937" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="504" y="941" font-size="9" fill="#c0392b">Strikethrough = void</text>
+  <rect x="600" y="931" width="18" height="12" rx="2" fill="#7f8c8d" opacity="0.6"/>
+  <text x="622" y="941" font-size="9" fill="#555">Reversion</text>
+  <text x="710" y="941" font-size="9" fill="#555">ML = Measuring Life   RAP = Rule Against Perpetuities   LIB = Life in Being at Creation</text>
+</svg>

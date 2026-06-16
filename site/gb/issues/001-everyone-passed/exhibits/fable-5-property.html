@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fable-5-property - 001</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fafafa;
+  --bg: oklch(98.5% 0.003 220);
+  --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+  --paper: #ffffff;
+  --paper: oklch(99.5% 0.002 220);
+  --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+  --panel: #f1f2f4;
+  --panel: oklch(96% 0.006 220);
+  --panel: light-dark(oklch(96% 0.006 220), oklch(22% 0.018 240));
+  --fg: #1a1b22;
+  --fg: oklch(20% 0.022 240);
+  --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+  --muted: #6a6f7c;
+  --muted: oklch(48% 0.020 240);
+  --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+  --rule: #d6d9dd;
+  --rule: oklch(85% 0.010 220);
+  --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+  --accent: #226d8b;
+  --accent: oklch(45% 0.13 215);
+  --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+  --ok: #2f7a4e;
+  --ok: oklch(45% 0.16 145);
+  --ok: light-dark(oklch(45% 0.16 145), oklch(70% 0.16 145));
+  --bad: #b53d29;
+  --bad: oklch(50% 0.22 25);
+  --bad: light-dark(oklch(50% 0.22 25), oklch(70% 0.22 25));
+  --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                Arial, sans-serif;
+  --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                monospace;
+  --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                "Times New Roman", serif;
+}
+:root:has(#rdr-light:checked) { color-scheme: light; }
+:root:has(#rdr-dark:checked)  { color-scheme: dark; }
+@media print { :root { color-scheme: light; } }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 24px clamp(12px, 3vw, 36px) 60px;
+}
+.wrap { max-width: 900px; margin: 0 auto; }
+h1 { font-family: var(--font-sans); font-size: 22px; font-weight: 800; margin: 0 0 4px; }
+h2 { font-family: var(--font-sans); font-size: 11px; font-weight: 700; text-transform: uppercase;
+     letter-spacing: 0.07em; color: var(--muted); margin: 28px 0 8px;
+     border-bottom: 1px solid var(--rule); padding-bottom: 4px; }
+.sub { font-family: var(--font-sans); color: var(--muted); font-size: 12px; margin: 0 0 18px; }
+.meta-row { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); margin: 4px 0; }
+.meta-row b { color: var(--fg); }
+pre { font-family: var(--font-mono); white-space: pre-wrap; word-break: break-word;
+      background: var(--panel); border: 1px solid var(--rule); border-radius: 5px;
+      padding: 10px 12px; margin: 6px 0; font-size: 11.5px; line-height: 1.5; }
+.scores { font-family: var(--font-mono); font-size: 12px; margin: 8px 0; }
+.scores .n { font-weight: 800; color: var(--accent); }
+.prose { font-family: var(--font-prose); font-size: 15px; line-height: 1.65;
+         margin: 12px 0; max-width: 68ch; }
+.prose p { margin: 0 0 0.9em; }
+.diagram-box { margin: 14px 0; }
+.diagram-box svg { max-width: 100%; border: 1px solid var(--rule); border-radius: 5px;
+                   background: var(--paper); display: block; }
+.diagram-note { font-family: var(--font-sans); font-size: 12px; color: var(--muted);
+                margin: 4px 0; }
+.diagram-link { font-family: var(--font-mono); font-size: 11.5px; }
+a { color: var(--accent); }
+a:hover { color: var(--fg); }
+.back { font-family: var(--font-mono); font-size: 12px; margin-top: 32px;
+        padding-top: 10px; border-top: 1px solid var(--rule); }
+footer { font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+         margin-top: 8px; }
+.index-list { list-style: none; padding: 0; margin: 12px 0; }
+.index-list li { border: 1px solid var(--rule); border-radius: 5px; background: var(--paper);
+                 padding: 10px 14px; margin: 6px 0; }
+.index-list a { font-family: var(--font-sans); font-weight: 700; font-size: 14px;
+                text-decoration: none; }
+.index-list a:hover { text-decoration: underline; }
+.index-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>fable-5-property</h1>
+<p class="sub">issue 001 &middot; campaign EV-023</p>
+<div class="meta-row"><b>model</b> claude-fable-5 &middot; <b>channel</b> claude-code &middot; <b>task</b> property-fee-tail-rap</div>
+<div class="meta-row"><b>note</b> A perfect 20/20 chain resolution -- every dependent link held, with a clean estate diagram.</div>
+
+<h2>Prompt &mdash; lines 9-30 of 104</h2>
+<pre>## Fact Pattern
+
+Helena Cartwright owned Blackacre, a 140-acre working orchard
+outside the town of Rensselaer in the State of Franklin. Helena
+died testate on March 1, 2024. Her duly probated will contained
+the following dispositive clause, identified as Article IV:
+
+&gt; &#34;I devise Blackacre to my son Arthur and the heirs of his body,
+&gt; and if Arthur&#39;s bodily line should ever fail, then to such person
+&gt; as shall be Arthur&#39;s widow for her life, and then to those of
+&gt; Arthur&#39;s grandchildren who shall attain the age of twenty-five
+&gt; years, in equal shares; but if no grandchild of Arthur lives to
+&gt; attain the age of twenty-five, then to the Rensselaer Historical
+&gt; Society, its successors and assigns, forever.&#34;
+
+At Helena&#39;s death, the following persons were living:
+
+- Arthur Cartwright, Helena&#39;s only child, age 52, married to Bernice
+  (age 49). Arthur and Bernice have two living children: Celia
+  (age 24) and Dmitri (age 19). Neither Celia nor Dmitri is married
+  and neither has children.
+- Helena&#39;s sister, Octavia, age 82, a widow with no living issue.</pre>
+
+<h2>Answer</h2>
+<pre># MEMORANDUM
+
+**TO:** The Honorable Presiding Judge, Probate Court of Franklin County
+**FROM:** Law Clerk
+**RE:** *In re Estate of Helena Cartwright* — Petition of Arthur Cartwright for Construction of Article IV (Blackacre) and Declaration of Title
+**ATTACHMENT:** `diagram.svg` (chain of interests and perpetuities timeline)
+
+---
+
+## Preliminary Note on Governing Law
+
+Franklin is a common-law jurisdiction that (1) has never abolished the fee
+tail, (2) retains the common-law Rule Against Perpetuities (&#34;the Rule&#34;) in
+its classical, what-might-happen form — no wait-and-see, no USRAP, no cy
+pres reformation, (3) applies the conclusive fertility presumptions
+(fertile octogenarian, unborn widow), and (4) construes class gifts under
+the rule of convenience. Per the parties&#39; stipulations, no disentailing
+statute has been invoked, and the doctrine of worthier title and the Rule
+in Shelley&#39;s Case are assumed inapplicable. All interests under Article IV
+were created at Helena&#39;s death on **March 1, 2024** — the date the will
+spoke and the date from which the perpetuities period is measured.
+
+---
+
+## Questions Presented
+
+1. What present and future interests did Article IV create, in whom, and
+   are the future interests vested or contingent? What effect does
+   Franklin&#39;s retention of the fee tail have on the analysis?
+2. Which contingent future interests satisfy the common-law Rule Against
+   Perpetuities, measured from March 1, 2024 — including (a) whether
+   Octavia&#39;s age and attested infertility excuse the fertile-octogenarian
+   presumption, and (b) whether Bernice can be identified as Arthur&#39;s
+   &#34;widow&#34; at Helena&#39;s death?
+3. After void interests are stricken, what is the state of the title at
+   Helena&#39;s death, and who takes if Arthur&#39;s bodily line fails in (i) 2050
+   or (ii) 2150?
+
+## Brief Answers
+
+1. Article IV gives **Arthur a fee tail general in possession**. Because
+   Franklin retains the fee tail, the words &#34;and the heirs of his body&#34;
+   operate exactly as at common law, and the gifts over are **remainders**
+   expectant on the indefinite failure of Arthur&#39;s bodily issue, not
+   executory interests. The remainders are: a **contingent remainder for
+   life in Arthur&#39;s widow** (contingent solely because she is
+   unascertained); a **contingent remainder in fee simple, as a class,
+   in Arthur&#39;s grandchildren who attain twenty-five**; and an
+   **alternative contingent remainder in fee simple in the Rensselaer
+   Historical Society**. Because every remainder in fee is contingent,
+   Helena retained a **reversion in fee simple**, which passed under her
+   residuary clause to **Arthur**.
+2. The **widow&#39;s contingent remainder is valid** — it vests or fails at
+   Arthur&#39;s death, and Arthur is his own validating life. The
+   **grandchildren&#39;s remainder is void** *ab initio* — an after-born child
+   of Arthur could produce a grandchild who attains twenty-five more than
+   twenty-one years after every life in being has ended, and the
+   all-or-nothing class-gift rule voids the entire class. The **Society&#39;s
+   remainder is void** — it vests, if ever, only on the indefinite failure
+   of Arthur&#39;s bodily line, an event untethered to any life in being.
+   (a) Octavia&#39;s age and medical proof are **legally irrelevant**: the
+   fertility presumption is conclusive at common law and irrebuttable by
+   evidence — though the presumption that actually decides this case is
+   the one applied to *Arthur and Bernice*, who at 52 and 49 are
+   conclusively presumed capable of further children. (b) **No** —
+   &#34;widow&#34; means the woman, if any, to whom Arthur is married at his
+   death; Bernice&#39;s status cannot be determined until then, and the widow
+   may prove to be a person not yet born in 2024.
+3. After striking the void remainders, title stands: **fee tail general
+   in Arthur** (possessory); **valid contingent remainder for life in
+   Arthur&#39;s unascertained widow**; **reversion in fee simple in Arthur**
+   (by residuary devise). (i) If the bodily line fails in **2050**,
+   Arthur&#39;s surviving widow, if then living, takes a possessory life
+   estate, and thereafter (or immediately, if no widow survives) the
+   holders of the reversion — Arthur&#39;s successors in interest — take in
+   fee simple absolute. (ii) If the line fails in **2150**, the result is
+   the same in structure: the then-holders of the reversion take in fee
+   simple absolute. **In neither scenario does the Historical Society or
+   any grandchild take anything.**
+
+---
+
+## Discussion
+
+### I. Classification of the Interests Created by Article IV
+
+**Issue.** What estates and future interests did Article IV create at
+Helena&#39;s death, and how does Franklin&#39;s retention of the fee tail shape
+their classification?
+
+**Rule.** Since the Statute De Donis Conditionalibus (1285), a devise &#34;to
+A and the heirs of his body&#34; creates a **fee tail**: an estate of
+inheritance that descends only to the donee&#39;s lineal (bodily) issue, *per
+formam doni*, generation after generation, and expires naturally upon the
+**indefinite failure of issue** — the extinction of the donee&#39;s entire
+bodily line, whenever that occurs. In a jurisdiction retaining the fee
+tail, language such as &#34;if A&#39;s bodily line should ever fail&#34; is construed
+as referring to that indefinite failure, i.e., to the *natural expiration*
+of the entail; limitations over that take effect at that expiration are
+**remainders**, because they await the natural termination of the prior
+freehold rather than divesting it. A remainder is **vested** if its taker
+is ascertained and it is subject to no condition precedent other than the
+termination of the preceding estates; it is **contingent** if the taker is
+unascertained or a condition precedent must first be satisfied. Where the
+limitations in fee following a freehold are all contingent, the grantor
+(or testator&#39;s estate) retains a **reversion in fee simple**, a vested
+interest by operation of law.
+
+**Application.**
+
+*Arthur.* &#34;To my son Arthur and the heirs of his body&#34; creates a **fee
+tail general** in Arthur, possessory at Helena&#39;s death. This is the first
+and most consequential effect of Franklin&#39;s retention of the fee tail: in
+the great majority of American jurisdictions a statute would convert this
+language into a fee simple (or a life estate with remainder to issue),
+and the balance of Article IV would read very differently. In Franklin
+the entail is given full common-law effect: on Arthur&#39;s death Blackacre
+descends to his bodily heirs (presently Celia and Dmitri are the heirs
+apparent of his body), and so on down the line until the line fails.
+
+*Arthur&#39;s widow.* &#34;If Arthur&#39;s bodily line should ever fail, then to such
+person as shall be Arthur&#39;s widow for her life&#34; creates a **remainder for
+life**. The quoted condition is not a true condition precedent; it merely
+restates the event on which the entail naturally expires. The remainder
+is nonetheless **contingent**, for one reason only: the taker is
+**unascertained**. &#34;Arthur&#39;s widow&#34; describes whoever is married to
+Arthur at the moment of his death — an identity that cannot be known
+until he dies. (Section II.A(b) addresses Bernice&#39;s claim.) Upon
+Arthur&#39;s death the widow, if any, is ascertained, and her remainder
+becomes **vested in interest** — expectant on the entail — even though it
+may never become possessory, since possession awaits the failure of the
+entire bodily line during her lifetime.
+
+*Arthur&#39;s grandchildren.* &#34;And then to those of Arthur&#39;s grandchildren
+who shall attain the age of twenty-five years, in equal shares&#34; creates a
+**contingent remainder in fee simple in a class**. It is contingent
+twice over: no grandchild of Arthur exists (Celia, 24, and Dmitri, 19,
+are childless), and each taker must satisfy an express condition
+precedent of attaining twenty-five. Had any member vested, the class
+would have remained **subject to open** until the death of Arthur&#39;s last
+child closed it physiologically.
+
+*The Rensselaer Historical Society.* &#34;But if no grandchild of Arthur
+lives to attain the age of twenty-five, then to the Rensselaer Historical
+Society ... forever&#34; creates an **alternative contingent remainder in fee
+simple absolute**. Its condition precedent is the exact mirror of the
+grandchildren&#39;s: the two limitations are classic alternative contingent
+remainders — one or the other, never both.
+
+*The reversion.* Because every limitation in fee following the entail is
+contingent, Helena&#39;s estate retained a **reversion in fee simple**,
+vested from the moment of her death. Under the residuary clause (&#34;all the
+rest, residue, and remainder ... to Arthur outright&#34;), that reversion
+passed to **Arthur**. Two classification consequences follow. First, the
+reversion is vested by definition and is therefore wholly outside the
+Rule (Section II.D). Second, although Arthur now unites in himself the
+fee tail and the reversion in fee, **no merger occurs**: it is settled
+common law that an estate tail does not merge into the fee — De Donis
+protects the entail and the expectancies built upon it — so the widow&#39;s
+intervening contingent remainder is not squeezed out by merger or by the
+destructibility doctrine at Helena&#39;s death.
+
+**Conclusion.** At Helena&#39;s death Article IV created: (1) a fee tail
+general in Arthur, possessory; (2) a contingent remainder for life in
+Arthur&#39;s unascertained widow; (3) a contingent remainder in fee simple in
+the open class of Arthur&#39;s grandchildren who attain twenty-five; (4) an
+alternative contingent remainder in fee simple in the Society; and (5) a
+reversion in fee simple, vested, passing by the residuary devise to
+Arthur. Franklin&#39;s retention of the fee tail (a) validates the entail
+itself, (b) makes the gifts over remainders on *indefinite* failure of
+issue rather than executory interests on definite failure, (c) supplies
+the centuries-long duration that drives the perpetuities analysis below,
+and (d) by the no-merger rule preserves the widow&#39;s remainder despite
+Arthur&#39;s acquisition of the reversion.
+
+### II. The Rule Against Perpetuities
+
+**The Rule.** &#34;No interest is good unless it must vest, if at all, not
+later than twenty-one years after some life in being at the creation of
+the interest.&#34; Gray, *The Rule Against Perpetuities* § 201. For a
+testamentary gift the period runs from the testator&#39;s death — here,
+March 1, 2024. The Rule polices **vesting in interest, not possession**;
+a vested interest may lawfully wait centuries for possession. In its
+classical form the Rule is one of **possibilities**: an interest is void
+*ab initio* if, viewed from the creation date, any imaginable chain of
+events — however improbable — could postpone vesting beyond every life in
+being plus twenty-one years. Class gifts are tested by the
+**all-or-nothing rule** (*Leake v. Robinson*): if the interest of any
+*possible* member of the class could vest remotely, the whole class gift
+fails, even as to members whose interests would timely vest. The Rule
+does not apply to reversions, to other vested interests, or to present
+possessory estates. A &#34;measuring&#34; (validating) life is any person alive
+at creation within whose life-plus-twenty-one-years the interest must
+inevitably vest or fail.
+
+#### II.A — The Widow&#39;s Contingent Remainder for Life: VALID
+
+**Issue.** Must the widow&#39;s remainder vest or fail within a life in being
+plus twenty-one years, and can Bernice be identified as the &#34;widow&#34; now?
+
+**Rule.** A contingent remainder whose only contingency is the
+ascertainment of the taker vests, if at all, at the moment of
+ascertainment. Under the **unborn-widow presumption**, which Franklin
+recognizes, a gift to a living man&#39;s &#34;widow&#34; may not be read as a gift to
+his present wife: the marriage may end by divorce or her death, and the
+man may later marry a woman **born after the testator&#39;s death**. The
+widow is therefore unascertainable until the husband dies — but by the
+same token she is necessarily ascertained, or the gift necessarily fails,
+*at* his death.
+
+**Application.** The single contingency on the widow&#39;s life estate is
+ascertainment. At the instant of **Arthur&#39;s death** either some woman is
+his surviving spouse — in which case the remainder vests in interest in
+her at that instant — or no one is, and the remainder fails forever.
+Arthur was alive on March 1, 2024. **Arthur is therefore his own
+validating life**, and the latest possible vesting event is **Arthur&#39;s
+death plus zero years** — comfortably within the period. That the widow
+may herself be a person unborn in 2024 is irrelevant *to her own gift*,
+because her interest does not depend on anything measured by *her* life;
+the unborn-widow trap snaps shut only on gifts *after* the widow that are
+keyed to *her* death (Section II.B notes its contributory role there).
+Nor does the possibility that her estate never becomes possessory matter:
+once ascertained she holds a vested remainder for life expectant on the
+entail, and the Rule ignores postponed possession. One could object that
+she takes only &#34;if Arthur&#39;s bodily line should ever fail&#34; — an event
+perhaps centuries away — but that language merely marks the natural
+expiration of the prior estate; it is not a condition precedent to
+vesting, and a life tenant&#39;s implicit need to be alive at possession
+defines the *duration* of a life estate, not its vesting.
+
+**(b) Bernice.** Bernice&#39;s separate assertion that she &#34;is&#34; the widow
+must be rejected as premature. &#34;Such person as shall be Arthur&#39;s widow&#34;
+is a description answered only at Arthur&#39;s death. Bernice (49) may
+predecease Arthur or be divorced; Arthur may remarry — conceivably a
+woman born after March 1, 2024. **Bernice&#39;s identity as widow cannot be
+determined at Helena&#39;s death.** She presently has, at most, the prospect
+of qualifying; the contingent remainder exists in abeyance for whoever
+answers the description. The court should decline to declare Bernice the
+taker, while confirming that the widow&#39;s limitation itself is valid.
+
+**Conclusion.** The widow&#39;s contingent remainder for life is **valid**.
+Validating life: **Arthur**. Latest vesting event: **Arthur&#39;s death**.
+Bernice cannot now be identified as the taker.
+
+#### II.B — The Grandchildren&#39;s Class Remainder (Attain 25): VOID
+
+**Issue.** Must the remainder to &#34;those of Arthur&#39;s grandchildren who
+shall attain the age of twenty-five years&#34; vest or fail, as to every
+possible class member, within lives in being plus twenty-one years?
+
+**Rule.** A class gift conditioned on attaining an age greater than
+twenty-one, where the class can admit members born of persons themselves
+unborn at the creation of the interest, is the textbook remote gift.
+Under the conclusive **fertility presumption** (*Jee v. Audley*), every
+living person — regardless of age, sex, or medical condition — is
+presumed capable of having children until death. Under the
+**all-or-nothing rule**, one potentially remote member voids the class.
+The **rule of convenience** (Andrews v. Partington) can sometimes rescue
+a class gift by closing the class when some member becomes entitled to
+demand distribution — but only if that closing must itself occur within
+the period.
+
+**Application.** Candidate validating lives are the persons in being on
+March 1, 2024 connected to the gift: Arthur (52), Bernice (49), Celia
+(24), Dmitri (19), and — for completeness — Octavia (82). None works.
+
+*The invalidating chain.* (1) In 2025, Arthur and Bernice — or Arthur and
+a later wife — have another child, **E**. E is *not* a life in being.
+(Arthur at 52 is conclusively presumed fertile; that presumption, not
+Octavia&#39;s, does the work here.) (2) In 2026, Arthur, Bernice, Celia,
+Dmitri, and Octavia all die, extinguishing every life in being. (3)
+Decades later E has a child, **G** — a grandchild of Arthur. (4) G
+attains twenty-five well more than twenty-one years after 2026. G&#39;s
+interest would vest too remotely; under the all-or-nothing rule the
+**entire class gift is void**, including any share Celia&#39;s or Dmitri&#39;s
+children might have taken. Indeed an even shorter chain suffices: Celia
+bears a child G1 in 2025; every life in being dies in 2026; G1 attains
+twenty-five in 2050 — twenty-four years beyond the last life in being.
+The express age contingency of **twenty-five** — four years past the
+common-law buffer — is fatal on these facts standing alone.
+
+*No rescue available.* The rule of convenience cannot close the class
+within the period: no grandchild can demand distribution until Arthur&#39;s
+bodily line fails *and* the widow&#39;s life estate ends, and the failure of
+the bodily line is precisely the event that may lie centuries off. The
+physiological closing of the class (death of Arthur&#39;s last child) is
+equally unbounded, since that last child may be the after-born E. And
+the unborn-widow presumption compounds the remoteness: the preceding life
+estate may be held by a woman unborn in 2024, so even distribution-stage
+events cannot be tied to a life in being.
+
+**(a) Octavia and the fertile-octogenarian presumption.** Octavia&#39;s
+attested incapacity does **not** excuse the presumption. In its classical
+form the fertility presumption is **conclusive and irrebuttable**;
+medical testimony is inadmissible to qualify it. *Jee v. Audley* itself
+presumed septuagenarians fertile, and Franklin expressly retains the
+doctrine. Were Octavia&#39;s capacity material, the court would be bound to
+presume her capable of bearing children at 82 notwithstanding thirty
+years of menopause and her physicians&#39; attestations. That said, the
+court should note that Octavia&#39;s fertility is **immaterial to Article
+IV**: she is neither a taker nor an ancestor of any taker, and her only
+analytical role is as one more candidate measuring life (her life
+validates nothing). The presumption that *decides* this case is the same
+presumption applied to **Arthur and Bernice**: at 52 and 49 they are
+conclusively presumed capable of producing the after-born child E on whom
+the invalidating chain is built. Octavia is, in short, a decoy — but the
+doctrine she personifies is dispositive elsewhere in the devise.
+
+**Conclusion.** The grandchildren&#39;s remainder is **void ab initio**.
+Validating life: **none exists** (Arthur, Bernice, Celia, Dmitri, and
+Octavia all fail). Latest possible vesting event: attainment of
+twenty-five by a grandchild born to an after-born child of Arthur — an
+event with no temporal bound. The interest is stricken.
+
+#### II.C — The Society&#39;s Alternative Contingent Remainder: VOID
+
+**Issue.** Must the Society&#39;s remainder — &#34;if no grandchild of Arthur
+lives to attain the age of twenty-five&#34; — vest or fail within the period,
+and does any charity or fee-tail exemption save it?
+
+**Rule.** An interest contingent on the indefinite failure of issue
+violates the Rule unless tied to a validating life, because a bodily line
+may persist through after-born generations indefinitely. The
+**charity-to-charity exception** exempts a gift over from one charity to
+another charity; it has no application where the preceding interests are
+private. The classical books also recognize an exemption for
+**limitations after estates tail** (Gray §§ 443–444): an interest that
+must vest, if at all, no later than the expiration of an entail was held
+exempt, on the rationale that the tenant in tail could at any moment
+destroy it by suffering a common recovery or executing a disentailing
+conveyance — so the interest imposed no practical clog on alienation.
+
+**Application.** The Society&#39;s remainder vests in interest, at the
+earliest, when it becomes certain that no grandchild of Arthur will ever
+attain twenty-five, and at the latest at the failure of Arthur&#39;s bodily
+line — the natural expiration of the entail. Neither event is anchored
+to any life in being: the line may run through E, E&#39;s children, and
+their children for two centuries (the 2150 hypothetical in Question 3 is
+exactly such a case), every relevant actor having been born after 2024.
+No candidate measuring life — Arthur, Bernice, Celia, Dmitri, Octavia —
+validates the gift.
+
+*The charitable exception fails.* The Society is a charity, but the
+preceding limitations (fee tail in Arthur, widow&#39;s life estate,
+grandchildren&#39;s remainder) are private. A gift over from private takers
+to a charity enjoys no exemption; the exception requires charity on
+*both* sides of the divesting line.
+
+*The fee-tail exemption fails on these facts.* The Society&#39;s strongest
+argument is Gray&#39;s exemption for limitations after estates tail, since
+its interest must vest, if at all, no later than the entail&#39;s natural
+expiration. The court should reject it. The exemption is parasitic on
+**barrability**: it exists only because, and insofar as, the tenant in
+tail can bar the remainders, rendering them illusory restraints. Here
+the parties have invoked no disentailing statute, and the court has been
+directed to treat the disentailment doctrines as inapplicable to this
+construction. Where the entail cannot be barred, the exemption&#39;s
+rationale evaporates, and limitations after the entail are tested by the
+Rule in the ordinary way. (Were Franklin to recognize a freely available
+disentailing mechanism, the exemption would furnish a respectable
+argument for sustaining both gifts over; on the assumed record the court
+need not, and should not, reach that question.) The same reasoning
+disposes of any parallel argument on behalf of the grandchildren&#39;s class
+gift, which is independently void under Section II.B in any event.
+
+**Conclusion.** The Society&#39;s alternative contingent remainder is
+**void ab initio**. Validating life: **none exists**. Latest possible
+vesting event: the indefinite failure of Arthur&#39;s bodily line —
+temporally unbounded. The interest is stricken.
+
+#### II.D — Interests Not Subject to the Rule
+
+Arthur&#39;s **fee tail** is a present, vested estate of inheritance; the
+Rule has no application to it, and the succession of bodily heirs under
+an entail has never been treated as a perpetuities problem — each heir in
+tail takes by descent *per formam doni*, not by the vesting of a future
+interest. The **reversion in fee simple** retained by Helena&#39;s estate
+and devised to Arthur is vested from the moment of its creation;
+reversions are categorically exempt. The **widow&#39;s remainder**, once she
+is ascertained at Arthur&#39;s death, is vested and likewise beyond the
+Rule&#39;s reach thereafter.
+
+### III. State of the Title and the Two Failure Scenarios
+
+**Issue.** What does the title look like once the void interests are
+excised, and who takes on failure of the bodily line in 2050 and in 2150?
+
+**Rule.** Void interests are stricken as of the testator&#39;s death and the
+instrument is read as if they had never been written. Striking a
+remainder does not accelerate or enlarge other limitations beyond their
+terms; the gap is filled by the reversion, which takes effect in
+possession on the natural expiration of the preceding valid estates.
+
+**Application — title at Helena&#39;s death (March 1, 2024).** Reading
+Article IV with the grandchildren&#39;s and Society&#39;s remainders deleted:
+
+1. **Arthur** — fee tail general, in possession.
+2. **Arthur&#39;s widow (unascertained)** — contingent remainder for life,
+   valid; vests in whoever survives Arthur as his wife.
+3. **Arthur** — reversion in fee simple absolute (vested), taken under
+   the residuary clause; no merger with the entail, so the widow&#39;s
+   remainder stands (Section I).
+4. **Celia, Dmitri, future grandchildren, and the Society** — nothing
+   under Article IV. Celia and Dmitri hold no devised interest; their
+   expectancy is to inherit the entail as heirs of Arthur&#39;s body. The
+   guardian ad litem&#39;s wards take nothing because the class gift is void
+   as to all possible members; the Society&#39;s claim fails entirely.
+
+**Scenario (i): the bodily line fails in 2050.** The entail cannot fail
+while Arthur lives; so by hypothesis Arthur has died before 2050 (his
+widow, if any, was ascertained at his death — Bernice if she was then his
+wife and survived him), and his last bodily descendant dies in 2050. At
+that moment the entail expires. If the **widow is then living**, her
+remainder — long since vested in interest — takes effect **in possession
+as a life estate**; on her death, the **reversion in fee simple absolute
+falls into possession** in the hands of Arthur&#39;s successors in interest
+(the devisees or heirs through whom the reversion has passed from
+Arthur&#39;s estate). If **no widow survives** to 2050, the reversion takes
+effect in possession immediately upon the failure of the line. The
+Society takes nothing, even though no grandchild of Arthur may ever have
+reached twenty-five: its gift was void from March 1, 2024, and events
+since cannot revive it — the classical Rule judges possibilities at
+creation, not actualities.
+
+**Scenario (ii): the bodily line fails in 2150.** The analysis is
+identical in structure and starker in result. By 2150 the widow —
+whoever she proved to be — will in all probability have died long since;
+if so, her life estate simply expired without (or after) possession, and
+upon the failure of the line the **then-holders of the reversion take
+Blackacre in fee simple absolute**. Those holders are whoever succeeded,
+by will or intestacy through the intervening century, to the reversion
+Arthur took under Helena&#39;s residuary clause. (In the strict logical case
+that a widow of Arthur were still alive in 2150, she would take her life
+estate first, with the reversion following — the structure does not
+change.) Again, **neither the Society nor any grandchild takes**. The
+2150 hypothetical illustrates *why* the Rule struck these gifts: it is
+precisely the possibility that the curtain would not rise until 2150 —
+126 years after every 2024 life could have ended — that made the
+grandchildren&#39;s and Society&#39;s interests void on day one.
+
+**Conclusion.** Title at Helena&#39;s death: fee tail general in Arthur;
+valid contingent remainder for life in Arthur&#39;s unascertained widow;
+reversion in fee simple in Arthur via the residue. On failure of the
+bodily line in 2050: the surviving widow, if living, for life, then
+Arthur&#39;s reversion-successors in fee simple absolute; if no widow, the
+reversion-successors at once. On failure in 2150: the
+reversion-successors in fee simple absolute (subject to the theoretical
+priority of a still-living widow&#39;s life estate). The Historical
+Society&#39;s claim should be denied in toto.
+
+---
+
+## Recommendation
+
+The court should declare: (1) Arthur holds Blackacre in fee tail general,
+together with the reversion in fee simple devised by the residuary
+clause; (2) a valid contingent remainder for life exists in such person
+as shall be Arthur&#39;s widow, who cannot now be identified and as to whom
+Bernice&#39;s claim is premature; (3) the remainders to Arthur&#39;s
+grandchildren and to the Rensselaer Historical Society are void under the
+Rule Against Perpetuities and are stricken; and (4) upon the failure of
+Arthur&#39;s bodily line at any time, possession passes to the surviving
+widow for life, if any, and then to the holders of the reversion in fee
+simple absolute. A short decree to that effect, with the attached
+diagram appended as a visual aid, is recommended.
+
+*Attachment: `diagram.svg` — chain of interests, measuring lives,
+perpetuities windows, and vesting events.*
+</pre>
+<h2>Scores</h2>
+<div class="scores">memo <span class="n">5</span> / diagram <span class="n">5</span></div>
+<h2>Memo &mdash; why</h2>
+<div class="scores">The memorandum addresses all required issues (a through m) with exceptional depth and clean IRAC structure. It correctly classifies Arthur&#39;s fee tail, identifies all subsequent interests as remainders (not executory interests), explains the widow&#39;s contingent remainder and the unborn-widow trap, identifies the grandchildren&#39;s interest as a contingent remainder to an open class with a condition precedent of reaching 25, and classifies the Society&#39;s interest as an alternative contingent remainder. The RAP analysis is thorough and correct: the widow&#39;s life estate is valid (Arthur as his own validating life), the grandchildren&#39;s remainder is void via the afterborn-child &#43; afterborn-grandchild mechanism with explicit invocation of the all-or-nothing rule (Leake v. Robinson), and the Society&#39;s remainder is independently void with correct treatment of the charity-to-non-charity distinction. The fertile octogenarian presumption is correctly identified as irrebuttable, and Octavia is correctly identified as irrelevant to the measuring-life analysis. The resulting state of title is correctly stated, with the reversion passing to Arthur under the residuary clause. The memo even addresses merger and the fee-tail exemption for limitations after estates tail.</div>
+<h2>Diagram &mdash; why</h2>
+<div class="scores">All six required elements are present and clearly legible. The chain of title from Helena through Arthur (fee tail), Arthur&#39;s widow (contingent life estate), grandchildren (class gift), and the Rensselaer Historical Society (alternative contingent remainder) is fully labeled; measuring lives (Octavia, Arthur, Bernice, Celia, Dmitri) are shown on a timeline with 21-year RAP windows; vesting-event markers are placed on the timeline; void interests (grandchildren&#39;s class gift and Society&#39;s interest) are clearly distinguished with dashed red borders and strikethrough text while valid interests have solid green borders; and a comprehensive legend explains all notation. The afterborn-grandchild trap is explicitly rendered through the E/G line showing how vesting could be deferred beyond every life in being plus 21 years.</div>
+
+<h2>Diagram</h2>
+<div class="diagram-box">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1440" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="1440" fill="#ffffff"/>
+
+  <text x="640" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#0f172a">IN RE ESTATE OF HELENA CARTWRIGHT &#8212; ARTICLE IV: BLACKACRE</text>
+  <text x="640" y="64" text-anchor="middle" font-size="13" fill="#475569">Chain of interests and common-law Rule Against Perpetuities analysis &#8212; State of Franklin (fee tail retained; classical Rule; no wait-and-see)</text>
+
+  <text x="40" y="108" font-size="16" font-weight="bold" fill="#0f172a">1 &#8212; CHAIN OF INTERESTS CREATED AT HELENA&#8217;S DEATH (MARCH 1, 2024)</text>
+
+  <g>
+    <rect x="40" y="150" width="210" height="110" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+    <text x="52" y="178" font-size="13" font-weight="bold" fill="#0f172a">HELENA CARTWRIGHT</text>
+    <text x="52" y="196" font-size="11" fill="#334155">Testatrix &#8212; fee simple absolute</text>
+    <text x="52" y="212" font-size="11" fill="#334155">d. Mar 1, 2024 &#8212; will speaks;</text>
+    <text x="52" y="227" font-size="11" fill="#334155">perpetuities period begins</text>
+  </g>
+
+  <g>
+    <rect x="310" y="150" width="200" height="110" rx="8" fill="#f0fdfa" stroke="#0f766e" stroke-width="2.5"/>
+    <rect x="446" y="158" width="54" height="18" rx="9" fill="#0f766e"/>
+    <text x="473" y="171" text-anchor="middle" font-size="10" font-weight="bold" fill="#ffffff">VALID</text>
+    <text x="322" y="180" font-size="14" font-weight="bold" fill="#0f172a">ARTHUR</text>
+    <text x="322" y="198" font-size="11" fill="#134e4a">Fee tail general (possessory)</text>
+    <text x="322" y="214" font-size="10.5" font-style="italic" fill="#334155">&#8220;and the heirs of his body&#8221;</text>
+    <text x="322" y="230" font-size="10" fill="#475569">present estate &#8212; Rule inapplicable</text>
+  </g>
+
+  <g>
+    <rect x="570" y="150" width="250" height="110" rx="8" fill="#f0fdfa" stroke="#0f766e" stroke-width="2.5"/>
+    <rect x="756" y="158" width="54" height="18" rx="9" fill="#0f766e"/>
+    <text x="783" y="171" text-anchor="middle" font-size="10" font-weight="bold" fill="#ffffff">VALID</text>
+    <text x="582" y="180" font-size="13" font-weight="bold" fill="#0f172a">ARTHUR&#8217;S WIDOW</text>
+    <text x="582" y="198" font-size="11" fill="#134e4a">Contingent remainder &#8212; LIFE ESTATE</text>
+    <text x="582" y="214" font-size="10.5" fill="#334155">taker unascertained until Arthur&#8217;s death</text>
+    <text x="582" y="230" font-size="10" fill="#475569">vests, if at all, at Arthur&#8217;s death (Bernice TBD)</text>
+  </g>
+
+  <g>
+    <rect x="880" y="130" width="360" height="100" rx="8" fill="#fef2f2" stroke="#b91c1c" stroke-width="2.5" stroke-dasharray="7,4"/>
+    <rect x="1146" y="138" width="84" height="18" rx="9" fill="#b91c1c"/>
+    <text x="1188" y="151" text-anchor="middle" font-size="10" font-weight="bold" fill="#ffffff">VOID (RAP)</text>
+    <text x="892" y="160" font-size="13" font-weight="bold" fill="#7f1d1d">GRANDCHILDREN WHO ATTAIN 25</text>
+    <line x1="892" y1="156" x2="1115" y2="156" stroke="#b91c1c" stroke-width="1.6"/>
+    <text x="892" y="178" font-size="11" fill="#7f1d1d">Contingent remainder in fee simple (open class)</text>
+    <text x="892" y="194" font-size="10.5" fill="#7f1d1d">no validating life; age 25 &gt; 21; all-or-nothing class rule</text>
+    <text x="892" y="210" font-size="10" fill="#991b1b">void ab initio &#8212; stricken as of Mar 1, 2024</text>
+  </g>
+
+  <g>
+    <rect x="880" y="280" width="360" height="100" rx="8" fill="#fef2f2" stroke="#b91c1c" stroke-width="2.5" stroke-dasharray="7,4"/>
+    <rect x="1146" y="288" width="84" height="18" rx="9" fill="#b91c1c"/>
+    <text x="1188" y="301" text-anchor="middle" font-size="10" font-weight="bold" fill="#ffffff">VOID (RAP)</text>
+    <text x="892" y="310" font-size="13" font-weight="bold" fill="#7f1d1d">RENSSELAER HISTORICAL SOCIETY</text>
+    <line x1="892" y1="306" x2="1124" y2="306" stroke="#b91c1c" stroke-width="1.6"/>
+    <text x="892" y="328" font-size="11" fill="#7f1d1d">Alternative contingent remainder in fee simple</text>
+    <text x="892" y="344" font-size="10.5" fill="#7f1d1d">vests only on indefinite failure of the bodily line</text>
+    <text x="892" y="360" font-size="10" fill="#991b1b">charity-to-charity exception N/A (prior takers private)</text>
+  </g>
+
+  <g>
+    <rect x="310" y="300" width="280" height="100" rx="8" fill="#f0fdfa" stroke="#0f766e" stroke-width="2.5"/>
+    <rect x="526" y="308" width="54" height="18" rx="9" fill="#0f766e"/>
+    <text x="553" y="321" text-anchor="middle" font-size="10" font-weight="bold" fill="#ffffff">VALID</text>
+    <text x="322" y="330" font-size="13" font-weight="bold" fill="#0f172a">REVERSION IN FEE SIMPLE</text>
+    <text x="322" y="348" font-size="11" fill="#134e4a">retained by Helena&#8217;s estate;</text>
+    <text x="322" y="363" font-size="11" fill="#134e4a">passes to ARTHUR under the residue</text>
+    <text x="322" y="379" font-size="10" fill="#475569">vested at creation &#8212; Rule never applies</text>
+  </g>
+
+  <line x1="250" y1="205" x2="304" y2="205" stroke="#475569" stroke-width="1.8" marker-end="url(#arrGray)"/>
+  <line x1="510" y1="205" x2="564" y2="205" stroke="#475569" stroke-width="1.8" marker-end="url(#arrGray)"/>
+  <line x1="820" y1="195" x2="874" y2="182" stroke="#b91c1c" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrRed)"/>
+  <line x1="820" y1="222" x2="874" y2="324" stroke="#b91c1c" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrRed)"/>
+  <path d="M145,260 V350 H304" fill="none" stroke="#475569" stroke-width="1.8" marker-end="url(#arrGray)"/>
+  <path d="M590,350 H620 V452 H634" fill="none" stroke="#b45309" stroke-width="1.8" marker-end="url(#arrGray)"/>
+
+  <g font-size="10.5" font-weight="bold" fill="#1e293b">
+    <circle cx="277" cy="192" r="9" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="277" y="196" text-anchor="middle">1</text>
+    <circle cx="537" cy="192" r="9" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="537" y="196" text-anchor="middle">2</text>
+    <circle cx="847" cy="172" r="9" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="847" y="176" text-anchor="middle">3</text>
+    <circle cx="847" cy="280" r="9" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="847" y="284" text-anchor="middle">4</text>
+    <circle cx="145" cy="300" r="9" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="145" y="304" text-anchor="middle">5</text>
+    <circle cx="620" cy="400" r="9" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="620" y="404" text-anchor="middle">6</text>
+  </g>
+
+  <g>
+    <rect x="640" y="420" width="600" height="64" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+    <text x="654" y="444" font-size="11" font-weight="bold" fill="#7c2d12">TITLE AFTER STRIKING THE VOID GIFTS &#8212; Arthur: fee tail (possessory) + reversion in fee simple;</text>
+    <text x="654" y="462" font-size="11" fill="#7c2d12">widow (unascertained): valid contingent remainder for life. No merger: an entail never merges into the fee.</text>
+  </g>
+
+  <g font-size="11" fill="#334155">
+    <text x="40" y="512"><tspan font-weight="bold">1</tspan>  Devise of Blackacre under Article IV, effective at Helena&#8217;s death.</text>
+    <text x="40" y="529"><tspan font-weight="bold">2</tspan>  Entail expires on INDEFINITE failure of Arthur&#8217;s bodily line; &#8220;widow&#8221; is ascertained only at Arthur&#8217;s death (unborn-widow rule &#8212; Bernice cannot be identified in 2024).</text>
+    <text x="40" y="546"><tspan font-weight="bold">3</tspan>  &#8220;Then&#8221; to grandchildren who attain 25 &#8212; condition precedent; open class; all-or-nothing rule; rule of convenience cannot close the class within the period.</text>
+    <text x="40" y="563"><tspan font-weight="bold">4</tspan>  &#8220;But if&#8221; no grandchild attains 25 &#8212; alternative contingent remainder, contingent on an event untethered to any life in being.</text>
+    <text x="40" y="580"><tspan font-weight="bold">5</tspan>  Residuary clause carries Helena&#8217;s retained reversion to Arthur (vested; categorically exempt from the Rule).</text>
+    <text x="40" y="597"><tspan font-weight="bold">6</tspan>  With 3 and 4 stricken: on failure of the line, possession passes to the widow for life (if then living), then to the reversion in fee simple absolute.</text>
+  </g>
+
+  <text x="40" y="648" font-size="16" font-weight="bold" fill="#0f172a">2 &#8212; MEASURING LIVES, 21-YEAR WINDOWS, AND VESTING EVENTS</text>
+  <text x="40" y="666" font-size="11" font-style="italic" fill="#64748b">Death dates are illustrative. The classical Rule judges validity at creation (Mar 1, 2024) by what MIGHT happen, however improbable.</text>
+
+  <rect x="639.5" y="676" width="590.5" height="344" fill="#fecaca" opacity="0.25"/>
+  <line x1="639.5" y1="676" x2="639.5" y2="1132" stroke="#b91c1c" stroke-width="2" stroke-dasharray="8,5"/>
+  <text x="648" y="700" font-size="12" font-weight="bold" fill="#b91c1c">PERPETUITIES HORIZON &#8212; 2087</text>
+  <text x="648" y="714" font-size="10" fill="#b91c1c">last life in being (Dmitri &#8224;2066) + 21 yrs (illustrative)</text>
+
+  <g font-size="12" fill="#0f172a">
+    <text x="24" y="734" font-weight="bold">Octavia (82)</text>
+    <text x="24" y="779" font-weight="bold">Arthur (52)</text>
+    <text x="24" y="824" font-weight="bold">Bernice (49)</text>
+    <text x="24" y="869" font-weight="bold">Celia (24)</text>
+    <text x="24" y="914" font-weight="bold">Dmitri (19)</text>
+    <text x="24" y="934" font-size="10" fill="#64748b">after-born:</text>
+    <text x="24" y="948" font-weight="bold" font-size="11" fill="#64748b">E (b. 2025)</text>
+    <text x="24" y="993" font-weight="bold" font-size="11" fill="#64748b">G (b. 2070)</text>
+  </g>
+
+  <g>
+    <rect x="130" y="725" width="64.7" height="10" rx="3" fill="#0f766e"/>
+    <text x="194.7" y="720" text-anchor="middle" font-size="10" fill="#7f1d1d" font-weight="bold">&#8224;2032</text>
+    <path d="M194.7,740 v7 h169.8 v-7" fill="none" stroke="#d97706" stroke-width="2"/>
+    <text x="279.6" y="760" text-anchor="middle" font-size="9.5" fill="#92400e">+21 &#8594; 2053</text>
+    <text x="380" y="734" font-size="9.5" font-style="italic" fill="#64748b">conclusively presumed fertile at 82 (Jee v. Audley) &#8212; but immaterial: neither taker nor ancestor of a taker</text>
+  </g>
+
+  <g>
+    <rect x="130" y="770" width="161.8" height="10" rx="3" fill="#0f766e"/>
+    <text x="291.8" y="765" text-anchor="middle" font-size="10" fill="#7f1d1d" font-weight="bold">&#8224;2044</text>
+    <path d="M291.8,785 v7 h169.8 v-7" fill="none" stroke="#d97706" stroke-width="2"/>
+    <text x="376.7" y="805" text-anchor="middle" font-size="9.5" fill="#92400e">+21 &#8594; 2065</text>
+    <text x="480" y="779" font-size="9.5" font-style="italic" fill="#15803d">validating life for the widow&#8217;s remainder: it vests or fails the instant he dies</text>
+  </g>
+
+  <g>
+    <rect x="130" y="815" width="202.2" height="10" rx="3" fill="#0f766e"/>
+    <text x="332.2" y="810" text-anchor="middle" font-size="10" fill="#7f1d1d" font-weight="bold">&#8224;2049</text>
+    <path d="M332.2,830 v7 h169.8 v-7" fill="none" stroke="#d97706" stroke-width="2"/>
+    <text x="417.1" y="850" text-anchor="middle" font-size="9.5" fill="#92400e">+21 &#8594; 2070</text>
+    <text x="520" y="824" font-size="9.5" font-style="italic" fill="#64748b">presumed fertile at 49; may predecease or divorce &#8212; the actual &#8220;widow&#8221; may be unborn in 2024</text>
+  </g>
+
+  <g>
+    <rect x="130" y="860" width="275" height="10" rx="3" fill="#0f766e"/>
+    <text x="405" y="855" text-anchor="middle" font-size="10" fill="#7f1d1d" font-weight="bold">&#8224;2058</text>
+    <path d="M405,875 v7 h169.8 v-7" fill="none" stroke="#d97706" stroke-width="2"/>
+    <text x="489.9" y="895" text-anchor="middle" font-size="9.5" fill="#92400e">+21 &#8594; 2079</text>
+  </g>
+
+  <g>
+    <rect x="130" y="905" width="339.7" height="10" rx="3" fill="#0f766e"/>
+    <text x="469.7" y="900" text-anchor="middle" font-size="10" fill="#7f1d1d" font-weight="bold">&#8224;2066</text>
+    <path d="M469.7,920 v7 h169.8 v-7" fill="none" stroke="#d97706" stroke-width="2"/>
+    <text x="554.6" y="940" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#92400e">+21 &#8594; 2087 = HORIZON</text>
+  </g>
+
+  <g>
+    <line x1="138.1" y1="944" x2="785.1" y2="944" stroke="#94a3b8" stroke-width="7" stroke-dasharray="10,6" opacity="0.6"/>
+    <circle cx="138.1" cy="944" r="4" fill="#475569"/>
+    <text x="785.1" y="938" text-anchor="middle" font-size="10" fill="#64748b" font-weight="bold">&#8224;2105</text>
+    <text x="190" y="962" font-size="9.5" font-style="italic" fill="#475569">E &#8212; after-born child of Arthur (Arthur presumed fertile at 52): NOT a life in being</text>
+  </g>
+
+  <g>
+    <line x1="502.1" y1="989" x2="1149.1" y2="989" stroke="#94a3b8" stroke-width="7" stroke-dasharray="10,6" opacity="0.6"/>
+    <circle cx="502.1" cy="989" r="4" fill="#475569"/>
+    <text x="502.1" y="1006" text-anchor="middle" font-size="9" fill="#64748b">b. 2070</text>
+    <text x="540" y="977" font-size="9.5" font-style="italic" fill="#475569">G &#8212; child of E, grandchild of Arthur</text>
+    <circle cx="704.3" cy="989" r="4.5" fill="#b91c1c"/>
+    <text x="714" y="1006" font-size="9.5" font-weight="bold" fill="#b91c1c">attains 25 &#8594; 2095</text>
+    <text x="1149.1" y="977" text-anchor="middle" font-size="10" font-weight="bold" fill="#7f1d1d">&#8224;2150 &#8212; line fails</text>
+  </g>
+
+  <line x1="130" y1="1020" x2="1230" y2="1020" stroke="#334155" stroke-width="1.8"/>
+  <g stroke="#334155" stroke-width="1.4">
+    <line x1="130" y1="1020" x2="130" y2="1027"/>
+    <line x1="259.4" y1="1020" x2="259.4" y2="1027"/>
+    <line x1="421.2" y1="1020" x2="421.2" y2="1027"/>
+    <line x1="582.9" y1="1020" x2="582.9" y2="1027"/>
+    <line x1="744.6" y1="1020" x2="744.6" y2="1027"/>
+    <line x1="906.4" y1="1020" x2="906.4" y2="1027"/>
+    <line x1="1068.2" y1="1020" x2="1068.2" y2="1027"/>
+    <line x1="1230" y1="1020" x2="1230" y2="1027"/>
+  </g>
+  <g font-size="11" fill="#334155" text-anchor="middle">
+    <text x="130" y="1042">2024</text>
+    <text x="259.4" y="1042">2040</text>
+    <text x="421.2" y="1042">2060</text>
+    <text x="582.9" y="1042">2080</text>
+    <text x="744.6" y="1042">2100</text>
+    <text x="906.4" y="1042">2120</text>
+    <text x="1068.2" y="1042">2140</text>
+    <text x="1230" y="1042">2160</text>
+  </g>
+
+  <path d="M291.8,1004 L284.8,1016 L298.8,1016 z" fill="#15803d"/>
+  <path d="M704.3,1004 L697.3,1016 L711.3,1016 z" fill="#b91c1c"/>
+  <path d="M1149.1,1004 L1142.1,1016 L1156.1,1016 z" fill="#b91c1c"/>
+  <line x1="291.8" y1="1022" x2="291.8" y2="1054" stroke="#15803d" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="704.3" y1="1022" x2="704.3" y2="1076" stroke="#b91c1c" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="1149.1" y1="1022" x2="1149.1" y2="1098" stroke="#b91c1c" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <text x="130" y="1066" font-size="11.5" font-weight="bold" fill="#15803d">VESTING EVENT 2044 &#8212; Arthur dies: widow ascertained; her life-estate remainder VESTS at Arthur + 0 years &#8594; VALID</text>
+  <text x="400" y="1088" font-size="11.5" font-weight="bold" fill="#b91c1c">VESTING EVENT 2095 &#8212; G attains 25: first possible vesting of the class gift, 29 yrs after the last life in being &#8594; VOID</text>
+  <text x="1230" y="1110" text-anchor="end" font-size="11.5" font-weight="bold" fill="#b91c1c">VESTING EVENT 2150 &#8212; bodily line fails (G dies without issue): only now could the Society&#8217;s gift vest &#8594; VOID</text>
+
+  <text x="40" y="1152" font-size="13" font-weight="bold" fill="#0f172a">QUESTION 3 &#8212; WHO TAKES IN POSSESSION? (each hypothetical on its own assumed facts; possession, not vesting)</text>
+  <line x1="130" y1="1180" x2="1230" y2="1180" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="340.3" y="1170" text-anchor="middle" font-size="10" font-weight="bold" fill="#1d4ed8">2050</text>
+  <path d="M340.3,1173 l7,7 l-7,7 l-7,-7 z" fill="#1d4ed8"/>
+  <text x="1149.1" y="1170" text-anchor="middle" font-size="10" font-weight="bold" fill="#1d4ed8">2150</text>
+  <path d="M1149.1,1173 l7,7 l-7,7 l-7,-7 z" fill="#1d4ed8"/>
+  <text x="130" y="1206" font-size="11" fill="#1e3a8a">(i) Line fails 2050 &#8594; Arthur&#8217;s widow, if then living, takes her life estate in possession; then the holders of Arthur&#8217;s reversion take in fee simple absolute.</text>
+  <text x="130" y="1224" font-size="11" fill="#1e3a8a">(ii) Line fails 2150 &#8594; the then-holders of the reversion take in fee simple absolute. The Society and the grandchildren take NOTHING in either case.</text>
+
+  <text x="40" y="1262" font-size="14" font-weight="bold" fill="#0f172a">LEGEND</text>
+  <g font-size="10.5" fill="#334155">
+    <rect x="60" y="1276" width="34" height="16" rx="4" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+    <text x="106" y="1288">Valid interest (solid border)</text>
+    <rect x="60" y="1304" width="34" height="16" rx="4" fill="#fef2f2" stroke="#b91c1c" stroke-width="2" stroke-dasharray="5,3"/>
+    <line x1="64" y1="1312" x2="90" y2="1312" stroke="#b91c1c" stroke-width="1.4"/>
+    <text x="106" y="1316">Void under the Rule &#8212; dashed border, struck-through title; stricken from the devise</text>
+    <rect x="60" y="1334" width="30" height="8" rx="2" fill="#0f766e"/>
+    <text x="96" y="1343" font-weight="bold" fill="#7f1d1d">&#8224;</text>
+    <text x="106" y="1344">Measuring life in being on Mar 1, 2024; &#8224; = death (dates illustrative)</text>
+    <line x1="60" y1="1366" x2="92" y2="1366" stroke="#94a3b8" stroke-width="6" stroke-dasharray="8,5" opacity="0.6"/>
+    <text x="106" y="1370">Person NOT in being at creation (conceived after Mar 1, 2024)</text>
+
+    <path d="M662,1278 v7 h40 v-7" fill="none" stroke="#d97706" stroke-width="2"/>
+    <text x="716" y="1288">21-year perpetuities window running from each measuring life&#8217;s death</text>
+    <line x1="682" y1="1300" x2="682" y2="1318" stroke="#b91c1c" stroke-width="2" stroke-dasharray="6,4"/>
+    <rect x="690" y="1303" width="14" height="12" fill="#fecaca" opacity="0.5"/>
+    <text x="716" y="1316">Perpetuities horizon = last life in being + 21 yrs; shaded zone = beyond the period</text>
+    <path d="M682,1332 L675,1344 L689,1344 z" fill="#15803d"/>
+    <text x="716" y="1344">Vesting event within the period &#8594; interest VALID</text>
+    <path d="M668,1360 L661,1372 L675,1372 z" fill="#b91c1c"/>
+    <path d="M696,1359 l6,6 l-6,6 l-6,-6 z" fill="#1d4ed8"/>
+    <text x="716" y="1370">Vesting beyond the period &#8594; VOID; blue diamond = Question 3 possession hypothetical</text>
+  </g>
+
+  <text x="40" y="1414" font-size="10.5" font-style="italic" fill="#64748b">Companion to answer.md. The E/G line and all death dates illustrate what MIGHT happen as viewed from March 1, 2024: the classical Rule voids an interest if ANY possible chain of events defers vesting beyond every life in being plus 21 years.</text>
+</svg>
+
+<div class="diagram-link"><a href="fable-5-property.svg">open diagram</a></div>
+
+</div>
+
+
+<div class="back"><a href="index.html">back to index</a></div>
+</div>
+</body>
+</html>

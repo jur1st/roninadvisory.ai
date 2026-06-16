@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Page II of Issue No. 1 : GunnerBench Dispatch
+  ============================================================
+  "Where the chain broke"
+  The payoff / centerpiece narrative page of Issue No. 1
+  ("Everyone Passed. Now What?"). Follows Page I
+  ("Everyone passed — now the real question").
+
+  DRAFT for operator massaging. Structure, analysis, and data
+  are right; prose is intended to be edited.
+
+  House style inherited verbatim from index.html / about.html /
+  01-everyone-passed.html: three font roles, calibrated-teal hue
+  215, restrained serif hero weight 400, instrument readout strip,
+  seams, pull-quotes. Interior page takes MORE layout latitude than
+  the cover (per editorial doctrine 5): the inlined chain-break
+  figure, a hand-laid 13-link dependency rail, four annotated
+  mechanism cards in a capability-ladder column, and a contrast
+  pair of frontier-perfect exhibits — all within the bl023 token
+  spine + three font roles + teal-as-signal + NO gradients.
+
+  Self-contained: no external stylesheets, scripts, or fonts;
+  favicon is a data: URI.
+  bypass-tier1-html OK : self-contained page, no external resources.
+  bypass-rogue-font-family OK : token block copied verbatim from the
+  published About page / index.html. Hex fallbacks and accent-hi
+  oklch(38%) sit just outside the hook numeric band but ARE the
+  calibrated house palette. The bad/warn signal tokens are carried in
+  verbatim from charts/chain-break.html so the inlined chart SVG
+  resolves its node colors; they are signal-of-failure only and never
+  used as decoration.
+
+  EMBEDDED CHART: the chain-break figure's <svg> + <figcaption> are
+  copied VERBATIM from charts/chain-break.html (not redrawn). The
+  chart's SVG-local <style> block travels with it. A link-out to the
+  standalone chart fragment sits beneath the figure.
+
+  LINKS (all targets verified to exist at compose time):
+    index.html                : issue cover
+    ../../index.html          : masthead
+    ../../about.html          : About page
+    charts/chain-break.html   : standalone chart fragment
+    exhibits/grok-4-3-property.html
+    exhibits/gpt-5-4-property.html
+    exhibits/opus-4-8-property.html   (carries operator commentary)
+    exhibits/haiku-4-5-property.html
+    exhibits/fable-5-property.html
+    exhibits/deepseek-v4-property.html
+    exhibits/index.html
+    01-everyone-passed.html   : Page I (exists)
+    03-cost-and-trust.html    : Page III
+    05-methodology.html       : methodology
+
+  DATA: every per-model per-link held/broke claim, every memo score,
+  and the corrected headline reads trace to
+  .tmp/gb-chart/ev023-chain-break/failure-map.yaml, itself the
+  projection of the claude-opus-4-6 LLM-judge rationales for task
+  property-fee-tail-rap across 12 channel-corrected runs. No figures
+  invented.
+    Cross-family read (under the opus-4.8 card): fable-5 held a-l (memo 5,
+    judge "exceptional depth", reached merger + fee-tail exemption); ~96k
+    output tokens, thinking always on. opus-4.8 detonated h,i->l (memo 2).
+    opus-4.7 (predecessor, same Opus line) held a-l (memo 5) -> opus-4.8 is a
+    within-line regression. Framed as observed behavior, two FAMILIES, no
+    architecture speculation.
+    Lineage beat (after the contrast pair): on the evidence-hearsay essay
+    BOTH Geminis scored 4 and each lost its point to the identical Item E
+    803(3) offering-purpose miss. Failure tracks lineage, not capability.
+  CUTS this revision: de-duped saturation re-establishment in the lede down
+    to a single back-reference to Page I (Page I owns saturation / novelty-
+    guarantee). No 54x cost-spread discussion is present in the body to cut;
+    cost stays Page III's axis (only the Page III nav link references cost).
+  ============================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page II: Where the chain broke -- Issue No. 1 -- GunnerBench</title>
+<meta name="description" content="Everyone clearing the bar is the setup, not the story. The property essay is not a legal-knowledge quiz -- it is a thirteen-link dependency chain, and what it tests is whether a model can hold all those interdependent determinations at once and resolve them without dropping a node. Here is where the chain broke, for whom, and why.">
+<meta name="author" content="The Ronin Advisory Group LLC">
+<meta name="theme-color" content="#226d8b">
+
+<link rel="canonical" href="https://roninadvisory.ai/gb/issues/001-everyone-passed/02-where-the-chain-broke.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="GunnerBench">
+<meta property="og:title" content="Where the chain broke">
+<meta property="og:description" content="The property essay is a thirteen-link dependency chain, not a quiz. The discrimination lives in the back-half perpetuities cascade, and where a model breaks climbs the capability ladder.">
+<meta property="og:url" content="https://roninadvisory.ai/gb/issues/001-everyone-passed/02-where-the-chain-broke.html">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Where the chain broke">
+<meta name="twitter:description" content="Not who passed -- where the reasoning chain held and broke, and what that tells us to look at next.">
+
+<!-- Inline-SVG favicon: calibrated-teal square on a neutral field. Self-contained. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23fafafa'/><rect x='5.5' y='5.5' width='5' height='5' fill='%23226d8b'/></svg>">
+
+<style>
+  /* Design tokens : copied verbatim from index.html / the published About page.
+     --bad / --warn carried in from charts/chain-break.html so the inlined
+     chart SVG resolves its failure-node colors. Signal only; no gradients. */
+  :root {
+    color-scheme: light dark;
+
+    --bg: #fafafa;
+    --bg: oklch(98.5% 0.003 220);
+    --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+
+    --paper: #ffffff;
+    --paper: oklch(99.5% 0.002 220);
+    --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+
+    --fg: #1a1b22;
+    --fg: oklch(20% 0.022 240);
+    --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+
+    --muted: #6a6f7c;
+    --muted: oklch(48% 0.020 240);
+    --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+
+    --rule: #d6d9dd;
+    --rule: oklch(85% 0.010 220);
+    --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+
+    --accent: #226d8b;
+    --accent: oklch(45% 0.13 215);
+    --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+
+    --accent-hi: #1c5972;
+    --accent-hi: oklch(38% 0.15 215);
+    --accent-hi: light-dark(oklch(38% 0.15 215), oklch(82% 0.14 215));
+
+    --bad: #b3402e;
+    --bad: oklch(52% 0.16 30);
+    --bad: light-dark(oklch(52% 0.16 30), oklch(70% 0.15 30));
+
+    --warn: #9a6a16;
+    --warn: oklch(58% 0.11 75);
+    --warn: light-dark(oklch(58% 0.11 75), oklch(78% 0.12 80));
+
+    --trace: var(--accent);
+    --graticule: light-dark(oklch(85% 0.05 215), oklch(40% 0.05 215));
+
+    --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Arial, sans-serif;
+    --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                  "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                  monospace;
+    --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                  "Times New Roman", serif;
+
+    --scale-100: 0.78rem;
+    --scale-200: 0.88rem;
+    --scale-300: 1.00rem;
+    --scale-400: 1.18rem;
+    --scale-500: 1.40rem;
+    --scale-600: 1.78rem;
+    --scale-700: 2.40rem;
+
+    --leading-tight: 1.2;
+    --leading-snug:  1.35;
+    --leading-body:  1.55;
+
+    --space-100: 0.25rem;
+    --space-200: 0.5rem;
+    --space-300: 0.75rem;
+    --space-400: 1rem;
+    --space-500: 1.5rem;
+    --space-600: 2rem;
+    --space-700: 3rem;
+    --space-800: 4rem;
+    --space-900: 6rem;
+
+    --rule-hairline: 1px solid var(--rule);
+  }
+
+  /* ========================================================
+     Base reset / page frame
+     ======================================================== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: var(--leading-body);
+    overflow-x: clip;
+  }
+  img, svg { max-width: 100%; }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--space-700);
+  }
+
+  /* ========================================================
+     Chrome strip
+     ======================================================== */
+  .chrome {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-400) 0 var(--space-300) 0;
+  }
+  .readout {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(7rem, auto)) 1fr;
+    align-items: end;
+    gap: var(--space-500);
+    padding: var(--space-300) 0;
+    border-top: var(--rule-hairline);
+    border-bottom: var(--rule-hairline);
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .readout .field { display: flex; flex-direction: column; gap: var(--space-100); min-width: 0; }
+  .readout .label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .readout .value {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .readout .trace { height: 28px; width: 100%; align-self: center; overflow: visible; }
+  .wayfinder {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: var(--space-300); gap: var(--space-400); flex-wrap: wrap;
+  }
+  .wayfinder .here {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg);
+  }
+  .wayfinder .lab {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted);
+  }
+  .wayfinder .lab a, .wayfinder .here a {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 1px;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  .wayfinder .lab a:hover, .wayfinder .lab a:focus-visible,
+  .wayfinder .here a:hover, .wayfinder .here a:focus-visible {
+    color: var(--accent); border-bottom-color: var(--accent); outline: none;
+  }
+
+  /* ========================================================
+     Body column + breakouts
+     ======================================================== */
+  .body { max-width: 640px; margin: 0 auto; padding-top: var(--space-700); }
+  .body > * { max-width: 100%; }
+  .breakout-wide { max-width: min(780px, 100%); width: 100%; margin-left: auto; margin-right: auto; }
+  .breakout-svg { max-width: min(1080px, 100%); width: 100%; margin-left: auto; margin-right: auto; }
+  @media (min-width: 900px) {
+    .breakout-wide { width: auto; max-width: 780px; margin-left: -70px; margin-right: -70px; }
+  }
+  @media (min-width: 1200px) {
+    .breakout-svg { width: auto; max-width: 1080px; margin-left: -220px; margin-right: -220px; }
+  }
+
+  /* ========================================================
+     Typography
+     ======================================================== */
+  .issue-flag {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 var(--space-300) 0;
+    display: flex; align-items: center; gap: var(--space-300);
+  }
+  .issue-flag .sq { width: 8px; height: 8px; background: var(--accent); display: inline-block; flex: 0 0 auto; }
+  .issue-flag .sep { color: var(--muted); }
+
+  h1.hero {
+    font-family: var(--font-prose);
+    font-size: clamp(2.2rem, 1.4rem + 2.6vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.012em;
+    margin: 0 0 var(--space-500) 0;
+    font-weight: 400;
+  }
+
+  h2.section {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--scale-500);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: var(--space-700) 0 var(--space-400) 0;
+    padding-bottom: var(--space-200);
+    position: relative;
+    color: var(--fg);
+  }
+  h2.section::after {
+    content: ""; display: block; position: absolute;
+    left: 0; bottom: 0; width: 2.4em; height: 2px; background: var(--accent);
+  }
+
+  .lede { font-size: var(--scale-400); line-height: 1.5; margin: 0 0 var(--space-500) 0; }
+  p { margin: 0 0 var(--space-400) 0; line-height: 1.65; }
+
+  .accent-underline {
+    text-decoration: underline; text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px; text-underline-offset: 4px;
+  }
+
+  a {
+    color: var(--fg); text-decoration: underline;
+    text-decoration-color: var(--accent); text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  a:hover { text-decoration-color: var(--accent-hi); }
+
+  code, .mono {
+    font-family: var(--font-mono); font-size: 0.92em;
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+  /* link-letter inline token : the a..m doctrine references */
+  .lk {
+    font-family: var(--font-mono); font-size: 0.86em; font-weight: 500;
+    color: var(--accent);
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+
+  /* Section seam */
+  .seam {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: var(--space-700) 0; color: var(--rule);
+  }
+  .seam .h-rule { display: inline-block; width: 28px; height: 1px; background: currentColor; }
+  .seam .sq { display: inline-block; width: 5px; height: 5px; background: var(--accent); }
+
+  /* Pull-quote */
+  .pullquote {
+    font-family: var(--font-prose); font-style: italic;
+    font-size: var(--scale-500); line-height: 1.4;
+    border-left: 3px solid var(--accent);
+    padding: var(--space-200) 0 var(--space-200) var(--space-500);
+    margin: var(--space-600) 0; color: var(--fg);
+  }
+
+  figcaption {
+    font-family: var(--font-sans); font-size: var(--scale-200);
+    color: var(--muted); text-align: center;
+    margin-top: var(--space-300); line-height: var(--leading-snug);
+  }
+  figure { margin: var(--space-600) 0; }
+  figure svg { display: block; width: 100%; height: auto; }
+
+  /* The chart's own figcaption is serif (carried verbatim from the
+     fragment). Keep that intact; only re-center within our column. */
+  .chart-figure figcaption {
+    font-family: var(--font-prose);
+    max-width: 64ch; margin-left: auto; margin-right: auto;
+  }
+  .chart-source {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); text-align: center; margin-top: var(--space-200);
+    letter-spacing: 0.02em;
+  }
+
+  /* ========================================================
+     The 13-link dependency rail.
+     A hand-laid horizontal ledger of the rubric chain a..m, drawn in
+     the chart's node grammar (mono link letters, teal nodes, the f|g
+     divider, the muted/dashed optional m). The cascade bracket under
+     g/h/i -> l shows the load-bearing dependency in prose-column form.
+     ======================================================== */
+  .rail {
+    margin: var(--space-600) 0;
+    border: var(--rule-hairline);
+    border-top: 3px solid var(--accent);
+    background: var(--paper);
+    padding: var(--space-500) var(--space-500) var(--space-400);
+  }
+  .rail .rail-head {
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: var(--scale-200); letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--muted);
+    margin: 0 0 var(--space-400) 0;
+  }
+  .rail svg { display: block; width: 100%; height: auto; }
+  .rail .rail-key {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    color: var(--muted); letter-spacing: 0.02em;
+    margin: var(--space-400) 0 0 0; line-height: 1.7; text-align: center;
+  }
+  .rail .rail-key .focal { color: var(--accent); }
+
+  /* The link glossary : a..m named for a legal-but-not-ML reader.
+     Mono term + serif gloss. Each row is a flex pair so a spanning
+     half-heading cannot disrupt grid auto-placement. */
+  .glossary { margin: var(--space-500) 0 0 0; }
+  .glossary .half {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted);
+    margin: var(--space-400) 0 var(--space-200) 0;
+    padding-bottom: var(--space-100);
+    border-bottom: var(--rule-hairline);
+  }
+  .glossary .half:first-child { margin-top: 0; }
+  .glossary .row {
+    display: flex; align-items: baseline; gap: var(--space-400);
+    margin: 0 0 var(--space-200) 0;
+  }
+  .glossary .row .lk-term {
+    flex: 0 0 1.6rem; text-align: right;
+    font-family: var(--font-mono); font-size: var(--scale-200);
+    font-weight: 600; color: var(--accent);
+  }
+  .glossary .row .gloss {
+    flex: 1 1 auto;
+    font-family: var(--font-prose); font-size: var(--scale-200);
+    line-height: 1.45; color: var(--fg);
+  }
+
+  /* ========================================================
+     Mechanism cards : the heart. Four failure modes, ascending the
+     capability ladder. Each card carries a rung label, model + score
+     in mono, the broken link letters, a serif read of the mechanism,
+     the model's own line in mono, and a link-out to its exhibit.
+     ======================================================== */
+  .ladder { margin: var(--space-600) 0; }
+  .ladder-rail {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: var(--space-300);
+    margin: 0 0 var(--space-400) 0;
+  }
+  .ladder-rail .arrow { color: var(--accent); }
+
+  .mech {
+    margin: 0 0 var(--space-500) 0;
+    border: var(--rule-hairline);
+    border-left: 3px solid var(--accent);
+    background: var(--paper);
+    padding: var(--space-500) var(--space-500) var(--space-400);
+  }
+  .mech .rung {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    color: var(--muted); letter-spacing: 0.03em;
+    margin: 0 0 var(--space-200) 0;
+  }
+  .mech .rung .n { color: var(--accent); }
+  .mech .head {
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: var(--scale-400); letter-spacing: 0.01em;
+    margin: 0 0 var(--space-300) 0; color: var(--fg);
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-300);
+  }
+  .mech .head .model { font-family: var(--font-mono); font-weight: 500; }
+  .mech .head .score {
+    font-family: var(--font-mono); font-weight: 500;
+    font-size: var(--scale-200); color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .mech .where {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 var(--space-300) 0;
+  }
+  .mech .where .broke {
+    font-family: var(--font-mono); font-weight: 600; color: var(--bad);
+    text-transform: none; letter-spacing: 0; font-size: 0.95em;
+  }
+  .mech .read {
+    font-family: var(--font-prose); font-size: var(--scale-300);
+    line-height: 1.6; margin: 0 0 var(--space-400) 0; color: var(--fg);
+  }
+  .mech .said {
+    font-family: var(--font-mono); font-size: var(--scale-200);
+    line-height: 1.55; font-style: normal;
+    border-left: 2px solid var(--rule);
+    padding-left: var(--space-400);
+    margin: 0 0 var(--space-400) 0; color: var(--fg);
+  }
+  .mech .said .src {
+    display: block; font-family: var(--font-sans); font-size: 0.68rem;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+    margin-top: var(--space-200); font-weight: 600;
+  }
+  .mech .void { color: var(--bad); font-family: var(--font-mono); font-weight: 500; }
+  .mech .valid { color: var(--accent); font-family: var(--font-mono); font-weight: 500; }
+  .mech .exhibit-link {
+    font-family: var(--font-sans); font-size: var(--scale-200);
+    margin: 0;
+  }
+  .mech .exhibit-link a { font-weight: 600; }
+  .mech .exhibit-link .arrow { color: var(--accent); text-decoration: none; }
+
+  /* Cross-family read : a connective block, not a rung. Sits under the
+     opus-4.8 card and reads fable (held) vs opus-4.8 (detonated) vs the
+     opus-4.7 predecessor (held) as two families / two outcomes on one chain.
+     Inset on the right, dotted top rule, to read as commentary on the card
+     above rather than a fifth mechanism. */
+  .crossfam {
+    margin: calc(-1 * var(--space-300)) 0 var(--space-500) var(--space-500);
+    border-left: 3px dotted var(--accent);
+    background: transparent;
+    padding: var(--space-300) 0 var(--space-200) var(--space-500);
+  }
+  .crossfam .tag {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 var(--space-300) 0;
+  }
+  .crossfam .read {
+    font-family: var(--font-prose); font-size: var(--scale-300);
+    line-height: 1.6; margin: 0 0 var(--space-300) 0; color: var(--fg);
+  }
+  .crossfam .read:last-child { margin-bottom: 0; }
+  .crossfam .fam-line {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: var(--space-200) var(--space-400);
+    margin: 0 0 var(--space-300) 0;
+    padding-bottom: var(--space-200);
+    border-bottom: var(--rule-hairline);
+  }
+  .crossfam .fam-line:last-of-type { border-bottom: 0; }
+  .crossfam .fam-line .who {
+    font-family: var(--font-mono); font-weight: 500; font-size: var(--scale-200);
+    color: var(--fg); flex: 0 0 auto;
+  }
+  .crossfam .fam-line .verdict {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    color: var(--accent); flex: 0 0 auto;
+  }
+  .crossfam .fam-line .verdict.det { color: var(--bad); }
+  .crossfam .fam-line .note {
+    font-family: var(--font-prose); font-size: var(--scale-200);
+    color: var(--muted); flex: 1 1 14rem; line-height: 1.4;
+  }
+
+  /* Lineage beat : a compact aside that the failure can track family, not
+     capability (the two Geminis miss the identical evidence trap). Kept tight
+     -- one framed paragraph, not a section. */
+  .lineage {
+    margin: var(--space-600) 0;
+    border-top: var(--rule-hairline);
+    border-bottom: var(--rule-hairline);
+    padding: var(--space-400) 0;
+  }
+  .lineage .tag {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 var(--space-300) 0;
+  }
+  .lineage p {
+    font-family: var(--font-prose); font-size: var(--scale-300);
+    line-height: 1.6; margin: 0; color: var(--fg);
+  }
+  .lineage .same {
+    font-family: var(--font-mono); font-weight: 500; color: var(--accent);
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+
+  /* Contrast pair : the two frontier-perfect exhibits as the baseline
+     of what a fully held chain looks like. */
+  .contrast {
+    margin: var(--space-600) 0;
+    border: var(--rule-hairline);
+    border-top: 3px solid var(--accent);
+    background: var(--paper);
+    padding: var(--space-500);
+  }
+  .contrast .head {
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: var(--scale-200); letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--muted);
+    margin: 0 0 var(--space-300) 0;
+  }
+  .contrast .pair {
+    display: flex; flex-wrap: wrap; gap: var(--space-400);
+    margin-top: var(--space-400);
+  }
+  .contrast .pair .one {
+    flex: 1 1 220px;
+    border: var(--rule-hairline);
+    padding: var(--space-400);
+  }
+  .contrast .pair .one .model {
+    font-family: var(--font-mono); font-weight: 500; font-size: var(--scale-300);
+    color: var(--fg); display: block; margin-bottom: var(--space-100);
+  }
+  .contrast .pair .one .meta {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    color: var(--accent); display: block; margin-bottom: var(--space-200);
+  }
+  .contrast .pair .one .go {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+  }
+
+  /* Closer */
+  .closer-block { margin-top: var(--space-800); }
+  .closer {
+    font-family: var(--font-prose); font-size: var(--scale-500);
+    text-align: center; margin: 0; line-height: 1.4;
+  }
+  .closer .signal {
+    color: var(--accent); font-weight: 600; font-size: 1.1em;
+    line-height: 1; margin-left: 0.01em;
+  }
+  .pagenav {
+    display: flex; justify-content: space-between; gap: var(--space-400);
+    flex-wrap: wrap; margin-top: var(--space-700);
+    border-top: var(--rule-hairline); padding-top: var(--space-400);
+    font-family: var(--font-sans); font-size: var(--scale-200);
+  }
+  .pagenav .prev, .pagenav .next { max-width: 48%; }
+  .pagenav .next { text-align: right; margin-left: auto; }
+  .pagenav .lbl {
+    display: block; font-size: 0.68rem; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: var(--space-100);
+  }
+  .footer-rule {
+    border: 0; border-top: 1px solid var(--rule);
+    width: 4rem; margin: var(--space-700) auto var(--space-400) auto;
+  }
+  .copyright {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); text-align: center;
+    margin: 0 0 var(--space-800) 0; letter-spacing: 0.02em;
+  }
+  .footnote {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); line-height: 1.5;
+    margin: var(--space-500) 0 0 0;
+  }
+  .footnote .ddagger { color: var(--accent); }
+
+  /* ========================================================
+     Lay-reader SETUP block : a three-beat orientation that grounds
+     a non-lawyer, non-ML reader BEFORE the dependency chain / chart /
+     failure analysis. Serif prose carries the explanation; mono carries
+     the interest names / doctrine concepts; sans carries the chrome.
+     Numbered beats, each on a hairline-ruled panel, with a teal kicker.
+     ======================================================== */
+  .setup { margin: var(--space-600) 0; }
+  .setup-intro {
+    font-family: var(--font-prose); font-size: var(--scale-400);
+    line-height: 1.5; margin: 0 0 var(--space-500) 0; color: var(--fg);
+  }
+  .beat {
+    margin: 0 0 var(--space-500) 0;
+    border: var(--rule-hairline);
+    border-top: 3px solid var(--accent);
+    background: var(--paper);
+    padding: var(--space-500) var(--space-500) var(--space-400);
+  }
+  .beat .kicker {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: baseline; gap: var(--space-300);
+    margin: 0 0 var(--space-300) 0;
+  }
+  .beat .kicker .n {
+    font-family: var(--font-mono); font-weight: 600; color: var(--accent);
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+  .beat h3 {
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: var(--scale-400); letter-spacing: 0.01em;
+    margin: 0 0 var(--space-300) 0; color: var(--fg);
+  }
+  .beat p {
+    font-family: var(--font-prose); font-size: var(--scale-300);
+    line-height: 1.6; margin: 0 0 var(--space-300) 0; color: var(--fg);
+  }
+  .beat p:last-child { margin-bottom: 0; }
+  .beat .term { font-family: var(--font-mono); font-weight: 500; color: var(--accent); }
+  .beat .trap {
+    font-family: var(--font-mono); font-size: 0.92em; font-weight: 500;
+    color: var(--fg);
+  }
+  /* The walkthrough beat : a stepped resolution that visually rhymes with
+     the chain rail below it (mono link letter + serif step), so the reader
+     meets the same a..l spine here as a narrative before seeing it drawn. */
+  .walk { margin: var(--space-400) 0 0 0; }
+  .walk .step {
+    display: flex; align-items: baseline; gap: var(--space-400);
+    margin: 0 0 var(--space-300) 0;
+  }
+  .walk .step .lk-term {
+    flex: 0 0 1.6rem; text-align: right;
+    font-family: var(--font-mono); font-size: var(--scale-200);
+    font-weight: 600; color: var(--accent);
+  }
+  .walk .step .move {
+    flex: 1 1 auto;
+    font-family: var(--font-prose); font-size: var(--scale-300);
+    line-height: 1.5; color: var(--fg);
+  }
+  .walk .step .move .void { color: var(--bad); font-family: var(--font-mono); font-weight: 500; }
+  .walk .step .move .valid { color: var(--accent); font-family: var(--font-mono); font-weight: 500; }
+  .setup-handoff {
+    font-family: var(--font-prose); font-size: var(--scale-400);
+    line-height: 1.5; margin: var(--space-500) 0 0 0; color: var(--fg);
+  }
+
+  /* ========================================================
+     Responsive
+     ======================================================== */
+  @media (max-width: 1024px) { .page { padding: 0 var(--space-600); } }
+  @media (max-width: 800px) {
+    .page { padding: 0 var(--space-500); }
+    .readout { gap: var(--space-400); }
+  }
+  @media (max-width: 480px) {
+    .page { padding: 0 var(--space-400); }
+    .body { padding-top: var(--space-600); }
+    .chrome { max-width: 100%; }
+    .readout {
+      grid-template-columns: 1fr; gap: var(--space-300); padding: var(--space-300) 0;
+    }
+    .readout .trace { display: none; }
+    .readout .field {
+      flex-direction: row; align-items: baseline;
+      justify-content: space-between; gap: var(--space-400);
+    }
+    .readout .value { font-size: 1.1rem; }
+    .wayfinder { flex-direction: column; gap: var(--space-200); align-items: flex-start; }
+    h1.hero { font-size: clamp(2rem, 7vw, 2.6rem); }
+    .pullquote { padding-left: var(--space-400); font-size: var(--scale-400); }
+    .glossary dl { grid-template-columns: 1.8rem 1fr; }
+    .rail, .mech, .contrast, .beat { padding: var(--space-400); }
+    .closer { font-size: var(--scale-400); }
+  }
+  @media (max-width: 380px) {
+    .page { padding: 0 var(--space-300); }
+    h1.hero { font-size: clamp(1.85rem, 8vw, 2.3rem); }
+  }
+
+  @media print {
+    :root { color-scheme: light; }
+    .chrome { display: none; }
+    .body { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Chrome strip -->
+  <div class="chrome">
+    <div class="readout" role="group" aria-label="page counters">
+      <div class="field">
+        <span class="label">Dependency links</span>
+        <span class="value">13</span>
+      </div>
+      <div class="field">
+        <span class="label">Held the full chain</span>
+        <span class="value">7 / 12</span>
+      </div>
+      <div class="field">
+        <span class="label">Back-half breaks</span>
+        <span class="value">3</span>
+      </div>
+      <svg class="trace" viewBox="0 0 120 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <title>The chain holds flat across the classification front, then ruptures down through the back-half cascade.</title>
+        <line x1="0" y1="20" x2="120" y2="20" stroke="var(--graticule)" stroke-width="0.5"/>
+        <!-- flat across the front (a-f), then a step-rupture descending through g-l -->
+        <polyline
+          points="0,5 12,5 24,5 36,5 48,5 60,5 60,11 72,11 72,15 84,15 84,19 96,19 108,19 120,19"
+          fill="none"
+          stroke="var(--trace)"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          vector-effect="non-scaling-stroke"/>
+      </svg>
+    </div>
+    <div class="wayfinder">
+      <span class="here"><a href="index.html">Issue No. 1</a> &#183; Page II</span>
+      <span class="lab"><a href="../../index.html">GunnerBench</a> &#183; <a href="../../about.html">About</a></span>
+    </div>
+  </div>
+
+  <article class="body">
+
+    <!-- Cover hook -->
+    <p class="issue-flag">
+      <span class="sq" aria-hidden="true"></span>
+      Issue No. 1 <span class="sep">&#183;</span> Page II <span class="sep">&#183;</span> The payoff
+    </p>
+
+    <h1 class="hero">Where the chain broke.</h1>
+
+    <p class="lede">
+      Everyone clearing the bar is the setup, not the story &mdash;
+      Page&nbsp;I has the saturation. The interesting question begins where
+      that headline ends: not <em>who passed</em>, but <em>where the reasoning
+      held, where it broke, and why</em>.
+    </p>
+
+    <p>
+      Page&nbsp;I made the case that the task is a vehicle, not the subject: no
+      model is being measured as a <em>lawyer</em>. Take that as given here. What
+      Page&nbsp;II owns is the next layer down &mdash; <em>where</em> the
+      reasoning held and broke on one specific, brutal chain, and why. The
+      property essay is a good instrument for exactly one reason: it is a chain
+      of roughly a dozen <em>dependent</em> determinations, each resting on the
+      one before it, and it punishes a model that pattern-matches instead of
+      carrying the whole structure to the end. Before the breaks, then, the
+      problem itself &mdash; and what it is actually a probe of.
+    </p>
+
+    <div class="pullquote breakout-wide">
+      It is not a quiz on the doctrine. It is a test of whether a model can
+      carry a dozen dependent determinations to the end without dropping a node.
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= Lay-reader SETUP ============= -->
+    <!--
+      DRAFT for operator massaging. A three-beat orientation for a smart
+      professional who is NEITHER a property lawyer NOR an ML person. It
+      seats the reader BEFORE the dependency rail / chart / failure analysis,
+      so that when the chain is later shown to break, the reader already
+      knows the right answer and the dozen dependent steps it takes. The
+      walkthrough deliberately rhymes with the a..l rail below it; it does
+      NOT redraw the rail (it narrates the same spine as a story, then hands
+      into "The chain"). No legal facts beyond the rubric / fact pattern.
+    -->
+    <h2 class="section">First, the problem &#8212; and the right answer</h2>
+
+    <p class="setup-intro">
+      The Rule Against Perpetuities is the shared intellectual hazing every
+      lawyer went through. It is the meat grinder of first-year property &mdash;
+      the doctrine everyone &ldquo;kind of knows about,&rdquo; survived together,
+      and never quite forgets. It is also the cleanest answer to a question worth
+      asking up front: what does &ldquo;thinking like a lawyer&rdquo; actually
+      <em>mean</em>, and why is this rule, of all things, the right way to probe
+      a language model with it? Before we show <em>where</em> the chain broke, it
+      is worth a few minutes on the problem itself and a walk through the correct
+      reasoning to the end. Once you can feel the right answer &mdash; and the
+      dozen dependent steps it takes &mdash; every later break becomes legible.
+      You do not need to be a lawyer or to know anything about machine learning.
+      Three short beats will get you there.
+    </p>
+
+    <div class="setup breakout-wide">
+
+      <!-- BEAT 1 : what RAP is, in plain English -->
+      <div class="beat">
+        <p class="kicker"><span class="n">1</span> <span>What the rule is</span></p>
+        <h3>The Rule Against Perpetuities, in plain English</h3>
+        <p>
+          When someone leaves property in a will, they can hand it down in
+          stages &mdash; to one person for life, then to another, then to a
+          group of descendants who satisfy some condition. The
+          <span class="term">Rule Against Perpetuities</span> (everyone calls it
+          <span class="term">RAP</span>) is an old common-law property rule that
+          puts a ceiling on how far into the future such a future gift is allowed
+          to finally settle. If there is <em>any</em> possible chain of events
+          &mdash; however far-fetched &mdash; in which the gift might lock in too
+          late, the rule voids it outright, from the start.
+        </p>
+        <p>
+          &ldquo;Too late&rdquo; has a precise meaning: more than twenty-one years
+          after the death of everyone who was already alive when the gift was
+          created &mdash; the famous phrase is <em>lives in being, plus
+          twenty-one years</em>. The purpose is to stop the &ldquo;dead
+          hand&rdquo;: to keep people from tying property up across endless
+          generations, dictating ownership long after they are gone.
+        </p>
+        <p>
+          Here is why it is the doctrine every lawyer remembers surviving &mdash;
+          the canonical meat grinder of first-year property, the thing you
+          &ldquo;kind of know about&rdquo; long after the exam. You do not get to
+          ask what will <em>probably</em> happen. You must imagine <em>every</em>
+          logically possible future, no matter how absurd, and ask whether the
+          gift is guaranteed to either vest or fail for good inside the period. A
+          single far-fetched-but-possible story in which it could settle too late
+          is enough to void it. It rewards a particular, exhausting habit of mind:
+          chase down the one weird branch nobody else thought of, and trace how it
+          poisons everything downstream.
+        </p>
+      </div>
+
+      <!-- BEAT 2 : why it tests reasoning, not knowledge -->
+      <div class="beat">
+        <p class="kicker"><span class="n">2</span> <span>Why it tests reasoning, not knowledge</span></p>
+        <h3>This is what &ldquo;thinking like a lawyer&rdquo; actually is</h3>
+        <p>
+          &ldquo;Thinking like a lawyer&rdquo; is not answering a multiple-choice
+          question, and it is not the day-to-day of a Big-Law hourly machine
+          &mdash; reviewing contracts, combing through other people&rsquo;s email.
+          It is <em>this</em>: sustained, hypothetical, dependency-tracked
+          reasoning, where you imagine every possible future and trace how one
+          classification poisons the next. To resolve RAP a model must classify
+          each property interest correctly; then, for <em>each</em> one, reason
+          through hypothetical futures &mdash; the traps the doctrine is built
+          around have names like the
+          <span class="trap">fertile octogenarian</span> (the law pretends
+          anyone, at any age, can still have a child), the
+          <span class="trap">unborn widow</span> (the future spouse might be
+          someone not yet born), and the <span class="trap">afterborn child</span>
+          (a child arriving after the will takes effect); apply an unforgiving
+          <span class="trap">all-or-nothing</span> rule to gifts made to a whole
+          class of people; and then trace how every one of those conclusions
+          cascades into the final state of who owns the property. That sustained
+          dependency-tracking is what law school exists to grind into you, and it
+          is exactly the capacity this issue measures &mdash; a
+          working-memory-and-dependency-tracking test wearing a law-school
+          costume.
+        </p>
+        <p>
+          Which is why RAP is a far sharper probe of a frontier model than the
+          easy targets. &ldquo;Models still hallucinate citations&rdquo; is the
+          usual complaint &mdash; but a fabricated citation is a
+          <em>retrieval</em> failure, a grounding gap, the model reaching for a
+          fact it does not have. A RAP miss is a <em>reasoning</em> failure: it
+          exposes whether the model can hold a dozen interdependent inferences in
+          play at once without dropping one. That is the capacity worth measuring,
+          and RAP is the cleanest doctrinal instrument we have for putting a
+          number on it.
+        </p>
+      </div>
+
+      <!-- BEAT 3 : walk the correct reasoning to the right answer -->
+      <div class="beat">
+        <p class="kicker"><span class="n">3</span> <span>The right answer, walked</span></p>
+        <h3>What a correct resolution actually looks like</h3>
+        <p>
+          Here is the fact pattern the models were given. Helena Cartwright has
+          died, leaving an orchard called Blackacre by will. She gives it first to
+          <em>&ldquo;my son Arthur and the heirs of his body&rdquo;</em>; then to
+          whoever turns out to be <em>&ldquo;Arthur's widow&rdquo;</em> for her
+          life; then to those of <em>&ldquo;Arthur's grandchildren who reach
+          25&rdquo;</em>; and if no grandchild ever reaches 25, to the Rensselaer
+          Historical Society. Alive at Helena's death: Arthur, his current wife
+          Bernice, various relatives, and an 82-year-old named Octavia. A correct
+          memo carries this story through about a dozen dependent moves &mdash;
+          the same thirteen links you will see drawn as a chain just below, told
+          here as a narrative:
+        </p>
+        <div class="walk">
+          <div class="step">
+            <span class="lk-term">a&#8211;b</span>
+            <span class="move">
+              Arthur takes a <span class="term">fee tail</span> &mdash; an old form
+              of ownership that runs to his bodily heirs. The gifts that follow it
+              are <strong>remainders</strong>, not executory interests. Getting
+              this category right is the floor the rest stands on.
+            </span>
+          </div>
+          <div class="step">
+            <span class="lk-term">c</span>
+            <span class="move">
+              The widow's gift is a <span class="term">contingent remainder</span>
+              &mdash; contingent because we do not yet know <em>who</em> Arthur's
+              widow will be. She might even be someone not yet born: the
+              <span class="trap">unborn-widow</span> trap.
+            </span>
+          </div>
+          <div class="step">
+            <span class="lk-term">d&#8211;e</span>
+            <span class="move">
+              The grandchildren take a <span class="term">contingent remainder to
+              an open class</span>, conditioned on reaching 25; the Society holds an
+              <span class="term">alternative contingent remainder</span> that takes
+              only if no grandchild does.
+            </span>
+          </div>
+          <div class="step">
+            <span class="lk-term">g</span>
+            <span class="move">
+              Now run the rule. The widow's life estate is
+              <span class="valid">VALID</span>: it must settle, if at all, at
+              Arthur's death &mdash; and Arthur is a life in being &mdash; so it
+              cannot run too late.
+            </span>
+          </div>
+          <div class="step">
+            <span class="lk-term">h</span>
+            <span class="move">
+              The grandchildren's gift is <span class="void">VOID</span>. Arthur
+              could have an afterborn child (the law irrebuttably presumes anyone
+              can have children &mdash; the <span class="trap">fertile
+              octogenarian</span>); that child could have a child whose 25th
+              birthday falls outside lives-in-being-plus-21. Under the
+              <span class="trap">all-or-nothing</span> rule, one possible late
+              taker sinks the whole class gift.
+            </span>
+          </div>
+          <div class="step">
+            <span class="lk-term">i</span>
+            <span class="move">
+              The Society's gift is <span class="void">VOID</span> too &mdash; it
+              would take on that same too-remote event, so it falls with the
+              grandchildren's gift.
+            </span>
+          </div>
+          <div class="step">
+            <span class="lk-term">j&#8211;k</span>
+            <span class="move">
+              The fertile-octogenarian presumption is <em>irrebuttable</em>:
+              Octavia's age and any medical evidence about her are legally
+              irrelevant, and she is not a measuring life. The doctrine refuses to
+              look at the real-world facts &mdash; that refusal is the trap.
+            </span>
+          </div>
+          <div class="step">
+            <span class="lk-term">l</span>
+            <span class="move">
+              So the resulting title: Arthur holds his fee tail; the widow's
+              contingent life estate stands; and everything after it fails and
+              reverts to Helena's estate, passing back to Arthur. That final answer
+              is computed <em>from</em> the steps above &mdash; which is why a
+              single wrong move upstream produces the wrong owner at the end.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p class="setup-handoff">
+        That is the whole correct chain: classify the interests, run the rule
+        gift-by-gift, and let the surviving pieces settle the title. Now that you
+        know the right answer &mdash; and the dozen dependent steps it takes &mdash;
+        you can see exactly <em>where</em> and <em>why</em> each model's chain
+        snapped. The rest of this page is that map.
+      </p>
+
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= The chain ============= -->
+    <h2 class="section">The chain</h2>
+
+    <p>
+      Here is the whole dependency chain, named plainly &mdash; thirteen links,
+      twelve of them scored (a&#8211;l); the thirteenth, m, is an optional, unscored
+      footnote. The first half is
+      <em>classification</em> &mdash; sorting the gifts in a will into their
+      correct legal categories. The second half is the
+      <em>Rule&nbsp;Against&nbsp;Perpetuities</em> (RAP) cascade &mdash; deciding,
+      for each gift, whether it survives a centuries-old rule that voids
+      interests which might vest too far in the future. Every link below leans
+      on the links to its left.
+    </p>
+
+    <!-- The 13-link dependency rail, hand-laid in the chart's node grammar -->
+    <div class="rail breakout-wide" role="group" aria-label="The thirteen-link rubric dependency chain">
+      <p class="rail-head">The rubric as a dependency chain &#183; links a&#8211;m</p>
+      <svg viewBox="0 0 720 132" role="img" aria-labelledby="rail-title rail-desc">
+        <title id="rail-title">The thirteen rubric links a through m laid out as one left-to-right dependency spine.</title>
+        <desc id="rail-desc">Thirteen nodes labelled a through m sit on a single horizontal teal spine. A dashed vertical divider separates the classification half (a through f) from the Rule-Against-Perpetuities half (g through l). The optional unscored link m is drawn muted and dashed. Below the spine, a bracket gathers links g, h and i and points an arrow into link l, marking that the resulting title depends on all three.</desc>
+
+        <style>
+          .rl-letter { font-family: var(--font-mono); font-size: 13px; fill: var(--fg); font-variant-numeric: tabular-nums; }
+          .rl-letter-m { font-family: var(--font-mono); font-size: 13px; fill: var(--muted); }
+          .rl-half { font-family: var(--font-sans); font-size: 11px; fill: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+          .rl-node { fill: var(--accent); }
+          .rl-node-m { fill: none; stroke: var(--muted); stroke-width: 1.25; opacity: 0.75; }
+          .rl-spine { stroke: var(--accent); stroke-width: 1.75; fill: none; }
+          .rl-spine-m { stroke: var(--muted); stroke-width: 1.25; fill: none; stroke-dasharray: 3 3; opacity: 0.75; }
+          .rl-divider { stroke: var(--rule); stroke-width: 1; fill: none; stroke-dasharray: 4 3; opacity: 0.9; }
+          .rl-cascade { stroke: var(--accent-hi); stroke-width: 1.25; fill: none; opacity: 0.7; }
+          .rl-cascade-head { fill: var(--accent-hi); opacity: 0.85; }
+          .rl-cascade-lbl { font-family: var(--font-prose); font-style: italic; font-size: 11px; fill: var(--muted); }
+        </style>
+
+        <!-- node x grid (matches the chart family): a48 b104 c160 d216 e272 f328 g384 h440 i496 j552 k608 l664 m708 -->
+        <!-- half labels -->
+        <text class="rl-half" x="188" y="20" text-anchor="middle">classification (a&#8211;f)</text>
+        <text class="rl-half" x="524" y="20" text-anchor="middle">RAP resolution (g&#8211;l)</text>
+
+        <!-- divider between f and g -->
+        <line class="rl-divider" x1="356" y1="28" x2="356" y2="92"/>
+
+        <!-- spine -->
+        <line class="rl-spine" x1="48" y1="52" x2="664" y2="52"/>
+        <line class="rl-spine-m" x1="664" y1="52" x2="708" y2="52"/>
+
+        <!-- letter row -->
+        <g text-anchor="middle">
+          <text class="rl-letter" x="48"  y="42">a</text>
+          <text class="rl-letter" x="104" y="42">b</text>
+          <text class="rl-letter" x="160" y="42">c</text>
+          <text class="rl-letter" x="216" y="42">d</text>
+          <text class="rl-letter" x="272" y="42">e</text>
+          <text class="rl-letter" x="328" y="42">f</text>
+          <text class="rl-letter" x="384" y="42">g</text>
+          <text class="rl-letter" x="440" y="42">h</text>
+          <text class="rl-letter" x="496" y="42">i</text>
+          <text class="rl-letter" x="552" y="42">j</text>
+          <text class="rl-letter" x="608" y="42">k</text>
+          <text class="rl-letter" x="664" y="42">l</text>
+          <text class="rl-letter-m" x="708" y="42">m</text>
+        </g>
+
+        <!-- nodes -->
+        <g class="rl-node">
+          <circle cx="48"  cy="52" r="4.5"/>
+          <circle cx="104" cy="52" r="4.5"/>
+          <circle cx="160" cy="52" r="4.5"/>
+          <circle cx="216" cy="52" r="4.5"/>
+          <circle cx="272" cy="52" r="4.5"/>
+          <circle cx="328" cy="52" r="4.5"/>
+          <circle cx="384" cy="52" r="4.5"/>
+          <circle cx="440" cy="52" r="4.5"/>
+          <circle cx="496" cy="52" r="4.5"/>
+          <circle cx="552" cy="52" r="4.5"/>
+          <circle cx="608" cy="52" r="4.5"/>
+          <circle cx="664" cy="52" r="4.5"/>
+        </g>
+        <circle class="rl-node-m" cx="708" cy="52" r="4"/>
+
+        <!-- cascade bracket : g,h,i gather and point into l -->
+        <path class="rl-cascade" d="M 384 64 L 384 78 L 496 78"/>
+        <path class="rl-cascade" d="M 440 64 L 440 78"/>
+        <path class="rl-cascade" d="M 496 64 L 496 90 L 660 90"/>
+        <polygon class="rl-cascade-head" points="664,90 656,86 656,94"/>
+        <text class="rl-cascade-lbl" x="384" y="108" text-anchor="start">g + h + i resolve into the title &#8594; l</text>
+      </svg>
+      <div class="glossary">
+        <p class="half">Classification &#8212; sorting the gifts (a&#8211;f)</p>
+        <div class="row"><span class="lk-term">a</span><span class="gloss">Classify the fee tail &#8212; Arthur's present interest.</span></div>
+        <div class="row"><span class="lk-term">b</span><span class="gloss">The interests after the fee tail are <strong>remainders</strong>, not executory interests.</span></div>
+        <div class="row"><span class="lk-term">c</span><span class="gloss">The widow's interest is a contingent remainder for life &mdash; the unborn-widow trap.</span></div>
+        <div class="row"><span class="lk-term">d</span><span class="gloss">The grandchildren take a contingent class gift &mdash; an open class, condition precedent (reach 25).</span></div>
+        <div class="row"><span class="lk-term">e</span><span class="gloss">The Society holds an alternative contingent remainder.</span></div>
+        <div class="row"><span class="lk-term">f</span><span class="gloss">Identify the measuring lives.</span></div>
+        <p class="half">The RAP cascade &#8212; does each gift survive? (g&#8211;l)</p>
+        <div class="row"><span class="lk-term">g</span><span class="gloss">RAP: the widow's life estate is <strong>VALID</strong> &mdash; it vests at Arthur's death.</span></div>
+        <div class="row"><span class="lk-term">h</span><span class="gloss">RAP: the grandchildren's gift is <strong>VOID</strong> &mdash; the afterborn-child &#8594; afterborn-grandchild mechanism, plus the all-or-nothing rule.</span></div>
+        <div class="row"><span class="lk-term">i</span><span class="gloss">RAP: the Society's gift is <strong>VOID</strong> &mdash; the same remote event; a charity-to-non-charity gift is subject to RAP.</span></div>
+        <div class="row"><span class="lk-term">j</span><span class="gloss">The fertile-octogenarian presumption is irrebuttable &mdash; Octavia's medical evidence is a trap.</span></div>
+        <div class="row"><span class="lk-term">k</span><span class="gloss">Octavia is <em>not</em> a measuring life.</span></div>
+        <div class="row"><span class="lk-term">l</span><span class="gloss">The resulting title: the widow's contingent life estate stands; the rest reverts to Arthur through the residuary.</span></div>
+        <div class="row"><span class="lk-term">m</span><span class="gloss">Modern-statute footnote &mdash; optional, unscored.</span></div>
+      </div>
+      <p class="rail-key">
+        link <span class="focal">l</span> depends on <span class="focal">g</span>, <span class="focal">h</span> and <span class="focal">i</span> &#8212; drop one and the whole resolution fails
+      </p>
+    </div>
+
+    <p>
+      That last point is the whole game. Link&nbsp;<span class="lk">l</span> &mdash;
+      the final answer, who actually owns what &mdash; is not an independent
+      checklist item. It is computed <em>from</em> links <span class="lk">g</span>,
+      <span class="lk">h</span> and <span class="lk">i</span>. Get any one of
+      those three perpetuities holdings wrong and the title comes out wrong, no
+      matter how clean the rest of the analysis looked. That is what makes
+      link&nbsp;<span class="lk">l</span> load-bearing rather than a box to tick:
+      it is downstream of everything, and it tells you whether the model carried
+      the whole structure or only pieces of it.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= The headline chart ============= -->
+    <h2 class="section">Where it held, where it snapped</h2>
+
+    <p>
+      Lay all twelve models on the same chain and the structure resolves into a
+      single picture. The front of the chain &mdash; naming the interests &mdash;
+      is saturated <em>across the frontier</em>: every frontier model classified
+      every interest correctly. The breaks cluster in the back-half RAP cascade.
+      And there is a pattern in <em>where</em> a model breaks that looks like it
+      climbs a capability ladder: the earliest, most structural failures sit at
+      the bottom; the failures at the top are subtler, later, and more dangerous.
+      Read that as an observed pattern worth testing, not a measured finding
+      &mdash; this is a single run per model, all of it inside the noise band, and
+      the lanes are partly ordered by construction. The ladder is a hypothesis the
+      lab would probe next, not a result we are asserting.
+    </p>
+
+    <p>
+      One note on the scores below. Each lane carries a <em>property memo</em>
+      grade out of 5 &mdash; that is one of the four 1&ndash;5 components (property
+      memo, property diagram, Criminal Procedure, Evidence) that sum to the
+      out-of-20 total on Page&nbsp;I&rsquo;s scoreboard. So a &ldquo;memo 2/5&rdquo;
+      here is a 2 on just the property memo, not the model&rsquo;s whole grade; the
+      chart isolates the one component where the property chain is won or lost.
+    </p>
+
+    <!-- ====== EMBEDDED CHART : SVG + figcaption copied VERBATIM from
+              charts/chain-break.html (not redrawn). The chart's SVG-local
+              <style> block travels with it. ====== -->
+    <figure class="chart-figure breakout-svg">
+      <svg viewBox="-22 0 842 620" role="img" aria-labelledby="cb-title cb-desc">
+        <title id="cb-title">Where the thirteen-link rubric chain snapped across twelve models.</title>
+        <desc id="cb-desc">A shared dependency spine of thirteen rubric links labelled a through m runs left to right; links a through f are the classification half, links g through l are the back-half Rule-Against-Perpetuities cascade, and link m is an optional unscored footnote drawn muted and dashed. A dashed vertical divider sits between f and g. At the top, a teal band spans a through l: the seven models that held the entire chain. Below it descend five rupture lanes in capability-ladder order. grok-4.3 ruptures early at b, a hollow ring with a snapped spine, the lone front-half structural break and the ladder's bottom rung. deepseek-v3.2 ruptures at e. gpt-5.4 ruptures at g, and a thin arc carries the failure into the title link l. opus-4.8 holds all structure then ruptures at h and i, with two arcs converging on l. haiku-4.5 ruptures at i with a partial at h, and an arc into l, plus partial half-rings at j and k. Held nodes are solid teal discs; broken nodes are hollow rings stroked red with a gap in the spine; partial nodes are half-filled rings.</desc>
+
+        <style>
+          .cb-t-sans  { font-family: var(--font-sans); }
+          .cb-t-mono  { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+          .cb-t-prose { font-family: var(--font-prose); font-style: italic; }
+
+          .cb-link-letter { font-size: 13px; fill: var(--fg); }
+          .cb-link-letter-muted { font-size: 13px; fill: var(--muted); }
+          .cb-half-label  { font-size: 11.5px; fill: var(--muted); letter-spacing: 0.04em; }
+          .cb-lane-id     { font-size: 12px; fill: var(--fg); }
+          .cb-lane-memo   { font-size: 11px; fill: var(--muted); }
+          .cb-lane-mech   { font-size: 11.5px; fill: var(--muted); font-style: italic; }
+          .cb-band-id     { font-size: 12px; fill: var(--accent); }
+          .cb-band-mech   { font-size: 11.5px; fill: var(--muted); font-style: italic; }
+          .cb-rung-tag    { font-size: 10px; fill: var(--muted); letter-spacing: 0.04em; }
+
+          .cb-spine       { stroke: var(--accent); stroke-width: 1.75; fill: none; }
+          .cb-spine-m     { stroke: var(--muted); stroke-width: 1.25; fill: none; stroke-dasharray: 3 3; opacity: 0.75; }
+          .cb-spine-gap   { stroke: var(--bad); stroke-width: 1.75; fill: none; }
+
+          .cb-node-held   { fill: var(--accent); stroke: var(--accent); stroke-width: 1; }
+          .cb-node-m      { fill: none; stroke: var(--muted); stroke-width: 1.25; opacity: 0.75; }
+          .cb-node-broke  { fill: var(--bg); stroke: var(--bad); stroke-width: 1.75; }
+          .cb-node-partial-bg { fill: var(--bg); stroke: var(--warn); stroke-width: 1.5; }
+
+          .cb-band-fill   { fill: var(--accent); opacity: 0.08; }
+          .cb-band-edge   { stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.45; }
+
+          .cb-divider     { stroke: var(--rule); stroke-width: 1; fill: none; stroke-dasharray: 4 3; opacity: 0.85; }
+
+          .cb-cascade     { stroke: var(--bad); stroke-width: 1; fill: none; opacity: 0.8; }
+          .cb-cascade-head { fill: var(--bad); opacity: 0.8; }
+
+          .cb-focal-rule  { stroke: var(--accent-hi); stroke-width: 1; fill: none; opacity: 0.55; }
+        </style>
+
+        <!-- link-letter header row, half labels, and the f to g divider. -->
+        <!-- node x grid: a232 b274 c316 d358 e400 f442 g484 h526 i568 j610 k652 l694 m748 -->
+        <g class="cb-t-mono cb-link-letter" text-anchor="middle">
+          <text x="232" y="58">a</text>
+          <text x="274" y="58">b</text>
+          <text x="316" y="58">c</text>
+          <text x="358" y="58">d</text>
+          <text x="400" y="58">e</text>
+          <text x="442" y="58">f</text>
+          <text x="484" y="58">g</text>
+          <text x="526" y="58">h</text>
+          <text x="568" y="58">i</text>
+          <text x="610" y="58">j</text>
+          <text x="652" y="58">k</text>
+          <text x="694" y="58">l</text>
+        </g>
+        <text class="cb-t-mono cb-link-letter-muted" x="748" y="58" text-anchor="middle">m</text>
+
+        <!-- structural divider between f and g : classification | RAP resolution -->
+        <line class="cb-divider" x1="463" y1="46" x2="463" y2="560"/>
+        <text class="cb-t-sans cb-half-label" x="347" y="40" text-anchor="middle">classification (a&#8211;f)</text>
+        <text class="cb-t-sans cb-half-label" x="589" y="40" text-anchor="middle">RAP resolution (g&#8211;l)</text>
+
+        <!-- HELD-COHORT BAND : seven models, full chain a..l intact (band center y=110) -->
+        <rect class="cb-band-fill" x="214" y="86" width="500" height="48" rx="6"/>
+        <rect class="cb-band-edge" x="214" y="86" width="500" height="48" rx="6"/>
+
+        <line class="cb-spine" x1="232" y1="110" x2="694" y2="110"/>
+        <line class="cb-spine-m" x1="694" y1="110" x2="748" y2="110"/>
+        <g class="cb-node-held">
+          <circle cx="232" cy="110" r="4.5"/>
+          <circle cx="274" cy="110" r="4.5"/>
+          <circle cx="316" cy="110" r="4.5"/>
+          <circle cx="358" cy="110" r="4.5"/>
+          <circle cx="400" cy="110" r="4.5"/>
+          <circle cx="442" cy="110" r="4.5"/>
+          <circle cx="484" cy="110" r="4.5"/>
+          <circle cx="526" cy="110" r="4.5"/>
+          <circle cx="568" cy="110" r="4.5"/>
+          <circle cx="610" cy="110" r="4.5"/>
+          <circle cx="652" cy="110" r="4.5"/>
+          <circle cx="694" cy="110" r="4.5">
+            <title>Held the full chain a&#8211;l (seven models, memo 5): claude-fable-5, claude-opus-4.7, gpt-5.5, deepseek-v4-pro, claude-opus-4.6, gemini-3.5-flash, gemini-3.1-pro.</title>
+          </circle>
+        </g>
+        <circle class="cb-node-m" cx="748" cy="110" r="4"/>
+
+        <g text-anchor="end">
+          <text class="cb-t-mono cb-band-id" x="206" y="106">7 models held a&#8211;l</text>
+          <text class="cb-t-sans cb-lane-memo" x="206" y="121">memo 5 / 5</text>
+          <text class="cb-t-prose cb-band-mech" x="206" y="134">classification saturated across the frontier</text>
+        </g>
+
+        <!-- RUPTURE LANES (5), descending in capability-ladder order. -->
+        <!-- lane y: grok 200 / deepseek 270 / gpt54 340 / opus48 420 / haiku 500 -->
+
+        <!-- LANE 1 : grok-4.3, breaks at b (front half, ladder bottom rung) -->
+        <g>
+          <line class="cb-spine" x1="232" y1="200" x2="262" y2="200"/>
+          <line class="cb-spine-gap" x1="286" y1="200" x2="694" y2="200"/>
+          <line class="cb-spine-m" x1="694" y1="200" x2="748" y2="200"/>
+          <circle class="cb-node-held" cx="232" cy="200" r="4.5"/>
+          <circle class="cb-node-broke" cx="274" cy="200" r="5.5">
+            <title>grok-4.3, link b BROKE: calls the post-fee-tail interests executory interests, not remainders. An early, structural classification mis-step &#8212; the ladder's bottom rung.</title>
+          </circle>
+          <circle class="cb-node-held" cx="316" cy="200" r="4.5"/>
+          <circle class="cb-node-held" cx="358" cy="200" r="4.5"/>
+          <circle class="cb-node-held" cx="400" cy="200" r="4.5"/>
+          <circle class="cb-node-partial-bg" cx="442" cy="200" r="5"/>
+          <path d="M 442 195 A 5 5 0 0 1 442 205 Z" fill="var(--warn)" opacity="0.85">
+            <title>grok-4.3, link f PARTIAL: measuring-lives identification muddled.</title>
+          </path>
+          <circle class="cb-node-held" cx="484" cy="200" r="4.5"/>
+          <circle class="cb-node-held" cx="526" cy="200" r="4.5"/>
+          <circle class="cb-node-held" cx="568" cy="200" r="4.5"/>
+          <circle class="cb-node-held" cx="610" cy="200" r="4.5"/>
+          <circle class="cb-node-partial-bg" cx="652" cy="200" r="5"/>
+          <path d="M 652 195 A 5 5 0 0 1 652 205 Z" fill="var(--warn)" opacity="0.85">
+            <title>grok-4.3, link k PARTIAL: Octavia-as-measuring-life muddled.</title>
+          </path>
+          <circle class="cb-node-held" cx="694" cy="200" r="4.5"/>
+          <circle class="cb-node-m" cx="748" cy="200" r="4"/>
+        </g>
+        <g text-anchor="end">
+          <text class="cb-t-mono cb-lane-id" x="206" y="196">grok-4.3</text>
+          <text class="cb-t-sans cb-lane-memo" x="206" y="210">memo 3 / 5</text>
+        </g>
+        <text class="cb-t-prose cb-lane-mech" x="232" y="226" text-anchor="start">early &#38; structural &#8212; foundational miscategory, but the RAP conclusions held</text>
+        <text class="cb-t-sans cb-rung-tag" x="274" y="180" text-anchor="middle">bottom rung</text>
+
+        <!-- LANE 2 : deepseek-v3.2, breaks at e -->
+        <g>
+          <line class="cb-spine" x1="232" y1="270" x2="388" y2="270"/>
+          <line class="cb-spine-gap" x1="412" y1="270" x2="694" y2="270"/>
+          <line class="cb-spine-m" x1="694" y1="270" x2="748" y2="270"/>
+          <circle class="cb-node-held" cx="232" cy="270" r="4.5"/>
+          <circle class="cb-node-held" cx="274" cy="270" r="4.5"/>
+          <circle class="cb-node-held" cx="316" cy="270" r="4.5"/>
+          <circle class="cb-node-held" cx="358" cy="270" r="4.5"/>
+          <circle class="cb-node-broke" cx="400" cy="270" r="5.5">
+            <title>deepseek-v3.2, link e BROKE: classifies the Society gift as an executory interest. A near-miss; the core RAP result essentially held.</title>
+          </circle>
+          <circle class="cb-node-held" cx="442" cy="270" r="4.5"/>
+          <circle class="cb-node-held" cx="484" cy="270" r="4.5"/>
+          <circle class="cb-node-partial-bg" cx="526" cy="270" r="5"/>
+          <path d="M 526 265 A 5 5 0 0 1 526 275 Z" fill="var(--warn)" opacity="0.85">
+            <title>deepseek-v3.2, link h PARTIAL: no explicit all-or-nothing (Leake) citation.</title>
+          </path>
+          <circle class="cb-node-held" cx="568" cy="270" r="4.5"/>
+          <circle class="cb-node-held" cx="610" cy="270" r="4.5"/>
+          <circle class="cb-node-partial-bg" cx="652" cy="270" r="5"/>
+          <path d="M 652 265 A 5 5 0 0 1 652 275 Z" fill="var(--warn)" opacity="0.85">
+            <title>deepseek-v3.2, link k PARTIAL: Octavia muddled.</title>
+          </path>
+          <circle class="cb-node-held" cx="694" cy="270" r="4.5"/>
+          <circle class="cb-node-m" cx="748" cy="270" r="4"/>
+        </g>
+        <g text-anchor="end">
+          <text class="cb-t-mono cb-lane-id" x="206" y="266">deepseek-v3.2</text>
+          <text class="cb-t-sans cb-lane-memo" x="206" y="280">memo 4 / 5</text>
+        </g>
+        <text class="cb-t-prose cb-lane-mech" x="232" y="296" text-anchor="start">near-miss &#8212; one misclassification, core RAP result essentially held</text>
+
+        <!-- LANE 3 : gpt-5.4, breaks at g and cascades to l -->
+        <g>
+          <line class="cb-spine" x1="232" y1="340" x2="472" y2="340"/>
+          <line class="cb-spine-gap" x1="496" y1="340" x2="682" y2="340"/>
+          <line class="cb-spine-m" x1="694" y1="340" x2="748" y2="340"/>
+          <circle class="cb-node-held" cx="232" cy="340" r="4.5"/>
+          <circle class="cb-node-held" cx="274" cy="340" r="4.5"/>
+          <circle class="cb-node-held" cx="316" cy="340" r="4.5"/>
+          <circle class="cb-node-held" cx="358" cy="340" r="4.5"/>
+          <circle class="cb-node-held" cx="400" cy="340" r="4.5"/>
+          <circle class="cb-node-held" cx="442" cy="340" r="4.5"/>
+          <circle class="cb-node-broke" cx="484" cy="340" r="5.5">
+            <title>gpt-5.4, link g BROKE: concludes the widow's life estate VOID when it is VALID (it vests at Arthur's death). The single wrong decision &#8212; the originating break that cascades into a second broken link at l.</title>
+          </circle>
+          <circle class="cb-node-held" cx="526" cy="340" r="4.5"/>
+          <circle class="cb-node-held" cx="568" cy="340" r="4.5"/>
+          <circle class="cb-node-held" cx="610" cy="340" r="4.5"/>
+          <circle class="cb-node-held" cx="652" cy="340" r="4.5"/>
+          <circle class="cb-node-broke" cx="694" cy="340" r="5.5">
+            <title>gpt-5.4, link l BROKE: wrong resulting title &#8212; a consequence of the wrong determination at g.</title>
+          </circle>
+          <circle class="cb-node-m" cx="748" cy="340" r="4"/>
+        </g>
+        <path class="cb-cascade" d="M 484 346 C 540 374, 638 374, 692 346"/>
+        <polygon class="cb-cascade-head" points="692,346 686,341 689,350"/>
+        <g text-anchor="end">
+          <text class="cb-t-mono cb-lane-id" x="206" y="336">gpt-5.4</text>
+          <text class="cb-t-sans cb-lane-memo" x="206" y="350">memo 3 / 5</text>
+        </g>
+        <text class="cb-t-prose cb-lane-mech" x="232" y="392" text-anchor="start">one wrong decision (g) cascades into a second broken link (l)</text>
+
+        <!-- LANE 4 : opus-4.8, holds structure then breaks h and i, cascades to l (focal) -->
+        <g>
+          <line class="cb-spine" x1="232" y1="420" x2="514" y2="420"/>
+          <line class="cb-spine-gap" x1="538" y1="420" x2="556" y2="420"/>
+          <line class="cb-spine-gap" x1="580" y1="420" x2="682" y2="420"/>
+          <line class="cb-spine-m" x1="694" y1="420" x2="748" y2="420"/>
+          <circle class="cb-node-held" cx="232" cy="420" r="4.5"/>
+          <circle class="cb-node-held" cx="274" cy="420" r="4.5"/>
+          <circle class="cb-node-held" cx="316" cy="420" r="4.5"/>
+          <circle class="cb-node-held" cx="358" cy="420" r="4.5"/>
+          <circle class="cb-node-held" cx="400" cy="420" r="4.5"/>
+          <circle class="cb-node-held" cx="442" cy="420" r="4.5"/>
+          <circle class="cb-node-held" cx="484" cy="420" r="4.5"/>
+          <circle class="cb-node-broke" cx="526" cy="420" r="5.5">
+            <title>claude-opus-4.8, link h BROKE: flips grandchildren VOID to VALID under one wrong premise (post-fee-tail remainders RAP-exempt). Knowledge intact; a single wrong commitment overrode it.</title>
+          </circle>
+          <circle class="cb-node-broke" cx="568" cy="420" r="5.5">
+            <title>claude-opus-4.8, link i BROKE: flips the Society gift VOID to VALID under the same wrong premise.</title>
+          </circle>
+          <circle class="cb-node-held" cx="610" cy="420" r="4.5"/>
+          <circle class="cb-node-held" cx="652" cy="420" r="4.5"/>
+          <circle class="cb-node-broke" cx="694" cy="420" r="5.5">
+            <title>claude-opus-4.8, link l BROKE: wrong resulting title &#8212; carried from the flipped h and i holdings.</title>
+          </circle>
+          <circle class="cb-node-m" cx="748" cy="420" r="4"/>
+        </g>
+        <path class="cb-cascade" d="M 526 426 C 580 458, 650 456, 691 427"/>
+        <path class="cb-cascade" d="M 568 426 C 608 446, 660 446, 692 427"/>
+        <polygon class="cb-cascade-head" points="692,427 686,422 689,431"/>
+        <rect class="cb-focal-rule" x="214" y="404" width="552" height="34" rx="5"/>
+        <g text-anchor="end">
+          <text class="cb-t-mono cb-lane-id" x="206" y="416">claude-opus-4.8</text>
+          <text class="cb-t-sans cb-lane-memo" x="206" y="430">memo 2 / 5</text>
+        </g>
+        <text class="cb-t-prose cb-lane-mech" x="232" y="476" text-anchor="start">held all structure (a&#8211;g), then one wrong premise detonates h, i and the title l</text>
+
+        <!-- LANE 5 : haiku-4.5, holds taxonomy then the back half collapses -->
+        <g>
+          <line class="cb-spine" x1="232" y1="500" x2="514" y2="500"/>
+          <line class="cb-spine" x1="538" y1="500" x2="556" y2="500" opacity="0.5"/>
+          <line class="cb-spine-gap" x1="580" y1="500" x2="682" y2="500"/>
+          <line class="cb-spine-m" x1="694" y1="500" x2="748" y2="500"/>
+          <circle class="cb-node-held" cx="232" cy="500" r="4.5"/>
+          <circle class="cb-node-held" cx="274" cy="500" r="4.5"/>
+          <circle class="cb-node-held" cx="316" cy="500" r="4.5"/>
+          <circle class="cb-node-held" cx="358" cy="500" r="4.5"/>
+          <circle class="cb-node-held" cx="400" cy="500" r="4.5"/>
+          <circle class="cb-node-held" cx="442" cy="500" r="4.5"/>
+          <circle class="cb-node-held" cx="484" cy="500" r="4.5"/>
+          <circle class="cb-node-partial-bg" cx="526" cy="500" r="5"/>
+          <path d="M 526 495 A 5 5 0 0 1 526 505 Z" fill="var(--warn)" opacity="0.85">
+            <title>haiku-4.5, link h PARTIAL: never identifies the afterborn mechanism; all-or-nothing not invoked.</title>
+          </path>
+          <circle class="cb-node-broke" cx="568" cy="500" r="5.5">
+            <title>haiku-4.5, link i BROKE: calls the Society's gift VALID. Working-memory overload across the long downstream cascade.</title>
+          </circle>
+          <circle class="cb-node-partial-bg" cx="610" cy="500" r="5"/>
+          <path d="M 610 495 A 5 5 0 0 1 610 505 Z" fill="var(--warn)" opacity="0.85">
+            <title>haiku-4.5, link j PARTIAL: mishandles the fertile-octogenarian trap.</title>
+          </path>
+          <circle class="cb-node-partial-bg" cx="652" cy="500" r="5"/>
+          <path d="M 652 495 A 5 5 0 0 1 652 505 Z" fill="var(--warn)" opacity="0.85">
+            <title>haiku-4.5, link k PARTIAL: Octavia-as-measuring-life mishandled.</title>
+          </path>
+          <circle class="cb-node-broke" cx="694" cy="500" r="5.5">
+            <title>haiku-4.5, link l BROKE: wrong resulting title &#8212; cannot carry the full dependent resolution at once.</title>
+          </circle>
+          <circle class="cb-node-m" cx="748" cy="500" r="4"/>
+        </g>
+        <path class="cb-cascade" d="M 568 506 C 610 532, 658 532, 692 507"/>
+        <polygon class="cb-cascade-head" points="692,507 686,502 689,511"/>
+        <g text-anchor="end">
+          <text class="cb-t-mono cb-lane-id" x="206" y="496">haiku-4.5</text>
+          <text class="cb-t-sans cb-lane-memo" x="206" y="510">memo 2 / 5</text>
+        </g>
+        <text class="cb-t-prose cb-lane-mech" x="232" y="552" text-anchor="start">holds the taxonomy (a&#8211;g) but cannot carry the long dependent resolution (h&#8211;l)</text>
+
+        <text class="cb-t-sans cb-rung-tag" x="804" y="200" text-anchor="start" transform="rotate(90 804 200)">capability ladder &#8595;  early-structural to late-conclusional</text>
+
+      </svg>
+
+      <figcaption>
+        Naming the interests (links a&#8211;f) is saturated across the frontier &#8212;
+        every break falls in the back-half RAP cascade (g&#8211;l) save the two
+        front-half classification breaks &#8212; grok-4.3 at b and deepseek-v3.2
+        at e. And where a model breaks climbs the capability ladder: one wrong
+        decision cascades into a second broken link (gpt-5.4, g&#8594;l); the frontier flagship holds
+        all structure then one wrong premise detonates the conclusions
+        (opus-4.8, h, i&#8594;l); a small model holds the taxonomy but cannot carry
+        the long dependent resolution (haiku, the back half collapses).
+      </figcaption>
+    </figure>
+
+    <p class="chart-source">
+      Per-link status is the projection of the claude-opus-4-6 judge rationales for task property-fee-tail-rap, twelve channel-corrected runs. &#183;
+      <a href="charts/chain-break.html">Open the chart on its own</a>
+    </p>
+
+    <p>
+      Read the bottom rung honestly. The one early, structural break belongs to
+      a mid-tier model: <span class="lk">grok-4.3</span> miscalls the
+      post-fee-tail interests <em>executory interests</em> at link&nbsp;<span class="lk">b</span>,
+      near the front of the chain. (A second front-half slip,
+      <span class="lk">deepseek-v3.2</span> at link&nbsp;<span class="lk">e</span>,
+      is a near-miss that the RAP result survives.) No frontier model breaks in
+      the front half. The discrimination lives in the back, and so do the
+      interesting failures.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= The four mechanisms ============= -->
+    <h2 class="section">Four ways to break a chain</h2>
+
+    <p>
+      The failure is never just a wrong answer; it is a wrong answer with a
+      shape. Here are four of them, ordered up the capability ladder &mdash;
+      from the foundational mis-step at the bottom to the confident, fluent
+      error at the top. Each links to its exhibit, where you can read the
+      model's actual memo and judge the reasoning yourself.
+    </p>
+
+    <div class="ladder breakout-wide">
+      <p class="ladder-rail">
+        <span>bottom of the ladder</span>
+        <span class="arrow" aria-hidden="true">&#8595;</span>
+        <span>top of the ladder</span>
+      </p>
+
+      <!-- MECHANISM 1 : grok-4.3 -->
+      <div class="mech">
+        <p class="rung"><span class="n">Rung 1</span> &#183; the foundation slips</p>
+        <p class="head">
+          <span class="model">grok-4.3</span>
+          <span class="score">memo 3 / 5</span>
+        </p>
+        <p class="where">breaks at link <span class="broke">b</span> &#8212; front of the chain, structural</p>
+        <p class="read">
+          The earliest and most structural break in the field. grok-4.3 miscalls
+          the interests created after the fee tail &mdash; they are
+          <em>remainders</em>, and it labels them <em>executory interests</em>.
+          That is a foundational sorting error at link&nbsp;<span class="lk">b</span>,
+          before the hard reasoning even begins. Remarkably, it then reaches the
+          right perpetuities conclusions downstream &mdash; but it got there
+          having mislabeled the pieces it was reasoning about. This is the bottom
+          rung: the chain breaks where the analysis starts, not where it
+          culminates.
+        </p>
+        <p class="exhibit-link">
+          <a href="exhibits/grok-4-3-property.html">Read grok-4.3's memo <span class="arrow" aria-hidden="true">&#8594;</span></a>
+        </p>
+      </div>
+
+      <!-- MECHANISM 2 : gpt-5.4 -->
+      <div class="mech">
+        <p class="rung"><span class="n">Rung 2</span> &#183; one wrong decision cascades</p>
+        <p class="head">
+          <span class="model">gpt-5.4</span>
+          <span class="score">memo 3 / 5</span>
+        </p>
+        <p class="where">breaks at link <span class="broke">g</span> &#8594; propagates to <span class="broke">l</span></p>
+        <p class="read">
+          The cleanest proof that this is a dependency chain and not a checklist.
+          gpt-5.4 gets nearly everything right &mdash; including the genuinely
+          hard step of voiding the grandchildren's gift via the all-or-nothing
+          rule at link&nbsp;<span class="lk">h</span>. But at link&nbsp;<span class="lk">g</span>
+          it concludes the widow's life estate is <span class="void">VOID</span>
+          when it is <span class="valid">VALID</span> (it vests at Arthur's
+          death). That single wrong determination propagates straight downstream
+          into the wrong resulting title at link&nbsp;<span class="lk">l</span>
+          &mdash; so two links break (<span class="lk">g</span> and
+          <span class="lk">l</span>), but from one originating error. One wrong
+          decision, and the final answer is wrong &mdash; even though the rest of
+          the reasoning was sound.
+        </p>
+        <p class="exhibit-link">
+          <a href="exhibits/gpt-5-4-property.html">Read gpt-5.4's memo <span class="arrow" aria-hidden="true">&#8594;</span></a>
+        </p>
+      </div>
+
+      <!-- MECHANISM 3 : opus-4.8 -->
+      <div class="mech">
+        <p class="rung"><span class="n">Rung 3</span> &#183; confident-wrong at the top</p>
+        <p class="head">
+          <span class="model">claude-opus-4.8</span>
+          <span class="score">memo 2 / 5 &#183; diagram 5 / 5</span>
+        </p>
+        <p class="where">holds a&#8211;g, then breaks <span class="broke">h</span>, <span class="broke">i</span> &#8594; <span class="broke">l</span></p>
+        <p class="read">
+          The exhibit to sit with &mdash; and the point is not that opus-4.8 is a
+          step down. This is a single run, inside the band; in a law-school exam
+          this memo would earn nearly full credit. It classified <em>every</em>
+          interest correctly and showed, in its own hypotheticals, that it saw the
+          traps. Then it adopted a single wrong premise &mdash; that a remainder
+          following a fee tail is exempt from the Rule Against Perpetuities
+          &mdash; and that one commitment overrode everything it knew, flipping
+          two <span class="void">VOID</span> holdings to
+          <span class="valid">VALID</span> at links&nbsp;<span class="lk">h</span>
+          and&nbsp;<span class="lk">i</span> and carrying the error through to the
+          title at link&nbsp;<span class="lk">l</span>. The knowledge was intact; a
+          confident, wrong commitment propagated down the chain anyway &mdash; and
+          the judge scored the accompanying diagram a flawless five for rendering
+          that wrong holding crisply. That is the reminder worth keeping: even a
+          top-tier model produces a confident, well-drafted <em>miss</em>
+          sometimes, and a polished miss is exactly the thing an aggregate score
+          erases &mdash; it averages away, invisible, until the moment the work is
+          relied on and not checked.
+        </p>
+        <p class="said">
+          &ldquo;a remainder limited after a fee tail is not subject to the Rule
+          Against Perpetuities. That retention is dispositive.&rdquo;
+          <span class="src">claude-opus-4.8 &#183; the wrong premise, in its own words</span>
+        </p>
+        <p class="exhibit-link">
+          <a href="exhibits/opus-4-8-property.html">Read opus-4.8's memo + the operator's commentary <span class="arrow" aria-hidden="true">&#8594;</span></a>
+        </p>
+      </div>
+
+      <!-- CROSS-FAMILY READ : fable vs opus on the same chain -->
+      <div class="crossfam">
+        <p class="tag">Same chain, two families &#8212; and they miss in different places</p>
+        <p class="read">
+          Set that opus-4.8 result beside a model from a different lineage and
+          the lesson sharpens. claude-fable-5 &mdash; Anthropic's newer top tier,
+          a distinct family from the Opus line &mdash; held the entire thirteen-link
+          chain, and the judge singled out its <em>exceptional depth</em>: it
+          reached secondary doctrines the rubric never demanded, naming merger and
+          the fee-tail exemption for limitations after estates tail. It also works
+          the problem hard &mdash; thinking always on, roughly ninety-six thousand
+          output tokens spent reasoning toward the answer. On this single run,
+          opus-4.8 knew the same doctrine cold and then let one wrong premise
+          carry the conclusions away. Same vendor, two families, two different
+          places to slip.
+        </p>
+        <div class="fam-line">
+          <span class="who">claude-fable-5</span>
+          <span class="verdict">held a&#8211;l &#183; memo 5</span>
+          <span class="note">different family; reached merger and the fee-tail exemption unprompted</span>
+        </div>
+        <div class="fam-line">
+          <span class="who">claude-opus-4.8</span>
+          <span class="verdict det">missed h, i &#8594; l &#183; memo 2</span>
+          <span class="note">Opus line; knowledge intact, one wrong commitment overrode it</span>
+        </div>
+        <p class="read">
+          The point is not a ranking. These are single runs each, all of them
+          inside the noise band &mdash; nothing here says one model is
+          &ldquo;worse.&rdquo; What it says is narrower and more useful:
+          <em>different model families miss in different places, and the only way
+          to know where is to check the specific task.</em> The two families even
+          share a vendor, so brand is no guide either. A reputation earned on one
+          problem does not transfer to the next one; you verify the task, not the
+          name on it.
+        </p>
+      </div>
+
+      <!-- MECHANISM 4 : haiku-4.5 -->
+      <div class="mech">
+        <p class="rung"><span class="n">Rung 4</span> &#183; working-memory overload</p>
+        <p class="head">
+          <span class="model">haiku-4.5</span>
+          <span class="score">memo 2 / 5</span>
+        </p>
+        <p class="where">holds a&#8211;g, then the back half falls over: <span class="broke">i</span>, <span class="broke">l</span></p>
+        <p class="read">
+          A different shape of failure, and the one that points at the next
+          question. haiku-4.5 holds the early classification cleanly and carries
+          the chain through link&nbsp;<span class="lk">g</span>
+          (links&nbsp;<span class="lk">a</span>&#8211;<span class="lk">g</span>),
+          then the long downstream RAP cascade fails over: it never identifies
+          the afterborn mechanism, calls the Society's gift
+          <span class="valid">VALID</span> at link&nbsp;<span class="lk">i</span>
+          when it is <span class="void">VOID</span>, mishandles the octogenarian
+          trap, and lands on the wrong title at link&nbsp;<span class="lk">l</span>.
+          It holds local nodes it plainly knows; what it cannot do is carry the
+          whole dependent resolution at once.
+        </p>
+        <p class="exhibit-link">
+          <a href="exhibits/haiku-4-5-property.html">Read haiku-4.5's memo <span class="arrow" aria-hidden="true">&#8594;</span></a>
+        </p>
+      </div>
+    </div>
+
+    <!-- The contrast : what a fully-held chain looks like -->
+    <div class="contrast breakout-wide">
+      <p class="head">For contrast &#8212; what a fully held chain looks like</p>
+      <p style="margin:0;">
+        Two of the seven full-chain holders are published as exhibits in their
+        own right. Read either one beside the four above and the difference is
+        not eloquence &mdash; the broken memos are often beautifully written. The
+        difference is that every node held, all the way to the title.
+      </p>
+      <div class="pair">
+        <div class="one">
+          <span class="model">claude-fable-5</span>
+          <span class="meta">memo 5 / 5 &#183; held a&#8211;l</span>
+          <span class="go"><a href="exhibits/fable-5-property.html">Read the exhibit &#8594;</a></span>
+        </div>
+        <div class="one">
+          <span class="model">deepseek-v4-pro</span>
+          <span class="meta">memo 5 / 5 &#183; held a&#8211;l</span>
+          <span class="go"><a href="exhibits/deepseek-v4-property.html">Read the exhibit &#8594;</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LINEAGE BEAT : the two Geminis miss the identical evidence trap -->
+    <div class="lineage breakout-wide">
+      <p class="tag">A second tell, off the property chain &#8212; failure that tracks lineage</p>
+      <p>
+        Step over to a different task in the same battery &mdash; the
+        evidence-hearsay essay &mdash; and the same lesson arrives from the
+        opposite direction. gemini-3.5-flash and gemini-3.1-pro each scored
+        <span class="same">4</span> there, and each lost its single point to the
+        <em>identical</em> miss: both applied the state-of-mind hearsay exception
+        (FRE 803(3)) to Item&nbsp;E &mdash; a statement actually offered to prove
+        the truth of the underlying transfers, where state-of-mind does not reach.
+        Same blind spot, same family, different capability tiers. Some failures
+        track lineage, not capability &mdash; which is exactly why a second
+        opinion from a <em>different</em> family is worth more than one more pass
+        from a sibling model.
+      </p>
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= What this tells us to look at next ============= -->
+    <h2 class="section">What to look at next</h2>
+
+    <p>
+      This is where the work earns its keep &mdash; the part a leaderboard never
+      reaches. We are a lab, and the question we actually care about is never
+      &ldquo;what was the score,&rdquo; it is &ldquo;what did the behavior reveal,
+      and what does it tell us to look at next.&rdquo; The four mechanisms are not
+      a gallery of mistakes; they sort into the pattern above, and the haiku
+      result poses the real next question. opus-4.8 missed at the <em>top</em> of
+      the stack &mdash; it knew everything and a single premise overrode it. haiku
+      missed at the <em>bottom</em> of the back half &mdash; it held the taxonomy
+      it plainly knows, then lost the thread across the long dependent resolution.
+      Those are different failures, and the second one is the more suggestive.
+    </p>
+
+    <p>
+      The hypothesis worth chasing: is the small model failing because the
+      problem demands tracking too many interdependent chains at once &mdash; so
+      it activates too many nodes and drops a resolution it would get right in
+      isolation? That is a claim about <em>where reasoning-under-load gives
+      out</em>, not about what the model knows. And it suggests a concrete next
+      probe: vary the depth and the interdependence of the chain &mdash; shorten
+      it, lengthen it, sever some dependencies and tighten others &mdash; and
+      watch where each model's resolution collapses. If the collapse tracks
+      chain length and coupling rather than doctrine, the load hypothesis gains
+      ground &mdash; and the capability-ladder pattern from the chart earns its
+      promotion from <em>observed</em> to <em>tested</em>. That is the experiment
+      this issue points at, and it is the kind of question this publication exists
+      to ask.
+    </p>
+
+    <div class="pullquote breakout-wide">
+      The contribution is not the headline. It is the mechanism, and the next
+      question the mechanism opens.
+    </div>
+
+    <p>
+      Be honest about what we have and have not shown. We have not isolated the
+      mechanism &mdash; one task, twelve runs, a single judge's rationales. What
+      we have is a pattern with a testable shape and a clear next experiment, and
+      that pursuit is the point. And to be equally clear about what this is
+      <em>not</em>: none of it says a model can stand in for a lawyer. Clearing a
+      perpetuities chain is reasoning under load, not the judgment of practice.
+      The chain is a good instrument precisely because its dependencies are real
+      &mdash; which is also why the place it breaks tells us something worth
+      writing down<span class="signal">.</span>
+    </p>
+
+    <!-- ============= Close / page nav ============= -->
+    <div class="closer-block">
+
+      <div class="pagenav">
+        <span class="prev">
+          <span class="lbl">Previous &#183; Page I</span>
+          <a href="01-everyone-passed.html">Everyone passed &#8212; now the real question</a>
+        </span>
+        <span class="next">
+          <span class="lbl">Next &#183; Page III</span>
+          <a href="03-cost-and-trust.html">Cost &amp; trust</a>
+        </span>
+      </div>
+
+      <p class="footnote">
+        <span class="ddagger">&#8225;</span> Every per-model per-link held / broke
+        / partial determination, every memo score, and the corrected headline
+        reads trace to the EV-023 chain-break failure map &mdash; the projection
+        of the claude-opus-4-6 LLM-judge rationales for task
+        property-fee-tail-rap across twelve channel-corrected runs (canonical per
+        model; three drawn from the predecessor EV-003 law-essays campaign).
+        Roll-up: <span class="mono">N = 12</span> &#183; classification held across
+        the frontier &#183; <span class="mono">7 / 12</span> held the full chain
+        a&#8211;l &#183; five broke &mdash; three in the back-half RAP cascade
+        (gpt-5.4, opus-4.8, haiku-4.5), two in the front-half classification
+        (grok-4.3 at b, deepseek-v3.2 at e). The full battery, rubric, judge, and
+        channel correction are described in the
+        <a href="05-methodology.html">methodology</a>.
+      </p>
+
+      <hr class="footer-rule">
+      <p class="copyright">
+        &#169; 2026 The Ronin Advisory Group LLC
+      </p>
+    </div>
+
+  </article>
+</div>
+
+</body>
+</html>

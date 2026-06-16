@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>grok-4-3-property - 001</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fafafa;
+  --bg: oklch(98.5% 0.003 220);
+  --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+  --paper: #ffffff;
+  --paper: oklch(99.5% 0.002 220);
+  --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+  --panel: #f1f2f4;
+  --panel: oklch(96% 0.006 220);
+  --panel: light-dark(oklch(96% 0.006 220), oklch(22% 0.018 240));
+  --fg: #1a1b22;
+  --fg: oklch(20% 0.022 240);
+  --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+  --muted: #6a6f7c;
+  --muted: oklch(48% 0.020 240);
+  --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+  --rule: #d6d9dd;
+  --rule: oklch(85% 0.010 220);
+  --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+  --accent: #226d8b;
+  --accent: oklch(45% 0.13 215);
+  --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+  --ok: #2f7a4e;
+  --ok: oklch(45% 0.16 145);
+  --ok: light-dark(oklch(45% 0.16 145), oklch(70% 0.16 145));
+  --bad: #b53d29;
+  --bad: oklch(50% 0.22 25);
+  --bad: light-dark(oklch(50% 0.22 25), oklch(70% 0.22 25));
+  --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                Arial, sans-serif;
+  --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                monospace;
+  --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                "Times New Roman", serif;
+}
+:root:has(#rdr-light:checked) { color-scheme: light; }
+:root:has(#rdr-dark:checked)  { color-scheme: dark; }
+@media print { :root { color-scheme: light; } }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 24px clamp(12px, 3vw, 36px) 60px;
+}
+.wrap { max-width: 900px; margin: 0 auto; }
+h1 { font-family: var(--font-sans); font-size: 22px; font-weight: 800; margin: 0 0 4px; }
+h2 { font-family: var(--font-sans); font-size: 11px; font-weight: 700; text-transform: uppercase;
+     letter-spacing: 0.07em; color: var(--muted); margin: 28px 0 8px;
+     border-bottom: 1px solid var(--rule); padding-bottom: 4px; }
+.sub { font-family: var(--font-sans); color: var(--muted); font-size: 12px; margin: 0 0 18px; }
+.meta-row { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); margin: 4px 0; }
+.meta-row b { color: var(--fg); }
+pre { font-family: var(--font-mono); white-space: pre-wrap; word-break: break-word;
+      background: var(--panel); border: 1px solid var(--rule); border-radius: 5px;
+      padding: 10px 12px; margin: 6px 0; font-size: 11.5px; line-height: 1.5; }
+.scores { font-family: var(--font-mono); font-size: 12px; margin: 8px 0; }
+.scores .n { font-weight: 800; color: var(--accent); }
+.prose { font-family: var(--font-prose); font-size: 15px; line-height: 1.65;
+         margin: 12px 0; max-width: 68ch; }
+.prose p { margin: 0 0 0.9em; }
+.diagram-box { margin: 14px 0; }
+.diagram-box svg { max-width: 100%; border: 1px solid var(--rule); border-radius: 5px;
+                   background: var(--paper); display: block; }
+.diagram-note { font-family: var(--font-sans); font-size: 12px; color: var(--muted);
+                margin: 4px 0; }
+.diagram-link { font-family: var(--font-mono); font-size: 11.5px; }
+a { color: var(--accent); }
+a:hover { color: var(--fg); }
+.back { font-family: var(--font-mono); font-size: 12px; margin-top: 32px;
+        padding-top: 10px; border-top: 1px solid var(--rule); }
+footer { font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+         margin-top: 8px; }
+.index-list { list-style: none; padding: 0; margin: 12px 0; }
+.index-list li { border: 1px solid var(--rule); border-radius: 5px; background: var(--paper);
+                 padding: 10px 14px; margin: 6px 0; }
+.index-list a { font-family: var(--font-sans); font-weight: 700; font-size: 14px;
+                text-decoration: none; }
+.index-list a:hover { text-decoration: underline; }
+.index-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>grok-4-3-property</h1>
+<p class="sub">issue 001 &middot; campaign EV-023</p>
+<div class="meta-row"><b>model</b> grok-4.3 &middot; <b>channel</b> openrouter &middot; <b>task</b> property-fee-tail-rap</div>
+<div class="meta-row"><b>note</b> Broke early and structurally -- miscalled the post-fee-tail remainders executory interests.</div>
+
+<h2>Answer</h2>
+<pre># Memorandum of Law
+
+**TO:** The Honorable Judge, Probate Court of Franklin County  
+**FROM:** Law Clerk  
+**RE:** *In re Estate of Helena Cartwright; Construction of Article IV of the Will*  
+**DATE:** June 10, 2026
+
+---
+
+## I. ISSUE
+
+Whether Article IV of Helena Cartwright&#39;s will creates valid present and future interests under the common law of the State of Franklin, and what estate or estates result after application of the Rule Against Perpetuities.
+
+---
+
+## II. BRIEF ANSWER
+
+Article IV creates: (1) a fee tail in Arthur Cartwright; (2) a shifting executory interest in fee simple in Arthur&#39;s unidentified widow; (3) a contingent remainder in fee simple in Arthur&#39;s grandchildren who attain age twenty-five; and (4) an alternative contingent remainder in fee simple in the Rensselaer Historical Society (&#34;RHS&#34;). The widow&#39;s shifting executory interest is valid under the RAP. The grandchildren&#39;s remainder is void under the RAP because it may vest more than twenty-one years after the death of all lives in being. The RHS&#39;s alternative remainder is likewise void. After striking the void interests, Arthur holds a fee tail, which under Franklin law is a fee simple subject to divestment if Arthur&#39;s lineal descendants fail. If Arthur&#39;s bodily line fails in 2050, the property passes by resulting trust to Arthur&#39;s estate or Helena&#39;s residuary devisee; if the line fails in 2150, the same result obtains.
+
+---
+
+## III. STATEMENT OF FACTS
+
+Helena Cartwright died testate on March 1, 2024, owning Blackacre, a 140-acre orchard. Article IV of her will devises Blackacre:
+
+&gt; &#34;to my son Arthur and the heirs of his body, and if Arthur&#39;s bodily line should ever fail, then to such person as shall be Arthur&#39;s widow for her life, and then to those of Arthur&#39;s grandchildren who shall attain the age of twenty-five years, in equal shares; but if no grandchild of Arthur lives to attain the age of twenty-five, then to the Rensselaer Historical Society, its successors and assigns, forever.&#34;
+
+At Helena&#39;s death, Arthur (age 52) was married to Bernice (age 49) and had two children: Celia (age 24) and Dmitri (age 19). Helena&#39;s sister, Octavia (age 82), was a childless widow incapable of bearing children. The RHS is a charitable corporation. Arthur petitions for construction; the RHS, Bernice, and a guardian ad litem for potential unborn grandchildren have appeared.
+
+---
+
+## IV. ANALYSIS
+
+### A. Classification of Present and Future Interests
+
+#### 1. Arthur&#39;s Interest: Fee Tail
+
+The will devises Blackacre &#34;to my son Arthur and the heirs of his body.&#34; Under the common law of England, from which Franklin derives its estates in land, this language creates a fee tail (also called a fee tail general). A fee tail is an estate of inheritance limited to the grantee&#39;s lineal descendants; it terminates automatically if the grantee&#39;s bodily line fails. Because Franklin has never abolished the fee tail, Article IV creates a fee tail in Arthur.
+
+Arthur&#39;s fee tail is a present possessory estate. As the first taker, Arthur is entitled to immediate possession. The fee tail is subject to divestment if Arthur&#39;s lineal descendants expire.
+
+---
+
+#### 2. The Widow&#39;s Interest: Shifting Executory Interest in a Life Estate
+
+The will next provides: &#34;and if Arthur&#39;s bodily line should ever fail, then to such person as shall be Arthur&#39;s widow for her life.&#34; This language creates a future interest in a life estate for the person who is Arthur&#39;s widow at the moment Arthur&#39;s bodily line fails.
+
+Because this interest follows a fee tail (which is a fee simple subject to divestment), it cannot be a remainder; remainders follow life estates or terms of years. Instead, the widow&#39;s life estate is a shifting executory interest in fee simple (more precisely, an executory interest limited in duration to a life estate). It is &#34;shifting&#34; because it divests Arthur&#39;s fee tail upon the condition subsequent of lineal failure. It is &#34;executory&#34; because it may divest a prior fee estate.
+
+The identity of the widow is presently unascertained. Bernice, Arthur&#39;s current wife, may predecease Arthur; Arthur may remarry; or Arthur may never remarry. The will does not specify that the interest belongs to Bernice personally; it refers to &#34;such person as shall be Arthur&#39;s widow&#34; at the time of divestment. Therefore, the widow is an unascertained person, and the interest is contingent upon both (a) Arthur&#39;s line failing and (b) the identity of the surviving widow.
+
+---
+
+#### 3. The Grandchildren&#39;s Interest: Contingent Remainder in Fee Simple
+
+Following the widow&#39;s life estate, the will devises the property &#34;to those of Arthur&#39;s grandchildren who shall attain the age of twenty-five years, in equal shares.&#34; This creates a remainder in fee simple in Arthur&#39;s grandchildren, subject to two conditions precedent: (1) being a grandchild of Arthur, and (2) attaining age twenty-five.
+
+Because the class of takers is defined by a condition precedent (attaining age 25) that may exclude some class members, and because the will creates an alternative gift over if no grandchild attains 25, the interest is a contingent remainder, not a vested remainder subject to open. Under the rule of convenience, a class gift closes when the first member is entitled to possession, but here no member can possess until age 25, and the alternative gift over confirms the contingent character. The remainder is thus contingent.
+
+The class members are Arthur&#39;s grandchildren, a class that may open to include after-born grandchildren and may close upon Arthur&#39;s death or upon the death of the surviving widow, whichever last occurs.
+
+---
+
+#### 4. The RHS&#39;s Interest: Alternative Contingent Remainder in Fee Simple
+
+The will concludes: &#34;but if no grandchild of Arthur lives to attain the age of twenty-five, then to the Rensselaer Historical Society, its successors and assigns, forever.&#34; This creates an alternative contingent remainder in fee simple in the RHS. The condition precedent is that no grandchild of Arthur attains age twenty-five. The RHS&#39;s interest is alternative to the grandchildren&#39;s remainder and will take effect only if the grandchildren&#39;s gift fails entirely.
+
+---
+
+### B. Application of the Common-Law Rule Against Perpetuities
+
+Franklin retains the common-law Rule Against Perpetuities (&#34;RAP&#34;) in its classical form. Under the RAP, no interest is good unless it must vest, if at all, not later than twenty-one years after the death of some life in being at the creation of the interest. Franklin applies the &#34;rule of convenience&#34; to class gifts and recognizes the fertile-octogenarian and unborn-widow presumptions.
+
+The fee tail in Arthur is not subject to the RAP; fee tails (like all fees simple) are not future interests.
+
+#### 1. The Widow&#39;s Shifting Executory Interest: Valid
+
+The widow&#39;s shifting executory interest in a life estate will vest, if at all, upon the failure of Arthur&#39;s bodily line. The measuring life is Arthur, because only upon Arthur&#39;s death (or, more precisely, upon the extinction of his lineal descendants) can his bodily line fail.
+
+Arthur is a life in being at Helena&#39;s death. The widow&#39;s interest must vest, if at all, within Arthur&#39;s lifetime or at the instant of his death (if he dies without surviving lineal descendants). This is well within the RAP period. Even if Arthur remarries after Bernice&#39;s death, the new widow&#39;s identity is determined at the moment Arthur&#39;s line fails, which cannot occur after Arthur&#39;s death.
+
+Bernice&#39;s current identity as Arthur&#39;s wife does not determine the interest; the will refers to &#34;such person as shall be&#34; the widow at the time of failure. Under Franklin law, the unborn-widow presumption applies: we presume that Arthur might marry a woman not yet born at Helena&#39;s death. However, even under this presumption, the widow&#39;s interest is valid because it must vest at the latest upon Arthur&#39;s death, a life in being. The interest does not depend on the widow&#39;s survival for any period beyond Arthur&#39;s life; it springs into existence the instant Arthur&#39;s line fails, and it endures only for the widow&#39;s life.
+
+Accordingly, the widow&#39;s shifting executory interest is valid under the RAP.
+
+#### 2. The Grandchildren&#39;s Contingent Remainder: Void
+
+The grandchildren&#39;s contingent remainder in fee simple is subject to the RAP. The measuring lives are Arthur&#39;s children and grandchildren living at Helena&#39;s death: Celia, Dmitri, and any after-born children or grandchildren of Arthur. The latest possible vesting event is the attainment of age twenty-five by the youngest of Arthur&#39;s grandchildren.
+
+Under the fertile-octogenarian presumption, Franklin law presumes that any living person, regardless of age or medical condition, may bear children. Octavia is eighty-two and her physicians attest she is incapable of bearing children. However, the fertile-octogenarian presumption is irrebuttable at common law; courts do not consider medical evidence of sterility. Octavia&#39;s age and medical condition do not excuse the presumption. Therefore, Arthur&#39;s sister Octavia is presumed capable of bearing children, and those children would be Arthur&#39;s siblings, whose children (Arthur&#39;s nieces and nephews) would not be Arthur&#39;s grandchildren. The relevant fertile-octogenarian concern is that Arthur himself, or Arthur&#39;s living children (Celia and Dmitri), might bear additional children after Helena&#39;s death.
+
+The critical path of invalidity runs through Arthur&#39;s children. Consider this sequence:
+
+1. Arthur is alive at Helena&#39;s death. Arthur may have additional children after Helena&#39;s death.
+2. One of Arthur&#39;s after-born children (call her &#34;Edwina&#34;) is born in 2030. Edwina is not a life in being at Helena&#39;s death.
+3. Edwina bears a child (Arthur&#39;s grandchild) in 2060. This grandchild, &#34;Frank,&#34; is not a life in being.
+4. Frank attains age twenty-five in 2085.
+
+This vesting occurs 55 years after Helena&#39;s death, far beyond the 21-year period after Arthur&#39;s death. Arthur (a life in being) may die in 2045; the 21-year period expires in 2066. Frank&#39;s vesting in 2085 is 19 years too late.
+
+Alternatively, even limiting the class to grandchildren in being at Helena&#39;s death: Celia is 24 and may bear a child (&#34;George&#34;) in 2030. George attains 25 in 2055—31 years after Helena&#39;s death, which exceeds the 21-year period after the deaths of all measuring lives (Arthur, Celia, Dmitri). Arthur may die in 2045; the 21-year period from Arthur&#39;s death expires in 2066. But if we consider Dmitri (age 19 at Helena&#39;s death) as the measuring life, Dmitri may die in 2075; the 21-year period from Dmitri&#39;s death expires in 2096, and a child of Dmitri born in 2073 would attain 25 in 2098—one year too late.
+
+The unborn-widow presumption does not directly affect the grandchildren&#39;s remainder, but the fertile-octogenarian presumption does. Because a grandchild may be born to a parent who is not a life in being, and that grandchild may attain age twenty-five more than twenty-one years after the death of all lives in being, the interest violates the RAP.
+
+The rule of convenience does not save the gift. Even if the class closes at Arthur&#39;s death, the class includes grandchildren who may be born after Helena&#39;s death (including to parents born after Helena&#39;s death), and those grandchildren may attain age twenty-five beyond the RAP period.
+
+Therefore, the grandchildren&#39;s contingent remainder is void under the RAP.
+
+#### 3. The RHS&#39;s Alternative Contingent Remainder: Void
+
+The RHS&#39;s alternative contingent remainder depends upon the same condition: that no grandchild of Arthur attains age twenty-five. Because this condition may occur (or not occur) at the same remote time as the grandchildren&#39;s remainder—possibly after the death of all lives in being plus twenty-one years—the RHS&#39;s interest is also void under the RAP.
+
+---
+
+### C. Resulting State of the Title at Helena&#39;s Death
+
+Striking the void interests (the grandchildren&#39;s remainder and the RHS&#39;s remainder), Article IV leaves the following estates:
+
+- **Present possessory estate**: Fee tail in Arthur Cartwright.
+- **Shifting executory interest in a life estate**: In Arthur&#39;s unidentified widow, valid under the RAP, arising if Arthur&#39;s bodily line fails.
+
+Because the grandchildren&#39;s remainder and the RHS&#39;s remainder are void, the will creates no valid remainder after the widow&#39;s life estate. Under the doctrine of worthier title (inapplicable here by stipulation) or, more relevantly, under the common-law rule that a gap in the disposition results in a reversion, Helena&#39;s estate retains a reversion in fee simple, which passes under the residuary clause to Arthur outright.
+
+Alternatively, the void future interests cause a resulting trust to Arthur&#39;s estate, which Arthur then devises under the residuary clause to himself.
+
+Thus, at Helena&#39;s death, the state of the title to Blackacre is:
+
+- Arthur holds a fee tail in possession.
+- Arthur&#39;s unidentified widow holds a valid shifting executory interest in a life estate, shifting upon failure of Arthur&#39;s bodily line.
+- Arthur (or his estate) holds a reversion in fee simple, subject to the widow&#39;s shifting executory interest and to the fee tail&#39;s natural termination.
+
+---
+
+### D. Consequences of Lineal Failure
+
+#### (i) If Arthur&#39;s Bodily Line Fails in 2050
+
+If Arthur&#39;s bodily line fails in 2050, Arthur&#39;s fee tail terminates. The shifting executory interest in Arthur&#39;s widow immediately vests in possession as a life estate. Arthur&#39;s widow (whoever she may be at that time) takes a life estate. Upon the widow&#39;s death, because the grandchildren&#39;s remainder and RHS&#39;s remainder are void, the property reverts to Arthur&#39;s estate (or to Helena&#39;s residuary devisee, Arthur, under the residuary clause). The reversion in fee simple passes to Arthur&#39;s heirs or devisees.
+
+#### (ii) If Arthur&#39;s Bodily Line Fails in 2150
+
+The analysis is identical. The RAP invalidates the grandchildren&#39;s and RHS&#39;s remainders regardless of when Arthur&#39;s line fails. If the line fails in 2150, Arthur&#39;s widow takes a life estate, and upon her death the property reverts to Arthur&#39;s estate or Helena&#39;s residuary devisee. The remote date of failure (2150) does not change the validity analysis because the void remainders never come into existence.
+
+---
+
+## V. CONCLUSION
+
+Article IV creates a fee tail in Arthur, a valid shifting executory life estate in Arthur&#39;s widow, and two void remainders in fee simple (grandchildren and RHS). After striking the void interests, Arthur holds a fee tail subject to divestment, with a reversion in fee simple passing under the residuary clause. If Arthur&#39;s line fails in either 2050 or 2150, the widow takes a life estate, and the property ultimately reverts to Arthur&#39;s estate or Helena&#39;s residuary taker.
+
+---
+
+*Respectfully submitted,*  
+*Law Clerk to the Probate Court*</pre>
+<h2>Scores</h2>
+<div class="scores">memo <span class="n">3</span> / diagram <span class="n">3</span></div>
+<h2>Memo &mdash; why</h2>
+<div class="scores">The memo correctly identifies Arthur&#39;s fee tail (item a), the unborn widow problem and validity of the widow&#39;s interest (items c, g), the fertile octogenarian presumption as irrebuttable (item j), voids the grandchildren&#39;s gift via the afterborn-child mechanism (item h), voids the Society&#39;s interest (item i), and reaches the correct resulting title (item l). However, it critically misclassifies the post-fee-tail interests as shifting executory interests rather than remainders (item b is wrong), which is a significant doctrinal error. The memo also fails to clearly identify Octavia as not being a measuring life (item k is partially addressed but muddled), and the measuring-lives analysis (item f) is incomplete and confused. The executory-interest misclassification is a significant error that prevents a score of 4 under the rubric anchors.</div>
+<h2>Diagram &mdash; why</h2>
+<div class="scores">The diagram shows a chain of title from Helena through Arthur, Arthur&#39;s Widow, Arthur&#39;s Grandchildren, and Rensselaer Historical Society with estate labels, a visual distinction between void (red dashed) and valid (solid blue/green) interests, and a legend. However, the measuring lives are incomplete (only Arthur is labeled; Bernice, Celia, Dmitri, and Octavia are not shown), the RAP timeline is cut off at the bottom and not fully rendered, and vesting-event markers on the timeline are not visible. The XML parsing error also truncates the page, preventing full rendering.</div>
+
+<h2>Diagram</h2>
+<div class="diagram-box">
+
+<p class="diagram-note">diagram did not render</p>
+
+</div>
+
+
+<div class="back"><a href="index.html">back to index</a></div>
+</div>
+</body>
+</html>

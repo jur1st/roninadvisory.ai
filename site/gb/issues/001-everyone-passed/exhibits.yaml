@@ -1,0 +1,54 @@
+issue: "001"
+slug: everyone-passed
+campaign: EV-023
+# Curated 2026-06-15. Six property-task exhibits: the two frontier-perfect
+# chains (what a fully-held 13-link resolution looks like) + the four failure
+# mechanisms surfaced by the chain-break analysis (early structural break,
+# single-node cascade, confident-wrong premise, working-memory overload).
+# Selection is editorial; rendering is deterministic (gunnerbench dispatch exhibits).
+exhibits:
+  - id: fable-5-property
+    run: 92b37501
+    task: property-fee-tail-rap
+    model: claude-fable-5
+    channel: claude-code
+    headline: true
+    prompt: excerpt
+    prompt_lines: "9-30"
+    note: "A perfect 20/20 chain resolution -- every dependent link held, with a clean estate diagram."
+  - id: deepseek-v4-property
+    run: dc9687ad
+    task: property-fee-tail-rap
+    model: deepseek-v4-pro
+    channel: openrouter
+    prompt: none
+    note: "Open-weight, also 20/20 -- ties the closed frontier on the same chain."
+  - id: opus-4-8-property
+    run: 81b29fbb
+    task: property-fee-tail-rap
+    model: claude-opus-4.8
+    channel: claude-code
+    prompt: none
+    commentary: commentary/opus-4-8.md
+    note: "Memo 2, diagram 5 -- a flawless picture of a doctrinally wrong holding."
+  - id: gpt-5-4-property
+    run: 705b499e
+    task: property-fee-tail-rap
+    model: gpt-5.4
+    channel: openrouter
+    prompt: none
+    note: "One wrong link -- the widow's estate -- cascaded into the wrong resulting title."
+  - id: haiku-4-5-property
+    run: b5c19d61
+    task: property-fee-tail-rap
+    model: claude-haiku-4.5
+    channel: claude-code
+    prompt: none
+    note: "Held the classification, then the long RAP cascade fell over -- the overload signature."
+  - id: grok-4-3-property
+    run: 4d41f6b6
+    task: property-fee-tail-rap
+    model: grok-4.3
+    channel: openrouter
+    prompt: none
+    note: "Broke early and structurally -- miscalled the post-fee-tail remainders executory interests."

@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Issue No. 1 cover + TOC : GunnerBench periodical
+  ============================================================
+  Sibling of the published About page at https://roninadvisory.ai/gb/.
+  Same house style: three font roles, calibrated-teal accent (hue 215),
+  restrained serif hook (weight 400, clamp), instrument readout strip,
+  chart-as-instrument, three-font provenance specimen.
+
+  Self-contained: no external stylesheets, scripts, images, or fonts;
+  favicon is a data: URI.
+  bypass-tier1-html OK : self-contained page, no external resources.
+  bypass-rogue-font-family OK : token block copied verbatim from the
+  published About page (roninadvisory.ai/gb). The hex fallbacks
+  (#226d8b / #1c5972) and accent-hi oklch(38%) sit just outside the
+  hook numeric band but ARE the calibrated house palette; matching the
+  canonical published page, not introducing a new color.
+
+  DATA: scoreboard + the three VERIFIED price points (fable-5 $9.74,
+  gpt-5.5 $1.32, deepseek-v4-pro $0.18) are real. Other chart points are
+  approximate run-level placeholders for the Phase-E /gb-chart build.
+
+  Dead-link discipline (verified 2026-06-15): all TOC entries link to live pages.
+  ============================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Issue No. 1 -- Everyone Passed. Now What? -- GunnerBench</title>
+<meta name="description" content="Expert legal reasoning went from a frontier capability to a commodity in about two years. Four models score a perfect 20/20 bar-exam memo; the price of that identical grade spans roughly 54x. The game is now cost and trust.">
+<meta name="author" content="The Ronin Advisory Group LLC">
+<meta name="theme-color" content="#226d8b">
+
+<link rel="canonical" href="https://roninadvisory.ai/gb/issue-1/">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="GunnerBench">
+<meta property="og:title" content="Everyone Passed. Now What?">
+<meta property="og:description" content="Four models score a perfect 20/20 bar-exam memo; the price of that identical grade spans roughly 54x. Capability stopped being the variable. Price became the variable.">
+<meta property="og:url" content="https://roninadvisory.ai/gb/issue-1/">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Everyone Passed. Now What?">
+<meta name="twitter:description" content="Four models, a perfect 20/20, a 54x price spread. The game is now cost and trust.">
+
+<!-- Inline-SVG favicon: calibrated-teal square on a neutral field. Self-contained. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23fafafa'/><rect x='5.5' y='5.5' width='5' height='5' fill='%23226d8b'/></svg>">
+
+<style>
+  /* Design tokens : copied verbatim from the published About page. */
+  :root {
+    color-scheme: light dark;
+
+    --bg: #fafafa;
+    --bg: oklch(98.5% 0.003 220);
+    --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+
+    --paper: #ffffff;
+    --paper: oklch(99.5% 0.002 220);
+    --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+
+    --fg: #1a1b22;
+    --fg: oklch(20% 0.022 240);
+    --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+
+    --muted: #6a6f7c;
+    --muted: oklch(48% 0.020 240);
+    --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+
+    --rule: #d6d9dd;
+    --rule: oklch(85% 0.010 220);
+    --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+
+    --accent: #226d8b;
+    --accent: oklch(45% 0.13 215);
+    --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+
+    --accent-hi: #1c5972;
+    --accent-hi: oklch(38% 0.15 215);
+    --accent-hi: light-dark(oklch(38% 0.15 215), oklch(82% 0.14 215));
+
+    --bad: #b3402e;
+    --bad: oklch(52% 0.16 30);
+    --bad: light-dark(oklch(52% 0.16 30), oklch(70% 0.15 30));
+
+    --warn: #9a6a16;
+    --warn: oklch(58% 0.11 75);
+    --warn: light-dark(oklch(58% 0.11 75), oklch(78% 0.12 80));
+
+    --trace: var(--accent);
+    --graticule: light-dark(oklch(85% 0.05 215), oklch(40% 0.05 215));
+
+    --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Arial, sans-serif;
+    --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                  "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                  monospace;
+    --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                  "Times New Roman", serif;
+
+    --scale-100: 0.78rem;
+    --scale-200: 0.88rem;
+    --scale-300: 1.00rem;
+    --scale-400: 1.18rem;
+    --scale-500: 1.40rem;
+    --scale-600: 1.78rem;
+    --scale-700: 2.40rem;
+
+    --leading-tight: 1.2;
+    --leading-snug:  1.35;
+    --leading-body:  1.55;
+
+    --space-100: 0.25rem;
+    --space-200: 0.5rem;
+    --space-300: 0.75rem;
+    --space-400: 1rem;
+    --space-500: 1.5rem;
+    --space-600: 2rem;
+    --space-700: 3rem;
+    --space-800: 4rem;
+    --space-900: 6rem;
+
+    --rule-hairline: 1px solid var(--rule);
+  }
+
+  /* ========================================================
+     Base reset / page frame
+     ======================================================== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: var(--leading-body);
+    overflow-x: clip;
+  }
+  img, svg { max-width: 100%; }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--space-700);
+  }
+
+  /* ========================================================
+     Chrome strip
+     ======================================================== */
+  .chrome {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-400) 0 var(--space-300) 0;
+  }
+  .readout {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(7rem, auto)) 1fr;
+    align-items: end;
+    gap: var(--space-500);
+    padding: var(--space-300) 0;
+    border-top: var(--rule-hairline);
+    border-bottom: var(--rule-hairline);
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .readout .field { display: flex; flex-direction: column; gap: var(--space-100); min-width: 0; }
+  .readout .label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .readout .value {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .readout .trace { height: 28px; width: 100%; align-self: center; overflow: visible; }
+  .wayfinder {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: var(--space-300); gap: var(--space-400); flex-wrap: wrap;
+  }
+  .wayfinder .here {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg);
+  }
+  .wayfinder .lab {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted);
+  }
+  .wayfinder .lab a, .wayfinder .here a {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 1px;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  .wayfinder .lab a:hover, .wayfinder .lab a:focus-visible,
+  .wayfinder .here a:hover, .wayfinder .here a:focus-visible {
+    color: var(--accent); border-bottom-color: var(--accent); outline: none;
+  }
+
+  /* ========================================================
+     Body column + breakouts
+     ======================================================== */
+  .body { max-width: 640px; margin: 0 auto; padding-top: var(--space-700); }
+  .body > * { max-width: 100%; }
+  .breakout-wide { max-width: min(780px, 100%); width: 100%; margin-left: auto; margin-right: auto; }
+  .breakout-svg { max-width: min(1080px, 100%); width: 100%; margin-left: auto; margin-right: auto; }
+  @media (min-width: 900px) {
+    .breakout-wide { width: auto; max-width: 780px; margin-left: -70px; margin-right: -70px; }
+  }
+  @media (min-width: 1200px) {
+    .breakout-svg { width: auto; max-width: 1080px; margin-left: -220px; margin-right: -220px; }
+  }
+
+  /* ========================================================
+     Typography : restrained serif hook, weight 400, About clamp.
+     ======================================================== */
+  .issue-flag {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 var(--space-300) 0;
+    display: flex; align-items: center; gap: var(--space-300);
+  }
+  .issue-flag .sq { width: 8px; height: 8px; background: var(--accent); display: inline-block; flex: 0 0 auto; }
+  .issue-flag .sep { color: var(--muted); }
+
+  h1.hero {
+    font-family: var(--font-prose);
+    font-size: clamp(2.2rem, 1.4rem + 2.6vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.012em;
+    margin: 0 0 var(--space-500) 0;
+    font-weight: 400;
+  }
+
+  h2.section {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--scale-500);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: var(--space-700) 0 var(--space-400) 0;
+    padding-bottom: var(--space-200);
+    position: relative;
+    color: var(--fg);
+  }
+  h2.section::after {
+    content: ""; display: block; position: absolute;
+    left: 0; bottom: 0; width: 2.4em; height: 2px; background: var(--accent);
+  }
+
+  .lede { font-size: var(--scale-400); line-height: 1.5; margin: 0 0 var(--space-500) 0; }
+  p { margin: 0 0 var(--space-400) 0; line-height: 1.65; }
+
+  /* Orienting standfirst : tells a cover-only reader what GunnerBench is
+     and that this is one experiment among many. Bordered inset, calm voice. */
+  .standfirst {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: 1.6;
+    color: var(--fg);
+    border-left: 3px solid var(--accent);
+    padding: var(--space-200) 0 var(--space-200) var(--space-500);
+    margin: 0 0 var(--space-500) 0;
+  }
+  .standfirst .standfirst-lab {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--accent-hi);
+  }
+
+  .accent-underline {
+    text-decoration: underline; text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px; text-underline-offset: 4px;
+  }
+
+  a {
+    color: var(--fg); text-decoration: underline;
+    text-decoration-color: var(--accent); text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  a:hover { text-decoration-color: var(--accent-hi); }
+
+  code, .mono {
+    font-family: var(--font-mono); font-size: 0.92em;
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+
+  /* Section seam */
+  .seam {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: var(--space-700) 0; color: var(--rule);
+  }
+  .seam .h-rule { display: inline-block; width: 28px; height: 1px; background: currentColor; }
+  .seam .sq { display: inline-block; width: 5px; height: 5px; background: var(--accent); }
+
+  /* Pull-quote */
+  .pullquote {
+    font-family: var(--font-prose); font-style: italic;
+    font-size: var(--scale-500); line-height: 1.4;
+    border-left: 3px solid var(--accent);
+    padding: var(--space-200) 0 var(--space-200) var(--space-500);
+    margin: var(--space-600) 0; color: var(--fg);
+  }
+
+  figcaption {
+    font-family: var(--font-sans); font-size: var(--scale-200);
+    color: var(--muted); text-align: center;
+    margin-top: var(--space-300); line-height: var(--leading-snug);
+  }
+  figure { margin: var(--space-600) 0; }
+  figure svg { display: block; width: 100%; height: auto; }
+
+  /* ========================================================
+     Provenance specimen : the human-vs-machine type contrast.
+     Operator framing in serif; machine output in mono on paper.
+     ======================================================== */
+  .specimen { margin: var(--space-600) 0; }
+  .specimen .frame {
+    font-family: var(--font-prose);
+    font-size: var(--scale-400);
+    line-height: 1.5;
+    margin: 0 0 var(--space-400) 0;
+  }
+  .specimen .machine {
+    font-family: var(--font-mono);
+    font-size: var(--scale-200);
+    line-height: 1.6;
+    background: var(--paper);
+    border: var(--rule-hairline);
+    border-left: 3px solid var(--accent);
+    padding: var(--space-400) var(--space-500);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: var(--fg);
+  }
+  .specimen .machine .tag {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: var(--space-300);
+    font-weight: 600;
+  }
+  .specimen .machine .h { color: var(--accent); }
+
+  /* ========================================================
+     Centerpiece callout : the "beautiful wrong answer".
+     A bordered card. Verdict in serif/sans, the model's own
+     line in mono. Teal signal kept to the rule + the score.
+     ======================================================== */
+  .callout {
+    margin: var(--space-600) 0;
+    border: var(--rule-hairline);
+    border-top: 3px solid var(--accent);
+    background: var(--paper);
+    padding: var(--space-500) var(--space-500) var(--space-400);
+  }
+  .callout .head {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--scale-200);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 var(--space-300) 0;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-300);
+  }
+  .callout .head .model { color: var(--fg); }
+  .callout .scores {
+    font-family: var(--font-mono);
+    font-size: var(--scale-200);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .callout .said {
+    font-family: var(--font-mono);
+    font-size: var(--scale-200);
+    line-height: 1.55;
+    font-style: normal;
+    border-left: 2px solid var(--rule);
+    padding-left: var(--space-400);
+    margin: 0 0 var(--space-400) 0;
+    color: var(--fg);
+  }
+  .callout .verdict {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: 1.6;
+    margin: 0 0 var(--space-300) 0;
+  }
+  .callout .lesson {
+    font-family: var(--font-sans);
+    font-size: var(--scale-200);
+    line-height: 1.55;
+    color: var(--muted);
+    margin: 0;
+  }
+  .callout .void { color: var(--accent); font-family: var(--font-mono); font-weight: 500; }
+
+  /* ========================================================
+     Table of contents
+     ======================================================== */
+  .toc { margin: var(--space-500) 0 0 0; }
+  .toc .entry {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: var(--space-400);
+    padding: var(--space-300) 0;
+    border-top: var(--rule-hairline);
+    align-items: baseline;
+  }
+  .toc .entry:last-child { border-bottom: var(--rule-hairline); }
+  .toc .num {
+    font-family: var(--font-mono); font-size: var(--scale-200);
+    color: var(--accent); letter-spacing: 0.03em;
+  }
+  .toc .name { font-family: var(--font-prose); font-size: var(--scale-400); line-height: 1.3; }
+  .toc .name a { text-decoration-thickness: 1px; }
+  .toc .name .sub {
+    display: block; font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); margin-top: var(--space-100); letter-spacing: 0.01em;
+  }
+  .toc .kind {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;
+    text-align: right; white-space: nowrap;
+  }
+
+  /* Chart: legend below */
+  .chart-legend {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    color: var(--muted);
+    text-align: center;
+    margin-top: var(--space-200);
+    letter-spacing: 0.02em;
+  }
+  .chart-legend .ddagger { color: var(--accent); }
+
+  /* Closer */
+  .closer-block { margin-top: var(--space-800); }
+  .closer {
+    font-family: var(--font-prose); font-size: var(--scale-500);
+    text-align: center; margin: 0; line-height: 1.4;
+  }
+  .closer .signal {
+    color: var(--accent); font-weight: 600; font-size: 1.1em;
+    line-height: 1; margin-left: 0.01em;
+  }
+  .footer-rule {
+    border: 0; border-top: 1px solid var(--rule);
+    width: 4rem; margin: var(--space-700) auto var(--space-400) auto;
+  }
+  .copyright {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); text-align: center;
+    margin: 0 0 var(--space-800) 0; letter-spacing: 0.02em;
+  }
+  .footnote {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); line-height: 1.5;
+    margin: var(--space-500) 0 0 0;
+  }
+  .footnote .ddagger { color: var(--accent); }
+
+  /* ========================================================
+     Responsive
+     ======================================================== */
+  @media (max-width: 1024px) { .page { padding: 0 var(--space-600); } }
+  @media (max-width: 800px) {
+    .page { padding: 0 var(--space-500); }
+    .readout { gap: var(--space-400); }
+  }
+  @media (max-width: 480px) {
+    .page { padding: 0 var(--space-400); }
+    .body { padding-top: var(--space-600); }
+    .chrome { max-width: 100%; }
+    .readout {
+      grid-template-columns: 1fr; gap: var(--space-300); padding: var(--space-300) 0;
+    }
+    .readout .trace { display: none; }
+    .readout .field {
+      flex-direction: row; align-items: baseline;
+      justify-content: space-between; gap: var(--space-400);
+    }
+    .readout .value { font-size: 1.1rem; }
+    .wayfinder { flex-direction: column; gap: var(--space-200); align-items: flex-start; }
+    h1.hero { font-size: clamp(2rem, 7vw, 2.6rem); }
+    .pullquote { padding-left: var(--space-400); font-size: var(--scale-400); }
+    .specimen .machine { padding: var(--space-300) var(--space-400); }
+    .toc .entry { grid-template-columns: 2rem 1fr; }
+    .toc .kind { display: none; }
+    .closer { font-size: var(--scale-400); }
+  }
+  @media (max-width: 380px) {
+    .page { padding: 0 var(--space-300); }
+    h1.hero { font-size: clamp(1.85rem, 8vw, 2.3rem); }
+  }
+
+  @media print {
+    :root { color-scheme: light; }
+    .chrome { display: none; }
+    .body { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Chrome strip -->
+  <div class="chrome">
+    <div class="readout" role="group" aria-label="issue counters">
+      <div class="field">
+        <span class="label">Perfect 20/20</span>
+        <span class="value">4</span>
+      </div>
+      <div class="field">
+        <span class="label">Price spread</span>
+        <span class="value">54&#215;</span>
+      </div>
+      <div class="field">
+        <span class="label">Cheapest 20/20</span>
+        <span class="value">$0.18</span>
+      </div>
+      <svg class="trace" viewBox="0 0 120 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <title>Capability-ceiling trace : scores cluster flat at the top while cost spreads underneath.</title>
+        <line x1="0" y1="20" x2="120" y2="20" stroke="var(--graticule)" stroke-width="0.5"/>
+        <polyline
+          points="0,6 12,5 24,6 36,4 48,5 60,4 72,5 84,4 96,5 108,4 120,4"
+          fill="none"
+          stroke="var(--trace)"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          vector-effect="non-scaling-stroke"/>
+      </svg>
+    </div>
+    <div class="wayfinder">
+      <span class="here"><a href="../../index.html">GunnerBench</a> &#183; Issue No. 1</span>
+      <span class="lab"><a href="../../about.html">About</a> &#183; The Ronin Advisory Group LLC</span>
+    </div>
+  </div>
+
+  <article class="body">
+
+    <!-- Cover hook -->
+    <p class="issue-flag">
+      <span class="sq" aria-hidden="true"></span>
+      Issue No. 1 <span class="sep">&#183;</span> June 2026
+    </p>
+
+    <h1 class="hero">Everyone Passed. Now What?</h1>
+
+    <p class="lede">
+      In about two years, expert legal reasoning went from something only the
+      most advanced AI could do to something nearly all of it can. That part is
+      settled. The more interesting question is what happens inside the reasoning
+      chain itself &mdash; where it holds, where it snaps, and why.
+    </p>
+
+    <p class="standfirst">
+      <span class="standfirst-lab">GunnerBench</span> is a lab that measures how
+      AI models actually behave on hard, real tasks &mdash; a workbench for
+      deciding which model to trust with work that carries an obligation. This
+      is its first dispatch. Each issue runs a different experiment; this one
+      puts the June&nbsp;2026 frontier &mdash; the most advanced AI systems on the
+      market, the leading edge of what the technology can currently do &mdash; on
+      a single hard legal-reasoning task. One kind of test among many the bench
+      will run.
+    </p>
+
+    <p>
+      Four of twelve frontier models scored a flawless twenty out of twenty on
+      bar-exam-grade essays they had never seen &mdash; expert legal reasoning
+      is now table stakes. So we stopped asking who passed. We followed each
+      reasoning chain link by link to find where it snapped &mdash; most
+      memorably in the flagship that held every structural step, then committed
+      to a single wrong premise and drew a flawless, confident diagram of a
+      conclusion that was exactly backwards. A leaderboard cannot show you that.
+      This issue does.
+    </p>
+
+    <div class="pullquote breakout-wide">
+      The failure modes are the story. Cost and trust are one downstream axis;
+      where the chain breaks, and why, is the payoff.
+    </div>
+
+    <!-- ============= The headline chart ============= -->
+    <h2 class="section">Where the reasoning chain broke</h2>
+
+    <p>
+      The hardest of the three tasks is a property problem, and it is the
+      centerpiece of this issue. A will hands a family orchard down a chain of
+      conditions &mdash; to a son and the heirs of his body, then to a future widow
+      for life, then to the grandchildren who reach twenty-five, then to a charity
+      &mdash; each taking only if the one before it fails, some of them not yet born.
+      Answering it is not one judgment but roughly a dozen interdependent ones in
+      sequence: first <em>name</em> every present and future interest in that chain
+      (what lawyers call &ldquo;identifying the interests&rdquo;), then test each
+      contingent one against the Rule Against Perpetuities &mdash; the doctrine
+      students remember as the hardest they ever met, which asks not what
+      <em>will</em> happen but what <em>could</em>, under any turn of events the
+      words permit. Miss one link early and every conclusion downstream inherits
+      the error.
+    </p>
+
+    <p>
+      Every model in this field can now name the legal interests correctly &mdash;
+      that part is fully saturated. Where they differ is the hard multi-step
+      reasoning that follows: whether a model can hold a long chain of dependent
+      conclusions together all the way to the title, or whether it drops a node
+      somewhere in the middle. Even the best sometimes produces a confident,
+      polished wrong answer &mdash; not because it lacks knowledge, but because a
+      single wrong commitment early in the chain carries forward into everything
+      that follows. That is the pattern this chart shows.
+    </p>
+
+    <p>
+      Two numbers in this issue measure different things, so hold them apart.
+      Holding the full reasoning chain is <em>not</em> the same as a perfect
+      score: a model can hold every property-link in the chain and still drop a
+      point &mdash; on the required diagram, or on one of the other two essays.
+      So seven models held the full chain on the property problem; of those
+      seven, four <em>also</em> scored a perfect 20/20 across the whole battery.
+    </p>
+
+    <figure class="breakout-svg">
+  <svg viewBox="-22 0 842 620" role="img" aria-labelledby="cb-title cb-desc">
+    <title id="cb-title">Where the thirteen-link rubric chain snapped across twelve models.</title>
+    <desc id="cb-desc">A shared dependency spine of thirteen rubric links labelled a through m runs left to right; links a through f are the classification half, links g through l are the back-half Rule-Against-Perpetuities cascade, and link m is an optional unscored footnote drawn muted and dashed. A dashed vertical divider sits between f and g. At the top, a teal band spans a through l: the seven models that held the entire chain. Below it descend five rupture lanes in capability-ladder order. grok-4.3 ruptures early at b, a hollow ring with a snapped spine, the lone front-half structural break and the ladder's bottom rung. deepseek-v3.2 ruptures at e. gpt-5.4 ruptures at g, and a thin arc carries the failure into the title link l. opus-4.8 holds all structure then ruptures at h and i, with two arcs converging on l. haiku-4.5 ruptures at i with a partial at h, and an arc into l, plus partial half-rings at j and k. Held nodes are solid teal discs; broken nodes are hollow rings stroked red with a gap in the spine; partial nodes are half-filled rings.</desc>
+
+    <style>
+      .cb-t-sans  { font-family: var(--font-sans); }
+      .cb-t-mono  { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+      .cb-t-prose { font-family: var(--font-prose); font-style: italic; }
+
+      .cb-link-letter { font-size: 13px; fill: var(--fg); }
+      .cb-link-letter-muted { font-size: 13px; fill: var(--muted); }
+      .cb-half-label  { font-size: 11.5px; fill: var(--muted); letter-spacing: 0.04em; }
+      .cb-lane-id     { font-size: 12px; fill: var(--fg); }
+      .cb-lane-memo   { font-size: 11px; fill: var(--muted); }
+      .cb-lane-mech   { font-size: 11.5px; fill: var(--muted); font-style: italic; }
+      .cb-band-id     { font-size: 12px; fill: var(--accent); }
+      .cb-band-mech   { font-size: 11.5px; fill: var(--muted); font-style: italic; }
+      .cb-rung-tag    { font-size: 10px; fill: var(--muted); letter-spacing: 0.04em; }
+
+      .cb-spine       { stroke: var(--accent); stroke-width: 1.75; fill: none; }
+      .cb-spine-m     { stroke: var(--muted); stroke-width: 1.25; fill: none; stroke-dasharray: 3 3; opacity: 0.75; }
+      .cb-spine-gap   { stroke: var(--bad); stroke-width: 1.75; fill: none; }
+
+      .cb-node-held   { fill: var(--accent); stroke: var(--accent); stroke-width: 1; }
+      .cb-node-m      { fill: none; stroke: var(--muted); stroke-width: 1.25; opacity: 0.75; }
+      .cb-node-broke  { fill: var(--bg); stroke: var(--bad); stroke-width: 1.75; }
+      .cb-node-partial-bg { fill: var(--bg); stroke: var(--warn); stroke-width: 1.5; }
+
+      .cb-band-fill   { fill: var(--accent); opacity: 0.08; }
+      .cb-band-edge   { stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.45; }
+
+      .cb-divider     { stroke: var(--rule); stroke-width: 1; fill: none; stroke-dasharray: 4 3; opacity: 0.85; }
+
+      .cb-cascade     { stroke: var(--bad); stroke-width: 1; fill: none; opacity: 0.8; }
+      .cb-cascade-head { fill: var(--bad); opacity: 0.8; }
+
+      .cb-focal-rule  { stroke: var(--accent-hi); stroke-width: 1; fill: none; opacity: 0.55; }
+    </style>
+
+    <!-- link-letter header row, half labels, and the f to g divider. -->
+    <!-- node x grid: a232 b274 c316 d358 e400 f442 g484 h526 i568 j610 k652 l694 m748 -->
+    <g class="cb-t-mono cb-link-letter" text-anchor="middle">
+      <text x="232" y="58">a</text>
+      <text x="274" y="58">b</text>
+      <text x="316" y="58">c</text>
+      <text x="358" y="58">d</text>
+      <text x="400" y="58">e</text>
+      <text x="442" y="58">f</text>
+      <text x="484" y="58">g</text>
+      <text x="526" y="58">h</text>
+      <text x="568" y="58">i</text>
+      <text x="610" y="58">j</text>
+      <text x="652" y="58">k</text>
+      <text x="694" y="58">l</text>
+    </g>
+    <text class="cb-t-mono cb-link-letter-muted" x="748" y="58" text-anchor="middle">m</text>
+
+    <!-- structural divider between f and g : classification | RAP resolution -->
+    <line class="cb-divider" x1="463" y1="46" x2="463" y2="560"/>
+    <text class="cb-t-sans cb-half-label" x="347" y="40" text-anchor="middle">classification (a&#8211;f)</text>
+    <text class="cb-t-sans cb-half-label" x="589" y="40" text-anchor="middle">RAP resolution (g&#8211;l)</text>
+
+    <!-- HELD-COHORT BAND : seven models, full chain a..l intact (band center y=110) -->
+    <rect class="cb-band-fill" x="214" y="86" width="500" height="48" rx="6"/>
+    <rect class="cb-band-edge" x="214" y="86" width="500" height="48" rx="6"/>
+
+    <line class="cb-spine" x1="232" y1="110" x2="694" y2="110"/>
+    <line class="cb-spine-m" x1="694" y1="110" x2="748" y2="110"/>
+    <g class="cb-node-held">
+      <circle cx="232" cy="110" r="4.5"/>
+      <circle cx="274" cy="110" r="4.5"/>
+      <circle cx="316" cy="110" r="4.5"/>
+      <circle cx="358" cy="110" r="4.5"/>
+      <circle cx="400" cy="110" r="4.5"/>
+      <circle cx="442" cy="110" r="4.5"/>
+      <circle cx="484" cy="110" r="4.5"/>
+      <circle cx="526" cy="110" r="4.5"/>
+      <circle cx="568" cy="110" r="4.5"/>
+      <circle cx="610" cy="110" r="4.5"/>
+      <circle cx="652" cy="110" r="4.5"/>
+      <circle cx="694" cy="110" r="4.5">
+        <title>Held the full chain a&#8211;l (seven models, memo 5): claude-fable-5, claude-opus-4.7, gpt-5.5, deepseek-v4-pro, claude-opus-4.6, gemini-3.5-flash, gemini-3.1-pro.</title>
+      </circle>
+    </g>
+    <circle class="cb-node-m" cx="748" cy="110" r="4"/>
+
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-band-id" x="206" y="106">7 models held a&#8211;l</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="121">memo 5 / 5</text>
+      <text class="cb-t-prose cb-band-mech" x="206" y="134">classification saturated across the frontier</text>
+    </g>
+
+    <!-- RUPTURE LANES (5), descending in capability-ladder order. -->
+    <!-- lane y: grok 200 / deepseek 270 / gpt54 340 / opus48 420 / haiku 500 -->
+
+    <!-- LANE 1 : grok-4.3, breaks at b (front half, ladder bottom rung) -->
+    <g>
+      <line class="cb-spine" x1="232" y1="200" x2="262" y2="200"/>
+      <line class="cb-spine-gap" x1="286" y1="200" x2="694" y2="200"/>
+      <line class="cb-spine-m" x1="694" y1="200" x2="748" y2="200"/>
+      <circle class="cb-node-held" cx="232" cy="200" r="4.5"/>
+      <circle class="cb-node-broke" cx="274" cy="200" r="5.5">
+        <title>grok-4.3, link b BROKE: calls the post-fee-tail interests executory interests, not remainders. An early, structural classification mis-step &#8212; the ladder's bottom rung.</title>
+      </circle>
+      <circle class="cb-node-held" cx="316" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="400" cy="200" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="442" cy="200" r="5"/>
+      <path d="M 442 195 A 5 5 0 0 1 442 205 Z" fill="var(--warn)" opacity="0.85">
+        <title>grok-4.3, link f PARTIAL: measuring-lives identification muddled.</title>
+      </path>
+      <circle class="cb-node-held" cx="484" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="526" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="568" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="610" cy="200" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="652" cy="200" r="5"/>
+      <path d="M 652 195 A 5 5 0 0 1 652 205 Z" fill="var(--warn)" opacity="0.85">
+        <title>grok-4.3, link k PARTIAL: Octavia-as-measuring-life muddled.</title>
+      </path>
+      <circle class="cb-node-held" cx="694" cy="200" r="4.5"/>
+      <circle class="cb-node-m" cx="748" cy="200" r="4"/>
+    </g>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="196">grok-4.3</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="210">memo 3 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="226" text-anchor="start">early &#38; structural &#8212; foundational miscategory, but the RAP conclusions held</text>
+    <text class="cb-t-sans cb-rung-tag" x="274" y="180" text-anchor="middle">bottom rung</text>
+
+    <!-- LANE 2 : deepseek-v3.2, breaks at e -->
+    <g>
+      <line class="cb-spine" x1="232" y1="270" x2="388" y2="270"/>
+      <line class="cb-spine-gap" x1="412" y1="270" x2="694" y2="270"/>
+      <line class="cb-spine-m" x1="694" y1="270" x2="748" y2="270"/>
+      <circle class="cb-node-held" cx="232" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="274" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="316" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="270" r="4.5"/>
+      <circle class="cb-node-broke" cx="400" cy="270" r="5.5">
+        <title>deepseek-v3.2, link e BROKE: classifies the Society gift as an executory interest. A near-miss; the core RAP result essentially held.</title>
+      </circle>
+      <circle class="cb-node-held" cx="442" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="484" cy="270" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="526" cy="270" r="5"/>
+      <path d="M 526 265 A 5 5 0 0 1 526 275 Z" fill="var(--warn)" opacity="0.85">
+        <title>deepseek-v3.2, link h PARTIAL: no explicit all-or-nothing (Leake) citation.</title>
+      </path>
+      <circle class="cb-node-held" cx="568" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="610" cy="270" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="652" cy="270" r="5"/>
+      <path d="M 652 265 A 5 5 0 0 1 652 275 Z" fill="var(--warn)" opacity="0.85">
+        <title>deepseek-v3.2, link k PARTIAL: Octavia muddled.</title>
+      </path>
+      <circle class="cb-node-held" cx="694" cy="270" r="4.5"/>
+      <circle class="cb-node-m" cx="748" cy="270" r="4"/>
+    </g>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="266">deepseek-v3.2</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="280">memo 4 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="296" text-anchor="start">near-miss &#8212; one misclassification, core RAP result essentially held</text>
+
+    <!-- LANE 3 : gpt-5.4, breaks at g and cascades to l -->
+    <g>
+      <line class="cb-spine" x1="232" y1="340" x2="472" y2="340"/>
+      <line class="cb-spine-gap" x1="496" y1="340" x2="682" y2="340"/>
+      <line class="cb-spine-m" x1="694" y1="340" x2="748" y2="340"/>
+      <circle class="cb-node-held" cx="232" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="274" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="316" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="400" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="442" cy="340" r="4.5"/>
+      <circle class="cb-node-broke" cx="484" cy="340" r="5.5">
+        <title>gpt-5.4, link g BROKE: concludes the widow's life estate VOID when it is VALID (it vests at Arthur's death). The single wrong decision &#8212; the originating break that cascades into a second broken link at l.</title>
+      </circle>
+      <circle class="cb-node-held" cx="526" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="568" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="610" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="652" cy="340" r="4.5"/>
+      <circle class="cb-node-broke" cx="694" cy="340" r="5.5">
+        <title>gpt-5.4, link l BROKE: wrong resulting title &#8212; a consequence of the wrong determination at g.</title>
+      </circle>
+      <circle class="cb-node-m" cx="748" cy="340" r="4"/>
+    </g>
+    <path class="cb-cascade" d="M 484 346 C 540 374, 638 374, 692 346"/>
+    <polygon class="cb-cascade-head" points="692,346 686,341 689,350"/>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="336">gpt-5.4</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="350">memo 3 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="392" text-anchor="start">one wrong decision (g) cascades into a second broken link (l)</text>
+
+    <!-- LANE 4 : opus-4.8, holds structure then breaks h and i, cascades to l (focal) -->
+    <g>
+      <line class="cb-spine" x1="232" y1="420" x2="514" y2="420"/>
+      <line class="cb-spine-gap" x1="538" y1="420" x2="556" y2="420"/>
+      <line class="cb-spine-gap" x1="580" y1="420" x2="682" y2="420"/>
+      <line class="cb-spine-m" x1="694" y1="420" x2="748" y2="420"/>
+      <circle class="cb-node-held" cx="232" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="274" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="316" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="400" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="442" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="484" cy="420" r="4.5"/>
+      <circle class="cb-node-broke" cx="526" cy="420" r="5.5">
+        <title>claude-opus-4.8, link h BROKE: flips grandchildren VOID to VALID under one wrong premise (post-fee-tail remainders RAP-exempt). Knowledge intact; a single wrong commitment overrode it.</title>
+      </circle>
+      <circle class="cb-node-broke" cx="568" cy="420" r="5.5">
+        <title>claude-opus-4.8, link i BROKE: flips the Society gift VOID to VALID under the same wrong premise.</title>
+      </circle>
+      <circle class="cb-node-held" cx="610" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="652" cy="420" r="4.5"/>
+      <circle class="cb-node-broke" cx="694" cy="420" r="5.5">
+        <title>claude-opus-4.8, link l BROKE: wrong resulting title &#8212; carried from the flipped h and i holdings.</title>
+      </circle>
+      <circle class="cb-node-m" cx="748" cy="420" r="4"/>
+    </g>
+    <path class="cb-cascade" d="M 526 426 C 580 458, 650 456, 691 427"/>
+    <path class="cb-cascade" d="M 568 426 C 608 446, 660 446, 692 427"/>
+    <polygon class="cb-cascade-head" points="692,427 686,422 689,431"/>
+    <rect class="cb-focal-rule" x="214" y="404" width="552" height="34" rx="5"/>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="416">claude-opus-4.8</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="430">memo 2 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="476" text-anchor="start">held all structure (a&#8211;g), then one wrong premise detonates h, i and the title l</text>
+
+    <!-- LANE 5 : haiku-4.5, holds taxonomy then the back half collapses -->
+    <g>
+      <line class="cb-spine" x1="232" y1="500" x2="514" y2="500"/>
+      <line class="cb-spine" x1="538" y1="500" x2="556" y2="500" opacity="0.5"/>
+      <line class="cb-spine-gap" x1="580" y1="500" x2="682" y2="500"/>
+      <line class="cb-spine-m" x1="694" y1="500" x2="748" y2="500"/>
+      <circle class="cb-node-held" cx="232" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="274" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="316" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="400" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="442" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="484" cy="500" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="526" cy="500" r="5"/>
+      <path d="M 526 495 A 5 5 0 0 1 526 505 Z" fill="var(--warn)" opacity="0.85">
+        <title>haiku-4.5, link h PARTIAL: never identifies the afterborn mechanism; all-or-nothing not invoked.</title>
+      </path>
+      <circle class="cb-node-broke" cx="568" cy="500" r="5.5">
+        <title>haiku-4.5, link i BROKE: calls the Society's gift VALID. Working-memory overload across the long downstream cascade.</title>
+      </circle>
+      <circle class="cb-node-partial-bg" cx="610" cy="500" r="5"/>
+      <path d="M 610 495 A 5 5 0 0 1 610 505 Z" fill="var(--warn)" opacity="0.85">
+        <title>haiku-4.5, link j PARTIAL: mishandles the fertile-octogenarian trap.</title>
+      </path>
+      <circle class="cb-node-partial-bg" cx="652" cy="500" r="5"/>
+      <path d="M 652 495 A 5 5 0 0 1 652 505 Z" fill="var(--warn)" opacity="0.85">
+        <title>haiku-4.5, link k PARTIAL: Octavia-as-measuring-life mishandled.</title>
+      </path>
+      <circle class="cb-node-broke" cx="694" cy="500" r="5.5">
+        <title>haiku-4.5, link l BROKE: wrong resulting title &#8212; cannot carry the full dependent resolution at once.</title>
+      </circle>
+      <circle class="cb-node-m" cx="748" cy="500" r="4"/>
+    </g>
+    <path class="cb-cascade" d="M 568 506 C 610 532, 658 532, 692 507"/>
+    <polygon class="cb-cascade-head" points="692,507 686,502 689,511"/>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="496">haiku-4.5</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="510">memo 2 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="552" text-anchor="start">holds the taxonomy (a&#8211;g) but cannot carry the long dependent resolution (h&#8211;l)</text>
+
+    <text class="cb-t-sans cb-rung-tag" x="804" y="200" text-anchor="start" transform="rotate(90 804 200)">capability ladder &#8595;  early-structural to late-conclusional</text>
+
+  </svg>
+
+      <figcaption>
+        Naming the interests (links a&#8211;f) is saturated across the frontier &#8212;
+        every break falls in the back-half RAP cascade (g&#8211;l) save the two
+        front-half classification breaks &#8212; grok-4.3 at b and deepseek-v3.2
+        at e. And where a model breaks climbs the capability ladder: one wrong
+        decision cascades into a second broken link (gpt-5.4, g&#8594;l); the frontier flagship holds
+        all structure then one wrong premise detonates the conclusions
+        (opus-4.8, h, i&#8594;l); a small model holds the taxonomy but cannot carry
+        the long dependent resolution (haiku, the back half collapses).
+      </figcaption>
+    </figure>
+
+    <p class="chart-legend">
+      The teal band marks the <strong>seven</strong> models that held the full property chain (a&#8211;l); of those seven, <strong>four</strong> also scored a perfect 20/20 across the whole battery. Holding every link is not the same as a perfect grade &#8212; a chain-holder could still drop a point on the diagram or another essay.<br>
+      <span style="color:var(--accent);">held</span> = solid teal node &#183;
+      <span style="color:var(--bad);">broke</span> = hollow ring + snapped spine &#183;
+      <span style="color:var(--warn);">partial</span> = half-filled ring &#183;
+      m = optional/unscored (muted dashed)<br>
+      cascade arc = an upstream break (g/h/i) propagating into the title link l &#183;
+      rows ordered by break location = the capability ladder
+    </p>
+
+    <p>
+      <a href="charts/chain-break.html">View the full chain-break diagram &#8594;</a>
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= Provenance specimen ============= -->
+    <h2 class="section">Read the lawyering yourself</h2>
+
+    <div class="specimen breakout-wide">
+      <p class="frame">
+        A score is a claim. The work is the evidence. Read the lawyering
+        yourself &mdash; here is what a 20/20 memorandum on a
+        Rule-Against-Perpetuities problem actually looks like, in the model's
+        own words.
+      </p>
+      <div class="machine" role="figure" aria-label="Excerpt from claude-fable-5's 20/20 memorandum">
+        <span class="tag">claude-fable-5 &#183; 20/20 &#183; verbatim excerpt</span>
+        <span class="h"># MEMORANDUM &mdash; RE: In re Estate of Helena Cartwright, Construction of Article IV (Blackacre).</span>
+
+Preliminary Note on Governing Law: Franklin is a common-law jurisdiction that (1) has never abolished the fee tail, (2) retains the common-law Rule Against Perpetuities in its classical, what-might-happen form &mdash; no wait-and-see, no USRAP, no cy pres reformation, (3) applies the conclusive fertility presumptions (fertile octogenarian, unborn widow), and (4) construes class gifts under the rule of convenience.</div>
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= Centerpiece exhibit: the beautiful wrong answer ============= -->
+    <h2 class="section">The beautiful wrong answer</h2>
+
+    <p>
+      Not every confident memo is a correct one. The clearest exhibit in this
+      issue is a model that wrote a polished, well-drafted analysis &mdash;
+      and got the law exactly backwards, while scoring a perfect five for
+      drawing the wrong conclusion crisply.
+    </p>
+
+    <div class="callout breakout-wide">
+      <p class="head">
+        <span class="model">claude-opus-4.8</span>
+        <span class="scores">memo 2 / 5 &#183; diagram 5 / 5</span>
+      </p>
+      <p class="said">
+        &ldquo;a remainder limited after a fee tail is not subject to the Rule
+        Against Perpetuities. That retention is dispositive.&rdquo;
+      </p>
+      <p class="verdict">
+        The judge's verdict: it invents a fee-tail RAP exemption, holding the
+        grandchildren's and the Society's gifts <span class="void">VALID</span>
+        where the rubric requires them <span class="void">VOID</span> &mdash;
+        and the diagram scored a perfect 5 for rendering that wrong conclusion
+        crisply.
+      </p>
+      <p class="lesson">
+        A polished, confident <em>wrong</em> answer is the one most likely to be
+        waved through. Where that failure comes from &mdash; and how it climbs the
+        capability ladder across the field &mdash; is
+        <a href="02-where-the-chain-broke.html">Page II</a>.
+      </p>
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= Table of contents ============= -->
+    <h2 class="section">In this issue</h2>
+
+    <div class="toc">
+
+      <div class="entry">
+        <span class="num">I</span>
+        <span class="name">
+          <a href="01-everyone-passed.html">Everyone passed &mdash; now the real question</a>
+          <span class="sub">How expert legal reasoning became a commodity in two years</span>
+        </span>
+        <span class="kind">Narrative</span>
+      </div>
+
+      <div class="entry">
+        <span class="num">II</span>
+        <span class="name">
+          <a href="02-where-the-chain-broke.html">Where the chain broke</a>
+          <span class="sub">The thirteen-link rubric spine (twelve scored, a&#8211;l; m an optional footnote), the five rupture lanes, and what failure modes reveal</span>
+        </span>
+        <span class="kind">Narrative</span>
+      </div>
+
+      <div class="entry">
+        <span class="num">III</span>
+        <span class="name">
+          <a href="03-cost-and-trust.html">Cost &amp; trust</a>
+          <span class="sub">When capability is flat, price and provenance are the whole decision</span>
+        </span>
+        <span class="kind">Narrative</span>
+      </div>
+
+      <div class="entry">
+        <span class="num">IV</span>
+        <span class="name">
+          <a href="exhibits/index.html">The exhibits (index)</a>
+          <span class="sub">An index, not a narrative page: the actual memos and diagrams for the Property problem; all twelve models&#8217; answers, read in full</span>
+        </span>
+        <span class="kind">Index</span>
+      </div>
+
+      <div class="entry">
+        <span class="num">V</span>
+        <span class="name">
+          <a href="05-methodology.html">Methodology &amp; colophon</a>
+          <span class="sub">The battery, the rubric, the judge, and channel correction</span>
+        </span>
+        <span class="kind">Method</span>
+      </div>
+
+    </div>
+
+    <p class="footnote">
+      <span class="ddagger">&#8225;</span> The battery: three bar-exam-grade
+      essays &mdash; Property (fee tail + Rule Against Perpetuities, with a
+      required hand-generated estate-chain diagram), Criminal Procedure +
+      &#167;1983, and Evidence (hearsay + Confrontation Clause). Same tasks,
+      same grading checklist, scored by a separate strong AI model
+      (claude-opus-4-6) that reads each answer against that checklist. Anthropic
+      models were run on their own native service (claude-code); all other models
+      (marked <span class="ddagger">&#8225;</span> in the full scoreboard) were
+      run through a shared service called OpenRouter, with costs corrected so
+      every model is compared on the same basis.
+    </p>
+
+    <!-- ============= Close ============= -->
+    <div class="closer-block">
+      <p class="closer">
+        Capability stopped being the variable<span class="signal">.</span>
+      </p>
+
+      <hr class="footer-rule">
+      <p class="copyright">
+        &#169; 2026 The Ronin Advisory Group LLC
+      </p>
+    </div>
+
+  </article>
+</div>
+
+</body>
+</html>

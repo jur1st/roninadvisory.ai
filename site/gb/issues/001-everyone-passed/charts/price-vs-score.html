@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  price-vs-score.html : standalone dispatch chart fragment (Issue No. 1).
+  ============================================================
+  Sibling of the price-vs-score figure embedded in
+  docs/dispatch/issues/001-everyone-passed/index.html. Drops into the same
+  .breakout-svg slot. Cleaner, de-conflicted, verified-vs-approximate styled.
+
+  Token block copied verbatim from the published About page (via index.html).
+  bypass-tier1-html OK : self-contained fragment, no external resources.
+  bypass-rogue-font-family OK : token block copied verbatim from the
+  published About page (roninadvisory.ai/gb). The hex fallbacks
+  (#226d8b / #1c5972) and accent-hi oklch(38%) sit just outside the hook
+  numeric band but ARE the calibrated house palette; matching the canonical
+  published page, not introducing a new color.
+
+  DATA: three VERIFIED price points (claude-fable-5 $9.74/20, gpt-5.5
+  $1.32/20, deepseek-v4-pro $0.18/20) are exact; nine run-level points are
+  approximate, plotted for shape and rendered label-light at reduced opacity.
+  Chart family: cost-vs-substance-scatter, score-vs-cost mode, log-X variant.
+  Claim anchor: CC-12 (capability stopped being the variable; price became it).
+  ============================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The price of a perfect score: a flat ceiling over a 54x cost spread</title>
+
+<style>
+  /* Design tokens : copied verbatim from the published About page. */
+  :root {
+    color-scheme: light dark;
+
+    --bg: #fafafa;
+    --bg: oklch(98.5% 0.003 220);
+    --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+
+    --paper: #ffffff;
+    --paper: oklch(99.5% 0.002 220);
+    --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+
+    --fg: #1a1b22;
+    --fg: oklch(20% 0.022 240);
+    --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+
+    --muted: #6a6f7c;
+    --muted: oklch(48% 0.020 240);
+    --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+
+    --rule: #d6d9dd;
+    --rule: oklch(85% 0.010 220);
+    --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+
+    --accent: #226d8b;
+    --accent: oklch(45% 0.13 215);
+    --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+
+    --accent-hi: #1c5972;
+    --accent-hi: oklch(38% 0.15 215);
+    --accent-hi: light-dark(oklch(38% 0.15 215), oklch(82% 0.14 215));
+
+    --trace: var(--accent);
+    --graticule: light-dark(oklch(85% 0.05 215), oklch(40% 0.05 215));
+
+    --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Arial, sans-serif;
+    --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                  "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                  monospace;
+    --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                  "Times New Roman", serif;
+
+    --scale-100: 0.78rem;
+    --scale-200: 0.88rem;
+    --scale-300: 1.00rem;
+    --scale-400: 1.18rem;
+
+    --space-100: 0.25rem;
+    --space-200: 0.5rem;
+    --space-300: 0.75rem;
+    --space-400: 1rem;
+    --space-500: 1.5rem;
+    --space-600: 2rem;
+    --space-700: 3rem;
+
+    --leading-snug: 1.35;
+    --rule-hairline: 1px solid var(--rule);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: 1.55;
+    padding: var(--space-700) var(--space-500);
+  }
+  img, svg { max-width: 100%; }
+
+  .breakout-svg {
+    max-width: min(1080px, 100%);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  figure { margin: 0 auto; }
+  figure svg { display: block; width: 100%; height: auto; }
+
+  figcaption {
+    font-family: var(--font-prose);
+    font-size: var(--scale-200);
+    color: var(--muted);
+    text-align: center;
+    margin-top: var(--space-400);
+    line-height: var(--leading-snug);
+    max-width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .chart-legend {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    color: var(--muted);
+    text-align: center;
+    margin-top: var(--space-300);
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+  }
+  .chart-legend .verified-key { color: var(--accent); }
+
+  .footnote {
+    font-family: var(--font-sans);
+    font-size: var(--scale-100);
+    color: var(--muted);
+    line-height: 1.5;
+    margin: var(--space-500) auto 0 auto;
+    max-width: 60ch;
+    text-align: center;
+  }
+  .footnote .ddagger { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<figure class="breakout-svg">
+  <svg viewBox="0 0 780 470" role="img" aria-labelledby="pvs-title pvs-desc">
+    <title id="pvs-title">Price per job versus rubric score, nine models, on a logarithmic price axis.</title>
+    <desc id="pvs-desc">A scatter plot. The horizontal axis is price per job on a logarithmic scale from about ten cents to ten dollars; the vertical axis is rubric score from zero to twenty. Points cluster near the top of the score axis across a wide spread of prices, forming a flat capability ceiling. A faint teal band marks the seventeen-to-twenty score region with a dashed teal guide along its floor. Three verified points share the score of twenty: deepseek-v4-pro at eighteen cents (open-weight), gpt-5.5 at one dollar thirty-two, and claude-fable-5 at nine dollars seventy-four, a roughly fifty-four times price spread for the identical grade. Six approximate run-level points are drawn faintly without labels. Marker shape encodes vendor: circle for Anthropic, square for OpenAI, triangle for Google, diamond for other.</desc>
+
+    <style>
+      .pvs-t-sans  { font-family: var(--font-sans); }
+      .pvs-t-mono  { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+      .pvs-t-prose { font-family: var(--font-prose); font-style: italic; }
+
+      .pvs-axis-tick  { font-size: 12px; fill: var(--muted); }
+      .pvs-axis-title { font-size: 14px; font-weight: 600; fill: var(--fg); }
+      .pvs-ceiling-label { font-size: 12px; font-weight: 600; fill: var(--accent); }
+      .pvs-id-label   { font-size: 11.5px; fill: var(--fg); }
+      .pvs-price      { font-size: 11.5px; fill: var(--accent); font-weight: 500; }
+      .pvs-tag        { font-size: 10px; fill: var(--muted); letter-spacing: 0.03em; }
+      .pvs-span-label { font-size: 12.5px; fill: var(--muted); font-style: italic; }
+
+      .pvs-axis-line   { stroke: var(--rule); stroke-width: 1; fill: none; }
+      .pvs-grid        { stroke: var(--graticule); stroke-width: 0.5; fill: none; }
+      .pvs-ceiling     { stroke: var(--accent); stroke-width: 1.25; fill: none; stroke-dasharray: 6 5; opacity: 0.85; }
+      .pvs-ceiling-band { fill: var(--accent); opacity: 0.06; }
+      .pvs-span        { stroke: var(--muted); stroke-width: 0.85; fill: none; }
+      .pvs-leader      { stroke: var(--muted); stroke-width: 1; fill: none; opacity: 0.7; }
+
+      .pvs-marker-verified { fill: var(--accent); stroke: var(--accent); stroke-width: 1; }
+      .pvs-marker-approx   { fill: none; stroke: var(--fg); stroke-width: 1.25; opacity: 0.45; }
+    </style>
+
+    <!-- capability-ceiling wash band : score 17 (y=91) to score 20 (y=40) -->
+    <rect class="pvs-ceiling-band" x="90" y="40" width="630" height="51"/>
+
+    <!-- plot axis frame -->
+    <line class="pvs-axis-line" x1="90" y1="40" x2="90" y2="380"/>
+    <line class="pvs-axis-line" x1="90" y1="380" x2="720" y2="380"/>
+
+    <!-- y gridlines (score) at 5/10/15/20 -->
+    <g class="pvs-grid">
+      <line x1="90" y1="40"  x2="720" y2="40"/>
+      <line x1="90" y1="125" x2="720" y2="125"/>
+      <line x1="90" y1="210" x2="720" y2="210"/>
+      <line x1="90" y1="295" x2="720" y2="295"/>
+    </g>
+    <g class="pvs-t-mono pvs-axis-tick" text-anchor="end">
+      <text x="80" y="44">20</text>
+      <text x="80" y="129">15</text>
+      <text x="80" y="214">10</text>
+      <text x="80" y="299">5</text>
+      <text x="80" y="384">0</text>
+    </g>
+
+    <!-- x log decade gridlines + mono tick labels : $0.10=90, $1.00=405, $10.00=720 -->
+    <g class="pvs-grid">
+      <line x1="405" y1="40" x2="405" y2="380"/>
+      <line x1="720" y1="40" x2="720" y2="380"/>
+    </g>
+    <g class="pvs-t-mono pvs-axis-tick" text-anchor="middle">
+      <text x="90"  y="400">$0.10</text>
+      <text x="405" y="400">$1.00</text>
+      <text x="720" y="400">$10.00</text>
+    </g>
+
+    <!-- capability-ceiling guide : dashed teal hairline on the score=17 floor of the band -->
+    <line class="pvs-ceiling" x1="90" y1="91" x2="720" y2="91"/>
+    <text class="pvs-t-sans pvs-ceiling-label" x="520" y="105" text-anchor="start">capability ceiling (17&#8211;20)</text>
+
+    <!-- ============================================================ -->
+    <!-- APPROXIMATE run-level points : faint, label-light, shape=vendor -->
+    <!--   circle anthropic / square openai / triangle google / diamond other -->
+    <!-- ============================================================ -->
+    <g class="pvs-marker-approx">
+      <!-- gemini-3.5-flash google $1.52 / 19 : nudged right to clear gpt-5.5 -->
+      <polygon points="0,-5.4 4.7,2.7 -4.7,2.7" transform="translate(470,57)">
+        <title>Approximate run-level: gemini-3.5-flash (google), about $1.52 per job, score 19 of 20.</title>
+      </polygon>
+      <!-- gpt-5.4 openai $1.24 / 16 -->
+      <rect x="429.93" y="103.5" width="9" height="9">
+        <title>Approximate run-level: gpt-5.4 (openai), about $1.24 per job, score 16 of 20.</title>
+      </rect>
+      <!-- gemini-3.1-pro google $0.99 / 18 -->
+      <polygon points="0,-5.4 4.7,2.7 -4.7,2.7" transform="translate(403.63,74)">
+        <title>Approximate run-level: gemini-3.1-pro (google), about $0.99 per job, score 18 of 20.</title>
+      </polygon>
+      <!-- claude-haiku-4.5 anthropic $0.78 / 13 -->
+      <circle cx="371.01" cy="159" r="4.5">
+        <title>Approximate run-level: claude-haiku-4.5 (anthropic), about $0.78 per job, score 13 of 20.</title>
+      </circle>
+      <!-- grok-4.3 other $0.42 / 14 -->
+      <polygon points="0,-5.7 5.7,0 0,5.7 -5.7,0" transform="translate(286.32,142)">
+        <title>Approximate run-level: grok-4.3 (other), about $0.42 per job, score 14 of 20.</title>
+      </polygon>
+      <!-- deepseek-v3.2 other $0.29 / 13 -->
+      <polygon points="0,-5.7 5.7,0 0,5.7 -5.7,0" transform="translate(235.66,159)">
+        <title>Approximate run-level: deepseek-v3.2 (other), about $0.29 per job, score 13 of 20.</title>
+      </polygon>
+    </g>
+
+    <!-- ============================================================ -->
+    <!-- 54x span bracket along the ceiling : deepseek-v4-pro x to fable-5 x -->
+    <!-- ============================================================ -->
+    <g>
+      <line class="pvs-span" x1="170.41" y1="26" x2="716.40" y2="26"/>
+      <line class="pvs-span" x1="170.41" y1="22" x2="170.41" y2="30"/>
+      <line class="pvs-span" x1="716.40" y1="22" x2="716.40" y2="30"/>
+      <text class="pvs-t-sans pvs-span-label" x="443" y="18" text-anchor="middle">same 20/20, ~54&#215; the price</text>
+    </g>
+
+    <!-- ============================================================ -->
+    <!-- VERIFIED points : full-opacity teal, labeled, shape=vendor -->
+    <!-- ============================================================ -->
+    <g class="pvs-marker-verified">
+      <!-- deepseek-v4-pro other $0.18 / 20 (open-weight) : diamond -->
+      <polygon points="0,-6.4 6.4,0 0,6.4 -6.4,0" transform="translate(170.41,40)">
+        <title>Verified: deepseek-v4-pro (other, open-weight), $0.18 per job, score 20 of 20.</title>
+      </polygon>
+      <!-- gpt-5.5 openai $1.32 / 20 : square -->
+      <rect x="437.98" y="35" width="10" height="10">
+        <title>Verified: gpt-5.5 (openai), $1.32 per job, score 20 of 20.</title>
+      </rect>
+      <!-- claude-fable-5 anthropic $9.74 / 20 : circle -->
+      <circle cx="716.40" cy="40" r="6">
+        <title>Verified: claude-fable-5 (anthropic), $9.74 per job, score 20 of 20.</title>
+      </circle>
+    </g>
+
+    <!-- verified-point labels -->
+    <!-- deepseek-v4-pro : label below the band, left-of-cluster, open-weight tag -->
+    <g text-anchor="middle">
+      <text class="pvs-t-mono pvs-id-label" x="170.41" y="118">deepseek-v4-pro</text>
+      <text class="pvs-t-mono pvs-price"    x="170.41" y="133">$0.18</text>
+      <text class="pvs-t-sans pvs-tag"      x="170.41" y="147">open-weight</text>
+    </g>
+    <!-- claude-fable-5 : label inboard (right edge), below the dot -->
+    <g text-anchor="end">
+      <text class="pvs-t-mono pvs-id-label" x="708" y="62">claude-fable-5</text>
+      <text class="pvs-t-mono pvs-price"    x="708" y="77">$9.74</text>
+    </g>
+    <!-- gpt-5.5 verified : de-conflict the $1.00-$1.50 cluster. -->
+    <!-- Pull the label UP-LEFT into a callout, leadered from the dot, clearing -->
+    <!-- the gemini-3.5-flash approx triangle nudged right to x=470. -->
+    <g>
+      <line class="pvs-leader" x1="438" y1="40" x2="372" y2="40"/>
+      <g text-anchor="end">
+        <text class="pvs-t-mono pvs-id-label" x="368" y="36">gpt-5.5</text>
+        <text class="pvs-t-mono pvs-price"    x="368" y="51">$1.32</text>
+      </g>
+    </g>
+
+    <!-- axis titles in sans -->
+    <text class="pvs-t-sans pvs-axis-title" x="405" y="430" text-anchor="middle">price per job (log scale, sum of 3 graded tasks)</text>
+    <text class="pvs-t-sans pvs-axis-title" x="28" y="210" text-anchor="middle" transform="rotate(-90 28 210)">score (out of 20)</text>
+  </svg>
+
+  <figcaption>
+    Four models tie at a perfect 20/20, yet the price of that identical grade
+    runs from $0.18 (deepseek-v4-pro, open-weight) to $9.74 (claude-fable-5)
+    &#8212; a flat ceiling over roughly 54&#215; the cost.
+  </figcaption>
+</figure>
+
+<p class="chart-legend">
+  <span class="verified-key">verified (exact, labeled):</span> deepseek-v4-pro $0.18 &#183; gpt-5.5 $1.32 &#183; claude-fable-5 $9.74 &#183; all 20/20<br>
+  6 approximate run-level points (shape only) &#183; shape = vendor: circle anthropic / square openai / triangle google / diamond other
+</p>
+
+<p class="footnote">
+  <span class="ddagger">&#8225;</span> Costs corrected to a common channel:
+  Anthropic models priced on native claude-code, non-Anthropic via OpenRouter.
+</p>
+
+</body>
+</html>

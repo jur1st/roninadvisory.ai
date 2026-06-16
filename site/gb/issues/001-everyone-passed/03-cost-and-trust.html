@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Issue No. 1, Page III: "Cost and trust — one downstream axis"
+  ============================================================
+  Sibling of the issue cover at index.html.
+  Audience: legal professionals — sophisticated, skeptical, practice-minded.
+  Voice: calm, authoritative, evidence-over-hype.
+
+  Editorial doctrine applied: dispatch-editorial-voice.md §4 + §6.
+  Cost + trust is a legitimate downstream axis (the procurement story) but
+  is NOT the intellectually interesting nugget — the failure modes on
+  page II are. This page opens by situating itself after the mechanism
+  work; the price spread and governance table are evidence for the
+  procurement decision, not the payoff of the issue.
+
+  Self-contained: no external stylesheets, scripts, images, or fonts;
+  favicon is a data: URI.
+  bypass-tier1-html OK : self-contained page, no external resources.
+  bypass-rogue-font-family OK : token block copied verbatim from the issue
+  cover (index.html), which itself mirrors the published About page.
+
+  Dead-link discipline:
+    LIVE:     index.html (issue cover), ../../index.html (masthead), ../../about.html
+              charts/price-vs-score.html (exists), exhibits/opus-4-8-property.html (exists)
+    FORTHCOMING (plain text + HTML comment naming target):
+      - 02-where-the-chain-broke.html  [Page II, now complete]
+
+  DATA: all figures verified.
+    Perfect-20/20 models: 4
+    Price spread among 20/20 scorers: ~54x
+    deepseek-v4-pro: $0.18 / 20 out of 20 (via OpenRouter); ~365k total tokens (gorges; cheap on rate)
+    gpt-5.5:         $1.32 / 20 out of 20; ~72,600 total tokens, 37,799 output (lowest output in field)
+    claude-fable-5:  $9.74 / 20 out of 20 (via native claude-code); ~96k output tokens (works it hard)
+    claude-opus-4.8: confidently reached a wrong holding on the property
+                     problem; diagram scored a perfect 5/5. (Full treatment -> Page II.)
+    Gemini tier inversion (approx run-level, this page's basis):
+      gemini-3.5-flash: score 19 / ~$1.52 / ~201k tokens
+      gemini-3.1-pro:   score 18 / ~$0.99 / ~141k tokens
+      => "flash" outscored AND outcost "pro": tier labels predict neither outcome nor bill.
+  ============================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cost and trust -- one downstream axis -- Issue No. 1 -- GunnerBench</title>
+<meta name="description" content="Once capability is settled, the questions that open are practical ones. Cost and deployment governance are real and important -- they are just not the intellectually interesting part. A 54x spread among perfect scorers and four governance questions for professional use.">
+<meta name="author" content="The Ronin Advisory Group LLC">
+<meta name="theme-color" content="#226d8b">
+
+<link rel="canonical" href="https://roninadvisory.ai/gb/issue-1/03-cost-and-trust.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="GunnerBench">
+<meta property="og:title" content="Cost and trust -- one downstream axis">
+<meta property="og:description" content="Four models score 20/20. The cheapest costs $0.18; the most expensive costs $9.74. Same grade, 54x the price. The decision has moved from capability to procurement -- one axis among several the saturation opens.">
+<meta property="og:url" content="https://roninadvisory.ai/gb/issue-1/03-cost-and-trust.html">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cost and trust -- one downstream axis">
+<meta name="twitter:description" content="Same 20/20, 54x the price. Cost and governance are important once capability is settled -- but not the intellectually interesting part.">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23fafafa'/><rect x='5.5' y='5.5' width='5' height='5' fill='%23226d8b'/></svg>">
+
+<style>
+  /* Design tokens: copied verbatim from the issue cover (index.html),
+     which itself mirrors the published About page at roninadvisory.ai/gb. */
+  :root {
+    color-scheme: light dark;
+
+    --bg: #fafafa;
+    --bg: oklch(98.5% 0.003 220);
+    --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+
+    --paper: #ffffff;
+    --paper: oklch(99.5% 0.002 220);
+    --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+
+    --fg: #1a1b22;
+    --fg: oklch(20% 0.022 240);
+    --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+
+    --muted: #6a6f7c;
+    --muted: oklch(48% 0.020 240);
+    --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+
+    --rule: #d6d9dd;
+    --rule: oklch(85% 0.010 220);
+    --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+
+    --accent: #226d8b;
+    --accent: oklch(45% 0.13 215);
+    --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+
+    --accent-hi: #1c5972;
+    --accent-hi: oklch(38% 0.15 215);
+    --accent-hi: light-dark(oklch(38% 0.15 215), oklch(82% 0.14 215));
+
+    --trace: var(--accent);
+    --graticule: light-dark(oklch(85% 0.05 215), oklch(40% 0.05 215));
+
+    --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Arial, sans-serif;
+    --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                  "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                  monospace;
+    --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                  "Times New Roman", serif;
+
+    --scale-100: 0.78rem;
+    --scale-200: 0.88rem;
+    --scale-300: 1.00rem;
+    --scale-400: 1.18rem;
+    --scale-500: 1.40rem;
+    --scale-600: 1.78rem;
+    --scale-700: 2.40rem;
+
+    --leading-tight: 1.2;
+    --leading-snug:  1.35;
+    --leading-body:  1.55;
+
+    --space-100: 0.25rem;
+    --space-200: 0.5rem;
+    --space-300: 0.75rem;
+    --space-400: 1rem;
+    --space-500: 1.5rem;
+    --space-600: 2rem;
+    --space-700: 3rem;
+    --space-800: 4rem;
+    --space-900: 6rem;
+
+    --rule-hairline: 1px solid var(--rule);
+  }
+
+  /* ========================================================
+     Base reset / page frame
+     ======================================================== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: var(--leading-body);
+    overflow-x: clip;
+  }
+  img, svg { max-width: 100%; }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--space-700);
+  }
+
+  /* ========================================================
+     Chrome strip
+     ======================================================== */
+  .chrome {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-400) 0 var(--space-300) 0;
+  }
+  .readout {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(7rem, auto)) 1fr;
+    align-items: end;
+    gap: var(--space-500);
+    padding: var(--space-300) 0;
+    border-top: var(--rule-hairline);
+    border-bottom: var(--rule-hairline);
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .readout .field { display: flex; flex-direction: column; gap: var(--space-100); min-width: 0; }
+  .readout .label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .readout .value {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .readout .trace { height: 28px; width: 100%; align-self: center; overflow: visible; }
+  .wayfinder {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: var(--space-300); gap: var(--space-400); flex-wrap: wrap;
+  }
+  .wayfinder .here {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg);
+  }
+  .wayfinder .lab {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted);
+  }
+  .wayfinder .lab a, .wayfinder .here a {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 1px;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  .wayfinder .lab a:hover, .wayfinder .lab a:focus-visible,
+  .wayfinder .here a:hover, .wayfinder .here a:focus-visible {
+    color: var(--accent); border-bottom-color: var(--accent); outline: none;
+  }
+
+  /* ========================================================
+     Body column + breakouts
+     ======================================================== */
+  .body { max-width: 640px; margin: 0 auto; padding-top: var(--space-700); }
+  .body > * { max-width: 100%; }
+  .breakout-wide { max-width: min(780px, 100%); width: 100%; margin-left: auto; margin-right: auto; }
+  .breakout-svg  { max-width: min(1080px, 100%); width: 100%; margin-left: auto; margin-right: auto; }
+  @media (min-width: 900px) {
+    .breakout-wide { width: auto; max-width: 780px; margin-left: -70px; margin-right: -70px; }
+  }
+  @media (min-width: 1200px) {
+    .breakout-svg { width: auto; max-width: 1080px; margin-left: -220px; margin-right: -220px; }
+  }
+
+  /* ========================================================
+     Typography
+     ======================================================== */
+  .issue-flag {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 var(--space-300) 0;
+    display: flex; align-items: center; gap: var(--space-300);
+  }
+  .issue-flag .sq { width: 8px; height: 8px; background: var(--accent); display: inline-block; flex: 0 0 auto; }
+  .issue-flag .sep { color: var(--muted); }
+
+  h1.hero {
+    font-family: var(--font-prose);
+    font-size: clamp(2.2rem, 1.4rem + 2.6vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.012em;
+    margin: 0 0 var(--space-500) 0;
+    font-weight: 400;
+  }
+
+  h2.section {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--scale-500);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: var(--space-700) 0 var(--space-400) 0;
+    padding-bottom: var(--space-200);
+    position: relative;
+    color: var(--fg);
+  }
+  h2.section::after {
+    content: ""; display: block; position: absolute;
+    left: 0; bottom: 0; width: 2.4em; height: 2px; background: var(--accent);
+  }
+
+  .lede { font-size: var(--scale-400); line-height: 1.5; margin: 0 0 var(--space-500) 0; }
+  p { margin: 0 0 var(--space-400) 0; line-height: 1.65; }
+
+  .accent-underline {
+    text-decoration: underline; text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px; text-underline-offset: 4px;
+  }
+
+  a {
+    color: var(--fg); text-decoration: underline;
+    text-decoration-color: var(--accent); text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  a:hover { text-decoration-color: var(--accent-hi); }
+
+  code, .mono {
+    font-family: var(--font-mono); font-size: 0.92em;
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+
+  /* Section seam */
+  .seam {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: var(--space-700) 0; color: var(--rule);
+  }
+  .seam .h-rule { display: inline-block; width: 28px; height: 1px; background: currentColor; }
+  .seam .sq { display: inline-block; width: 5px; height: 5px; background: var(--accent); }
+
+  /* Pull-quote */
+  .pullquote {
+    font-family: var(--font-prose); font-style: italic;
+    font-size: var(--scale-500); line-height: 1.4;
+    border-left: 3px solid var(--accent);
+    padding: var(--space-200) 0 var(--space-200) var(--space-500);
+    margin: var(--space-600) 0; color: var(--fg);
+  }
+
+  figcaption {
+    font-family: var(--font-sans); font-size: var(--scale-200);
+    color: var(--muted); text-align: center;
+    margin-top: var(--space-300); line-height: var(--leading-snug);
+  }
+  figure { margin: var(--space-600) 0; }
+  figure svg { display: block; width: 100%; height: auto; }
+
+  /* ========================================================
+     Situating block: restrained framing card for the
+     editorial-position opening (this page's role in the issue).
+     ======================================================== */
+  .situate {
+    margin: var(--space-600) 0;
+    background: var(--paper);
+    border: var(--rule-hairline);
+    border-left: 3px solid var(--rule);
+    padding: var(--space-400) var(--space-500);
+  }
+  .situate .sit-label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0 0 var(--space-200) 0;
+  }
+  .situate .sit-body {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: 1.65;
+    color: var(--fg);
+    margin: 0;
+  }
+  .situate .sit-body a { color: inherit; }
+
+  /* ========================================================
+     Price table: three verified points set in mono on a ruled
+     paper background. A compact evidence display.
+     ======================================================== */
+  .price-table {
+    margin: var(--space-600) 0;
+    background: var(--paper);
+    border: var(--rule-hairline);
+    border-top: 3px solid var(--accent);
+  }
+  .price-table .pt-head {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    display: grid;
+    grid-template-columns: 1fr 5rem 5rem;
+    gap: var(--space-400);
+    padding: var(--space-300) var(--space-500);
+    border-bottom: var(--rule-hairline);
+  }
+  .price-table .pt-row {
+    display: grid;
+    grid-template-columns: 1fr 5rem 5rem;
+    gap: var(--space-400);
+    padding: var(--space-300) var(--space-500);
+    border-bottom: var(--rule-hairline);
+    align-items: baseline;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .price-table .pt-row:last-child { border-bottom: 0; }
+  .price-table .pt-model {
+    font-family: var(--font-mono); font-size: var(--scale-200);
+    color: var(--fg);
+  }
+  .price-table .pt-score {
+    font-family: var(--font-mono); font-size: var(--scale-200);
+    color: var(--accent); text-align: right;
+  }
+  .price-table .pt-price {
+    font-family: var(--font-mono); font-size: var(--scale-300);
+    color: var(--fg); text-align: right; font-weight: 500;
+  }
+  .price-table .pt-note {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    color: var(--muted); display: block; margin-top: 2px;
+    letter-spacing: 0.02em;
+  }
+  .price-table .pt-spread {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); padding: var(--space-200) var(--space-500);
+    letter-spacing: 0.02em; border-top: var(--rule-hairline);
+    background: var(--bg);
+  }
+  .price-table .pt-spread .highlight {
+    font-family: var(--font-mono); color: var(--accent); font-weight: 500;
+  }
+
+  /* ========================================================
+     Chart inset: secondary artifact. Narrower framing than
+     a primary figure -- contained, labeled as supporting evidence.
+     ======================================================== */
+  .chart-inset {
+    margin: var(--space-600) 0;
+  }
+  .chart-inset .ci-label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0 0 var(--space-300) 0;
+  }
+  .chart-inset figure {
+    margin: 0;
+    background: var(--paper);
+    border: var(--rule-hairline);
+    border-top: 2px solid var(--rule);
+    padding: var(--space-400);
+  }
+  .chart-inset figure svg { display: block; width: 100%; height: auto; }
+  .chart-inset figcaption {
+    font-family: var(--font-sans); font-size: var(--scale-200);
+    color: var(--muted); text-align: center;
+    margin-top: var(--space-300); line-height: var(--leading-snug);
+    padding: 0 var(--space-400) var(--space-300);
+  }
+
+  /* Chart legend */
+  .chart-legend {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    color: var(--muted);
+    text-align: center;
+    margin-top: var(--space-200);
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+  }
+  .chart-legend .verified-key { color: var(--accent); }
+
+  /* ========================================================
+     Deployment decision table
+     ======================================================== */
+  .decision-table {
+    margin: var(--space-600) 0;
+    border-top: var(--rule-hairline);
+    border-bottom: var(--rule-hairline);
+  }
+  .decision-table .dt-row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--space-500);
+    padding: var(--space-400) 0;
+    border-bottom: var(--rule-hairline);
+    align-items: baseline;
+  }
+  .decision-table .dt-row:last-child { border-bottom: 0; }
+  .decision-table .dt-label {
+    font-family: var(--font-sans);
+    font-size: var(--scale-100);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .decision-table .dt-value {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    color: var(--fg);
+    line-height: 1.55;
+  }
+
+  /* Footnote */
+  .footnote {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); line-height: 1.5;
+    margin: var(--space-500) 0 0 0;
+  }
+  .footnote .ddagger { color: var(--accent); }
+
+  /* Closer */
+  .closer-block { margin-top: var(--space-800); }
+  .closer {
+    font-family: var(--font-prose); font-size: var(--scale-500);
+    text-align: center; margin: 0; line-height: 1.4;
+  }
+  .closer .signal {
+    color: var(--accent); font-weight: 600; font-size: 1.1em;
+    line-height: 1; margin-left: 0.01em;
+  }
+  .footer-rule {
+    border: 0; border-top: 1px solid var(--rule);
+    width: 4rem; margin: var(--space-700) auto var(--space-400) auto;
+  }
+  .copyright {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); text-align: center;
+    margin: 0 0 var(--space-800) 0; letter-spacing: 0.02em;
+  }
+
+  /* ========================================================
+     Responsive
+     ======================================================== */
+  @media (max-width: 1024px) { .page { padding: 0 var(--space-600); } }
+  @media (max-width: 800px) {
+    .page { padding: 0 var(--space-500); }
+    .readout { gap: var(--space-400); }
+  }
+  @media (max-width: 480px) {
+    .page { padding: 0 var(--space-400); }
+    .body { padding-top: var(--space-600); }
+    .chrome { max-width: 100%; }
+    .readout {
+      grid-template-columns: 1fr; gap: var(--space-300); padding: var(--space-300) 0;
+    }
+    .readout .trace { display: none; }
+    .readout .field {
+      flex-direction: row; align-items: baseline;
+      justify-content: space-between; gap: var(--space-400);
+    }
+    .readout .value { font-size: 1.1rem; }
+    .wayfinder { flex-direction: column; gap: var(--space-200); align-items: flex-start; }
+    h1.hero { font-size: clamp(2rem, 7vw, 2.6rem); }
+    .pullquote { padding-left: var(--space-400); font-size: var(--scale-400); }
+    .price-table .pt-head,
+    .price-table .pt-row {
+      grid-template-columns: 1fr 4rem 4.5rem;
+      gap: var(--space-300);
+      padding-left: var(--space-400);
+      padding-right: var(--space-400);
+    }
+    .decision-table .dt-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-200);
+    }
+    .decision-table .dt-label { padding-bottom: 0; }
+    .closer { font-size: var(--scale-400); }
+  }
+  @media (max-width: 380px) {
+    .page { padding: 0 var(--space-300); }
+    h1.hero { font-size: clamp(1.85rem, 8vw, 2.3rem); }
+  }
+
+  @media print {
+    :root { color-scheme: light; }
+    .chrome { display: none; }
+    .body { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Chrome strip -->
+  <div class="chrome">
+    <div class="readout" role="group" aria-label="issue counters">
+      <div class="field">
+        <span class="label">Perfect 20/20</span>
+        <span class="value">4</span>
+      </div>
+      <div class="field">
+        <span class="label">Price spread</span>
+        <span class="value">54&#215;</span>
+      </div>
+      <div class="field">
+        <span class="label">Cheapest 20/20</span>
+        <span class="value">$0.18</span>
+      </div>
+      <svg class="trace" viewBox="0 0 120 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <title>Cost spread trace: a flat capability ceiling over a wide cost range underneath.</title>
+        <line x1="0" y1="20" x2="120" y2="20" stroke="var(--graticule)" stroke-width="0.5"/>
+        <polyline
+          points="0,6 12,5 24,6 36,4 48,5 60,4 72,5 84,4 96,5 108,4 120,4"
+          fill="none"
+          stroke="var(--trace)"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          vector-effect="non-scaling-stroke"/>
+      </svg>
+    </div>
+    <div class="wayfinder">
+      <span class="here">
+        <a href="../../index.html">GunnerBench</a>
+        &#183; <a href="index.html">Issue No. 1</a>
+        &#183; III
+      </span>
+      <span class="lab"><a href="../../about.html">About</a> &#183; The Ronin Advisory Group LLC</span>
+    </div>
+  </div>
+
+  <article class="body">
+
+    <!-- Page flag -->
+    <p class="issue-flag">
+      <span class="sq" aria-hidden="true"></span>
+      Issue No. 1 <span class="sep">&#183;</span> Page III <span class="sep">&#183;</span> June 2026
+    </p>
+
+    <h1 class="hero">Cost and trust &mdash; one downstream axis</h1>
+
+    <p class="lede">
+      Page I showed the saturation: nearly every serious model now clears
+      the bar on expert legal reasoning.
+      <a href="02-where-the-chain-broke.html">Page II</a> showed where the chains
+      broke &mdash; the failure modes, and the mechanisms behind them. That is the
+      intellectually interesting part.
+    </p>
+
+    <p>
+      This page covers what comes after: once capability is settled as a
+      question, a different set of questions opens. Cost and deployment governance
+      are among them. They are real, they are important for anyone making a
+      procurement decision, and they are not a revelation. A 54&times; spread
+      among identical scores and a short list of non-negotiable governance
+      questions &mdash; these are the shape of the analysis, and they live
+      downstream of the mechanism work, not in competition with it.
+    </p>
+
+    <!-- Situating block: editorial position -->
+    <div class="situate breakout-wide">
+      <p class="sit-label">Where this page sits</p>
+      <p class="sit-body">
+        The failure modes on the previous page are the substance the lab is
+        interested in &mdash; the working-memory overload that drops a basic
+        classification, the trap-spotted-then-over-corrected holding, the
+        family-shared blind spot. Cost and trust is the
+        <em>procurement</em> story: once you have decided the capability is
+        adequate for the task, the questions that remain are about price,
+        data residency, and who controls the inference. Both matter. Only one
+        of them is surprising.
+      </p>
+    </div>
+
+    <!-- ============= Section 1: The cost spread ============= -->
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <h2 class="section">The cost spread</h2>
+
+    <p>
+      Among the four models that scored a perfect 20/20, the price of producing
+      that identical grade &mdash; the three graded essays, nothing else &mdash;
+      spans approximately <span class="accent-underline">fifty-four times</span>:
+      from <code>$0.18</code> at the bottom to <code>$9.74</code> at the top.
+      Same rubric. Same judge. Same perfect score. Wildly different bill.
+    </p>
+
+    <!-- Verified price table -->
+    <div class="price-table breakout-wide" role="table" aria-label="Verified cost data for models scoring 20 out of 20">
+      <div class="pt-head" role="row">
+        <span role="columnheader">Model</span>
+        <span role="columnheader" style="text-align:right;">Score</span>
+        <span role="columnheader" style="text-align:right;">Cost / job</span>
+      </div>
+      <div class="pt-row" role="row">
+        <span class="pt-model" role="cell">
+          deepseek-v4-pro
+          <span class="pt-note">&#8225; via OpenRouter; open-weight model</span>
+        </span>
+        <span class="pt-score" role="cell">20 / 20</span>
+        <span class="pt-price" role="cell">$0.18</span>
+      </div>
+      <div class="pt-row" role="row">
+        <span class="pt-model" role="cell">
+          gpt-5.5
+          <span class="pt-note">&#8225; via OpenRouter</span>
+        </span>
+        <span class="pt-score" role="cell">20 / 20</span>
+        <span class="pt-price" role="cell">$1.32</span>
+      </div>
+      <div class="pt-row" role="row">
+        <span class="pt-model" role="cell">
+          claude-fable-5
+          <span class="pt-note">native claude-code harness</span>
+        </span>
+        <span class="pt-score" role="cell">20 / 20</span>
+        <span class="pt-price" role="cell">$9.74</span>
+      </div>
+      <div class="pt-spread">
+        Spread among identical scores:
+        <span class="highlight">~54&#215;</span>
+        &mdash; sum of three graded tasks, channel-corrected.
+      </div>
+    </div>
+
+    <div class="pullquote breakout-wide">
+      The capability ceiling is flat. The cost axis is not.
+    </div>
+
+    <p>
+      The bill is the product of two independent things: how much a model
+      <em>writes</em> (its token appetite) and what each token <em>costs</em>
+      (its rate). Score predicts neither. And the two perfect scorers at the
+      ends of the price spread reach the same grade by opposite routes.
+      <code>claude-fable-5</code> works the problem hard &mdash; roughly
+      <code>96,000</code> output tokens of reasoning &mdash; at a premium rate.
+      <code>deepseek-v4-pro</code> gorges in the other direction, consuming on
+      the order of <code>365,000</code> total tokens, and stays cheap only
+      because its per-token rate is rock-bottom. Same 20/20 at both ends; nothing
+      alike underneath.
+    </p>
+
+    <p>
+      Between them sits the model the field&#8217;s headline numbers tend to
+      skip: <code>gpt-5.5</code> reached the identical perfect 20/20 on the
+      <span class="accent-underline">fewest tokens in the field</span> &mdash;
+      about <code>72,600</code> total, of which only <code>37,799</code> were
+      output, the lowest output count of any model by a wide margin. Terse and
+      right. That is a real axis of difference, and one vendors do not advertise:
+      two models can earn the same flawless grade with a five- to ten-fold gap in
+      how much they write. Token appetite is independent of both score and rate
+      &mdash; and it is half of what you actually pay for. The frugal path is its
+      own kind of capability.
+    </p>
+
+    <!-- ============= Chart: secondary artifact ============= -->
+    <!-- Chart embedded as secondary procurement-axis evidence.
+         Source: charts/price-vs-score.html (exists). -->
+    <div class="chart-inset breakout-svg">
+      <p class="ci-label">Supporting chart &mdash; procurement axis</p>
+      <figure>
+        <svg viewBox="0 0 780 470" role="img" aria-labelledby="pvs-title pvs-desc">
+          <title id="pvs-title">Price per job versus rubric score, nine models, on a logarithmic price axis.</title>
+          <desc id="pvs-desc">A scatter plot. The horizontal axis is price per job on a logarithmic scale from about ten cents to ten dollars; the vertical axis is rubric score from zero to twenty. Points cluster near the top of the score axis across a wide spread of prices, forming a flat capability ceiling. A faint teal band marks the seventeen-to-twenty score region with a dashed teal guide along its floor. Three verified points share the score of twenty: deepseek-v4-pro at eighteen cents (open-weight), gpt-5.5 at one dollar thirty-two, and claude-fable-5 at nine dollars seventy-four, a roughly fifty-four times price spread for the identical grade. Six approximate run-level points are drawn faintly without labels. Marker shape encodes vendor: circle for Anthropic, square for OpenAI, triangle for Google, diamond for other.</desc>
+
+          <style>
+            .pvs-t-sans  { font-family: var(--font-sans); }
+            .pvs-t-mono  { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+            .pvs-t-prose { font-family: var(--font-prose); font-style: italic; }
+
+            .pvs-axis-tick  { font-size: 12px; fill: var(--muted); }
+            .pvs-axis-title { font-size: 14px; font-weight: 600; fill: var(--fg); }
+            .pvs-ceiling-label { font-size: 12px; font-weight: 600; fill: var(--accent); }
+            .pvs-id-label   { font-size: 11.5px; fill: var(--fg); }
+            .pvs-price      { font-size: 11.5px; fill: var(--accent); font-weight: 500; }
+            .pvs-tag        { font-size: 10px; fill: var(--muted); letter-spacing: 0.03em; }
+            .pvs-span-label { font-size: 12.5px; fill: var(--muted); font-style: italic; }
+
+            .pvs-axis-line   { stroke: var(--rule); stroke-width: 1; fill: none; }
+            .pvs-grid        { stroke: var(--graticule); stroke-width: 0.5; fill: none; }
+            .pvs-ceiling     { stroke: var(--accent); stroke-width: 1.25; fill: none; stroke-dasharray: 6 5; opacity: 0.85; }
+            .pvs-ceiling-band { fill: var(--accent); opacity: 0.06; }
+            .pvs-span        { stroke: var(--muted); stroke-width: 0.85; fill: none; }
+            .pvs-leader      { stroke: var(--muted); stroke-width: 1; fill: none; opacity: 0.7; }
+
+            .pvs-marker-verified { fill: var(--accent); stroke: var(--accent); stroke-width: 1; }
+            .pvs-marker-approx   { fill: none; stroke: var(--fg); stroke-width: 1.25; opacity: 0.45; }
+          </style>
+
+          <!-- capability-ceiling wash band : score 17 (y=91) to score 20 (y=40) -->
+          <rect class="pvs-ceiling-band" x="90" y="40" width="630" height="51"/>
+
+          <!-- plot axis frame -->
+          <line class="pvs-axis-line" x1="90" y1="40" x2="90" y2="380"/>
+          <line class="pvs-axis-line" x1="90" y1="380" x2="720" y2="380"/>
+
+          <!-- y gridlines (score) at 5/10/15/20 -->
+          <g class="pvs-grid">
+            <line x1="90" y1="40"  x2="720" y2="40"/>
+            <line x1="90" y1="125" x2="720" y2="125"/>
+            <line x1="90" y1="210" x2="720" y2="210"/>
+            <line x1="90" y1="295" x2="720" y2="295"/>
+          </g>
+          <g class="pvs-t-mono pvs-axis-tick" text-anchor="end">
+            <text x="80" y="44">20</text>
+            <text x="80" y="129">15</text>
+            <text x="80" y="214">10</text>
+            <text x="80" y="299">5</text>
+            <text x="80" y="384">0</text>
+          </g>
+
+          <!-- x log decade gridlines + mono tick labels : $0.10=90, $1.00=405, $10.00=720 -->
+          <g class="pvs-grid">
+            <line x1="405" y1="40" x2="405" y2="380"/>
+            <line x1="720" y1="40" x2="720" y2="380"/>
+          </g>
+          <g class="pvs-t-mono pvs-axis-tick" text-anchor="middle">
+            <text x="90"  y="400">$0.10</text>
+            <text x="405" y="400">$1.00</text>
+            <text x="720" y="400">$10.00</text>
+          </g>
+
+          <!-- capability-ceiling guide : dashed teal hairline on the score=17 floor of the band -->
+          <line class="pvs-ceiling" x1="90" y1="91" x2="720" y2="91"/>
+          <text class="pvs-t-sans pvs-ceiling-label" x="520" y="105" text-anchor="start">capability ceiling (17&#8211;20)</text>
+
+          <!-- APPROXIMATE run-level points : faint, label-light, shape=vendor -->
+          <g class="pvs-marker-approx">
+            <!-- gemini-3.5-flash google $1.52 / 19 -->
+            <polygon points="0,-5.4 4.7,2.7 -4.7,2.7" transform="translate(470,57)">
+              <title>Approximate run-level: gemini-3.5-flash (google), about $1.52 per job, score 19 of 20.</title>
+            </polygon>
+            <!-- gpt-5.4 openai $1.24 / 16 -->
+            <rect x="429.93" y="103.5" width="9" height="9">
+              <title>Approximate run-level: gpt-5.4 (openai), about $1.24 per job, score 16 of 20.</title>
+            </rect>
+            <!-- gemini-3.1-pro google $0.99 / 18 -->
+            <polygon points="0,-5.4 4.7,2.7 -4.7,2.7" transform="translate(403.63,74)">
+              <title>Approximate run-level: gemini-3.1-pro (google), about $0.99 per job, score 18 of 20.</title>
+            </polygon>
+            <!-- haiku-4.5 anthropic $0.78 / 13 -->
+            <circle cx="371.01" cy="159" r="4.5">
+              <title>Approximate run-level: haiku-4.5 (anthropic), about $0.78 per job, score 13 of 20.</title>
+            </circle>
+            <!-- grok-4.3 other $0.42 / 14 -->
+            <polygon points="0,-5.7 5.7,0 0,5.7 -5.7,0" transform="translate(286.32,142)">
+              <title>Approximate run-level: grok-4.3 (other), about $0.42 per job, score 14 of 20.</title>
+            </polygon>
+            <!-- deepseek-v3.2 other $0.29 / 13 -->
+            <polygon points="0,-5.7 5.7,0 0,5.7 -5.7,0" transform="translate(235.66,159)">
+              <title>Approximate run-level: deepseek-v3.2 (other), about $0.29 per job, score 13 of 20.</title>
+            </polygon>
+          </g>
+
+          <!-- 54x span bracket along the ceiling -->
+          <g>
+            <line class="pvs-span" x1="170.41" y1="26" x2="716.40" y2="26"/>
+            <line class="pvs-span" x1="170.41" y1="22" x2="170.41" y2="30"/>
+            <line class="pvs-span" x1="716.40" y1="22" x2="716.40" y2="30"/>
+            <text class="pvs-t-sans pvs-span-label" x="443" y="18" text-anchor="middle">same 20/20, ~54&#215; the price</text>
+          </g>
+
+          <!-- VERIFIED points : full-opacity teal, labeled, shape=vendor -->
+          <g class="pvs-marker-verified">
+            <!-- deepseek-v4-pro other $0.18 / 20 (open-weight) : diamond -->
+            <polygon points="0,-6.4 6.4,0 0,6.4 -6.4,0" transform="translate(170.41,40)">
+              <title>Verified: deepseek-v4-pro (other, open-weight), $0.18 per job, score 20 of 20.</title>
+            </polygon>
+            <!-- gpt-5.5 openai $1.32 / 20 : square -->
+            <rect x="437.98" y="35" width="10" height="10">
+              <title>Verified: gpt-5.5 (openai), $1.32 per job, score 20 of 20.</title>
+            </rect>
+            <!-- claude-fable-5 anthropic $9.74 / 20 : circle -->
+            <circle cx="716.40" cy="40" r="6">
+              <title>Verified: claude-fable-5 (anthropic), $9.74 per job, score 20 of 20.</title>
+            </circle>
+          </g>
+
+          <!-- verified-point labels -->
+          <g text-anchor="middle">
+            <text class="pvs-t-mono pvs-id-label" x="170.41" y="118">deepseek-v4-pro</text>
+            <text class="pvs-t-mono pvs-price"    x="170.41" y="133">$0.18</text>
+            <text class="pvs-t-sans pvs-tag"      x="170.41" y="147">open-weight</text>
+          </g>
+          <g text-anchor="end">
+            <text class="pvs-t-mono pvs-id-label" x="708" y="62">claude-fable-5</text>
+            <text class="pvs-t-mono pvs-price"    x="708" y="77">$9.74</text>
+          </g>
+          <g>
+            <line class="pvs-leader" x1="438" y1="40" x2="372" y2="40"/>
+            <g text-anchor="end">
+              <text class="pvs-t-mono pvs-id-label" x="368" y="36">gpt-5.5</text>
+              <text class="pvs-t-mono pvs-price"    x="368" y="51">$1.32</text>
+            </g>
+          </g>
+
+          <!-- axis titles in sans -->
+          <text class="pvs-t-sans pvs-axis-title" x="405" y="430" text-anchor="middle">price per job (log scale, sum of 3 graded tasks)</text>
+          <text class="pvs-t-sans pvs-axis-title" x="28" y="210" text-anchor="middle" transform="rotate(-90 28 210)">score (out of 20)</text>
+        </svg>
+        <figcaption>
+          The price-vs-score scatter, nine models (those with comparable cost data).
+          Three of the field's four perfect 20/20s are plotted; the cost of that
+          identical grade runs from $0.18 to $9.74. The capability
+          ceiling is flat; the cost axis is not. Full standalone version:
+          <a href="charts/price-vs-score.html">charts/price-vs-score.html</a>.
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="chart-legend">
+      <span class="verified-key">verified (exact, labeled):</span> deepseek-v4-pro $0.18 &#183; gpt-5.5 $1.32 &#183; claude-fable-5 $9.74 &#183; all 20/20<br>
+      6 approximate run-level points &#183; shape = vendor: circle anthropic / square openai / triangle google / diamond other
+    </p>
+
+    <!-- ============= Section 2: Methodology ============= -->
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <h2 class="section">How the costs were measured</h2>
+
+    <p>
+      Each model was priced as delivered through its own natural front door.
+      Anthropic models ran on their native harness; others ran via OpenRouter,
+      a widely-used model aggregator, pending direct-API confirmation. Models
+      accessed through an aggregator are marked with a
+      <sup>&#8225;</sup> in the table above. The cost figures represent the
+      full API spend for the three-task battery &mdash; Property, Criminal
+      Procedure + &#167;1983, Evidence &mdash; and nothing else; harness
+      overhead is not included. Where channel differences could have introduced
+      cost bias, they were corrected to a common basis before comparison.
+    </p>
+
+    <p>
+      One consequence worth stating clearly: the open-weight model
+      (<code>deepseek-v4-pro</code>) ran via an aggregator that, if anything,
+      <em>overstates</em> its cost relative to a direct-API or self-hosted
+      deployment. Its <code>$0.18</code> figure is therefore a ceiling, not a
+      floor. The directional claim &mdash; that the cheapest path to a perfect
+      score is dramatically cheaper than the most expensive one &mdash; only
+      strengthens on that correction.
+    </p>
+
+    <!-- ============= Section: tier labels don't predict ============= -->
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <h2 class="section">The tier label on the box predicts nothing</h2>
+
+    <p>
+      Vendors tier their own lineups &mdash; &#8220;flash,&#8221; &#8220;pro,&#8221;
+      &#8220;mini,&#8221; &#8220;max&#8221; &mdash; and the names carry an implied
+      ordering: the &#8220;pro&#8221; model is the capable one, the &#8220;flash&#8221;
+      model is the fast, cheap one you reach for when the job is light. On this
+      battery, Google&#8217;s own pair inverted that ordering twice over.
+      <code>gemini-3.5-flash</code> &mdash; the budget-positioned tier &mdash;
+      scored <code>19</code> and cost roughly <code>$1.52</code>. Its
+      &#8220;pro&#8221; sibling, <code>gemini-3.1-pro</code>, scored
+      <code>18</code> and cost about <code>$0.99</code>.
+    </p>
+
+    <p>
+      So the &#8220;flash&#8221; model scored <em>higher</em> than the
+      &#8220;pro&#8221; model <em>and</em> cost <em>more</em> &mdash; its larger
+      token appetite outran its cheaper rate. A double inversion of the vendor&#8217;s
+      own positioning, on both the axis the label promises (capability) and the one
+      it implies (price). The procurement lesson is blunt: a tier name is a
+      marketing artifact, not a measurement. It does not reliably predict the
+      outcome or the bill. You have to test the specific job. (These are the
+      approximate run-level figures this page uses elsewhere; treat them as
+      directional, not exact.)
+    </p>
+
+    <!-- ============= Section 3: The deployment decision ============= -->
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <h2 class="section">The sticker price is not the real price</h2>
+
+    <p>
+      The cheapest path to a perfect score today runs through an open-weight
+      model. That is a striking fact. It means the best achievable result on
+      this battery is no longer locked behind a proprietary frontier model
+      with a premium per-token price. Capability, at least on this measure,
+      has genuinely commoditized.
+    </p>
+
+    <p>
+      But for a lawyer, the sticker price is not the real price. The
+      calculation that actually matters is broader, and for most of the
+      options on this list, it does not resolve in the model&#8217;s favor.
+    </p>
+
+    <div class="decision-table breakout-wide" role="table" aria-label="Procurement considerations beyond sticker price">
+      <div class="dt-row" role="row">
+        <span class="dt-label" role="rowheader">Data residency</span>
+        <span class="dt-value" role="cell">
+          Where do your client confidences actually go? Hosted endpoints
+          may route through jurisdictions you cannot audit or contractually
+          constrain. This is not theoretical; it is a professional
+          responsibility question with a concrete answer required.
+        </span>
+      </div>
+      <div class="dt-row" role="row">
+        <span class="dt-label" role="rowheader">Business associate agreement (BAA) equivalents</span>
+        <span class="dt-value" role="cell">
+          Does the provider offer a data processing agreement, a
+          business associate agreement (BAA), or a contractual confidentiality
+          commitment that travels with the work product? Most aggregators
+          do not. Some frontier-model providers do, at higher tiers.
+        </span>
+      </div>
+      <div class="dt-row" role="row">
+        <span class="dt-label" role="rowheader">Training on inputs</span>
+        <span class="dt-value" role="cell">
+          Read the terms of service, not just the pricing page. Opt-out
+          for training is not the default on many platforms, and for an
+          attorney, the absence of a clear commitment is the answer.
+        </span>
+      </div>
+      <div class="dt-row" role="row">
+        <span class="dt-label" role="rowheader">Open weights</span>
+        <span class="dt-value" role="cell">
+          The open-weight route means you <em>can</em> run frontier-grade
+          performance on infrastructure you vet, control, or own &mdash;
+          but only if you pay for a trusted host or self-host. The weight
+          file without a governed deployment is not a solution.
+        </span>
+      </div>
+    </div>
+
+    <p>
+      What this means in practice: the commoditization of capability does not
+      retire the hard questions. It raises the importance of cost and governance
+      by removing the last excuse for not asking them. Previously you might have
+      accepted a governance shortcut because you needed a particular model&#8217;s
+      capability. That bargain is gone. Today you can get the same result from
+      multiple providers. The selection criterion that remains is entirely about
+      the deployment: where does this run, who controls it, and can I put client
+      work there?
+    </p>
+
+    <div class="pullquote breakout-wide">
+      The choice is now about the deployment, not the model.
+    </div>
+
+    <!-- ============= Section 4: The confident wrong answer (single line + exhibit) ============= -->
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <h2 class="section">One caution that cuts across every point on the cost curve</h2>
+
+    <p>
+      Neither cost nor brand substitutes for verifying the specific task: the
+      newest flagship drew a flawless diagram of a wrong holding &mdash; the
+      confident, polished, wrong answer is the one most likely to pass review,
+      wherever it sits on the cost curve. The mechanism behind that failure is
+      page II&#8217;s subject (<a href="02-where-the-chain-broke.html">where the
+      chain broke</a>); the property exhibit is at
+      <a href="exhibits/opus-4-8-property.html">exhibits/opus-4-8-property.html</a>.
+    </p>
+
+    <!-- ============= Close ============= -->
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <h2 class="section">Read the work. Choose the deployment.</h2>
+
+    <p>
+      The numbers in this issue are real, and they are directional. A battery of
+      three essays is not a full assessment of a model&#8217;s practice range, and
+      fifty-four times on a small spend does not guarantee the same ratio on a
+      different task mix. What does generalize: the capability ceiling is flat,
+      the cost axis is not, and the governance questions are non-negotiable for
+      professional use regardless of which point on the cost curve you choose.
+    </p>
+
+    <p>
+      This dispatch publishes the actual answers so you can check the lawyering
+      yourself &mdash; not to offer a conclusion to be relied on, but to give you
+      the evidence to form your own. A score tells you a rubric was satisfied;
+      the work tells you how. The exhibits are at
+      <a href="exhibits/index.html">exhibits/index.html</a>: the full
+      prompts and the models&#8217; verbatim answers. The methodology page will
+      show the rubric, the judge, and the channel correction in detail.
+    </p>
+
+    <p>
+      Until then: verify the specific task, read the output before it travels,
+      and make the deployment choice with the same rigor you would bring to any
+      vendor that touches client confidences. The model is no longer the
+      constraint. The deployment always was.
+    </p>
+
+    <p class="footnote">
+      <span class="ddagger">&#8225;</span> Non-Anthropic models in this battery
+      ran via OpenRouter pending direct-API confirmation. Cost figures represent
+      API spend for the three-task battery only; harness overhead excluded.
+      Aggregator costs for open-weight models likely overstate direct-API or
+      self-hosted costs. All costs are channel-corrected to a common basis before
+      comparison.
+    </p>
+
+    <div class="closer-block">
+      <p class="closer">
+        Read the work. Choose the deployment<span class="signal">.</span>
+      </p>
+
+      <hr class="footer-rule">
+      <p class="copyright">
+        &#169; 2026 The Ronin Advisory Group LLC
+      </p>
+    </div>
+
+  </article>
+</div>
+
+</body>
+</html>

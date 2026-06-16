@@ -1,0 +1,180 @@
+<svg viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .timeline-axis { stroke: #333; stroke-width: 2; }
+      .timeline-label { font-family: 'Helvetica Neue', sans-serif; font-size: 12px; text-anchor: middle; fill: #333; }
+      .measuring-life-label { font-family: 'Helvetica Neue', sans-serif; font-size: 11px; font-weight: bold; fill: white; }
+      .interest-label { font-family: 'Helvetica Neue', sans-serif; font-size: 13px; font-weight: 600; fill: #222; }
+      .interest-note { font-family: 'Helvetica Neue', sans-serif; font-size: 10px; fill: #666; }
+      .legend-text { font-family: 'Helvetica Neue', sans-serif; font-size: 11px; fill: #222; }
+      .title-text { font-family: 'Helvetica Neue', sans-serif; font-size: 18px; font-weight: bold; fill: #000; }
+      .annotation { font-family: 'Helvetica Neue', sans-serif; font-size: 10px; fill: #c00; font-weight: bold; }
+      .void-text { text-decoration: line-through; }
+      .rap-window { stroke: #0066cc; stroke-width: 1; stroke-dasharray: 4,2; fill: none; }
+      .measuring-life-span { opacity: 0.3; }
+      .valid-box { stroke: #2d7a3a; stroke-width: 2; fill: #e8f5e9; }
+      .void-box { stroke: #c00; stroke-width: 2; stroke-dasharray: 5,3; fill: #ffebee; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="700" y="35" class="title-text" text-anchor="middle">Rule Against Perpetuities Analysis: Cartwright Will, Article IV</text>
+
+  <!-- Main timeline (2024-2090) -->
+  <line x1="80" y1="100" x2="1350" y2="100" class="timeline-axis"/>
+
+  <!-- Timeline scale: years -->
+  <g id="timeline-marks">
+    <line x1="80" y1="95" x2="80" y2="110" stroke="#333" stroke-width="1"/>
+    <text x="80" y="125" class="timeline-label">2024</text>
+
+    <line x1="200" y1="95" x2="200" y2="110" stroke="#333" stroke-width="1"/>
+    <text x="200" y="125" class="timeline-label">2030</text>
+
+    <line x1="330" y1="95" x2="330" y2="110" stroke="#333" stroke-width="1"/>
+    <text x="330" y="125" class="timeline-label">2040</text>
+
+    <line x1="460" y1="95" x2="460" y2="110" stroke="#333" stroke-width="1"/>
+    <text x="460" y="125" class="timeline-label">2050</text>
+
+    <line x1="590" y1="95" x2="590" y2="110" stroke="#333" stroke-width="1"/>
+    <text x="590" y="125" class="timeline-label">2060</text>
+
+    <line x1="720" y1="95" x2="720" y2="110" stroke="#333" stroke-width="1"/>
+    <text x="720" y="125" class="timeline-label">2070</text>
+
+    <line x1="850" y1="95" x2="850" y2="110" stroke="#333" stroke-width="1"/>
+    <text x="850" y="125" class="timeline-label">2080</text>
+
+    <line x1="1000" y1="95" x2="1000" y2="110" stroke="#333" stroke-width="1"/>
+    <text x="1000" y="125" class="timeline-label">2090</text>
+  </g>
+
+  <!-- MEASURING LIVES (above timeline) -->
+  <!-- Arthur (2024-2052, age 52→80) -->
+  <g id="arthur-life">
+    <rect x="80" y="140" width="392" height="35" class="measuring-life-span" fill="#4CAF50"/>
+    <rect x="80" y="140" width="392" height="35" stroke="#2d7a3a" stroke-width="2" fill="none"/>
+    <text x="276" y="165" class="measuring-life-label">Arthur Cartwright (2024-2052)</text>
+    <!-- 21-year RAP window from Arthur's death (2052) -->
+    <g id="arthur-rap-window">
+      <line x1="472" y1="205" x2="655" y2="205" class="rap-window" stroke-width="2"/>
+      <text x="472" y="220" class="interest-note" fill="#0066cc">[2052-2073: 21-yr window]</text>
+    </g>
+  </g>
+
+  <!-- Celia (2024-2074, age 24→74) -->
+  <g id="celia-life">
+    <rect x="80" y="245" width="633" height="35" class="measuring-life-span" fill="#2196F3"/>
+    <rect x="80" y="245" width="633" height="35" stroke="#1565c0" stroke-width="2" fill="none"/>
+    <text x="366" y="270" class="measuring-life-label">Celia Cartwright (2024-2074)</text>
+    <!-- 21-year RAP window from Celia's death (2074) -->
+    <g id="celia-rap-window">
+      <line x1="713" y1="310" x2="900" y2="310" class="rap-window" stroke-width="2"/>
+      <text x="713" y="325" class="interest-note" fill="#0066cc">[2074-2095: 21-yr window]</text>
+    </g>
+  </g>
+
+  <!-- Dmitri (2024-2079, age 19→75) -->
+  <g id="dmitri-life">
+    <rect x="80" y="350" width="698" height="35" class="measuring-life-span" fill="#FF9800"/>
+    <rect x="80" y="350" width="698" height="35" stroke="#e65100" stroke-width="2" fill="none"/>
+    <text x="379" y="375" class="measuring-life-label">Dmitri Cartwright (2024-2079)</text>
+    <!-- 21-year RAP window from Dmitri's death (2079) -->
+    <g id="dmitri-rap-window">
+      <line x1="778" y1="415" x2="1000" y2="415" class="rap-window" stroke-width="2"/>
+      <text x="778" y="430" class="interest-note" fill="#0066cc">[2079-2100: 21-yr window]</text>
+    </g>
+  </g>
+
+  <!-- INTEREST LANES -->
+  <!-- Lane 1: Arthur's Fee Tail (VALID - present estate) -->
+  <g id="arthur-fee-tail">
+    <text x="60" y="480" class="interest-label">1.</text>
+    <rect x="80" y="460" width="1270" height="50" class="valid-box"/>
+    <text x="100" y="485" class="interest-label">ARTHUR | Fee Tail | "heirs of his body"</text>
+    <text x="100" y="503" class="interest-note">[VALID - Present estate; not subject to RAP]</text>
+  </g>
+
+  <!-- Lane 2: Widow's Contingent Remainder (VALID) -->
+  <g id="widow-interest">
+    <text x="60" y="590" class="interest-label">2.</text>
+    <rect x="80" y="535" width="1270" height="50" class="valid-box"/>
+    <text x="100" y="560" class="interest-label">WIDOW | Contingent Remainder in Life Estate | [if Arthur's bodily line fails]</text>
+    <text x="100" y="578" class="interest-note">[VALID - Arthur is measuring life; vests upon Arthur's death (2052)]</text>
+    <!-- Vesting diamond at Arthur's death -->
+    <polygon points="472,555 478,561 472,567 466,561" fill="#2d7a3a" stroke="#2d7a3a" stroke-width="1"/>
+  </g>
+
+  <!-- Lane 3: Grandchildren's Interest (VOID) -->
+  <g id="grandchildren-interest">
+    <text x="60" y="700" class="interest-label">3.</text>
+    <rect x="80" y="645" width="1270" height="80" class="void-box"/>
+    <text x="100" y="670" class="interest-label void-text">✗ VOID | Grandchildren | Contingent Remainder in Fee Simple | [attain age 25]</text>
+    <text x="100" y="688" class="interest-note">Why VOID: Late-born grandchild could attain 25 beyond RAP period</text>
+    <text x="100" y="706" class="interest-note" fill="#c00">Example: Grandchild born 2050 attains 25 in 2075 (23 yrs after Arthur's death—exceeds 21-yr window)</text>
+    <!-- Early grandchild vesting (valid example) -->
+    <polygon points="393,655 399,661 393,667 387,661" fill="#2d7a3a" stroke="#2d7a3a" stroke-width="1"/>
+    <text x="405" y="661" class="interest-note" fill="#2d7a3a">2051: Early grandchild attains 25 ✓</text>
+    <!-- Late grandchild vesting (RAP violation) -->
+    <polygon points="640,655 646,661 640,667 634,661" fill="#c00" stroke="#c00" stroke-width="1"/>
+    <text x="650" y="661" class="annotation">2075: Late grandchild attains 25 ✗ RAP VIOLATION</text>
+  </g>
+
+  <!-- Lane 4: RHS's Contingent Remainder (VALID if grandchildren void) -->
+  <g id="rhs-interest">
+    <text x="60" y="810" class="interest-label">4.</text>
+    <rect x="80" y="755" width="1270" height="50" class="valid-box"/>
+    <text x="100" y="780" class="interest-label">RHS | Contingent Remainder in Fee Simple Absolute | [if no grandchild attains 25]</text>
+    <text x="100" y="798" class="interest-note">[VALID - Vests if grandchildren's interest is void; Arthur is measuring life]</text>
+    <!-- Vesting diamond at bodily line failure -->
+    <polygon points="472,755 478,761 472,767 466,761" fill="#2d7a3a" stroke="#2d7a3a" stroke-width="1"/>
+  </g>
+
+  <!-- LEGEND -->
+  <g id="legend">
+    <rect x="1050" y="470" width="300" height="280" stroke="#333" stroke-width="1" fill="#f9f9f9"/>
+    <text x="1065" y="490" class="interest-label" font-weight="bold">LEGEND</text>
+
+    <!-- Valid interest -->
+    <rect x="1065" y="505" width="20" height="20" class="valid-box"/>
+    <text x="1095" y="520" class="legend-text">Solid border, green fill = VALID interest</text>
+
+    <!-- Void interest -->
+    <rect x="1065" y="535" width="20" height="20" class="void-box"/>
+    <text x="1095" y="550" class="legend-text">Dashed border, red fill = VOID interest</text>
+
+    <!-- Measuring life -->
+    <rect x="1065" y="565" width="20" height="20" fill="#4CAF50" stroke="#2d7a3a" stroke-width="2" opacity="0.3"/>
+    <text x="1095" y="580" class="legend-text">Colored span = Measuring life</text>
+
+    <!-- RAP window -->
+    <line x1="1065" y1="600" x2="1085" y2="600" class="rap-window" stroke-width="2"/>
+    <text x="1095" y="605" class="legend-text">Dashed line = 21-year RAP window</text>
+
+    <!-- Vesting event -->
+    <polygon points="1075,623 1081,629 1075,635 1069,629" fill="#2d7a3a" stroke="#2d7a3a" stroke-width="1"/>
+    <text x="1095" y="635" class="legend-text">Diamond = Vesting event</text>
+
+    <!-- RAP violation -->
+    <polygon points="1075,653 1081,659 1075,665 1069,659" fill="#c00" stroke="#c00" stroke-width="1"/>
+    <text x="1095" y="665" class="legend-text">Red diamond = RAP violation</text>
+
+    <!-- Key dates -->
+    <text x="1065" y="695" class="legend-text" font-weight="bold">Key Dates:</text>
+    <text x="1065" y="712" class="legend-text">• 2024: Helena's death</text>
+    <text x="1065" y="729" class="legend-text">• 2052: Arthur's likely death</text>
+  </g>
+
+  <!-- ANNOTATIONS -->
+  <g id="annotations">
+    <!-- Helena's death marker -->
+    <line x1="80" y1="80" x2="80" y2="105" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="75" y="75" class="interest-note" text-anchor="end">Helena dies</text>
+    <text x="75" y="88" class="interest-note" text-anchor="end">2024-03-01</text>
+
+    <!-- Bodily line failure -->
+    <line x1="472" y1="410" x2="472" y2="650" stroke="#2d7a3a" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="478" y="530" class="annotation">Bodily line failure</text>
+  </g>
+</svg>

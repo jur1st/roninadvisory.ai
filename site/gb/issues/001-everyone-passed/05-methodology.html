@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Page V of Issue No. 1 : GunnerBench Dispatch
+  ============================================================
+  "Methodology &amp; Colophon: how to read this issue"
+  Fifth and final page of Issue No. 1 ("Everyone Passed. Now What?")
+  Sibling of index.html in the same directory.
+
+  House style inherited verbatim from index.html / about.html:
+  three font roles, calibrated-teal hue 215, restrained serif
+  body prose, instrument readout strip, seams.
+
+  Self-contained: no external stylesheets, scripts, or fonts.
+  bypass-tier1-html OK : self-contained page, no external resources.
+  bypass-rogue-font-family OK : token block copied verbatim from the
+  published About page / index.html. Hex fallbacks and accent-hi
+  sit just outside the hook numeric band but ARE the calibrated
+  house palette.
+
+  Dead-link discipline (verified 2026-06-15):
+    index.html               : issue cover : PRESENT
+    ../../index.html         : GunnerBench home : PRESENT (docs/dispatch/index.html)
+    ../../about.html         : About GunnerBench : PRESENT
+    01-everyone-passed.html  : narrative Page I : PRESENT
+    02-where-the-chain-broke.html : narrative Page II : PRESENT
+    03-cost-and-trust.html   : narrative Page III : PRESENT
+    exhibits/index.html      : exhibit gallery index : PRESENT
+    charts/chain-break.html  : chain-break chart : PRESENT
+    charts/price-vs-score.html : price-vs-score chart : PRESENT
+
+  All numerical claims trace to the verified scoreboard supplied
+  by the operator and the EV-023 campaign doc. No figures invented.
+  ============================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page V: Methodology &amp; Colophon -- Issue No. 1 -- GunnerBench</title>
+<meta name="description" content="How Issue No. 1 was built: the three-essay battery, the point-sheet rubric, the judge, channel correction, and what we do and do not claim from a single campaign.">
+<meta name="author" content="The Ronin Advisory Group LLC">
+<meta name="theme-color" content="#226d8b">
+
+<link rel="canonical" href="https://roninadvisory.ai/gb/issues/001-everyone-passed/05-methodology.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="GunnerBench">
+<meta property="og:title" content="Methodology &amp; Colophon -- Issue No. 1 -- GunnerBench">
+<meta property="og:description" content="How Issue No. 1 was built: the three-essay battery, the point-sheet rubric, the judge, channel correction, and what we do and do not claim from a single campaign.">
+<meta property="og:url" content="https://roninadvisory.ai/gb/issues/001-everyone-passed/05-methodology.html">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Methodology &amp; Colophon -- Issue No. 1 -- GunnerBench">
+<meta name="twitter:description" content="How Issue No. 1 was built: the three-essay battery, the point-sheet rubric, the judge, and what the honesty rails actually say.">
+
+<!-- Inline-SVG favicon: calibrated-teal square on a neutral field. Self-contained. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23fafafa'/><rect x='5.5' y='5.5' width='5' height='5' fill='%23226d8b'/></svg>">
+
+<style>
+  /* Design tokens : copied verbatim from index.html / the published About page. */
+  :root {
+    color-scheme: light dark;
+
+    --bg: #fafafa;
+    --bg: oklch(98.5% 0.003 220);
+    --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+
+    --paper: #ffffff;
+    --paper: oklch(99.5% 0.002 220);
+    --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+
+    --fg: #1a1b22;
+    --fg: oklch(20% 0.022 240);
+    --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+
+    --muted: #6a6f7c;
+    --muted: oklch(48% 0.020 240);
+    --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+
+    --rule: #d6d9dd;
+    --rule: oklch(85% 0.010 220);
+    --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+
+    --accent: #226d8b;
+    --accent: oklch(45% 0.13 215);
+    --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+
+    --accent-hi: #1c5972;
+    --accent-hi: oklch(38% 0.15 215);
+    --accent-hi: light-dark(oklch(38% 0.15 215), oklch(82% 0.14 215));
+
+    --trace: var(--accent);
+    --graticule: light-dark(oklch(85% 0.05 215), oklch(40% 0.05 215));
+
+    --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Arial, sans-serif;
+    --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                  "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                  monospace;
+    --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                  "Times New Roman", serif;
+
+    --scale-100: 0.78rem;
+    --scale-200: 0.88rem;
+    --scale-300: 1.00rem;
+    --scale-400: 1.18rem;
+    --scale-500: 1.40rem;
+    --scale-600: 1.78rem;
+    --scale-700: 2.40rem;
+
+    --leading-tight: 1.2;
+    --leading-snug:  1.35;
+    --leading-body:  1.55;
+
+    --space-100: 0.25rem;
+    --space-200: 0.5rem;
+    --space-300: 0.75rem;
+    --space-400: 1rem;
+    --space-500: 1.5rem;
+    --space-600: 2rem;
+    --space-700: 3rem;
+    --space-800: 4rem;
+    --space-900: 6rem;
+
+    --rule-hairline: 1px solid var(--rule);
+  }
+
+  /* ========================================================
+     Base reset / page frame
+     ======================================================== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: var(--leading-body);
+    overflow-x: clip;
+  }
+  img, svg { max-width: 100%; }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--space-700);
+  }
+
+  /* ========================================================
+     Chrome strip
+     ======================================================== */
+  .chrome {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-400) 0 var(--space-300) 0;
+  }
+  .readout {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(7rem, auto)) 1fr;
+    align-items: end;
+    gap: var(--space-500);
+    padding: var(--space-300) 0;
+    border-top: var(--rule-hairline);
+    border-bottom: var(--rule-hairline);
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .readout .field { display: flex; flex-direction: column; gap: var(--space-100); min-width: 0; }
+  .readout .label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .readout .value {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .readout .trace { height: 28px; width: 100%; align-self: center; overflow: visible; }
+  .wayfinder {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: var(--space-300); gap: var(--space-400); flex-wrap: wrap;
+  }
+  .wayfinder .here {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg);
+  }
+  .wayfinder .lab {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted);
+  }
+  .wayfinder .lab a, .wayfinder .here a {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 1px;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+  .wayfinder .lab a:hover, .wayfinder .lab a:focus-visible,
+  .wayfinder .here a:hover, .wayfinder .here a:focus-visible {
+    color: var(--accent); border-bottom-color: var(--accent); outline: none;
+  }
+
+  /* ========================================================
+     Body column
+     ======================================================== */
+  .body { max-width: 640px; margin: 0 auto; padding-top: var(--space-700); }
+  .body > * { max-width: 100%; }
+  .breakout-wide { max-width: min(780px, 100%); width: 100%; margin-left: auto; margin-right: auto; }
+  @media (min-width: 900px) {
+    .breakout-wide { width: auto; max-width: 780px; margin-left: -70px; margin-right: -70px; }
+  }
+
+  /* ========================================================
+     Typography
+     ======================================================== */
+  .issue-flag {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 var(--space-300) 0;
+    display: flex; align-items: center; gap: var(--space-300);
+  }
+  .issue-flag .sq { width: 8px; height: 8px; background: var(--accent); display: inline-block; flex: 0 0 auto; }
+  .issue-flag .sep { color: var(--muted); }
+
+  h1.hero {
+    font-family: var(--font-prose);
+    font-size: clamp(2.0rem, 1.3rem + 2.2vw, 3.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    margin: 0 0 var(--space-500) 0;
+    font-weight: 400;
+  }
+
+  h2.section {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--scale-500);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: var(--space-700) 0 var(--space-400) 0;
+    padding-bottom: var(--space-200);
+    position: relative;
+    color: var(--fg);
+  }
+  h2.section::after {
+    content: ""; display: block; position: absolute;
+    left: 0; bottom: 0; width: 2.4em; height: 2px; background: var(--accent);
+  }
+
+  .lede { font-size: var(--scale-400); line-height: 1.5; margin: 0 0 var(--space-500) 0; }
+  p { margin: 0 0 var(--space-400) 0; line-height: 1.65; }
+
+  a {
+    color: var(--fg); text-decoration: underline;
+    text-decoration-color: var(--accent); text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  a:hover { text-decoration-color: var(--accent-hi); }
+
+  code, .mono {
+    font-family: var(--font-mono); font-size: 0.92em;
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+
+  /* Section seam */
+  .seam {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: var(--space-700) 0; color: var(--rule);
+  }
+  .seam .h-rule { display: inline-block; width: 28px; height: 1px; background: currentColor; }
+  .seam .sq { display: inline-block; width: 5px; height: 5px; background: var(--accent); }
+
+  /* Pull-quote */
+  .pullquote {
+    font-family: var(--font-prose); font-style: italic;
+    font-size: var(--scale-500); line-height: 1.4;
+    border-left: 3px solid var(--accent);
+    padding: var(--space-200) 0 var(--space-200) var(--space-500);
+    margin: var(--space-600) 0; color: var(--fg);
+  }
+
+  /* ========================================================
+     Rubric table : letter keys in mono, descriptions in serif
+     ======================================================== */
+  .rubric-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-500) 0;
+    font-size: var(--scale-200);
+  }
+  .rubric-table caption {
+    font-family: var(--font-sans);
+    font-size: var(--scale-100);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-align: left;
+    padding-bottom: var(--space-300);
+    caption-side: top;
+  }
+  .rubric-table th {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    font-weight: 500;
+    text-align: left;
+    padding: var(--space-200) var(--space-300) var(--space-200) 0;
+    border-bottom: var(--rule-hairline);
+  }
+  .rubric-table td {
+    padding: var(--space-200) var(--space-300) var(--space-200) 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .rubric-table td:first-child {
+    font-family: var(--font-mono);
+    font-size: var(--scale-200);
+    color: var(--accent);
+    white-space: nowrap;
+    width: 2.5rem;
+  }
+  .rubric-table td.desc { font-family: var(--font-prose); }
+  .rubric-table tr:last-child td { border-bottom: 2px solid var(--rule); }
+
+  /* ========================================================
+     Battery block : essay summary cards
+     ======================================================== */
+  .battery { margin: var(--space-500) 0; }
+  .essay-card {
+    background: var(--paper);
+    border: var(--rule-hairline);
+    border-left: 3px solid var(--accent);
+    padding: var(--space-400) var(--space-500);
+    margin-bottom: var(--space-400);
+  }
+  .essay-card .essay-head {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: var(--space-300); margin-bottom: var(--space-200);
+  }
+  .essay-card .essay-id {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    flex: 0 0 auto;
+  }
+  .essay-card .essay-title {
+    font-family: var(--font-sans);
+    font-size: var(--scale-200);
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .essay-card .essay-body {
+    font-family: var(--font-prose);
+    font-size: var(--scale-200);
+    line-height: 1.6;
+    color: var(--fg);
+    margin: 0;
+  }
+
+  /* ========================================================
+     Channel table : model IDs and channel assignments
+     ======================================================== */
+  .channel-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-500) 0;
+    font-size: var(--scale-200);
+  }
+  .channel-table th {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    font-weight: 500;
+    text-align: left;
+    padding: var(--space-200) var(--space-400) var(--space-200) 0;
+    border-bottom: var(--rule-hairline);
+  }
+  .channel-table td {
+    font-family: var(--font-mono);
+    font-size: var(--scale-200);
+    padding: var(--space-200) var(--space-400) var(--space-200) 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .channel-table .anchor-row td { color: var(--accent); }
+  .channel-table .ddagger { color: var(--accent); }
+
+  /* ========================================================
+     Honesty-rails block : bordered inset with teal rule on top
+     ======================================================== */
+  .rails-block {
+    margin: var(--space-600) 0;
+    border: var(--rule-hairline);
+    border-top: 3px solid var(--accent);
+    background: var(--paper);
+    padding: var(--space-500);
+  }
+  .rails-block .rails-head {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0 0 var(--space-400) 0;
+  }
+  .rails-block ul {
+    margin: 0;
+    padding-left: var(--space-500);
+    list-style: none;
+  }
+  .rails-block li {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: 1.6;
+    margin-bottom: var(--space-300);
+    position: relative;
+  }
+  .rails-block li::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--space-400));
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+  }
+  .rails-block li:last-child { margin-bottom: 0; }
+
+  /* ========================================================
+     Deep-links index
+     ======================================================== */
+  .link-index { margin: var(--space-500) 0; }
+  .link-index .link-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-400);
+    align-items: baseline;
+    padding: var(--space-300) 0;
+    border-top: var(--rule-hairline);
+  }
+  .link-index .link-row:last-child { border-bottom: var(--rule-hairline); }
+  .link-index .link-name { font-family: var(--font-prose); font-size: var(--scale-300); }
+  .link-index .link-kind {
+    font-family: var(--font-mono); font-size: var(--scale-100);
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.05em; white-space: nowrap;
+  }
+
+  /* ========================================================
+     Closer
+     ======================================================== */
+  .closer-block { margin-top: var(--space-800); }
+  .identity {
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    margin: 0 0 var(--space-500) 0;
+  }
+  .closer {
+    font-family: var(--font-prose);
+    font-size: var(--scale-400);
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+  }
+  .closer .signal {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 1.1em;
+    line-height: 1;
+    margin-left: 0.01em;
+  }
+  .footer-rule {
+    border: 0; border-top: 1px solid var(--rule);
+    width: 4rem; margin: var(--space-700) auto var(--space-400) auto;
+  }
+  .copyright {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); text-align: center;
+    margin: 0 0 var(--space-800) 0; letter-spacing: 0.02em;
+  }
+
+  /* Footnote */
+  .footnote {
+    font-family: var(--font-sans); font-size: var(--scale-100);
+    color: var(--muted); line-height: 1.5;
+    margin: var(--space-500) 0 0 0;
+  }
+  .footnote .ddagger { color: var(--accent); }
+
+  /* ========================================================
+     Responsive
+     ======================================================== */
+  @media (max-width: 1024px) { .page { padding: 0 var(--space-600); } }
+  @media (max-width: 800px) {
+    .page { padding: 0 var(--space-500); }
+    .readout { gap: var(--space-400); }
+  }
+  @media (max-width: 480px) {
+    .page { padding: 0 var(--space-400); }
+    .body { padding-top: var(--space-600); }
+    .chrome { max-width: 100%; }
+    .readout {
+      grid-template-columns: 1fr; gap: var(--space-300); padding: var(--space-300) 0;
+    }
+    .readout .trace { display: none; }
+    .readout .field {
+      flex-direction: row; align-items: baseline;
+      justify-content: space-between; gap: var(--space-400);
+    }
+    .readout .value { font-size: 1.1rem; }
+    .wayfinder { flex-direction: column; gap: var(--space-200); align-items: flex-start; }
+    h1.hero { font-size: clamp(1.9rem, 6.5vw, 2.5rem); }
+    .pullquote { padding-left: var(--space-400); font-size: var(--scale-400); }
+    .essay-card { padding: var(--space-300) var(--space-400); }
+    .rubric-table td.desc { min-width: 0; }
+    .channel-table { font-size: var(--scale-100); }
+    .link-index .link-row { grid-template-columns: 1fr; }
+    .link-index .link-kind { display: none; }
+    .closer { font-size: var(--scale-300); }
+  }
+  @media (max-width: 380px) {
+    .page { padding: 0 var(--space-300); }
+    h1.hero { font-size: clamp(1.75rem, 8vw, 2.2rem); }
+  }
+
+  @media print {
+    :root { color-scheme: light; }
+    .chrome { display: none; }
+    .body { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Chrome strip -->
+  <div class="chrome">
+    <div class="readout" role="group" aria-label="campaign counters">
+      <div class="field">
+        <span class="label">Models evaluated</span>
+        <span class="value">12</span>
+      </div>
+      <div class="field">
+        <span class="label">Essays graded</span>
+        <span class="value">3</span>
+      </div>
+      <div class="field">
+        <span class="label">Rubric points</span>
+        <span class="value">20</span>
+      </div>
+      <!-- Trace: flat ceiling with one dip at the outlier position, then return to ceiling -->
+      <svg class="trace" viewBox="0 0 120 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <title>Score-distribution trace: flat at the ceiling with one outlier dip.</title>
+        <line x1="0" y1="20" x2="120" y2="20" stroke="var(--graticule)" stroke-width="0.5"/>
+        <polyline
+          points="0,5 12,5 24,4 36,5 48,4 60,5 72,14 84,5 96,4 108,5 120,4"
+          fill="none"
+          stroke="var(--trace)"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          vector-effect="non-scaling-stroke"/>
+      </svg>
+    </div>
+    <div class="wayfinder">
+      <span class="here">
+        <a href="../../index.html">GunnerBench</a>
+        &#183;
+        <a href="index.html">Issue No. 1</a>
+        &#183; Page V
+      </span>
+      <span class="lab">
+        <a href="../../about.html">About</a>
+        &#183; The Ronin Advisory Group LLC
+      </span>
+    </div>
+  </div>
+
+  <article class="body">
+
+    <!-- Page header -->
+    <p class="issue-flag">
+      <span class="sq" aria-hidden="true"></span>
+      Issue No. 1 <span class="sep">&#183;</span> Page V <span class="sep">&#183;</span> June 2026
+    </p>
+
+    <h1 class="hero">Methodology &amp; Colophon</h1>
+
+    <p class="lede">
+      How this issue was built, what the numbers mean, what they do not mean,
+      and where to go if you want to check the work yourself.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S1: What we measured and how ============= -->
+    <h2 class="section">What we measured and how</h2>
+
+    <p>
+      The unit of this issue is a battery of three bar-exam-grade essays on fact
+      patterns authored privately and run for the first time in April 2026.
+      Why that matters &mdash; and why it separates this result from a leaderboard
+      number &mdash; is argued fully on <a href="01-everyone-passed.html">Page I</a>.
+    </p>
+
+    <p>
+      Twelve models were given the same battery, in the same harness, under the
+      same conditions. Each received the same task description, no prior context,
+      and no coaching. The same point-sheet rubric was applied to every response.
+      The same judge &mdash; <code>claude-opus-4-6</code> &mdash; evaluated every
+      answer. The harness wrote results into a database the moment each model
+      produced them; judgment followed on the same artifact record.
+    </p>
+
+    <p>
+      These three essays were chosen because they are dense, interdependent, and
+      trap-laden &mdash; the kind of problem where a model that pattern-matches
+      instead of reasoning will fail quietly and confidently. The framing of what
+      that means is on <a href="01-everyone-passed.html">Page I</a>.
+    </p>
+
+    <!-- ============= S2: The battery ============= -->
+    <h2 class="section">The battery</h2>
+
+    <div class="battery">
+
+      <div class="essay-card">
+        <div class="essay-head">
+          <span class="essay-id">Essay 1</span>
+          <span class="essay-title">Property: Fee Tail + Rule Against Perpetuities</span>
+        </div>
+        <p class="essay-body">
+          A testamentary conveyance through a common-law jurisdiction that has never
+          abolished the fee tail, retains the classical wait-and-see-free Rule Against
+          Perpetuities, applies the fertile octogenarian and unborn-widow presumptions,
+          and construes class gifts under the rule of convenience. The model was
+          required to trace a multi-generation estate chain and produce a hand-generated
+          SVG diagram showing the chain of title with each estate's validity annotated.
+          This is the essay with the 13-item point-sheet (items a through m) used as
+          anchors for the holistic 1&ndash;5 memo score. The diagram is scored
+          separately by a visual judge, also 1&ndash;5.
+        </p>
+      </div>
+
+      <div class="essay-card">
+        <div class="essay-head">
+          <span class="essay-id">Essay 2</span>
+          <span class="essay-title">Criminal Procedure + &sect;1983</span>
+        </div>
+        <p class="essay-body">
+          A multi-issue fact pattern requiring analysis of Fourth and Fifth Amendment
+          violations, including a warrantless-search issue, a custodial-interrogation
+          issue, and a Monell-liability question under 42 U.S.C. &sect;1983. The model
+          was required to identify the doctrinal elements, apply them to the facts, and
+          reach a holding on each. The rubric rewards correct classification, correct
+          application, and correctly reaching the operative conclusion.
+        </p>
+      </div>
+
+      <div class="essay-card">
+        <div class="essay-head">
+          <span class="essay-id">Essay 3</span>
+          <span class="essay-title">Evidence: Hearsay + Confrontation Clause</span>
+        </div>
+        <p class="essay-body">
+          A multi-statement evidence problem requiring classification of each statement
+          as hearsay or non-hearsay, identification of applicable exceptions (including
+          a homicide-only exception that traps the over-cautious reader), and analysis
+          of Confrontation Clause implications under <em>Crawford v. Washington</em>.
+          Several items are designed to surface the difference between classification
+          failure and conclusion failure &mdash; a distinction that matters when
+          comparing models across capability levels.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ============= S3: The rubric ============= -->
+    <h2 class="section">The rubric: Property memo</h2>
+
+    <p>
+      Each essay was scored holistically on a 1&ndash;5 scale anchored against a
+      point-sheet rubric. The Property memo uses thirteen analytical items
+      (a&ndash;m) as the anchoring framework: a score of 5 means the memo
+      addresses items a through l correctly with clean IRAC structure; item m is
+      desirable but not required for a top score. The diagram is scored
+      <em>separately</em> by a visual judge, also on a 1&ndash;5 scale. A model
+      that gets the law right on every analytical node but draws the chain wrong
+      receives a separate diagram penalty &mdash; the scoring surface keeps those
+      apart.
+    </p>
+
+    <table class="rubric-table breakout-wide reproduced-spec" data-spec="property-point-sheet" aria-label="Property essay memo point-sheet, items a through m">
+      <caption>Property Memo Point-Sheet (items a&ndash;m &mdash; memo scored 1&ndash;5 against these; diagram judged separately 1&ndash;5)</caption>
+      <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Issue the memo must address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>a</td>
+          <td class="desc">Fee tail classification for Arthur&rsquo;s present interest.</td>
+        </tr>
+        <tr>
+          <td>b</td>
+          <td class="desc">Character of interests following a fee tail as remainders (not executory interests).</td>
+        </tr>
+        <tr>
+          <td>c</td>
+          <td class="desc">Widow&rsquo;s interest as a contingent remainder for life &mdash; contingent because the widow is unascertainable until Arthur&rsquo;s death (the &ldquo;unborn widow&rdquo; trap).</td>
+        </tr>
+        <tr>
+          <td>d</td>
+          <td class="desc">Grandchildren&rsquo;s interest as a contingent remainder to an open class, subject to the condition precedent of reaching 25.</td>
+        </tr>
+        <tr>
+          <td>e</td>
+          <td class="desc">Society&rsquo;s interest as an alternative contingent remainder.</td>
+        </tr>
+        <tr>
+          <td>f</td>
+          <td class="desc">Identification of measuring lives (Arthur, Bernice, Celia, Dmitri, Octavia, Society trustees).</td>
+        </tr>
+        <tr>
+          <td>g</td>
+          <td class="desc">RAP analysis of the widow&rsquo;s life estate: VALID (vests, if at all, at Arthur&rsquo;s death).</td>
+        </tr>
+        <tr>
+          <td>h</td>
+          <td class="desc">RAP analysis of the grandchildren&rsquo;s remainder: VOID &mdash; afterborn-child + afterborn-grandchild mechanism; all-or-nothing rule (<em>Leake v. Robinson</em>) voids the entire class gift.</td>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td class="desc">RAP analysis of the Society&rsquo;s interest: VOID (takes only on the same remote event; charity-to-non-charity gifts ARE subject to RAP).</td>
+        </tr>
+        <tr>
+          <td>j</td>
+          <td class="desc">Fertile-octogenarian presumption is IRREBUTTABLE at common law &mdash; Octavia&rsquo;s medical evidence is irrelevant.</td>
+        </tr>
+        <tr>
+          <td>k</td>
+          <td class="desc">Octavia is not a measuring life for these interests.</td>
+        </tr>
+        <tr>
+          <td>l</td>
+          <td class="desc">Resulting state of title: Arthur holds the fee tail; widow&rsquo;s contingent life estate stands; everything after fails and reverts to Helena&rsquo;s estate, passing under residuary to Arthur.</td>
+        </tr>
+        <tr>
+          <td>m</td>
+          <td class="desc">Modern-statute footnote (fee tail abolished in most states; USRAP wait-and-see would save the voided interests). <em>Optional &mdash; desirable but not required for a score of 5.</em></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="font-family: var(--font-sans); font-size: 0.72rem; color: var(--muted);">
+            Memo scored 1&ndash;5 holistically against the above point-sheet.
+            Diagram scored 1&ndash;5 separately by visual judge.
+            Property total contributes up to 10 toward the campaign maximum of 20
+            (Criminal Procedure memo /5 + Evidence memo /5 = remaining 10).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      The Criminal Procedure and Evidence essays are each scored 1&ndash;5 on their
+      respective memo rubrics. All three memos plus the Property diagram combine for
+      a campaign maximum of 20 points: Property memo (/5) + Property diagram (/5) +
+      Criminal Procedure memo (/5) + Evidence memo (/5).
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S4: Channel correction ============= -->
+    <h2 class="section">Channel correction</h2>
+
+    <p>
+      All costs in this issue are corrected to a common channel so that price
+      comparisons are meaningful. Without correction, a model run on its native
+      API would appear to cost differently from the same model run through an
+      intermediary &mdash; not because the compute differed, but because the
+      billing path did. The correction applies published per-token rates to
+      observed token counts and normalizes to a single channel baseline.
+    </p>
+
+    <p>
+      Anthropic models were scored on their native Claude Code harness, which
+      charges at the published direct-API rate. OpenAI and Google models were
+      scored via OpenRouter and are marked below; a direct-API re-run is planned
+      for a future issue. <span class="ddagger">&#8225;</span> xAI
+      (<code>grok</code>) and DeepSeek were also scored via OpenRouter by design
+      &mdash; the lab holds no direct keys for those providers.
+    </p>
+
+    <p>
+      Three of the twelve cells are anchors drawn from the predecessor
+      <code>EV-003</code> law-essays campaign, which ran the same tasks against
+      the same rubric with the same judge. They are included as a
+      cross-campaign consistency check: if the rubric and judge are stable, the
+      anchor cells should produce stable scores.
+    </p>
+
+    <table class="channel-table breakout-wide" aria-label="Channel assignments for the twelve models">
+      <thead>
+        <tr>
+          <th scope="col">Model</th>
+          <th scope="col">Channel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>claude-opus-4.8</td>
+          <td>native</td>
+        </tr>
+        <tr>
+          <td>claude-fable-5</td>
+          <td>native</td>
+        </tr>
+        <tr class="anchor-row">
+          <td>claude-opus-4.7</td>
+          <td>native</td>
+        </tr>
+        <tr class="anchor-row">
+          <td>claude-opus-4.6</td>
+          <td>native</td>
+        </tr>
+        <tr class="anchor-row">
+          <td>haiku-4.5</td>
+          <td>native</td>
+        </tr>
+        <tr>
+          <td>gpt-5.5<span class="ddagger">&#8225;</span></td>
+          <td>OpenRouter</td>
+        </tr>
+        <tr>
+          <td>gpt-5.4<span class="ddagger">&#8225;</span></td>
+          <td>OpenRouter</td>
+        </tr>
+        <tr>
+          <td>gemini-3.5-flash<span class="ddagger">&#8225;</span></td>
+          <td>OpenRouter</td>
+        </tr>
+        <tr>
+          <td>gemini-3.1-pro<span class="ddagger">&#8225;</span></td>
+          <td>OpenRouter</td>
+        </tr>
+        <tr>
+          <td>grok-4.3</td>
+          <td>OpenRouter</td>
+        </tr>
+        <tr>
+          <td>deepseek-v4-pro</td>
+          <td>OpenRouter</td>
+        </tr>
+        <tr>
+          <td>deepseek-v3.2</td>
+          <td>OpenRouter</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="footnote">
+      <span class="ddagger">&#8225;</span> OpenAI and Google models were scored
+      via OpenRouter. Costs have been corrected to published direct-API rates
+      for comparison purposes. A direct-API re-run is planned for a future
+      campaign; results may differ slightly at the margin.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S5: Why we show the work ============= -->
+    <h2 class="section">Why we show the work</h2>
+
+    <p>
+      GunnerBench publishes the actual prompts and the models' actual answers so
+      a reader can judge the reasoning rather than trusting a number. That is not
+      a policy choice or a positioning posture &mdash; it is what this kind of
+      measurement is for.
+    </p>
+
+    <div class="pullquote breakout-wide">
+      A leaderboard tells you a score moved. It cannot tell you &ldquo;good&rdquo; from
+      &ldquo;good at the test,&rdquo; and it gives no felt sense of fitness for your use.
+    </div>
+
+    <p>
+      A score is a claim. The work is the evidence. The exhibits in this issue
+      are the actual memos and diagrams from the Property problem &mdash; all
+      twelve models&rsquo; answers, with an excerpt of the prompt, shown as-received.
+      A reader who works through two or three exhibits will come away with a felt
+      sense of what a model actually does with a hard interdependent problem, which
+      is what they need to make a trust-allocation decision. That felt sense is not
+      computable from the number alone.
+    </p>
+
+    <p>
+      This is also why the issue foregrounds the failure modes alongside the
+      ceiling scores. The model that wrote a polished, well-drafted analysis and
+      got the law exactly backwards &mdash; scoring a perfect five for drawing
+      the wrong conclusion crisply &mdash; is the most important exhibit in this
+      issue. A confident-wrong answer, well-drafted and visually polished, is
+      the one a busy reviewer is most likely to wave through. Seeing it is not
+      optional if you are responsible for work that travels forward from it.
+    </p>
+
+    <p>
+      A caveat in fairness to that exhibit: the model&rsquo;s misstep &mdash; that
+      the remainders following Arthur&rsquo;s fee tail escape the Rule Against
+      Perpetuities &mdash; is the strongest classical argument on the table, since
+      a barrable fee tail leaves those remainders destructible, and destructible
+      interests are traditionally exempt from the Rule. Our point-sheet scores it
+      against the model, on the view that Franklin&rsquo;s retained fee tail does
+      not save the gifts over on these facts; reasonable authorities differ, and we
+      scored to the rubric rather than around it. That a model can invoke a
+      recognized doctrine, draft it cleanly, and still land where the answer key
+      marks it wrong is not a softer version of the lesson &mdash; it is the lesson.
+    </p>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S6: Honesty rails ============= -->
+    <h2 class="section">Honesty rails</h2>
+
+    <p>
+      Every campaign produces a finding. Not every finding generalizes as far as
+      the headline implies. These are the limits we hold ourselves to when
+      interpreting Issue No. 1.
+    </p>
+
+    <div class="rails-block breakout-wide">
+      <p class="rails-head">What this issue does and does not establish</p>
+      <ul>
+        <li>
+          <strong>&ldquo;Commoditized / saturated&rdquo;</strong> rests on this
+          three-essay battery. That is a strong directional signal on dense,
+          interdependent multi-chain reasoning problems. It is not a universal
+          law. Breadth &mdash; more doctrines, more task types, more domains
+          &mdash; is the bulletproofing follow-up.
+        </li>
+        <li>
+          <strong>N&nbsp;=&nbsp;1 per model.</strong> A single run has a real
+          noise floor. Rank coarsely within the top cluster; the difference
+          between 19 and 20 on one run is smaller than the difference between
+          15 and 19.
+        </li>
+        <li>
+          <strong>The judge is <code>claude-opus-4-6</code></strong> &mdash; an
+          Anthropic model judging a field that includes Anthropic models. The
+          rubric is point-sheet style rather than holistic, which partially
+          insulates it from judge-model bias, but that insulation is imperfect.
+          The lab has examined self-preference on this battery and will treat
+          the question more fully in a future issue; a non-Anthropic cross-judge
+          is deferred. (See also the brief disclosure on
+          <a href="01-everyone-passed.html">Page I</a>.)
+        </li>
+        <li>
+          <strong>No claim that any model can stand in for a practicing
+          lawyer.</strong> A high score on this battery says something about
+          sustained multi-step reasoning under load; it says nothing about
+          fitness to practice. The task-as-vehicle framing is on
+          <a href="01-everyone-passed.html">Page I</a>.
+        </li>
+        <li>
+          <strong>OpenAI and Google costs are corrected estimates,</strong> not
+          direct-API measurements. The correction uses published per-token rates
+          applied to observed token counts. A direct-API re-run will firm these
+          up.
+        </li>
+      </ul>
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S7: Where to go deeper ============= -->
+    <h2 class="section">Where to go deeper</h2>
+
+    <p>
+      Every number and every exhibit in this issue traces to a source. Here is
+      where to find them.
+    </p>
+
+    <div class="link-index">
+
+      <div class="link-row">
+        <span class="link-name">
+          <a href="exhibits/index.html">The exhibit gallery</a>
+          &mdash; all twelve models&rsquo; actual answers to the Property problem,
+          plus an excerpt of the prompt. Read the lawyering yourself.
+        </span>
+        <span class="link-kind">Index</span>
+      </div>
+
+      <div class="link-row">
+        <span class="link-name">
+          <a href="charts/chain-break.html">Where the chain broke</a>
+          &mdash; a rubric-item-by-model matrix showing exactly which analytical
+          steps held and which did not across all twelve models.
+        </span>
+        <span class="link-kind">Chart</span>
+      </div>
+
+      <div class="link-row">
+        <span class="link-name">
+          <a href="charts/price-vs-score.html">Price vs. score</a>
+          &mdash; the full scatter with all twelve models plotted on a log price
+          axis, including the capability-ceiling guide and the three verified
+          anchor points.
+        </span>
+        <span class="link-kind">Chart</span>
+      </div>
+
+      <div class="link-row">
+        <span class="link-name">
+          <a href="01-everyone-passed.html">Page I &mdash; Everyone passed, now the real question</a>
+          &mdash; the narrative account of how expert legal reasoning became a
+          commodity and what that means for the professional who has to choose.
+        </span>
+        <span class="link-kind">Narrative</span>
+      </div>
+
+      <div class="link-row">
+        <span class="link-name">
+          <a href="02-where-the-chain-broke.html">Page II &mdash; Where the chain broke</a>
+          &mdash; the failure modes: where each model's reasoning gave out on the
+          dependent chain, and what the mechanism reveals about reasoning under load.
+        </span>
+        <span class="link-kind">Narrative</span>
+      </div>
+
+      <div class="link-row">
+        <span class="link-name">
+          <a href="03-cost-and-trust.html">Page III &mdash; Cost &amp; trust</a>
+          &mdash; one downstream axis: when capability is flat, the decision reduces
+          to price and provenance. The procurement story.
+        </span>
+        <span class="link-kind">Narrative</span>
+      </div>
+
+      <div class="link-row">
+        <span class="link-name">
+          <a href="../../about.html">About GunnerBench</a>
+          &mdash; what the lab is for, who it is built for, and why the
+          obligation framing matters.
+        </span>
+        <span class="link-kind">About</span>
+      </div>
+
+    </div>
+
+    <div class="seam" aria-hidden="true">
+      <span class="h-rule"></span><span class="sq"></span><span class="h-rule"></span>
+    </div>
+
+    <!-- ============= S8: Colophon ============= -->
+    <h2 class="section">Colophon</h2>
+
+    <p>
+      GunnerBench is built and operated by The Ronin Advisory Group LLC. The
+      harness is written in Go against a SQLite database. Every score table,
+      cost figure, and chart in this issue is generated deterministically from
+      the lab's database and the model artifacts it holds. The publication is a
+      projection of a source-of-truth record, not a hand-assembled mock-up.
+    </p>
+
+    <p>
+      The model artifacts &mdash; the memos, the diagrams &mdash; are written by
+      the models themselves to a per-task working directory. The judge reads from
+      the same directory. The database captures the judgment. The exhibit pages
+      present what the database holds. There is no editorial step between what a
+      model produced and what appears in the exhibits; the artifacts are shown
+      as-received.
+    </p>
+
+    <!-- ============= Close ============= -->
+    <div class="closer-block">
+      <p class="identity">
+        GunnerBench is built and operated by The Ronin Advisory Group LLC.
+      </p>
+      <p class="closer">
+        The work is the evidence<span class="signal">.</span>
+      </p>
+      <hr class="footer-rule">
+      <p class="copyright">
+        &#169; 2026 The Ronin Advisory Group LLC
+      </p>
+    </div>
+
+  </article>
+</div>
+
+</body>
+</html>

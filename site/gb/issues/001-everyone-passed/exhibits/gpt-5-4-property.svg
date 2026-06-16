@@ -1,0 +1,233 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1220" viewBox="0 0 1800 1220">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#475467" />
+    </marker>
+    <marker id="arrowRed" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#b42318" />
+    </marker>
+    <style>
+      .title { font: 700 30px Helvetica, Arial, sans-serif; fill: #101828; }
+      .subtitle { font: 600 18px Helvetica, Arial, sans-serif; fill: #344054; }
+      .panel { fill: #ffffff; stroke: #d0d5dd; stroke-width: 2; rx: 18; ry: 18; }
+      .note { fill: #f8fafc; stroke: #d0d5dd; stroke-width: 1.5; }
+      .valid { fill: #eef9f0; stroke: #2d6a4f; stroke-width: 2.5; rx: 16; ry: 16; }
+      .void { fill: #fff5f5; stroke: #b42318; stroke-width: 2.5; stroke-dasharray: 11 8; rx: 16; ry: 16; }
+      .neutral { fill: #f8fafc; stroke: #475467; stroke-width: 2; rx: 16; ry: 16; }
+      .result { fill: #ecfdf3; stroke: #027a48; stroke-width: 3; rx: 18; ry: 18; }
+      .small { font: 400 14px Helvetica, Arial, sans-serif; fill: #475467; }
+      .body { font: 400 16px Helvetica, Arial, sans-serif; fill: #101828; }
+      .bodyBold { font: 700 16px Helvetica, Arial, sans-serif; fill: #101828; }
+      .boxTitle { font: 700 18px Helvetica, Arial, sans-serif; fill: #101828; }
+      .boxText { font: 400 15px Helvetica, Arial, sans-serif; fill: #101828; }
+      .boxTextRed { font: 400 15px Helvetica, Arial, sans-serif; fill: #7a271a; }
+      .labelRed { font: 700 13px Helvetica, Arial, sans-serif; fill: #b42318; letter-spacing: 0.5px; }
+      .labelGreen { font: 700 13px Helvetica, Arial, sans-serif; fill: #027a48; letter-spacing: 0.5px; }
+      .flow { fill: none; stroke: #475467; stroke-width: 2.8; marker-end: url(#arrow); }
+      .flowThin { fill: none; stroke: #667085; stroke-width: 2.2; marker-end: url(#arrow); }
+      .flowRed { fill: none; stroke: #b42318; stroke-width: 2.2; stroke-dasharray: 8 7; marker-end: url(#arrowRed); }
+      .window { fill: #e0f2fe; stroke: #0284c7; stroke-width: 1.6; rx: 10; ry: 10; }
+      .axis { stroke: #344054; stroke-width: 2; }
+      .tick { stroke: #475467; stroke-width: 2; }
+      .event { fill: #b42318; stroke: #ffffff; stroke-width: 2; }
+      .eventText { font: 600 14px Helvetica, Arial, sans-serif; fill: #7a271a; }
+      .lifeLabel { font: 700 16px Helvetica, Arial, sans-serif; fill: #101828; }
+      .legendText { font: 400 15px Helvetica, Arial, sans-serif; fill: #101828; }
+      .legendTitle { font: 700 18px Helvetica, Arial, sans-serif; fill: #101828; }
+      .strike { stroke: #b42318; stroke-width: 3.2; }
+      .callout { fill: #fffaf0; stroke: #f59e0b; stroke-width: 1.8; rx: 12; ry: 12; }
+      .orange { fill: #f59e0b; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1800" height="1220" fill="#f5f7fb" />
+
+  <text x="40" y="42" class="title">Article IV: Franklin fee tail + classical RAP analysis</text>
+  <text x="40" y="72" class="subtitle">Blackacre, Helena Cartwright's will, created March 1, 2024</text>
+
+  <rect x="32" y="96" width="790" height="800" class="panel" />
+  <text x="56" y="132" class="subtitle">1. Chain of interests and title result</text>
+
+  <rect x="272" y="158" width="320" height="74" class="neutral" />
+  <text x="432" y="186" text-anchor="middle" class="boxTitle">Helena Cartwright</text>
+  <text x="432" y="209" text-anchor="middle" class="boxText">Devise of Blackacre in Article IV</text>
+
+  <rect x="66" y="255" width="172" height="108" class="valid" />
+  <text x="152" y="281" text-anchor="middle" class="labelGreen">VALID</text>
+  <text x="152" y="306" text-anchor="middle" class="boxTitle">Helena's reversion</text>
+  <text x="152" y="328" text-anchor="middle" class="boxText">Vested reversion</text>
+  <text x="152" y="348" text-anchor="middle" class="boxText">in fee simple</text>
+
+  <rect x="238" y="278" width="390" height="110" class="valid" />
+  <text x="433" y="306" text-anchor="middle" class="labelGreen">VALID</text>
+  <text x="433" y="333" text-anchor="middle" class="boxTitle">Arthur Cartwright</text>
+  <text x="433" y="356" text-anchor="middle" class="boxText">Present possessory fee tail</text>
+  <text x="433" y="377" text-anchor="middle" class="boxText">Words of limitation: “and the heirs of his body”</text>
+
+  <path d="M 432 232 L 432 278" class="flow" />
+  <path d="M 272 196 L 238 255" class="flowThin" />
+
+  <rect x="284" y="420" width="300" height="58" class="note" />
+  <text x="434" y="444" text-anchor="middle" class="bodyBold">Trigger in Article IV</text>
+  <text x="434" y="465" text-anchor="middle" class="body">“if Arthur's bodily line should ever fail”</text>
+  <path d="M 433 388 L 433 420" class="flowThin" />
+
+  <rect x="224" y="520" width="420" height="100" class="void" />
+  <line x1="244" y1="570" x2="624" y2="570" class="strike" />
+  <text x="434" y="548" text-anchor="middle" class="labelRed">VOID UNDER RAP</text>
+  <text x="434" y="575" text-anchor="middle" class="boxTitle">Arthur's widow</text>
+  <text x="434" y="598" text-anchor="middle" class="boxTextRed">Contingent remainder for life</text>
+  <text x="434" y="616" text-anchor="middle" class="boxTextRed">Unascertained until Arthur dies; unborn-widow problem</text>
+
+  <path d="M 434 478 L 434 520" class="flowRed" />
+
+  <rect x="116" y="680" width="408" height="118" class="void" />
+  <line x1="136" y1="739" x2="504" y2="739" class="strike" />
+  <text x="320" y="708" text-anchor="middle" class="labelRed">VOID UNDER RAP</text>
+  <text x="320" y="735" text-anchor="middle" class="boxTitle">Arthur's grandchildren</text>
+  <text x="320" y="758" text-anchor="middle" class="boxTextRed">Contingent class remainder in fee simple</text>
+  <text x="320" y="778" text-anchor="middle" class="boxTextRed">Must attain age 25; class can include afterborn</text>
+  <text x="320" y="796" text-anchor="middle" class="boxTextRed">grandchildren; bad as to one, bad as to all</text>
+
+  <rect x="548" y="680" width="214" height="118" class="void" />
+  <line x1="566" y1="739" x2="744" y2="739" class="strike" />
+  <text x="655" y="708" text-anchor="middle" class="labelRed">VOID UNDER RAP</text>
+  <text x="655" y="735" text-anchor="middle" class="boxTitle">Rensselaer</text>
+  <text x="655" y="756" text-anchor="middle" class="boxTitle">Historical Society</text>
+  <text x="655" y="779" text-anchor="middle" class="boxTextRed">Alternative contingent</text>
+  <text x="655" y="797" text-anchor="middle" class="boxTextRed">remainder in fee simple</text>
+
+  <path d="M 434 620 L 320 680" class="flowRed" />
+  <path d="M 434 620 L 655 680" class="flowRed" />
+  <text x="524" y="652" class="small">if no grandchild lives to attain 25</text>
+
+  <rect x="58" y="408" width="180" height="82" class="note" />
+  <text x="148" y="436" text-anchor="middle" class="bodyBold">Residuary clause</text>
+  <text x="148" y="458" text-anchor="middle" class="body">passes the reversion</text>
+  <text x="148" y="478" text-anchor="middle" class="body">to Arthur outright</text>
+  <path d="M 152 363 L 152 408" class="flowThin" />
+
+  <rect x="174" y="820" width="526" height="60" class="result" />
+  <text x="437" y="847" text-anchor="middle" class="labelGreen">RESULTING TITLE AT HELENA'S DEATH</text>
+  <text x="437" y="869" text-anchor="middle" class="boxTitle">Arthur holds fee simple absolute</text>
+
+  <path d="M 152 490 L 300 820" class="flowThin" />
+  <path d="M 433 388 L 520 820" class="flowThin" />
+  <text x="584" y="832" class="small">fee tail + residuary reversion merge after void interests are struck</text>
+
+  <rect x="860" y="96" width="908" height="800" class="panel" />
+  <text x="884" y="132" class="subtitle">2. RAP measuring lives and latest possible vesting events</text>
+
+  <rect x="886" y="152" width="850" height="78" class="note" />
+  <text x="908" y="180" class="bodyBold">Classical Franklin RAP test</text>
+  <text x="908" y="201" class="body">Ask at Helena's death whether each contingent interest must vest or fail within 21 years after some life in being.</text>
+  <text x="908" y="221" class="body">No wait-and-see; no medical exception to fertile-octogenarian presumption; “widow” cannot be fixed until Arthur dies.</text>
+
+  <text x="908" y="266" class="bodyBold">Abstract scale used below for each validating life</text>
+  <line x1="1025" y1="300" x2="1680" y2="300" class="axis" />
+  <rect x="1025" y="282" width="220" height="36" class="window" />
+  <line x1="1025" y1="286" x2="1025" y2="314" class="tick" />
+  <line x1="1245" y1="286" x2="1245" y2="314" class="tick" />
+  <text x="1025" y="272" text-anchor="middle" class="body">death of selected life</text>
+  <text x="1135" y="304" text-anchor="middle" class="bodyBold">21-year RAP window</text>
+  <text x="1245" y="272" text-anchor="middle" class="body">+21 years</text>
+
+  <circle cx="1390" cy="300" r="8" class="event" />
+  <circle cx="1518" cy="300" r="8" class="event" />
+  <circle cx="1642" cy="300" r="8" class="event" />
+  <line x1="1390" y1="300" x2="1390" y2="334" class="tick" />
+  <line x1="1518" y1="300" x2="1518" y2="358" class="tick" />
+  <line x1="1642" y1="300" x2="1642" y2="382" class="tick" />
+  <text x="1390" y="352" text-anchor="middle" class="eventText">grandchild</text>
+  <text x="1390" y="370" text-anchor="middle" class="eventText">attains 25</text>
+  <text x="1518" y="376" text-anchor="middle" class="eventText">Arthur's bodily line</text>
+  <text x="1518" y="394" text-anchor="middle" class="eventText">fails; widow would take</text>
+  <text x="1642" y="408" text-anchor="middle" class="eventText">certain no grandchild</text>
+  <text x="1642" y="426" text-anchor="middle" class="eventText">reaches 25; Society vests</text>
+  <text x="1294" y="448" class="small">These vesting or failure events can occur beyond +21 because Arthur may have an afterborn child who later has a child.</text>
+
+  <text x="908" y="486" class="bodyBold">Lives in being on March 1, 2024</text>
+
+  <text x="908" y="536" class="lifeLabel">Arthur</text>
+  <line x1="1025" y1="530" x2="1680" y2="530" class="axis" />
+  <rect x="1025" y="512" width="220" height="36" class="window" />
+  <line x1="1025" y1="516" x2="1025" y2="544" class="tick" />
+  <line x1="1245" y1="516" x2="1245" y2="544" class="tick" />
+  <circle cx="1025" cy="530" r="8" class="orange" />
+  <text x="1038" y="507" class="small">Arthur dies; only then is “widow” knowable</text>
+  <circle cx="1518" cy="530" r="8" class="event" />
+  <circle cx="1390" cy="530" r="8" class="event" />
+  <circle cx="1642" cy="530" r="8" class="event" />
+
+  <text x="908" y="596" class="lifeLabel">Bernice</text>
+  <line x1="1025" y1="590" x2="1680" y2="590" class="axis" />
+  <rect x="1025" y="572" width="220" height="36" class="window" />
+  <line x1="1025" y1="576" x2="1025" y2="604" class="tick" />
+  <line x1="1245" y1="576" x2="1245" y2="604" class="tick" />
+  <circle cx="1390" cy="590" r="8" class="event" />
+  <circle cx="1518" cy="590" r="8" class="event" />
+  <circle cx="1642" cy="590" r="8" class="event" />
+  <text x="1284" y="612" class="small">Bernice is current spouse only; she may predecease Arthur or cease to be his spouse.</text>
+
+  <text x="908" y="656" class="lifeLabel">Celia</text>
+  <line x1="1025" y1="650" x2="1680" y2="650" class="axis" />
+  <rect x="1025" y="632" width="220" height="36" class="window" />
+  <line x1="1025" y1="636" x2="1025" y2="664" class="tick" />
+  <line x1="1245" y1="636" x2="1245" y2="664" class="tick" />
+  <circle cx="1390" cy="650" r="8" class="event" />
+  <circle cx="1518" cy="650" r="8" class="event" />
+  <circle cx="1642" cy="650" r="8" class="event" />
+
+  <text x="908" y="716" class="lifeLabel">Dmitri</text>
+  <line x1="1025" y1="710" x2="1680" y2="710" class="axis" />
+  <rect x="1025" y="692" width="220" height="36" class="window" />
+  <line x1="1025" y1="696" x2="1025" y2="724" class="tick" />
+  <line x1="1245" y1="696" x2="1245" y2="724" class="tick" />
+  <circle cx="1390" cy="710" r="8" class="event" />
+  <circle cx="1518" cy="710" r="8" class="event" />
+  <circle cx="1642" cy="710" r="8" class="event" />
+
+  <text x="908" y="776" class="lifeLabel">Octavia</text>
+  <line x1="1025" y1="770" x2="1680" y2="770" class="axis" />
+  <rect x="1025" y="752" width="220" height="36" class="window" />
+  <line x1="1025" y1="756" x2="1025" y2="784" class="tick" />
+  <line x1="1245" y1="756" x2="1245" y2="784" class="tick" />
+  <circle cx="1390" cy="770" r="8" class="event" />
+  <circle cx="1518" cy="770" r="8" class="event" />
+  <circle cx="1642" cy="770" r="8" class="event" />
+
+  <rect x="1290" y="736" width="420" height="78" class="callout" />
+  <text x="1310" y="764" class="bodyBold">Octavia's age 82 and medical infertility do not help.</text>
+  <text x="1310" y="785" class="body">Classical RAP keeps the fertile-octogenarian presumption;</text>
+  <text x="1310" y="805" class="body">the court does not accept evidence rebutting fertility.</text>
+
+  <rect x="32" y="922" width="1736" height="266" class="panel" />
+  <text x="56" y="958" class="subtitle">3. Legend and bottom-line consequences</text>
+
+  <rect x="64" y="984" width="160" height="72" class="valid" />
+  <text x="144" y="1012" text-anchor="middle" class="labelGreen">VALID</text>
+  <text x="144" y="1037" text-anchor="middle" class="legendText">solid border</text>
+
+  <rect x="252" y="984" width="160" height="72" class="void" />
+  <line x1="270" y1="1020" x2="394" y2="1020" class="strike" />
+  <text x="332" y="1012" text-anchor="middle" class="labelRed">VOID</text>
+  <text x="332" y="1037" text-anchor="middle" class="legendText">dashed + strike</text>
+
+  <rect x="442" y="984" width="160" height="72" class="window" />
+  <text x="522" y="1013" text-anchor="middle" class="legendText">blue span</text>
+  <text x="522" y="1037" text-anchor="middle" class="legendText">21-year RAP window</text>
+
+  <circle cx="642" cy="1021" r="9" class="event" />
+  <text x="663" y="1013" class="legendText">red dot</text>
+  <text x="663" y="1037" class="legendText">possible vesting event</text>
+
+  <text x="64" y="1100" class="legendTitle">Consequences after striking the void interests</text>
+  <text x="64" y="1128" class="body">• Arthur's fee tail survives. Helena's vested reversion also survives and passes to Arthur through the residuary clause.</text>
+  <text x="64" y="1152" class="body">• Those two valid interests merge, so Arthur holds fee simple absolute at Helena's death.</text>
+  <text x="64" y="1176" class="body">• Therefore, if Arthur's bodily line fails in 2050 or in 2150, nothing shifts to Bernice, the grandchildren, or the Historical Society.</text>
+
+  <rect x="1088" y="984" width="640" height="112" class="result" />
+  <text x="1408" y="1016" text-anchor="middle" class="labelGreen">BOTTOM LINE</text>
+  <text x="1408" y="1046" text-anchor="middle" class="boxTitle">Arthur owns Blackacre in fee simple absolute as of March 1, 2024.</text>
+  <text x="1408" y="1071" text-anchor="middle" class="boxText">Failure of Arthur's line in 2050 or 2150 does not activate any later Article IV gift.</text>
+</svg>

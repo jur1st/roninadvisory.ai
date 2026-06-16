@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  chain-break.html : standalone dispatch chart fragment (Issue No. 1).
+  ============================================================
+  Shared-spine aligned-rupture diagram. One 13-node rubric dependency spine
+  (a..m) drawn once; the seven full-chain holders collapse into one accent
+  band; the five breakers hang as rupture lanes in capability-ladder order.
+  Cascade arcs draw the g/h/i propagation into the title link l.
+
+  Token block copied verbatim from the published About page (via
+  charts/price-vs-score.html).
+  bypass-tier1-html OK : self-contained fragment, no external resources.
+  bypass-rogue-font-family OK : token block copied verbatim from the
+  published About page. The hex fallbacks and accent-hi oklch(38%) sit just
+  outside the hook numeric band but ARE the calibrated house palette.
+
+  DATA: failure-map.yaml (12 models by 13 links a..m; per-link held/broke/
+  partial from the claude-opus-4-6 LLM-judge rationales for task
+  property-fee-tail-rap, EV-023). Corrected reading: classification is
+  saturated across the FRONTIER; grok-4.3's b-break is the ladder bottom rung,
+  drawn honestly on the front of the spine.
+  Chart family: shared-spine aligned-rupture (signature-ledger lineage).
+  Claim anchor: CC-13 (where the chain snaps climbs the capability ladder).
+  ============================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where the chain snapped: the front held, the back-half RAP cascade discriminated</title>
+
+<style>
+  /* Design tokens : copied verbatim from the published About page. */
+  :root {
+    color-scheme: light dark;
+
+    --bg: #fafafa;
+    --bg: oklch(98.5% 0.003 220);
+    --bg: light-dark(oklch(98.5% 0.003 220), oklch(15% 0.012 240));
+
+    --paper: #ffffff;
+    --paper: oklch(99.5% 0.002 220);
+    --paper: light-dark(oklch(99.5% 0.002 220), oklch(17% 0.014 240));
+
+    --fg: #1a1b22;
+    --fg: oklch(20% 0.022 240);
+    --fg: light-dark(oklch(20% 0.022 240), oklch(92% 0.006 240));
+
+    --muted: #6a6f7c;
+    --muted: oklch(48% 0.020 240);
+    --muted: light-dark(oklch(48% 0.020 240), oklch(65% 0.018 240));
+
+    --rule: #d6d9dd;
+    --rule: oklch(85% 0.010 220);
+    --rule: light-dark(oklch(85% 0.010 220), oklch(34% 0.022 240));
+
+    --accent: #226d8b;
+    --accent: oklch(45% 0.13 215);
+    --accent: light-dark(oklch(45% 0.13 215), oklch(72% 0.14 215));
+
+    --accent-hi: #1c5972;
+    --accent-hi: oklch(38% 0.15 215);
+    --accent-hi: light-dark(oklch(38% 0.15 215), oklch(82% 0.14 215));
+
+    --bad: #b3402e;
+    --bad: oklch(52% 0.16 30);
+    --bad: light-dark(oklch(52% 0.16 30), oklch(70% 0.15 30));
+
+    --warn: #9a6a16;
+    --warn: oklch(58% 0.11 75);
+    --warn: light-dark(oklch(58% 0.11 75), oklch(78% 0.12 80));
+
+    --trace: var(--accent);
+    --graticule: light-dark(oklch(85% 0.05 215), oklch(40% 0.05 215));
+
+    --font-sans:  "acumin-pro", "Acumin Pro", "Inter", "Helvetica Neue",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Arial, sans-serif;
+    --font-mono:  "Berkeley Mono Variable", "Berkeley Mono", ui-monospace,
+                  "SF Mono", Menlo, Monaco, "Consolas", "Liberation Mono",
+                  monospace;
+    --font-prose: "Addington CF", "Charter", "Iowan Old Style", "Georgia",
+                  "Times New Roman", serif;
+
+    --scale-100: 0.78rem;
+    --scale-200: 0.88rem;
+    --scale-300: 1.00rem;
+    --scale-400: 1.18rem;
+
+    --space-100: 0.25rem;
+    --space-200: 0.5rem;
+    --space-300: 0.75rem;
+    --space-400: 1rem;
+    --space-500: 1.5rem;
+    --space-600: 2rem;
+    --space-700: 3rem;
+
+    --leading-snug: 1.35;
+    --rule-hairline: 1px solid var(--rule);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-prose);
+    font-size: var(--scale-300);
+    line-height: 1.55;
+    padding: var(--space-700) var(--space-500);
+  }
+  img, svg { max-width: 100%; }
+
+  .breakout-svg {
+    max-width: min(1080px, 100%);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  figure { margin: 0 auto; }
+  figure svg { display: block; width: 100%; height: auto; }
+
+  figcaption {
+    font-family: var(--font-prose);
+    font-size: var(--scale-200);
+    color: var(--muted);
+    text-align: center;
+    margin-top: var(--space-400);
+    line-height: var(--leading-snug);
+    max-width: 64ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .chart-legend {
+    font-family: var(--font-mono);
+    font-size: var(--scale-100);
+    color: var(--muted);
+    text-align: center;
+    margin-top: var(--space-300);
+    letter-spacing: 0.02em;
+    line-height: 1.9;
+  }
+  .chart-legend .held-key   { color: var(--accent); }
+  .chart-legend .broke-key  { color: var(--bad); }
+  .chart-legend .partial-key { color: var(--warn); }
+
+  .footnote {
+    font-family: var(--font-sans);
+    font-size: var(--scale-100);
+    color: var(--muted);
+    line-height: 1.5;
+    margin: var(--space-500) auto 0 auto;
+    max-width: 64ch;
+    text-align: center;
+  }
+  .footnote .ddagger { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<figure class="breakout-svg">
+  <svg viewBox="-22 0 842 620" role="img" aria-labelledby="cb-title cb-desc">
+    <title id="cb-title">Where the thirteen-link rubric chain snapped across twelve models.</title>
+    <desc id="cb-desc">A shared dependency spine of thirteen rubric links labelled a through m runs left to right; links a through f are the classification half, links g through l are the back-half Rule-Against-Perpetuities cascade, and link m is an optional unscored footnote drawn muted and dashed. A dashed vertical divider sits between f and g. At the top, a teal band spans a through l: the seven models that held the entire chain. Below it descend five rupture lanes in capability-ladder order. grok-4.3 ruptures early at b, a hollow ring with a snapped spine, the lone front-half structural break and the ladder's bottom rung. deepseek-v3.2 ruptures at e. gpt-5.4 ruptures at g, and a thin arc carries the failure into the title link l. opus-4.8 holds all structure then ruptures at h and i, with two arcs converging on l. claude-haiku-4.5 ruptures at i with a partial at h, and an arc into l, plus partial half-rings at j and k. Held nodes are solid teal discs; broken nodes are hollow rings stroked red with a gap in the spine; partial nodes are half-filled rings.</desc>
+
+    <style>
+      .cb-t-sans  { font-family: var(--font-sans); }
+      .cb-t-mono  { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+      .cb-t-prose { font-family: var(--font-prose); font-style: italic; }
+
+      .cb-link-letter { font-size: 13px; fill: var(--fg); }
+      .cb-link-letter-muted { font-size: 13px; fill: var(--muted); }
+      .cb-half-label  { font-size: 11.5px; fill: var(--muted); letter-spacing: 0.04em; }
+      .cb-lane-id     { font-size: 12px; fill: var(--fg); }
+      .cb-lane-memo   { font-size: 11px; fill: var(--muted); }
+      .cb-lane-mech   { font-size: 11.5px; fill: var(--muted); font-style: italic; }
+      .cb-band-id     { font-size: 12px; fill: var(--accent); }
+      .cb-band-mech   { font-size: 11.5px; fill: var(--muted); font-style: italic; }
+      .cb-rung-tag    { font-size: 10px; fill: var(--muted); letter-spacing: 0.04em; }
+
+      .cb-spine       { stroke: var(--accent); stroke-width: 1.75; fill: none; }
+      .cb-spine-m     { stroke: var(--muted); stroke-width: 1.25; fill: none; stroke-dasharray: 3 3; opacity: 0.75; }
+      .cb-spine-gap   { stroke: var(--bad); stroke-width: 1.75; fill: none; }
+
+      .cb-node-held   { fill: var(--accent); stroke: var(--accent); stroke-width: 1; }
+      .cb-node-m      { fill: none; stroke: var(--muted); stroke-width: 1.25; opacity: 0.75; }
+      .cb-node-broke  { fill: var(--bg); stroke: var(--bad); stroke-width: 1.75; }
+      .cb-node-partial-bg { fill: var(--bg); stroke: var(--warn); stroke-width: 1.5; }
+
+      .cb-band-fill   { fill: var(--accent); opacity: 0.08; }
+      .cb-band-edge   { stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.45; }
+
+      .cb-divider     { stroke: var(--rule); stroke-width: 1; fill: none; stroke-dasharray: 4 3; opacity: 0.85; }
+
+      .cb-cascade     { stroke: var(--bad); stroke-width: 1; fill: none; opacity: 0.8; }
+      .cb-cascade-head { fill: var(--bad); opacity: 0.8; }
+
+      .cb-focal-rule  { stroke: var(--accent-hi); stroke-width: 1; fill: none; opacity: 0.55; }
+    </style>
+
+    <!-- link-letter header row, half labels, and the f to g divider. -->
+    <!-- node x grid: a232 b274 c316 d358 e400 f442 g484 h526 i568 j610 k652 l694 m748 -->
+    <g class="cb-t-mono cb-link-letter" text-anchor="middle">
+      <text x="232" y="58">a</text>
+      <text x="274" y="58">b</text>
+      <text x="316" y="58">c</text>
+      <text x="358" y="58">d</text>
+      <text x="400" y="58">e</text>
+      <text x="442" y="58">f</text>
+      <text x="484" y="58">g</text>
+      <text x="526" y="58">h</text>
+      <text x="568" y="58">i</text>
+      <text x="610" y="58">j</text>
+      <text x="652" y="58">k</text>
+      <text x="694" y="58">l</text>
+    </g>
+    <text class="cb-t-mono cb-link-letter-muted" x="748" y="58" text-anchor="middle">m</text>
+
+    <!-- structural divider between f and g : classification | RAP resolution -->
+    <line class="cb-divider" x1="463" y1="46" x2="463" y2="560"/>
+    <text class="cb-t-sans cb-half-label" x="347" y="40" text-anchor="middle">classification (a&#8211;f)</text>
+    <text class="cb-t-sans cb-half-label" x="589" y="40" text-anchor="middle">RAP resolution (g&#8211;l)</text>
+
+    <!-- HELD-COHORT BAND : seven models, full chain a..l intact (band center y=110) -->
+    <rect class="cb-band-fill" x="214" y="86" width="500" height="48" rx="6"/>
+    <rect class="cb-band-edge" x="214" y="86" width="500" height="48" rx="6"/>
+
+    <line class="cb-spine" x1="232" y1="110" x2="694" y2="110"/>
+    <line class="cb-spine-m" x1="694" y1="110" x2="748" y2="110"/>
+    <g class="cb-node-held">
+      <circle cx="232" cy="110" r="4.5"/>
+      <circle cx="274" cy="110" r="4.5"/>
+      <circle cx="316" cy="110" r="4.5"/>
+      <circle cx="358" cy="110" r="4.5"/>
+      <circle cx="400" cy="110" r="4.5"/>
+      <circle cx="442" cy="110" r="4.5"/>
+      <circle cx="484" cy="110" r="4.5"/>
+      <circle cx="526" cy="110" r="4.5"/>
+      <circle cx="568" cy="110" r="4.5"/>
+      <circle cx="610" cy="110" r="4.5"/>
+      <circle cx="652" cy="110" r="4.5"/>
+      <circle cx="694" cy="110" r="4.5">
+        <title>Held the full chain a&#8211;l (seven models, memo 5): claude-fable-5, claude-opus-4.7, gpt-5.5, deepseek-v4-pro, claude-opus-4.6, gemini-3.5-flash, gemini-3.1-pro-preview.</title>
+      </circle>
+    </g>
+    <circle class="cb-node-m" cx="748" cy="110" r="4"/>
+
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-band-id" x="206" y="106">7 models held a&#8211;l</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="121">memo 5 / 5</text>
+      <text class="cb-t-prose cb-band-mech" x="206" y="134">classification saturated across the frontier</text>
+    </g>
+
+    <!-- RUPTURE LANES (5), descending in capability-ladder order. -->
+    <!-- lane y: grok 200 / deepseek 270 / gpt54 340 / opus48 420 / haiku 500 -->
+
+    <!-- LANE 1 : grok-4.3, breaks at b (front half, ladder bottom rung) -->
+    <g>
+      <line class="cb-spine" x1="232" y1="200" x2="262" y2="200"/>
+      <line class="cb-spine-gap" x1="286" y1="200" x2="694" y2="200"/>
+      <line class="cb-spine-m" x1="694" y1="200" x2="748" y2="200"/>
+      <circle class="cb-node-held" cx="232" cy="200" r="4.5"/>
+      <circle class="cb-node-broke" cx="274" cy="200" r="5.5">
+        <title>grok-4.3, link b BROKE: calls the post-fee-tail interests executory interests, not remainders. An early, structural classification mis-step &#8212; the ladder's bottom rung.</title>
+      </circle>
+      <circle class="cb-node-held" cx="316" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="400" cy="200" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="442" cy="200" r="5"/>
+      <path d="M 442 195 A 5 5 0 0 1 442 205 Z" fill="var(--warn)" opacity="0.85">
+        <title>grok-4.3, link f PARTIAL: measuring-lives identification muddled.</title>
+      </path>
+      <circle class="cb-node-held" cx="484" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="526" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="568" cy="200" r="4.5"/>
+      <circle class="cb-node-held" cx="610" cy="200" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="652" cy="200" r="5"/>
+      <path d="M 652 195 A 5 5 0 0 1 652 205 Z" fill="var(--warn)" opacity="0.85">
+        <title>grok-4.3, link k PARTIAL: Octavia-as-measuring-life muddled.</title>
+      </path>
+      <circle class="cb-node-held" cx="694" cy="200" r="4.5"/>
+      <circle class="cb-node-m" cx="748" cy="200" r="4"/>
+    </g>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="196">grok-4.3</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="210">memo 3 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="226" text-anchor="start">early &#38; structural &#8212; foundational miscategory, but the RAP conclusions held</text>
+    <text class="cb-t-sans cb-rung-tag" x="274" y="180" text-anchor="middle">bottom rung</text>
+
+    <!-- LANE 2 : deepseek-v3.2, breaks at e -->
+    <g>
+      <line class="cb-spine" x1="232" y1="270" x2="388" y2="270"/>
+      <line class="cb-spine-gap" x1="412" y1="270" x2="694" y2="270"/>
+      <line class="cb-spine-m" x1="694" y1="270" x2="748" y2="270"/>
+      <circle class="cb-node-held" cx="232" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="274" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="316" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="270" r="4.5"/>
+      <circle class="cb-node-broke" cx="400" cy="270" r="5.5">
+        <title>deepseek-v3.2, link e BROKE: classifies the Society gift as an executory interest. A near-miss; the core RAP result essentially held.</title>
+      </circle>
+      <circle class="cb-node-held" cx="442" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="484" cy="270" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="526" cy="270" r="5"/>
+      <path d="M 526 265 A 5 5 0 0 1 526 275 Z" fill="var(--warn)" opacity="0.85">
+        <title>deepseek-v3.2, link h PARTIAL: no explicit all-or-nothing (Leake) citation.</title>
+      </path>
+      <circle class="cb-node-held" cx="568" cy="270" r="4.5"/>
+      <circle class="cb-node-held" cx="610" cy="270" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="652" cy="270" r="5"/>
+      <path d="M 652 265 A 5 5 0 0 1 652 275 Z" fill="var(--warn)" opacity="0.85">
+        <title>deepseek-v3.2, link k PARTIAL: Octavia muddled.</title>
+      </path>
+      <circle class="cb-node-held" cx="694" cy="270" r="4.5"/>
+      <circle class="cb-node-m" cx="748" cy="270" r="4"/>
+    </g>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="266">deepseek-v3.2</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="280">memo 4 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="296" text-anchor="start">near-miss &#8212; one misclassification, core RAP result essentially held</text>
+
+    <!-- LANE 3 : gpt-5.4, breaks at g and cascades to l -->
+    <g>
+      <line class="cb-spine" x1="232" y1="340" x2="472" y2="340"/>
+      <line class="cb-spine-gap" x1="496" y1="340" x2="682" y2="340"/>
+      <line class="cb-spine-m" x1="694" y1="340" x2="748" y2="340"/>
+      <circle class="cb-node-held" cx="232" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="274" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="316" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="400" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="442" cy="340" r="4.5"/>
+      <circle class="cb-node-broke" cx="484" cy="340" r="5.5">
+        <title>gpt-5.4, link g BROKE: concludes the widow's life estate VOID when it is VALID (it vests at Arthur's death). The single wrong node.</title>
+      </circle>
+      <circle class="cb-node-held" cx="526" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="568" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="610" cy="340" r="4.5"/>
+      <circle class="cb-node-held" cx="652" cy="340" r="4.5"/>
+      <circle class="cb-node-broke" cx="694" cy="340" r="5.5">
+        <title>gpt-5.4, link l BROKE: wrong resulting title &#8212; a consequence of the wrong determination at g.</title>
+      </circle>
+      <circle class="cb-node-m" cx="748" cy="340" r="4"/>
+    </g>
+    <path class="cb-cascade" d="M 484 346 C 540 374, 638 374, 692 346"/>
+    <polygon class="cb-cascade-head" points="692,346 686,341 689,350"/>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="336">gpt-5.4</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="350">memo 3 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="392" text-anchor="start">one wrong node (g) cascades into the title (l)</text>
+
+    <!-- LANE 4 : opus-4.8, holds structure then breaks h and i, cascades to l (focal) -->
+    <g>
+      <line class="cb-spine" x1="232" y1="420" x2="514" y2="420"/>
+      <line class="cb-spine-gap" x1="538" y1="420" x2="556" y2="420"/>
+      <line class="cb-spine-gap" x1="580" y1="420" x2="682" y2="420"/>
+      <line class="cb-spine-m" x1="694" y1="420" x2="748" y2="420"/>
+      <circle class="cb-node-held" cx="232" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="274" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="316" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="400" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="442" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="484" cy="420" r="4.5"/>
+      <circle class="cb-node-broke" cx="526" cy="420" r="5.5">
+        <title>claude-opus-4.8, link h BROKE: flips grandchildren VOID to VALID under one wrong premise (post-fee-tail remainders RAP-exempt). Knowledge intact; a single wrong commitment overrode it.</title>
+      </circle>
+      <circle class="cb-node-broke" cx="568" cy="420" r="5.5">
+        <title>claude-opus-4.8, link i BROKE: flips the Society gift VOID to VALID under the same wrong premise.</title>
+      </circle>
+      <circle class="cb-node-held" cx="610" cy="420" r="4.5"/>
+      <circle class="cb-node-held" cx="652" cy="420" r="4.5"/>
+      <circle class="cb-node-broke" cx="694" cy="420" r="5.5">
+        <title>claude-opus-4.8, link l BROKE: wrong resulting title &#8212; carried from the flipped h and i holdings.</title>
+      </circle>
+      <circle class="cb-node-m" cx="748" cy="420" r="4"/>
+    </g>
+    <path class="cb-cascade" d="M 526 426 C 580 458, 650 456, 691 427"/>
+    <path class="cb-cascade" d="M 568 426 C 608 446, 660 446, 692 427"/>
+    <polygon class="cb-cascade-head" points="692,427 686,422 689,431"/>
+    <rect class="cb-focal-rule" x="214" y="404" width="552" height="34" rx="5"/>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="416">claude-opus-4.8</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="430">memo 2 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="476" text-anchor="start">held all structure (a&#8211;g), then one wrong premise detonates h, i and the title l</text>
+
+    <!-- LANE 5 : haiku-4.5, holds taxonomy then the back half collapses -->
+    <g>
+      <line class="cb-spine" x1="232" y1="500" x2="514" y2="500"/>
+      <line class="cb-spine" x1="538" y1="500" x2="556" y2="500" opacity="0.5"/>
+      <line class="cb-spine-gap" x1="580" y1="500" x2="682" y2="500"/>
+      <line class="cb-spine-m" x1="694" y1="500" x2="748" y2="500"/>
+      <circle class="cb-node-held" cx="232" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="274" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="316" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="358" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="400" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="442" cy="500" r="4.5"/>
+      <circle class="cb-node-held" cx="484" cy="500" r="4.5"/>
+      <circle class="cb-node-partial-bg" cx="526" cy="500" r="5"/>
+      <path d="M 526 495 A 5 5 0 0 1 526 505 Z" fill="var(--warn)" opacity="0.85">
+        <title>claude-haiku-4.5, link h PARTIAL: never identifies the afterborn mechanism; all-or-nothing not invoked.</title>
+      </path>
+      <circle class="cb-node-broke" cx="568" cy="500" r="5.5">
+        <title>claude-haiku-4.5, link i BROKE: calls the Society's gift VALID. Working-memory overload across the long downstream cascade.</title>
+      </circle>
+      <circle class="cb-node-partial-bg" cx="610" cy="500" r="5"/>
+      <path d="M 610 495 A 5 5 0 0 1 610 505 Z" fill="var(--warn)" opacity="0.85">
+        <title>claude-haiku-4.5, link j PARTIAL: mishandles the fertile-octogenarian trap.</title>
+      </path>
+      <circle class="cb-node-partial-bg" cx="652" cy="500" r="5"/>
+      <path d="M 652 495 A 5 5 0 0 1 652 505 Z" fill="var(--warn)" opacity="0.85">
+        <title>claude-haiku-4.5, link k PARTIAL: Octavia-as-measuring-life mishandled.</title>
+      </path>
+      <circle class="cb-node-broke" cx="694" cy="500" r="5.5">
+        <title>claude-haiku-4.5, link l BROKE: wrong resulting title &#8212; cannot carry the full dependent resolution at once.</title>
+      </circle>
+      <circle class="cb-node-m" cx="748" cy="500" r="4"/>
+    </g>
+    <path class="cb-cascade" d="M 568 506 C 610 532, 658 532, 692 507"/>
+    <polygon class="cb-cascade-head" points="692,507 686,502 689,511"/>
+    <g text-anchor="end">
+      <text class="cb-t-mono cb-lane-id" x="206" y="496">claude-haiku-4.5</text>
+      <text class="cb-t-sans cb-lane-memo" x="206" y="510">memo 2 / 5</text>
+    </g>
+    <text class="cb-t-prose cb-lane-mech" x="232" y="552" text-anchor="start">holds the taxonomy (a&#8211;g) but cannot carry the long dependent resolution (h&#8211;l)</text>
+
+    <text class="cb-t-sans cb-rung-tag" x="804" y="200" text-anchor="start" transform="rotate(90 804 200)">capability ladder &#8595;  early-structural to late-conclusional</text>
+
+  </svg>
+
+  <figcaption>
+    Naming the interests (links a&#8211;f) is saturated across the frontier &#8212;
+    every break falls in the back-half RAP cascade (g&#8211;l) save the two
+    front-half classification breaks &#8212; grok-4.3 at b and deepseek-v3.2
+    at e. And where a model breaks climbs the capability ladder: one wrong node
+    cascades into the title (gpt-5.4, g&#8594;l); the frontier flagship holds
+    all structure then one wrong premise detonates the conclusions
+    (opus-4.8, h, i&#8594;l); a small model holds the taxonomy but cannot carry
+    the long dependent resolution (haiku, the back half collapses).
+  </figcaption>
+</figure>
+
+<p class="chart-legend">
+  <span class="held-key">held</span> = solid teal node &#183;
+  <span class="broke-key">broke</span> = hollow ring + snapped spine &#183;
+  <span class="partial-key">partial</span> = half-filled ring &#183;
+  m = optional/unscored (muted dashed)<br>
+  cascade arc = an upstream break (g/h/i) propagating into the title link l &#183;
+  rows ordered by break location = the capability ladder
+</p>
+
+<p class="footnote">
+  <span class="ddagger">&#8225;</span> Per-link held/broke/partial status is the
+  projection of the claude-opus-4-6 LLM-judge rationales for task
+  property-fee-tail-rap, 12 channel-corrected runs (canonical per model;
+  3 drawn from the predecessor EV-003 law-essays campaign: opus-4.7 a9ce8b17,
+  opus-4.6 906ac4ad, haiku-4.5 b5c19d61). Roll-ups (measurement-shape
+  deviation): N = 12 &#183; front classification held across the frontier &#183;
+  7/12 held the full chain a&#8211;l &#183; 5 of 12 broke &#8212; three in the
+  back-half RAP cascade (gpt-5.4, opus-4.8, haiku-4.5), two in the front-half
+  classification (grok-4.3 at b, deepseek-v3.2 at e).
+</p>
+
+</body>
+</html>
